@@ -7,6 +7,9 @@
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>GLTech2.ProgramMain</StartupObject>
     <Nullable>annotations</Nullable>
+    <AnalysisLevel>5.0</AnalysisLevel>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+    <FileVersion>2.1.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

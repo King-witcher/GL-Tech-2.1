@@ -17,6 +17,8 @@
     <PlatformTarget>x64</PlatformTarget>
     <OutputPath>..\bin\Debug</OutputPath>
     <DocumentationFile>..\bin\Debug\GL Tech 2.1.xml</DocumentationFile>
+    <NoWarn>1701;1702;CS1592</NoWarn>
+    <WarningsAsErrors>;NU1605</WarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -24,6 +26,8 @@
     <PlatformTarget>x64</PlatformTarget>
     <OutputPath>..\bin\Release</OutputPath>
     <DocumentationFile>..\bin\Release\GL Tech 2.1.xml</DocumentationFile>
+    <NoWarn>1701;1702;CS1592</NoWarn>
+    <WarningsAsErrors>;NU1605</WarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

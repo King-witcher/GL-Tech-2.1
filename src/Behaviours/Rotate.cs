@@ -2,9 +2,16 @@
 
 namespace GLTech2.PrefabBehaviours
 {
+    /// <summary>
+    /// A basic test script that makes the object rotate indefinitely.
+    /// </summary>
     public sealed class Rotate : Behaviour
     {
+        /// <summary>
+        /// The angular speed the object turns in degrees per second
+        /// </summary>
         public float Speed { get; set; } = 30f;
+
         void Update()
         {
             Element.Rotate(Speed * Time.DeltaTime);

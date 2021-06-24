@@ -12,7 +12,7 @@ namespace GLTech2.PrefabBehaviours
     public class DebugPosition : Behaviour
     {
         /// <summary>
-        /// The interval to debug components again.
+        /// The debug step interval in seconds
         /// </summary>
         public float Interval { get; set; } = 1f;
 

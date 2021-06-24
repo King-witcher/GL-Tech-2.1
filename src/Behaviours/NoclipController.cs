@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GLTech2.PrefabBehaviours
 {
+    /// <summary>
+    /// Allows the user to move the camera around the map using keyboard input in a quake-like way. May not work as expected yet.
+    /// </summary>
     public sealed class NoclipController : Behaviour
     {
         public bool AlwaysRun { get; set; } = true;

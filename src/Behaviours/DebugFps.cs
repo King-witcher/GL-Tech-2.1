@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace GLTech2.PrefabBehaviours
 {
+    /// <summary>
+    /// Debugs how much fps the scene is running.
+    /// </summary>
     public class DebugFPS : Behaviour
     {
+        /// <summary>
+        /// The debug step interval in seconds
+        /// </summary>
         public float Interval { get; set; } = 1f;
 
         int frames;
@@ -22,8 +28,8 @@ namespace GLTech2.PrefabBehaviours
 
             if (frametime >= Interval)
             {
-                Debug.Log("Potential fps: \t" + frames / rendertime);
-                Debug.Log("Actual fps: \t" + frames / frametime);
+                Debug.Log("Raycast only fps: \t" + frames / rendertime);
+                Debug.Log("Full time fps: \t" + frames / frametime);
                 Debug.Log();
                 frames = 0;
                 rendertime = 0;

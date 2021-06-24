@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace GLTech2
@@ -8,29 +9,48 @@ namespace GLTech2
     /// </summary>
     public static class Debug
     {
+
         /// <summary>
-        ///     Gets and sets if the Debug should print system warnings. Obsolete.
+        /// Gets and sets whether the Debug should or not print system warnings. Obsolete.
         /// </summary>
         [Obsolete]
         public static bool DebugWarnings { get; set; } = true;
+
+        static bool consoleEnabled = false;
+
+        /// <summary>
+        /// Enables a console that can be used to output and input text.
+        /// </summary>
+        public static void EnableConsole()
+        {
+            [DllImport("kernel32.dll", SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            static extern bool AllocConsole();
+
+            AllocConsole();
+            consoleEnabled = true;
+        }
+
+        /// <summary>
+        /// Disables the console.
+        /// </summary>
+        public static void DisableConsole()
+        {
+            [DllImport("kernel32.dll", SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            static extern bool FreeConsole();
+
+            FreeConsole();
+            consoleEnabled = false;
+        }
 
         [Obsolete]
         internal static void LogWarning(string warning)
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            if (DebugWarnings)
-                System.Console.WriteLine(warning);
+            if (DebugWarnings && consoleEnabled)
+                Console.WriteLine(warning);
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine();
-        }
-
-        /// <summary>
-        ///     Prints a message on the screen.
-        /// </summary>
-        /// <param name="message">Message</param>
-        public static void Log(string message)
-        {
-            System.Console.WriteLine(message);
             Console.WriteLine();
         }
 
@@ -39,38 +59,44 @@ namespace GLTech2
         /// </summary>
         /// <param name="text">Message</param>
         /// <param name="option">Option</param>
-        public static void Log(string text, Options option)
+        public static void Log(string text = "", Options option = Options.Message)
         {
+            if (!consoleEnabled)
+                return;
+
             ConsoleColor prev = Console.ForegroundColor;
 
-            switch(option)
+            Console.ForegroundColor = option switch
             {
-                case Options.Message:
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine(text);
-                    break;
+                Options.Message => ConsoleColor.White,
+                Options.Info => ConsoleColor.Cyan,
+                Options.Warning => ConsoleColor.DarkYellow,
+                Options.Error => ConsoleColor.DarkRed,
+                _ => ConsoleColor.White
+            };
 
-                case Options.Info:
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.WriteLine(text);
-                    break;
+            Console.WriteLine(text);
 
-                case Options.Warning:
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.WriteLine(text);
-                    break;
-
-                case Options.Error:
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine(text);
-                    break;
-            }
-            Console.WriteLine();
             Console.ForegroundColor = prev;
+        }
+
+        /// <summary>
+        /// Reads text from the debug console, if enabled. Otherwise, will always return an empty string.
+        /// </summary>
+        /// <returns></returns>
+        public static string Read()
+        {
+            if (!consoleEnabled)
+                return string.Empty;
+
+            return Console.ReadLine();
         }
 
         static internal void InternalLog(string source, string message, Options options)
         {
+            if (!consoleEnabled)
+                return;
+
             ConsoleColor prev = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(source + ": ");
@@ -78,47 +104,8 @@ namespace GLTech2
             Console.ForegroundColor = prev;
         }
 
-#pragma warning disable
-        // Suboptimal and not well coded.
-        static void idPrint(string str)
-        {
-            Regex rgx = new Regex(@"\^[0-7]");
-            ConsoleColor[] colorMap =
-            {
-                ConsoleColor.Black,
-                ConsoleColor.Red,
-                ConsoleColor.Green,
-                ConsoleColor.DarkYellow,
-                ConsoleColor.Blue,
-                ConsoleColor.Cyan,
-                ConsoleColor.Magenta,
-                ConsoleColor.White
-            };
-
-            string[] segments = rgx.Split(str);
-            ConsoleColor[] colors = new ConsoleColor[segments.Length];
-
-            {
-                colors[0] = ConsoleColor.White;
-                int i = 1;
-                foreach (Match match in rgx.Matches(str))
-                {
-                    string tag = match.Value;
-                    int index = int.Parse(tag.ToCharArray()[1].ToString());
-                    colors[i++] = colorMap[index];
-                }
-            }
-
-            for (int i = 0; i < segments.Length; i++)
-            {
-                Console.ForegroundColor = colors[i];
-                Console.Write(segments[i]);
-            }
-        }
-#pragma warning enable
-
         /// <summary>
-        ///     Specifies constants that define the details of how a message should be printed.
+        /// Specifies constants that define the details of how a message should be printed.
         /// </summary>
         public enum Options
         {

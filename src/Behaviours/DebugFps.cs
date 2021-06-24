@@ -22,8 +22,9 @@ namespace GLTech2.PrefabBehaviours
 
             if (frametime >= Interval)
             {
-                Debug.Log("Potential fps: \t" + frames / rendertime +
-                    "\nActual fps: \t" + frames / frametime);
+                Debug.Log("Potential fps: \t" + frames / rendertime);
+                Debug.Log("Actual fps: \t" + frames / frametime);
+                Debug.Log();
                 frames = 0;
                 rendertime = 0;
                 frametime = 0;

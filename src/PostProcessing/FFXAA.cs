@@ -17,6 +17,12 @@ namespace GLTech2.PostProcessing
         /// </summary>
         public bool ShowEdges { get; set; } = false;
 
+        /// <summary>
+        /// Gets a new instance of FFXAA respecting the screen dimentions.
+        /// </summary>
+        /// <param name="width">Screen width</param>
+        /// <param name="height">Screen height</param>
+        /// <param name="threshold">The threshold that determines whether something is or not a border</param>
         public FFXAA(int width, int height, int threshold = 128)
         {
             temporaryBuffer = new PixelBuffer(width, height);

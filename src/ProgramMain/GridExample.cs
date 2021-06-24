@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace GLTech2
 {
     using GLTech2.Properties;
-    partial class Program
+    partial class ProgramMain
     {
         static void GridExample()
         {

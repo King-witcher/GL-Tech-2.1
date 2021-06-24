@@ -4,7 +4,7 @@ using GLTech2.PrefabElements;
 namespace GLTech2
 {
     using GLTech2.Properties;
-    partial class Program
+    partial class ProgramMain
     {
         static void AnimatedExample()
         {

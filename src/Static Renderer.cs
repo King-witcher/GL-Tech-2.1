@@ -10,11 +10,16 @@ using GLTech2.PostProcessing;
 
 namespace GLTech2
 {
+
     /// <summary>
     ///     Provides an interface to render scenes and output the video in a window.
     /// </summary>
     public static partial class Renderer
     {
+        unsafe static RenderingCache* cache;
+        static PixelBuffer outputBuffer;
+        static Scene activeScene = null;
+
         /// <summary>
         ///     Gets and determines if the renderer will use native code. Currently disabled.
         /// </summary>
@@ -160,11 +165,6 @@ namespace GLTech2
         /// </summary>
         public static bool IsRunning { get; private set; } = false;
 
-
-        unsafe static RenderingCache* cache;
-        static PixelBuffer outputBuffer;
-        static Scene activeScene = null;
-
         /// <summary>
         /// Takes a screenshot of the current frame as PixelBuffer.
         /// </summary>
@@ -174,6 +174,29 @@ namespace GLTech2
             PixelBuffer pb = new PixelBuffer(CustomWidth, customHeight);
             pb.Clone(outputBuffer);
             return pb;
+        }
+
+        /// <summary>
+        ///     Adds a new post processing effect to be applied every frame.
+        /// </summary>
+        /// <param name="postProcessing">Post processing effect to be applied</param>
+        public static void AddEffect(Effect postProcessing)
+        {
+            Renderer.postProcessing.Add(postProcessing);
+        }
+
+        /// <summary>
+        ///     Adds a new instance of a given post processing effect to be applied every frame.
+        /// </summary>
+        /// <typeparam name="T">Post processing type</typeparam>
+        /// <remarks>
+        ///     <para>
+        ///         Not every post processing effect can be added via Type because some needs to be setup manually.
+        ///     </para>
+        /// </remarks>
+        public static void AddPostProcessing<T>() where T : PostProcessing.Effect, new()
+        {
+            AddEffect(new T());
         }
 
         /// <summary>
@@ -331,29 +354,6 @@ namespace GLTech2
         {
             foreach (var effect in postProcessing)
                 effect.Process(target);
-        }
-
-        /// <summary>
-        ///     Adds a new post processing effect to be applied every frame.
-        /// </summary>
-        /// <param name="postProcessing">Post processing effect to be applied</param>
-        public static void AddEffect(Effect postProcessing)
-        {
-            Renderer.postProcessing.Add(postProcessing);
-        }
-
-        /// <summary>
-        ///     Adds a new instance of a given post processing effect to be applied every frame.
-        /// </summary>
-        /// <typeparam name="T">Post processing type</typeparam>
-        /// <remarks>
-        ///     <para>
-        ///         Not every post processing effect can be added via Type because some needs to be setup manually.
-        ///     </para>
-        /// </remarks>
-        public static void AddPostProcessing<T>() where T : PostProcessing.Effect, new()
-        {
-            AddEffect(new T());
         }
 
         static void ChangeIfNotRunning<T>(string name, ref T obj, T value)

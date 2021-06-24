@@ -9,103 +9,99 @@ namespace GLTech2
         static void AnimatedExample()
         {
             // Load buffers
-            using (PixelBuffer background_buffer = (PixelBuffer)Resources.DoomSky)
-            using (PixelBuffer carvedWall_buffer = (PixelBuffer)Resources.CarvedWall)
-            using (PixelBuffer bricks_buffer = (PixelBuffer)Resources.Bricks)
-            using (PixelBuffer wood_buffer = (PixelBuffer)Resources.Wood)
-            using (PixelBuffer grayHexagons_buffer = (PixelBuffer)Resources.GrayHexagons)
+            using PixelBuffer background_buffer = (PixelBuffer)Resources.DoomSky;
+            using PixelBuffer carvedWall_buffer = (PixelBuffer)Resources.CarvedWall;
+            using PixelBuffer bricks_buffer = (PixelBuffer)Resources.Bricks;
+            using PixelBuffer wood_buffer = (PixelBuffer)Resources.Wood;
+            using PixelBuffer grayHexagons_buffer = (PixelBuffer)Resources.GrayHexagons;
+
+            // Scene
+            Texture background = new Texture(
+                buffer: background_buffer,
+                hoffset: 0f,
+                hrepeat: 1f);
+
+            using Scene scene = new Scene(background);
+
+            // Pivot
             {
-                // Scene
-                Texture background = new Texture(
-                    buffer: background_buffer,
-                    hoffset: 0f,
-                    hrepeat: 1f);
+                Empty pivot = new Empty(0, 0.2868f);
+                pivot.AddBehaviour(new Rotate { Speed = -20f });
 
-                Scene scene = new Scene(background);
-
-                // Pivot
-                {
-                    Empty pivot = new Empty(0, 0.2868f);
-                    pivot.AddBehaviour(new Rotate { Speed = -20f });
-
-                    // Square
-                    {
-                        Texture tex = new Texture(
-                            buffer: wood_buffer,
-                            hoffset: 0f,
-                            hrepeat: 2f);
-
-                        Element e = new RegularPolygon((-0.5f, 0f), 4, .354f, tex);
-
-                        e.AddBehaviour(new Rotate { Speed = 180f });
-                        e.Parent = pivot;
-                    }
-
-                    // Cylinder
-                    {
-                        Texture tex = new Texture(
-                            buffer: bricks_buffer,
-                            hoffset: 0f,
-                            hrepeat: 4f);
-
-                        Element e = new RegularPolygon((0.5f, 0f), 100, .318f, tex);
-
-                        e.AddBehaviour(new Rotate { Speed = 180f });
-                        e.Parent = pivot;
-                    }
-
-                    // Triangle
-                    {
-                        Texture tex = new Texture(
-                            buffer: carvedWall_buffer,
-                            hoffset: 0f,
-                            hrepeat: 1f);
-
-                        Element e = new RegularPolygon((0f, 0.866f), 3, .385f, tex);
-
-                        e.AddBehaviour(new Rotate { Speed = 180f });
-                        e.Parent = pivot;
-                    }
-
-                    scene.AddElement(pivot);
-                }
-
-                // Big triangle
+                // Square
                 {
                     Texture tex = new Texture(
-                        buffer: grayHexagons_buffer,
+                        buffer: wood_buffer,
                         hoffset: 0f,
-                        hrepeat: 32f);
+                        hrepeat: 2f);
 
-                    Element e = new RegularPolygon(Vector.Origin, 4, 2, tex);
+                    Element e = new RegularPolygon((-0.5f, 0f), 4, .354f, tex);
 
-                    scene.AddElement(e);
+                    e.AddBehaviour(new Rotate { Speed = 180f });
+                    e.Parent = pivot;
                 }
 
-                // Observer
+                // Cylinder
                 {
-                    Observer pov = new Observer(Vector.Backward, 0);
+                    Texture tex = new Texture(
+                        buffer: bricks_buffer,
+                        hoffset: 0f,
+                        hrepeat: 4f);
 
-                    pov.AddBehaviour<DebugPosition>();
-                    pov.AddBehaviour<NoclipController>();
-                    pov.AddBehaviour(new MouseLook(2.2f));
+                    Element e = new RegularPolygon((0.5f, 0f), 100, .318f, tex);
 
-                    scene.AddElement(pov);
+                    e.AddBehaviour(new Rotate { Speed = 180f });
+                    e.Parent = pivot;
                 }
 
-                // Setup Renderer
-                Renderer.FullScreen = true;
-                Renderer.FieldOfView = 110f;
-                Renderer.ParallelRendering = true;
-                Renderer.DoubleBuffering = true;
-                Renderer.CaptureMouse = true;
+                // Triangle
+                {
+                    Texture tex = new Texture(
+                        buffer: carvedWall_buffer,
+                        hoffset: 0f,
+                        hrepeat: 1f);
 
-                // Run!
-                Renderer.Run(scene);
+                    Element e = new RegularPolygon((0f, 0.866f), 3, .385f, tex);
 
-                // Release scene
-                scene.Dispose();
+                    e.AddBehaviour(new Rotate { Speed = 180f });
+                    e.Parent = pivot;
+                }
+
+                scene.AddElement(pivot);
             }
+
+            // Big triangle
+            {
+                Texture tex = new Texture(
+                    buffer: grayHexagons_buffer,
+                    hoffset: 0f,
+                    hrepeat: 32f);
+
+                Element e = new RegularPolygon(Vector.Origin, 4, 2, tex);
+
+                scene.AddElement(e);
+            }
+
+            // Observer
+            {
+                Observer pov = new Observer(Vector.Backward, 0);
+
+                pov.AddBehaviour<DebugPosition>();
+                pov.AddBehaviour<NoclipController>();
+                pov.AddBehaviour(new MouseLook(2.2f));
+
+                scene.AddElement(pov);
+            }
+
+            // Setup Renderer
+            Renderer.FullScreen = true;
+            Renderer.FieldOfView = 110f;
+            Renderer.ParallelRendering = true;
+            Renderer.DoubleBuffering = true;
+            Renderer.CaptureMouse = true;
+
+            // Run!
+            Renderer.Run(scene);
         }
     }
 }

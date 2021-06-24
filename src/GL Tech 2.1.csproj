@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Library</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <RootNamespace>GLTech2</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
-    <StartupObject></StartupObject>
+    <StartupObject>GLTech2.ProgramMain</StartupObject>
     <Nullable>annotations</Nullable>
     <AnalysisLevel>5.0</AnalysisLevel>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>

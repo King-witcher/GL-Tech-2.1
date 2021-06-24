@@ -6,6 +6,10 @@ namespace GLTech2.PostProcessing
     /// </summary>
     public abstract class Effect
     {
+        /// <summary>
+        /// Applies the post processing effect to a target Pixelbuffer.
+        /// </summary>
+        /// <param name="target"></param>
         public abstract void Process(PixelBuffer target);
     }
 }

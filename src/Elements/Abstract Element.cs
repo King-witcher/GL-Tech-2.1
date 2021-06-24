@@ -139,11 +139,11 @@ namespace GLTech2
             {
                 if (value != null && scene != value.scene)
                 {
-                    if (Debug.DebugWarnings)
-                    {
-                        Console.WriteLine($"Cannot parent {this} to an element that is in other scene. Operation aborted.");
-                        return;
-                    }
+                    Debug.InternalLog(
+                        origin: "Element",
+                        message: $"Cannot parent {this} to an element that is in other scene. Operation aborted.",
+                        debugOption: Debug.Options.Error);
+                    return;
                 }
 
                 if (parent != null)
@@ -244,13 +244,19 @@ namespace GLTech2
 
             if (ContainsBehaviour(behaviour))
             {
-                Debug.LogWarning($"Cannot add same behaviour twice. {typeof(Behaviour).Name} second instance will be ignored.");
+                Debug.InternalLog(
+                    origin: "Element",
+                    message: $"Cannot add same behaviour twice. {typeof(Behaviour).Name} second instance will be ignored.",
+                    debugOption: Debug.Options.Warning);
                 return;
             }
 
             if (behaviour.element is null is false)
             {
-                Debug.LogWarning($"Cannot add same behaviour instance to two different elements. Element without behaviour: {this}.");
+                Debug.InternalLog(
+                    origin: "Element", 
+                    message: $"Cannot add same behaviour instance to two different elements. Element without behaviour: {this}.",
+                    debugOption: Debug.Options.Error);
                 return;
             }
 

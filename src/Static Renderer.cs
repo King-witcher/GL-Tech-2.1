@@ -50,7 +50,7 @@ namespace GLTech2
             get => (int)(1000f / minframetime);
             set
             {
-                Clip(ref value, 1, 250);
+                Utilities.Clip(ref value, 1, 250);
                 minframetime = 1000f / value;
             }
         }
@@ -140,7 +140,7 @@ namespace GLTech2
             get => fieldOfView;
             set
             {
-                Clip(ref value, 1f, 179f);
+                Utilities.Clip(ref value, 1f, 179f);
                 ChangeIfNotRunning("FieldOfView", ref fieldOfView, value);
             }
         }
@@ -160,41 +160,38 @@ namespace GLTech2
         /// </summary>
         public static bool IsRunning { get; private set; } = false;
 
-        static void Clip<T> (ref T value, T min, T max) where T : struct, IComparable<T>
-        {
-            if (value.CompareTo(max) > 0)
-                value = max;
-            else if (value.CompareTo(min) < 0)
-                value = min;
-        }
-
-        static void ChangeIfNotRunning<T>(string name, ref T obj, T value)
-        {
-            if (IsRunning)
-                Debug.LogWarning(name + " cannot be modified while running.");
-            else
-                obj = value;
-        }
 
         unsafe static RenderingCache* cache;
         static PixelBuffer outputBuffer;
         static Scene activeScene = null;
 
         /// <summary>
-        ///     Renders the given scene from its default point of view and displays the video in a new window.
+        /// Takes a screenshot of the current frame as PixelBuffer.
+        /// </summary>
+        /// <returns>A screenshot of the current frame.</returns>
+        public static PixelBuffer GetScreenshot()
+        {
+            PixelBuffer pb = new PixelBuffer(CustomWidth, customHeight);
+            pb.Clone(outputBuffer);
+            return pb;
+        }
+
+        /// <summary>
+        /// Renders the given scene from its default point of view and displays the video in a new window.
         /// </summary>
         /// <param name="scene">Scene to be rendered</param>
         /// <remarks>
-        ///     This method takes the control until the renderer is closed.
+        /// This method takes the control until the renderer is closed.
         /// </remarks>
         public unsafe static void Run(Scene scene)
         {
             if (scene.ActiveObserver is null)
 			{
-                Debug.InternalLog("Renderer",
-                    "The scene you are trying to render doesn't have an active observer. \n" +
-                    "Adding a default observer at origin.",
-                    Debug.Options.Warning);
+                Debug.InternalLog(
+                    origin: "Renderer",
+                    message: "The scene you are trying to render doesn't have an active observer. \n" +
+                        "Adding a default observer at origin.",
+                    debugOption: Debug.Options.Warning);
 
                 scene.ActiveObserver = new Observer(Vector.Origin, 0);
             }
@@ -209,7 +206,7 @@ namespace GLTech2
             // Unmanaged buffer where the video will be put.
             outputBuffer = new PixelBuffer(CustomWidth, customHeight);
 
-            // Create a whapper "Bitmap" that refers to the buffer.
+            // Create a whapper "Bitmap" that uses the same buffer.
             var sourceBitmap = new Bitmap(
                 CustomWidth, CustomHeight,
                 CustomWidth * sizeof(uint), PixelFormat.Format32bppRgb,
@@ -270,17 +267,19 @@ namespace GLTech2
                 activeBuffer = outputBuffer;
 
             if (!DoubleBuffering && postProcessing.Count > 0)
-                Debug.InternalLog("Renderer",
-                    "The renderer has post processing effects but DoubleBuffering is disabled. " +
-                    "The engine will display incompletely post processed frames and cause a probably unexpected " +
-                    "behaviour.",
-                    Debug.Options.Warning);
+                Debug.InternalLog(
+                    origin: "Renderer",
+                    message: "The renderer has post processing effects but DoubleBuffering is disabled. " +
+                        "The engine will display incompletely post processed frames and cause a probably unexpected " +
+                        "behaviour.",
+                    debugOption: Debug.Options.Warning);
 
             if (DoubleBuffering && postProcessing.Count == 0)
-                Debug.InternalLog("Renderer", 
-                    "DoubleBuffering is enabled but no post processing effect is active. If you need " +
-                    "more performance or less input lag, consider disabling DoubleBuffering.",
-                    Debug.Options.Info);
+                Debug.InternalLog(
+                    origin: "Renderer", 
+                    message: "DoubleBuffering is enabled but no post processing effect is active. If you need " +
+                        "more performance or less input lag, consider disabling DoubleBuffering.",
+                    debugOption: Debug.Options.Info);
 
             // Stopwatch that counts RenderTime.
             Stopwatch controlSW = new Stopwatch();
@@ -355,6 +354,17 @@ namespace GLTech2
         public static void AddPostProcessing<T>() where T : PostProcessing.Effect, new()
         {
             AddEffect(new T());
+        }
+
+        static void ChangeIfNotRunning<T>(string name, ref T obj, T value)
+        {
+            if (IsRunning)
+                Debug.InternalLog(
+                    origin: "Renderer",
+                    message: name + " cannot be modified while running.",
+                    debugOption: Debug.Options.Warning);
+            else
+                obj = value;
         }
     }
 }

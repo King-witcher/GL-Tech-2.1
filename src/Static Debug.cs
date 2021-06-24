@@ -9,13 +9,6 @@ namespace GLTech2
     /// </summary>
     public static class Debug
     {
-
-        /// <summary>
-        /// Gets and sets whether the Debug should or not print system warnings. Obsolete.
-        /// </summary>
-        [Obsolete]
-        public static bool DebugWarnings { get; set; } = true;
-
         static bool consoleEnabled = false;
 
         /// <summary>
@@ -44,29 +37,19 @@ namespace GLTech2
             consoleEnabled = false;
         }
 
-        [Obsolete]
-        internal static void LogWarning(string warning)
-        {
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            if (DebugWarnings && consoleEnabled)
-                Console.WriteLine(warning);
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine();
-        }
-
         /// <summary>
         ///     Prints a message on the screen given an option.
         /// </summary>
-        /// <param name="text">Message</param>
-        /// <param name="option">Option</param>
-        public static void Log(string text = "", Options option = Options.Message)
+        /// <param name="message">Message</param>
+        /// <param name="debugOption">Option</param>
+        public static void Log(string message = "", Options debugOption = Options.Message)
         {
             if (!consoleEnabled)
                 return;
 
             ConsoleColor prev = Console.ForegroundColor;
 
-            Console.ForegroundColor = option switch
+            Console.ForegroundColor = debugOption switch
             {
                 Options.Message => ConsoleColor.White,
                 Options.Info => ConsoleColor.Cyan,
@@ -75,7 +58,7 @@ namespace GLTech2
                 _ => ConsoleColor.White
             };
 
-            Console.WriteLine(text);
+            Console.WriteLine(message);
 
             Console.ForegroundColor = prev;
         }
@@ -92,15 +75,15 @@ namespace GLTech2
             return Console.ReadLine();
         }
 
-        static internal void InternalLog(string source, string message, Options options)
+        static internal void InternalLog(string origin, string message, Options debugOption = Options.Message)
         {
             if (!consoleEnabled)
                 return;
 
             ConsoleColor prev = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write(source + ": ");
-            Log(message, options);
+            Console.Write(origin + ": ");
+            Log(message, debugOption);
             Console.ForegroundColor = prev;
         }
 

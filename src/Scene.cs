@@ -85,8 +85,6 @@ namespace GLTech2
                 for (int col = 0; col < map.Width - 1; col++)
                 {
                     bool currentIsFilled = textures.TryGetValue(map[col, line], out Texture texture);
-                    Texture tex = default;
-
 
                     if (leftIsFilled ^ currentIsFilled)
 					{
@@ -164,9 +162,12 @@ namespace GLTech2
             if (element is null)
                 throw new ArgumentNullException("Cannot add null elements.");
 
-            if (element.scene != null && Debug.DebugWarnings)
+            if (element.scene != null)
             {
-                Console.WriteLine($"\"{element}\" is already bound to scene {element.scene}. Adding operation will be aborted.");
+                Debug.InternalLog(
+                    origin: "Scene",
+                    message: $"\"{element}\" is already bound to scene {element.scene}. Adding operation will be aborted.",
+                    debugOption: Debug.Options.Error);
                 return;
             }
 

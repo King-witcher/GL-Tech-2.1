@@ -12,6 +12,21 @@ namespace GLTech2
         static bool consoleEnabled = false;
 
         /// <summary>
+        /// Gets and sets whether the console should be enabled or not.
+        /// </summary>
+        public static bool ConsoleEnabled
+        {
+            get => consoleEnabled;
+            set
+            {
+                if (value)
+                    EnableConsole();
+                else
+                    DisableConsole();
+            }
+        }
+
+        /// <summary>
         /// Enables a console that can be used to output and input text.
         /// </summary>
         public static void EnableConsole()

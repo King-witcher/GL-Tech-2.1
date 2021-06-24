@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GLTech2.PrefabBehaviours
+﻿namespace GLTech2.PrefabBehaviours
 {
     /// <summary>
     /// Debugs all relative components of an object.
     /// </summary>
     public class DebugPosition : Behaviour
     {
+        float interval;
         /// <summary>
         /// The debug step interval in seconds
         /// </summary>
         public float Interval { get; set; } = 1f;
-
-        float interval;
 
         void Update()
         {

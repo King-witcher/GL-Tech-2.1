@@ -7,7 +7,7 @@ namespace GLTech2
     {
         static void Main()
         {
-            Debug.EnableConsole();
+            Debug.ConsoleEnabled = true;
 
             Debug.Log("Press any key to start.");
             Console.ReadKey();

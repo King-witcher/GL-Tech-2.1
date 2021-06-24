@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Reflection;
 
 namespace GLTech2
@@ -35,6 +31,7 @@ namespace GLTech2
         /// </summary>
         protected internal Scene Scene { get => element.scene; }
 
+        // void Start()
         private Action startMethod = null;
         internal Action StartMethod
         {
@@ -55,6 +52,7 @@ namespace GLTech2
             }
         }
 
+        // void Update()
         private Action updateMethod = null;
         internal Action UpdateMethod
         {
@@ -74,10 +72,5 @@ namespace GLTech2
                 return updateMethod;
             }
         }
-
-        // Start()
-        // Update()
-        // BeginCollide(Element collisor)
-        // EndCollide(Element collisor)
     }
 }

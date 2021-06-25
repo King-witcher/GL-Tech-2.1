@@ -53,6 +53,12 @@ namespace GLTech2
         }
 
         /// <summary>
+        /// Clears the console.
+        /// </summary>
+        public static void Clear() =>
+            Console.Clear();
+
+        /// <summary>
         ///     Prints a message on the screen given an option.
         /// </summary>
         /// <param name="message">Message</param>

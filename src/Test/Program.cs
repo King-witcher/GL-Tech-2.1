@@ -11,10 +11,11 @@ namespace Test
             Debug.Pause("Press any key to start.");
             GridExample();
 
+            Debug.Clear();
             Debug.Pause("Press any key to start.");
             AnimatedExample();
 
-            Debug.Pause("Press any key to start.");
+            Debug.Pause("Press any key to close.");
             Debug.Log("Releasing resources...");
         }
     }

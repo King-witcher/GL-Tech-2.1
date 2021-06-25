@@ -31,7 +31,6 @@ namespace GLTech2.PrefabElements
         // This exists because C# doesn't allow to call base constructor anywhere, so here it is.
         private protected void Build(Vector[] verts, Texture texture)
         {
-
             if (verts.Length == 0)
                 return;
 
@@ -43,11 +42,21 @@ namespace GLTech2.PrefabElements
             for (int i = 0; i < total_walls - 1; i++)
             {
                 currentTexture.hoffset = texture.hoffset + texture.hrepeat * i / (total_walls);
-                new Wall(verts[i], verts[i + 1], currentTexture).Parent = this;
+
+                new Wall(
+                    start: verts[i],
+                    end: verts[i + 1],
+                    texture: currentTexture)
+                        .Parent = this;
             }
 
             currentTexture.hoffset = texture.hoffset + texture.hrepeat * (total_walls - 1) / total_walls;
-            new Wall(verts[total_walls - 1], verts[0], currentTexture).Parent = this;
+
+            new Wall(
+                start: verts[total_walls - 1],
+                end: verts[0],
+                texture: currentTexture)
+                    .Parent = this;
         }
     }
 }

@@ -3,34 +3,50 @@
 namespace GLTech2.PrefabElements
 {
     /// <summary>
-    /// Provides an easier way to create regular polygons of walls.
+    /// Stores a set of walls that makes a regular polygon.
     /// </summary>
-    public sealed class RegularPolygon : Element
+    public sealed class RegularPolygon : Polygon
     {
+        private static readonly string className = typeof(RegularPolygon).FullName;
+
         /// <summary>
-        /// Gets a new instance of RegularPolygon
+        /// Gets a new instance of RegularPolygon.
         /// </summary>
+        /// <remarks>
+        /// Its absolute position is equal to the center of the object, while its Normal.Module is equal to the radius.
+        /// </remarks>
         /// <param name="position">The center of the polygon</param>
-        /// <param name="edges">How many edges the polygon has</param>
+        /// <param name="vertices">How many vertices the polygon has</param>
         /// <param name="radius">The radius of the polygon</param>
-        /// <param name="material">The material of the polygon</param>
-        public RegularPolygon(Vector position, int edges, float radius, Texture material)
+        /// <param name="texture">The material of the polygon</param>
+        public RegularPolygon(Vector position, int vertices, float radius, Texture texture)
         {
-            if (edges <= 2)
-                throw new ArgumentException("\"edges\" must be greater than 2.");
+            if (vertices <= 2)
+                Debug.InternalLog(
+                    origin: className,
+                    message: "An actual polygon has at least 3 vertices. If you want to make a polygon with only 2 vertices, consider simply creating a Wall.",
+                    debugOption: Debug.Options.Warning);
+
+
             if (radius == 0)
-                throw new ArgumentException("\"radius\" cannot be zero.");
+            {
+                Debug.InternalLog(
+                    origin: className,
+                    message: "Radius cannot be zero. The polygon was not be created and the RegularPolygon was returned as an empty object.",
+                    debugOption: Debug.Options.Error);
+
+                AbsolutePosition = position;
+                AbsoluteNormal = Vector.Forward;
+
+                return;
+            }
 
             AbsolutePosition = position;
-            AbsoluteNormal = Vector.Forward;
+            AbsoluteNormal = Vector.Forward * radius;
 
-            Vector[] verts = Vector.GetPolygon(position, radius, edges);
-            Wall[] walls = Wall.CreatePolygon(material, verts);
-            foreach (Wall wall in walls)
-                wall.Parent = this;
+            Build(
+                Vector.GetRegularPolygon(position, radius, vertices),
+                texture);
         }
-
-        private protected override Vector AbsolutePosition { get; set; }
-        private protected override Vector AbsoluteNormal { get; set; }
     }
 }

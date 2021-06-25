@@ -141,7 +141,7 @@ namespace GLTech2
 		/// <param name="radius">Radius of the polygon.</param>
 		/// <param name="edges">How many edges the polygon have.</param>
 		/// <returns>An array of vectors that compose the verts of a regular polygon.</returns>
-		public static Vector[] GetPolygon(Vector center, float radius, int edges)
+		public static Vector[] GetRegularPolygon(Vector center, float radius, int edges)
 		{
 			if (edges == 0)
 				throw new ArgumentException("\"edges\" cannot be 0.", "edges");

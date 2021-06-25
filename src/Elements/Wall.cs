@@ -82,32 +82,6 @@ namespace GLTech2
             unmanaged = WallData.Create(start, angle_deg, length, texture);
         }
 
-        [Obsolete]
-        internal static Wall[] CreatePolygon(Texture texture, params Vector[] verts) //Beta
-        {
-            if (verts == null)
-                throw new ArgumentNullException("Verts cannot be null.");
-            if (verts.Length <= 1)
-                return new Wall[0];
-
-            int total_walls = verts.Length;
-            Wall[] result = new Wall[total_walls];
-
-            Texture currentTexture = texture;
-            currentTexture.hrepeat /= total_walls;
-
-            for (int i = 0; i < total_walls - 1; i++)
-            {
-                currentTexture.hoffset = texture.hoffset + texture.hrepeat * i / (total_walls);
-                result[i] = new Wall(verts[i], verts[i + 1], currentTexture);
-            }
-
-            currentTexture.hoffset = texture.hoffset + texture.hrepeat * (total_walls - 1) / total_walls;
-            result[total_walls - 1] = new Wall(verts[total_walls - 1], verts[0], currentTexture);
-
-            return result;
-        }
-
         public override void Dispose()
         {
             WallData.Delete(unmanaged);

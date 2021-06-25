@@ -4,12 +4,6 @@
 //See Material.cs before
 //See Texture32.cs before
 
-#define DEVELOPMENT
-
-using System;
-using System.Threading;
-using System.Runtime.InteropServices;
-
 namespace GLTech2
 {
     internal unsafe struct Ray

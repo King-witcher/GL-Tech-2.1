@@ -29,8 +29,20 @@ namespace GLTech2
         /// </summary>
         public int ChildCount => childs.Count;
 
-
+        /// <summary>
+        /// Private protected. Determines how the element stores its position.
+        /// </summary>
+        /// <remarks>
+        /// Remember to set it before parenting any object!
+        /// </remarks>
         private protected abstract Vector AbsolutePosition { get; set; }
+
+        /// <summary>
+        /// Private protected. Determines how the element stores its normal.
+        /// </summary>
+        /// <remarks>
+        /// Remember to set it before parenting any object!
+        /// </remarks>
         private protected abstract Vector AbsoluteNormal { get; set; } //Provides rotation and scale of the object.
 
 

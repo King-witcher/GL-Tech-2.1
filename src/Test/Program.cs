@@ -1,5 +1,4 @@
-﻿using System;   // Vou tirar isso jaja
-using GLTech2;
+﻿using GLTech2;
 
 namespace Test
 {
@@ -9,19 +8,13 @@ namespace Test
         {
             Debug.ConsoleEnabled = true;
 
-            Debug.Log("Press any key to start.");
-            Console.ReadKey();
-
+            Debug.Pause("Press any key to start.");
             GridExample();
 
-            Debug.Log("Press any key to start.");
-            Console.ReadKey();
-
+            Debug.Pause("Press any key to start.");
             AnimatedExample();
 
-            Debug.Log("Press any key to close.");
-            Console.ReadKey();
-
+            Debug.Pause("Press any key to start.");
             Debug.Log("Releasing resources...");
         }
     }

@@ -79,9 +79,35 @@ namespace GLTech2
         }
 
         /// <summary>
-        /// Reads text from the debug console, if enabled. Otherwise, will always return an empty string.
+        /// Pauses the execution of the engine until the user presses a key on the console, if enabled.
         /// </summary>
-        /// <returns></returns>
+        public static void Pause()
+        {
+            if (!consoleEnabled)
+                return;
+
+            Console.ReadKey();
+            Console.Write("\b \b");
+        }
+
+        /// <summary>
+        /// Prints a message and pauses the execution of the engine until the user presses a key on the console, if enabled.
+        /// </summary>
+        /// <param name="message">Pause message</param>
+        public static void Pause(string message)
+        {
+            if (!consoleEnabled)
+                return;
+
+            Console.Write(message);
+            Pause();
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Pauses the execution of engine until the user inserts a text on the console, if enabled, and then return it; if disabled, will always return an empty string.
+        /// </summary>
+        /// <returns>The string typed by the user on the console, if enabled; otherwise, string.Empty</returns>
         public static string Read()
         {
             if (!consoleEnabled)

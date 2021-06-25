@@ -26,10 +26,10 @@ namespace GLTech2.PrefabElements
             {
                 get
                 {
-                    GetTexture(color, out Texture texture);
+                    bindings.TryGetValue(color, out Texture texture);
                     return texture;
                 }
-                set => Bind(color, value);
+                set => bindings[color] = value;
             }
 
             /// <summary>

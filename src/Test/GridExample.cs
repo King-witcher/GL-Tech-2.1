@@ -1,10 +1,10 @@
-﻿using GLTech2.PrefabBehaviours;
+﻿using GLTech2;
+using GLTech2.PrefabBehaviours;
 using GLTech2.PrefabElements;
-using System.Collections.Generic;
 
-namespace GLTech2
+namespace Test
 {
-    partial class ProgramMain
+    partial class Program
     {
         static void GridExample()
         {

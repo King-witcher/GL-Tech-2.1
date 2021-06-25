@@ -1,8 +1,9 @@
-﻿using System;
+﻿using System;   // Vou tirar isso jaja
+using GLTech2;
 
-namespace GLTech2
+namespace Test
 {
-    internal static partial class ProgramMain
+    internal static partial class Program
     {
         static void Main()
         {

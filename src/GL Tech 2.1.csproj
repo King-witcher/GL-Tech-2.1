@@ -5,7 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <RootNamespace>GLTech2</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
-    <StartupObject></StartupObject>
+    <StartupObject>Test.ProgramMain</StartupObject>
     <Nullable>annotations</Nullable>
     <AnalysisLevel>5.0</AnalysisLevel>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
@@ -36,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="ProgramMain\DemoTextures.Designer.cs">
+    <Compile Update="Test\DemoTextures.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>DemoTextures.resx</DependentUpon>
@@ -54,7 +54,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="ProgramMain\DemoTextures.resx">
+    <EmbeddedResource Update="Test\DemoTextures.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DemoTextures.Designer.cs</LastGenOutput>
     </EmbeddedResource>

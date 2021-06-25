@@ -8,8 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GLTech2 {
-    using System;
+namespace Test {
     
     
     /// <summary>
@@ -39,7 +38,7 @@ namespace GLTech2 {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GLTech2.ProgramMain.DemoTextures", typeof(DemoTextures).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GLTech2.Test.DemoTextures", typeof(DemoTextures).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

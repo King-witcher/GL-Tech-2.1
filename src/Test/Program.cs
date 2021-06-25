@@ -3,7 +3,7 @@ using GLTech2;
 
 namespace Test
 {
-    internal static partial class Program
+    static partial class Program
     {
         static void Main()
         {

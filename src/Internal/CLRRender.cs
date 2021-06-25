@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace GLTech2
 {
@@ -80,6 +74,7 @@ namespace GLTech2
                 }
             }
         }
+
         private unsafe static void CLRRender(PixelBuffer target, SceneData* scene)        // Must be changed
         {
             //Caching frequently used values.

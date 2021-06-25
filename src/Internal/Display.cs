@@ -29,6 +29,8 @@ namespace GLTech2
             // This create an infinite loop that keeps updating the image on the screen.
             pictureBox.Paint += RePaint;
             OnFocus(null, null);
+
+            versionLabel.Text = VersionData.EngineName + ", Build " + VersionData.Last_Build;
         }
 
         internal void RePaint(object _ = null, EventArgs __ = null)
@@ -53,16 +55,16 @@ namespace GLTech2
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
             // 
-            // label2
+            // versionLabel
             // 
             this.versionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.versionLabel.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.versionLabel.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.versionLabel.Location = new System.Drawing.Point(371, 9);
-            this.versionLabel.Name = "label2";
+            this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(257, 19);
             this.versionLabel.TabIndex = 2;
-            this.versionLabel.Text = "GL Tech 2.1, build 2406";
+            this.versionLabel.Text = "Version";
             this.versionLabel.TextAlign = System.Drawing.ContentAlignment.BottomRight;
             // 
             // Display
@@ -78,7 +80,9 @@ namespace GLTech2
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Display";
-            this.Text = "GL Tech 2 Screen";
+            this.Opacity = 0.99D;
+            this.Text = "GL Tech 2.1";
+            this.Load += new System.EventHandler(this.Display_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Display_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Display_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
@@ -109,5 +113,10 @@ namespace GLTech2
             if (Renderer.CaptureMouse)
                 Mouse.Disable();
         }
-	}
+
+        private void Display_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

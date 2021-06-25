@@ -1,0 +1,557 @@
+\hypertarget{struct_g_l_tech2_1_1_vector}{}\doxysection{GLTech2.\+Vector Struct Reference}
+\label{struct_g_l_tech2_1_1_vector}\index{GLTech2.Vector@{GLTech2.Vector}}
+
+
+Represents a \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} in a bidimensional space.  
+
+
+Inheritance diagram for GLTech2.\+Vector\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_g_l_tech2_1_1_vector}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_g_l_tech2_1_1_vector_aef18436ab7d3b5d8ec85eecfb394511f}{Vector}} (float x, float y)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of vector instance based on its cordinates. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a1c31a9f5e1b13c34a835131f0d603176}{Vector}} (float angle)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of vector that has module equal to 1 and a specified angle. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a4c035d7086f7d5d05316e7dc54db5c14}{Get\+Distance}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} vector)
+\begin{DoxyCompactList}\small\item\em Gets the euclidian distance to another vector. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_ac8c1ac6f1f27f91b1d68a7433ea2dc9d}{Projection}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} origin, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} normal)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of vector that represents it\textquotesingle{}s components in a different cartisian axis system. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a2e31490a41f700cce4d9913ad2a8e755}{As\+Projection\+Of}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} origin, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} normal)
+\begin{DoxyCompactList}\small\item\em Gets a new instance of vector that has the actual values of a vector as if it was a projection on a different cartesian system. See \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} Projection (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}). \end{DoxyCompactList}\item 
+override string \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a4e746a7ea0c162636a2604ff63640129}{To\+String}} ()
+\begin{DoxyCompactList}\small\item\em Returns a string that represents the current object. \end{DoxyCompactList}\item 
+override bool \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_ab3683172ac88123b6f77b6d98429d807}{Equals}} (object obj)
+\begin{DoxyCompactList}\small\item\em Determines whether two object instances are equal. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a112996614e8ff27d153a957950ebb943}{Equals}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} other)
+\begin{DoxyCompactList}\small\item\em Determines whether two object instances are equal. \end{DoxyCompactList}\item 
+override int \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a441bd5662c2ed489860fc82e22d07368}{Get\+Hash\+Code}} ()
+\begin{DoxyCompactList}\small\item\em Serves as the default hash function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a5e4956f0fec3061aead351430cc0ade7}{From\+Angle}} (float angle, float module)
+\begin{DoxyCompactList}\small\item\em Creates a instance of vector with specified angle and module. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a7573392ce508902ed4f9404f16d9eda3}{Get\+Regular\+Polygon}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} center, float radius, int edges)
+\begin{DoxyCompactList}\small\item\em Gets an array of vectors that compose the verts of a regular polygon. \end{DoxyCompactList}\item 
+static float \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a838e9e218fa04c7963ae4e8500264bea}{Dot\+Product}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} left, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} right)
+\begin{DoxyCompactList}\small\item\em Gets the dot product of two vectors. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a0a69a6d46e40c4a39d722d8e9033dfc7}{operator-\/}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} vector)
+\begin{DoxyCompactList}\small\item\em Just obvious thing. Will take a while until being documented. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a67d3b715c32889b1e08a8170c9635f24}{operator+}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} left, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} right)
+\begin{DoxyCompactList}\small\item\em Just obvious thing. Will take a while until being documented. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a50f986b66a5b669694ff0dd58c31a43d}{operator-\/}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} left, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} right)
+\begin{DoxyCompactList}\small\item\em Just obvious thing. Will take a while until being documented. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a8ab5441808ba814fabd24a1059b390ac}{operator$\ast$}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} left, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} right)
+\begin{DoxyCompactList}\small\item\em Gets the product between two vectors as if they were complex numbers as y + xi. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_ac53c0ba90c42913a5bc40fc46cd6c2ba}{operator/}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} dividend, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} divider)
+\begin{DoxyCompactList}\small\item\em Gets the division between two vectors as if they were complex numbers as y + xi. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a3670cbd3527c8f6f69534ec1f0c6cc42}{operator$\ast$}} (float scalar, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} vector)
+\begin{DoxyCompactList}\small\item\em Gets the product between a vector and a scalar. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a220db41208e786906d34890d93e55c44}{operator$\ast$}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} vector, float scalar)
+\begin{DoxyCompactList}\small\item\em Just obvious thing. Will take a while until being documented. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a41203161066392a58351aea8edfe4ae1}{operator/}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} vector, float scalar)
+\begin{DoxyCompactList}\small\item\em Just obvious thing. Will take a while until being documented. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a15ee73ac7abcc240f8fab7e08b3e1a87}{operator==}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} left, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} right)
+\begin{DoxyCompactList}\small\item\em Just obvious thing. Will take a while until being documented. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_adfbdc60d881ee3d480a629c6770e4963}{operator!=}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} left, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} right)
+\begin{DoxyCompactList}\small\item\em Just obvious thing. Will take a while until being documented. \end{DoxyCompactList}\item 
+static implicit \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a23874927ce78c859f16a44fb3c9cb307}{operator Vector}} ((float x, float y) components)
+\begin{DoxyCompactList}\small\item\em Converts a tuple into a \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{GLTech2.\+Vector}} struct. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a604f8fb01180a05b964b7621d87e200a}{X}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets and sets the X cordinate of the vector. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_ab7338a9dc65e9703d56a7d11f20e924d}{Y}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets and sets the Y cordinate of the vector. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a5f23be00b8e83391bc50c9e64ad7a1e1}{Angle}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets and sets the angle, in degrees, of the vector, approximately preserving it\textquotesingle{}s angle. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a4fffc364f183af3bc4dcaad5d464a8ac}{Module}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets and sets the module of the vector, approximately preserving its module. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a19e5c5e18b704bff60a794aeeeed351b}{Origin}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the vector that is at the origin of the bidimensional space. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_aa83c6eeb088131b6ba470398a2bd2c43}{Forward}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Equivalent to new \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} (0, 1); \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a723293e746b71287a2553d8e967218e6}{Right}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Equivalent to new \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} (1, 0); \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_aaba676429c077e27c5ce937bf6890d8b}{Backward}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Equivalent to new \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} (0, -\/1); \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_ac043c62b79f31a19a3b7a5559c770dc3}{Left}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Equivalent to new \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} (-\/1, 0); \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} in a bidimensional space. 
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_aef18436ab7d3b5d8ec85eecfb394511f}\label{struct_g_l_tech2_1_1_vector_aef18436ab7d3b5d8ec85eecfb394511f}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!Vector@{Vector}}
+\index{Vector@{Vector}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{Vector()}{Vector()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily GLTech2.\+Vector.\+Vector (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y }\end{DoxyParamCaption})}
+
+
+
+Creates a new instance of vector instance based on its cordinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & X cordinate\\
+\hline
+{\em y} & Y cordinate\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a1c31a9f5e1b13c34a835131f0d603176}\label{struct_g_l_tech2_1_1_vector_a1c31a9f5e1b13c34a835131f0d603176}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!Vector@{Vector}}
+\index{Vector@{Vector}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{Vector()}{Vector()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily GLTech2.\+Vector.\+Vector (\begin{DoxyParamCaption}\item[{float}]{angle }\end{DoxyParamCaption})}
+
+
+
+Creates a new instance of vector that has module equal to 1 and a specified angle. 
+
+Angle conventions are such that angle 0 has (x = 0, y = 1) components and angle 90 has (x = 1, y = 0) components. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em angle} & Angle in degrees\\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a2e31490a41f700cce4d9913ad2a8e755}\label{struct_g_l_tech2_1_1_vector_a2e31490a41f700cce4d9913ad2a8e755}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!AsProjectionOf@{AsProjectionOf}}
+\index{AsProjectionOf@{AsProjectionOf}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{AsProjectionOf()}{AsProjectionOf()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+As\+Projection\+Of (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{origin,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{normal }\end{DoxyParamCaption})}
+
+
+
+Gets a new instance of vector that has the actual values of a vector as if it was a projection on a different cartesian system. See \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} Projection (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em origin} & The origin of the specified cartesian system.\\
+\hline
+{\em normal} & The so called normal component (Y) of the the specified cartesian system.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new instance of vector that has the actual values of a vector as if it was a projection on a different cartesian system.
+\end{DoxyReturn}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a838e9e218fa04c7963ae4e8500264bea}\label{struct_g_l_tech2_1_1_vector_a838e9e218fa04c7963ae4e8500264bea}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!DotProduct@{DotProduct}}
+\index{DotProduct@{DotProduct}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{DotProduct()}{DotProduct()}}
+{\footnotesize\ttfamily static float GLTech2.\+Vector.\+Dot\+Product (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{left,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{right }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the dot product of two vectors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & First vector\\
+\hline
+{\em right} & Second vector\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The dot product of two vectors.
+\end{DoxyReturn}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_ab3683172ac88123b6f77b6d98429d807}\label{struct_g_l_tech2_1_1_vector_ab3683172ac88123b6f77b6d98429d807}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!Equals@{Equals}}
+\index{Equals@{Equals}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{Equals()}{Equals()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily override bool GLTech2.\+Vector.\+Equals (\begin{DoxyParamCaption}\item[{object}]{obj }\end{DoxyParamCaption})}
+
+
+
+Determines whether two object instances are equal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The object to compare with the current object.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the specified object is equal to the current object; otherwise, false.
+\end{DoxyReturn}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a112996614e8ff27d153a957950ebb943}\label{struct_g_l_tech2_1_1_vector_a112996614e8ff27d153a957950ebb943}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!Equals@{Equals}}
+\index{Equals@{Equals}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{Equals()}{Equals()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool GLTech2.\+Vector.\+Equals (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{other }\end{DoxyParamCaption})}
+
+
+
+Determines whether two object instances are equal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The object to compare with the current object.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the specified object is equal to the current object; otherwise, false.
+\end{DoxyReturn}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a5e4956f0fec3061aead351430cc0ade7}\label{struct_g_l_tech2_1_1_vector_a5e4956f0fec3061aead351430cc0ade7}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!FromAngle@{FromAngle}}
+\index{FromAngle@{FromAngle}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{FromAngle()}{FromAngle()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+From\+Angle (\begin{DoxyParamCaption}\item[{float}]{angle,  }\item[{float}]{module }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a instance of vector with specified angle and module. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em angle} & Angle in degrees\\
+\hline
+{\em module} & Module\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new instance of vector with specified angle and module.
+\end{DoxyReturn}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a4c035d7086f7d5d05316e7dc54db5c14}\label{struct_g_l_tech2_1_1_vector_a4c035d7086f7d5d05316e7dc54db5c14}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!GetDistance@{GetDistance}}
+\index{GetDistance@{GetDistance}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{GetDistance()}{GetDistance()}}
+{\footnotesize\ttfamily float GLTech2.\+Vector.\+Get\+Distance (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{vector }\end{DoxyParamCaption})}
+
+
+
+Gets the euclidian distance to another vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vector} & Another vector\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The euclidian distance between both vectors.
+\end{DoxyReturn}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a441bd5662c2ed489860fc82e22d07368}\label{struct_g_l_tech2_1_1_vector_a441bd5662c2ed489860fc82e22d07368}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!GetHashCode@{GetHashCode}}
+\index{GetHashCode@{GetHashCode}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{GetHashCode()}{GetHashCode()}}
+{\footnotesize\ttfamily override int GLTech2.\+Vector.\+Get\+Hash\+Code (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Serves as the default hash function. 
+
+\begin{DoxyReturn}{Returns}
+A hash code for the current object.
+\end{DoxyReturn}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a7573392ce508902ed4f9404f16d9eda3}\label{struct_g_l_tech2_1_1_vector_a7573392ce508902ed4f9404f16d9eda3}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!GetRegularPolygon@{GetRegularPolygon}}
+\index{GetRegularPolygon@{GetRegularPolygon}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{GetRegularPolygon()}{GetRegularPolygon()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{[}$\,$\mbox{]} GLTech2.\+Vector.\+Get\+Regular\+Polygon (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{center,  }\item[{float}]{radius,  }\item[{int}]{edges }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets an array of vectors that compose the verts of a regular polygon. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em center} & Center of the polygon.\\
+\hline
+{\em radius} & Radius of the polygon.\\
+\hline
+{\em edges} & How many edges the polygon have.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An array of vectors that compose the verts of a regular polygon.
+\end{DoxyReturn}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a23874927ce78c859f16a44fb3c9cb307}\label{struct_g_l_tech2_1_1_vector_a23874927ce78c859f16a44fb3c9cb307}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!operator Vector@{operator Vector}}
+\index{operator Vector@{operator Vector}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{operator Vector()}{operator Vector()}}
+{\footnotesize\ttfamily static implicit GLTech2.\+Vector.\+operator \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} (\begin{DoxyParamCaption}\item[{(float x, float y)}]{components }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Converts a tuple into a \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{GLTech2.\+Vector}} struct. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em components} & the components\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_adfbdc60d881ee3d480a629c6770e4963}\label{struct_g_l_tech2_1_1_vector_adfbdc60d881ee3d480a629c6770e4963}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily static bool GLTech2.\+Vector.\+operator!= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{left,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{right }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Just obvious thing. Will take a while until being documented. 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a3670cbd3527c8f6f69534ec1f0c6cc42}\label{struct_g_l_tech2_1_1_vector_a3670cbd3527c8f6f69534ec1f0c6cc42}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+operator$\ast$ (\begin{DoxyParamCaption}\item[{float}]{scalar,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{vector }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the product between a vector and a scalar. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scalar} & Scalar\\
+\hline
+{\em vector} & \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The product between a vector and a scalar.
+\end{DoxyReturn}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a8ab5441808ba814fabd24a1059b390ac}\label{struct_g_l_tech2_1_1_vector_a8ab5441808ba814fabd24a1059b390ac}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+operator$\ast$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{left,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{right }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the product between two vectors as if they were complex numbers as y + xi. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & First vector\\
+\hline
+{\em right} & Second vector\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The product between two vectors as if they were complex numbers as y + xi.
+\end{DoxyReturn}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a220db41208e786906d34890d93e55c44}\label{struct_g_l_tech2_1_1_vector_a220db41208e786906d34890d93e55c44}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+operator$\ast$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{vector,  }\item[{float}]{scalar }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Just obvious thing. Will take a while until being documented. 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a67d3b715c32889b1e08a8170c9635f24}\label{struct_g_l_tech2_1_1_vector_a67d3b715c32889b1e08a8170c9635f24}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!operator+@{operator+}}
+\index{operator+@{operator+}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+operator+ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{left,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{right }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Just obvious thing. Will take a while until being documented. 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a50f986b66a5b669694ff0dd58c31a43d}\label{struct_g_l_tech2_1_1_vector_a50f986b66a5b669694ff0dd58c31a43d}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+operator-\/ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{left,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{right }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Just obvious thing. Will take a while until being documented. 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a0a69a6d46e40c4a39d722d8e9033dfc7}\label{struct_g_l_tech2_1_1_vector_a0a69a6d46e40c4a39d722d8e9033dfc7}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+operator-\/ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{vector }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Just obvious thing. Will take a while until being documented. 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_ac53c0ba90c42913a5bc40fc46cd6c2ba}\label{struct_g_l_tech2_1_1_vector_ac53c0ba90c42913a5bc40fc46cd6c2ba}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!operator/@{operator/}}
+\index{operator/@{operator/}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{operator/()}{operator/()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+operator/ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{dividend,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{divider }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the division between two vectors as if they were complex numbers as y + xi. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dividend} & Dividend\\
+\hline
+{\em divider} & Divider\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The division between two vectors as if they were complex numbers as y + xi.
+\end{DoxyReturn}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a41203161066392a58351aea8edfe4ae1}\label{struct_g_l_tech2_1_1_vector_a41203161066392a58351aea8edfe4ae1}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!operator/@{operator/}}
+\index{operator/@{operator/}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{operator/()}{operator/()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+operator/ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{vector,  }\item[{float}]{scalar }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Just obvious thing. Will take a while until being documented. 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a15ee73ac7abcc240f8fab7e08b3e1a87}\label{struct_g_l_tech2_1_1_vector_a15ee73ac7abcc240f8fab7e08b3e1a87}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!operator==@{operator==}}
+\index{operator==@{operator==}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily static bool GLTech2.\+Vector.\+operator== (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{left,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{right }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Just obvious thing. Will take a while until being documented. 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_ac8c1ac6f1f27f91b1d68a7433ea2dc9d}\label{struct_g_l_tech2_1_1_vector_ac8c1ac6f1f27f91b1d68a7433ea2dc9d}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!Projection@{Projection}}
+\index{Projection@{Projection}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{Projection()}{Projection()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+Projection (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{origin,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{normal }\end{DoxyParamCaption})}
+
+
+
+Creates a new instance of vector that represents it\textquotesingle{}s components in a different cartisian axis system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em origin} & The origin of the specified cartesian system.\\
+\hline
+{\em normal} & The so called normal component (Y) of the the specified cartesian system.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new instance of vector that represents it\textquotesingle{}s components in a different cartisian axis system.
+\end{DoxyReturn}
+
+
+Note that the new cartesian system\textquotesingle{}s can have a normal component with module different from 1 and is represents the unit of the cartesian system. \mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a4e746a7ea0c162636a2604ff63640129}\label{struct_g_l_tech2_1_1_vector_a4e746a7ea0c162636a2604ff63640129}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!ToString@{ToString}}
+\index{ToString@{ToString}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{ToString()}{ToString()}}
+{\footnotesize\ttfamily override string GLTech2.\+Vector.\+To\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns a string that represents the current object. 
+
+\begin{DoxyReturn}{Returns}
+A string that represents the current object.
+\end{DoxyReturn}
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a5f23be00b8e83391bc50c9e64ad7a1e1}\label{struct_g_l_tech2_1_1_vector_a5f23be00b8e83391bc50c9e64ad7a1e1}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!Angle@{Angle}}
+\index{Angle@{Angle}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{Angle}{Angle}}
+{\footnotesize\ttfamily float GLTech2.\+Vector.\+Angle\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Gets and sets the angle, in degrees, of the vector, approximately preserving it\textquotesingle{}s angle. 
+
+Getting angle property will always return a value greater than -\/90 and less or equal to 270 due to performanceoptimizations and can be changed in future patches. 
+
+Modifying the angle of a vector is equivalent to creating a new vector with the same module and the specified angle, which can be slow if done many times and, due to floating-\/point accuracy problems
+
+, can distort the original vector\textquotesingle{}s module if changed many times. If you wish to constantly change the angle of a vector, consider holding the module value and constantly creating new vectors by module and angle via \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a5e4956f0fec3061aead351430cc0ade7}{Vector.\+From\+Angle(float, float)}} or new Vector(flaot). \mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_aaba676429c077e27c5ce937bf6890d8b}\label{struct_g_l_tech2_1_1_vector_aaba676429c077e27c5ce937bf6890d8b}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!Backward@{Backward}}
+\index{Backward@{Backward}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{Backward}{Backward}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+Backward\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}
+
+
+
+Equivalent to new \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} (0, -\/1); 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_aa83c6eeb088131b6ba470398a2bd2c43}\label{struct_g_l_tech2_1_1_vector_aa83c6eeb088131b6ba470398a2bd2c43}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!Forward@{Forward}}
+\index{Forward@{Forward}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{Forward}{Forward}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+Forward\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}
+
+
+
+Equivalent to new \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} (0, 1); 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_ac043c62b79f31a19a3b7a5559c770dc3}\label{struct_g_l_tech2_1_1_vector_ac043c62b79f31a19a3b7a5559c770dc3}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!Left@{Left}}
+\index{Left@{Left}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{Left}{Left}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+Left\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}
+
+
+
+Equivalent to new \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} (-\/1, 0); 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a4fffc364f183af3bc4dcaad5d464a8ac}\label{struct_g_l_tech2_1_1_vector_a4fffc364f183af3bc4dcaad5d464a8ac}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!Module@{Module}}
+\index{Module@{Module}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{Module}{Module}}
+{\footnotesize\ttfamily float GLTech2.\+Vector.\+Module\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Gets and sets the module of the vector, approximately preserving its module. 
+
+Modifying the module of a vector is equivalent to multiplying the original vector by a certain factor. \mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a19e5c5e18b704bff60a794aeeeed351b}\label{struct_g_l_tech2_1_1_vector_a19e5c5e18b704bff60a794aeeeed351b}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!Origin@{Origin}}
+\index{Origin@{Origin}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{Origin}{Origin}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+Origin\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}
+
+
+
+Gets the vector that is at the origin of the bidimensional space. 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a723293e746b71287a2553d8e967218e6}\label{struct_g_l_tech2_1_1_vector_a723293e746b71287a2553d8e967218e6}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!Right@{Right}}
+\index{Right@{Right}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{Right}{Right}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+Right\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}
+
+
+
+Equivalent to new \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} (1, 0); 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a604f8fb01180a05b964b7621d87e200a}\label{struct_g_l_tech2_1_1_vector_a604f8fb01180a05b964b7621d87e200a}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!X@{X}}
+\index{X@{X}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{X}{X}}
+{\footnotesize\ttfamily float GLTech2.\+Vector.\+X\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Gets and sets the X cordinate of the vector. 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_ab7338a9dc65e9703d56a7d11f20e924d}\label{struct_g_l_tech2_1_1_vector_ab7338a9dc65e9703d56a7d11f20e924d}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!Y@{Y}}
+\index{Y@{Y}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{Y}{Y}}
+{\footnotesize\ttfamily float GLTech2.\+Vector.\+Y\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Gets and sets the Y cordinate of the vector. 
+

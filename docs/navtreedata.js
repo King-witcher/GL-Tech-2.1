@@ -25,12 +25,9 @@
 var NAVTREE =
 [
   [ "GLTech 2.1 Documentation", "index.html", [
-    [ "Packages", "namespaces.html", [
-      [ "Packages", "namespaces.html", "namespaces_dup" ],
-      [ "Package Functions", "namespacemembers.html", [
-        [ "All", "namespacemembers.html", null ],
-        [ "Enumerations", "namespacemembers_enum.html", null ]
-      ] ]
+    [ "Package Functions", "namespacemembers.html", [
+      [ "All", "namespacemembers.html", null ],
+      [ "Enumerations", "namespacemembers_enum.html", null ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -49,7 +46,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"namespace_g_l_tech2.html#a1244e7efde07ae6c1d25dcedea54653ea4c614360da93c0a041b22e537de151eb"
+"struct_g_l_tech2_1_1_vector.html#a50f986b66a5b669694ff0dd58c31a43d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

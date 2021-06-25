@@ -1,0 +1,390 @@
+\hypertarget{class_g_l_tech2_1_1_element}{}\doxysection{GLTech2.\+Element Class Reference}
+\label{class_g_l_tech2_1_1_element}\index{GLTech2.Element@{GLTech2.Element}}
+
+
+Represents an element that can be part of a \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}.  
+
+
+Inheritance diagram for GLTech2.\+Element\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.743191cm]{class_g_l_tech2_1_1_element}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_g_l_tech2_1_1_element_a4859a68a668c9aa71b88a8d96cdb1c19}{Translate}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} direction)
+\begin{DoxyCompactList}\small\item\em Moves the object in one direction relatively to it\textquotesingle{}s direction; in other words, the direction of the module vector. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g_l_tech2_1_1_element_ab4341dd58606ebaf4d17fd2d4c18d706}{Rotate}} (float rotation)
+\begin{DoxyCompactList}\small\item\em Rotate the object a specified amount. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g_l_tech2_1_1_element_a72a6c6676b1eccd40ac89036ca12cf4f}{Detach\+Childs}} ()
+\begin{DoxyCompactList}\small\item\em Dettach all childs and make their parents = null. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g_l_tech2_1_1_element_aabe6ae3c53c63648f1d43efa508b8cc5}{Add\+Behaviour}} (\mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}} behaviour)
+\begin{DoxyCompactList}\small\item\em Adds a behaviour script to the element by instance. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g_l_tech2_1_1_element_ae726742694e9a4c42f5cd735aa3fa57c}{Add\+Behaviour$<$ Behaviour\+Type $>$}} ()
+\begin{DoxyCompactList}\small\item\em Add a new behaviour to the element by type. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g_l_tech2_1_1_element_a947763e0b8d826fc72e8b9ac7d34d8dc}{Add\+Behaviours}} (IEnumerable$<$ \mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}} $>$ behaviours)
+\begin{DoxyCompactList}\small\item\em Adds a set of behaviours. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g_l_tech2_1_1_element_a17ac9f0b784a74f91506e1eea8d2031d}{Add\+Behaviours}} (params \mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}}\mbox{[}$\,$\mbox{]} behaviours)
+\begin{DoxyCompactList}\small\item\em Adds a set of behaviours. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_g_l_tech2_1_1_element_a70dd92529859bed4e7038f0d2e07f1dd}{Contains\+Behaviour$<$ Behaviour\+Type $>$}} ()
+\begin{DoxyCompactList}\small\item\em Checks if the element contains an especific behaviour by type. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_g_l_tech2_1_1_element_a72ba7605cba93f044550efac37d1f001}{Contains\+Behaviour}} (\mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}} b)
+\begin{DoxyCompactList}\small\item\em Checks if the element contains an especific behaviour by instance. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g_l_tech2_1_1_element_a542260d45da18d8242087ce46fe962ac}{Remove\+Behaviour}} (\mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}} b)
+\begin{DoxyCompactList}\small\item\em Removes an instance of behaviour from b. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g_l_tech2_1_1_element_a3cfeddb4439d01a2521bfa64154e5bec}{Remove\+Behaviour$<$ Behaviour\+Type $>$}} ()
+\begin{DoxyCompactList}\small\item\em Removes all instances of \mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}} from a given type from the element. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g_l_tech2_1_1_element_a620f16979c7dc0596e7357e010756a86}{Remove\+All\+Behaviours}} ()
+\begin{DoxyCompactList}\small\item\em Remove all behaviours from the element. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g_l_tech2_1_1_element_a5933953f7da7f103f65b5739832dd598}{Detach\+Children}} ()
+\begin{DoxyCompactList}\small\item\em Detach all children from the element. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_ae73ef650c65193263fe503d9908cbd3f}{Get\+Child}} (int index)
+\begin{DoxyCompactList}\small\item\em Gets a child from the element by index. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_g_l_tech2_1_1_element_a0c1d09747a9346f7719f32c4ed0b670c}{Dispose}} ()
+\begin{DoxyCompactList}\small\item\em Releases unmanaged data, if any. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_a9687d40a7e6ca4204ccacefadbf0ec17}{Scene}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Its correspondent scene. If the element is not bound to any scene, returns null. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_g_l_tech2_1_1_element_a2ab96f9dcff0ff247af5eece1bb83d2a}{Child\+Count}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em How many childs the element has. \end{DoxyCompactList}\item 
+abstract \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_aeed443f8b0c0bb570d9af8a8e3faa644}{Absolute\+Position}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Private protected. Determines how the element stores its position. \end{DoxyCompactList}\item 
+abstract \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_a585edc055b0a0256ee31dfa67cefcedb}{Absolute\+Normal}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Private protected. Determines how the element stores its normal. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}? \mbox{\hyperlink{class_g_l_tech2_1_1_element_a2158d6c2610d88bf3b7991765d62036a}{Position}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets and sets element\textquotesingle{}s position relatively to it\textquotesingle{}s parent or, if it has no parent, it\textquotesingle{}s absolute position. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}? \mbox{\hyperlink{class_g_l_tech2_1_1_element_a27bdbdce9b1e0d4ae19726cf9e302ca3}{Normal}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets and sets element\textquotesingle{}s normal relatively to it\textquotesingle{}s parent or, if it has no parent, it\textquotesingle{}s absolute normal. \end{DoxyCompactList}\item 
+float? \mbox{\hyperlink{class_g_l_tech2_1_1_element_aca666f90e12d34dd00e509a593ea02f0}{Rotation}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets and sets directly the element\textquotesingle{}s rotation relative to it\textquotesingle{}s parent or, if it has no parents, it\textquotesingle{}s absolute rotation. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_aed800c203d9dadc1189bf70d0290bd40}{Parent}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets and sets element\textquotesingle{}s parent. Null is equivalent to no parent. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents an element that can be part of a \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_aabe6ae3c53c63648f1d43efa508b8cc5}\label{class_g_l_tech2_1_1_element_aabe6ae3c53c63648f1d43efa508b8cc5}} 
+\index{GLTech2.Element@{GLTech2.Element}!AddBehaviour@{AddBehaviour}}
+\index{AddBehaviour@{AddBehaviour}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{AddBehaviour()}{AddBehaviour()}}
+{\footnotesize\ttfamily void GLTech2.\+Element.\+Add\+Behaviour (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}}}]{behaviour }\end{DoxyParamCaption})}
+
+
+
+Adds a behaviour script to the element by instance. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em behaviour} & Instance of \mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}} to be added\\
+\hline
+\end{DoxyParams}
+
+
+I made id just a copy of how Mono\+Behaviours works in Unity3D =D \mbox{\Hypertarget{class_g_l_tech2_1_1_element_ae726742694e9a4c42f5cd735aa3fa57c}\label{class_g_l_tech2_1_1_element_ae726742694e9a4c42f5cd735aa3fa57c}} 
+\index{GLTech2.Element@{GLTech2.Element}!AddBehaviour$<$ BehaviourType $>$@{AddBehaviour$<$ BehaviourType $>$}}
+\index{AddBehaviour$<$ BehaviourType $>$@{AddBehaviour$<$ BehaviourType $>$}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{AddBehaviour$<$ BehaviourType $>$()}{AddBehaviour< BehaviourType >()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_g_l_tech2_1_1_element_aabe6ae3c53c63648f1d43efa508b8cc5}{GLTech2.\+Element.\+Add\+Behaviour}}$<$ Behaviour\+Type $>$ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Add a new behaviour to the element by type. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Behaviour\+Type} & \mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}} type\\
+\hline
+\end{DoxyTemplParams}
+\begin{Desc}
+\item[Type Constraints]\begin{description}
+\item[{\em Behaviour\+Type} : {\em Behaviour}]\item[{\em Behaviour\+Type} : {\em new()}]\end{description}
+\end{Desc}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a947763e0b8d826fc72e8b9ac7d34d8dc}\label{class_g_l_tech2_1_1_element_a947763e0b8d826fc72e8b9ac7d34d8dc}} 
+\index{GLTech2.Element@{GLTech2.Element}!AddBehaviours@{AddBehaviours}}
+\index{AddBehaviours@{AddBehaviours}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{AddBehaviours()}{AddBehaviours()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void GLTech2.\+Element.\+Add\+Behaviours (\begin{DoxyParamCaption}\item[{IEnumerable$<$ \mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}} $>$}]{behaviours }\end{DoxyParamCaption})}
+
+
+
+Adds a set of behaviours. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em behaviours} & Set of behaviours\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a17ac9f0b784a74f91506e1eea8d2031d}\label{class_g_l_tech2_1_1_element_a17ac9f0b784a74f91506e1eea8d2031d}} 
+\index{GLTech2.Element@{GLTech2.Element}!AddBehaviours@{AddBehaviours}}
+\index{AddBehaviours@{AddBehaviours}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{AddBehaviours()}{AddBehaviours()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void GLTech2.\+Element.\+Add\+Behaviours (\begin{DoxyParamCaption}\item[{params \mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}}\mbox{[}$\,$\mbox{]}}]{behaviours }\end{DoxyParamCaption})}
+
+
+
+Adds a set of behaviours. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em behaviours} & Array of behaviours\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a72ba7605cba93f044550efac37d1f001}\label{class_g_l_tech2_1_1_element_a72ba7605cba93f044550efac37d1f001}} 
+\index{GLTech2.Element@{GLTech2.Element}!ContainsBehaviour@{ContainsBehaviour}}
+\index{ContainsBehaviour@{ContainsBehaviour}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{ContainsBehaviour()}{ContainsBehaviour()}}
+{\footnotesize\ttfamily bool GLTech2.\+Element.\+Contains\+Behaviour (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}}}]{b }\end{DoxyParamCaption})}
+
+
+
+Checks if the element contains an especific behaviour by instance. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em b} & \mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if it contains; otherwise, false
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a70dd92529859bed4e7038f0d2e07f1dd}\label{class_g_l_tech2_1_1_element_a70dd92529859bed4e7038f0d2e07f1dd}} 
+\index{GLTech2.Element@{GLTech2.Element}!ContainsBehaviour$<$ BehaviourType $>$@{ContainsBehaviour$<$ BehaviourType $>$}}
+\index{ContainsBehaviour$<$ BehaviourType $>$@{ContainsBehaviour$<$ BehaviourType $>$}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{ContainsBehaviour$<$ BehaviourType $>$()}{ContainsBehaviour< BehaviourType >()}}
+{\footnotesize\ttfamily bool \mbox{\hyperlink{class_g_l_tech2_1_1_element_a72ba7605cba93f044550efac37d1f001}{GLTech2.\+Element.\+Contains\+Behaviour}}$<$ Behaviour\+Type $>$ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Checks if the element contains an especific behaviour by type. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Behaviour\+Type} & \mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}} type\\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+true if it contains; otherwise, false
+\end{DoxyReturn}
+\begin{Desc}
+\item[Type Constraints]\begin{description}
+\item[{\em Behaviour\+Type} : {\em Behaviour}]\end{description}
+\end{Desc}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a5933953f7da7f103f65b5739832dd598}\label{class_g_l_tech2_1_1_element_a5933953f7da7f103f65b5739832dd598}} 
+\index{GLTech2.Element@{GLTech2.Element}!DetachChildren@{DetachChildren}}
+\index{DetachChildren@{DetachChildren}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{DetachChildren()}{DetachChildren()}}
+{\footnotesize\ttfamily void GLTech2.\+Element.\+Detach\+Children (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Detach all children from the element. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a72a6c6676b1eccd40ac89036ca12cf4f}\label{class_g_l_tech2_1_1_element_a72a6c6676b1eccd40ac89036ca12cf4f}} 
+\index{GLTech2.Element@{GLTech2.Element}!DetachChilds@{DetachChilds}}
+\index{DetachChilds@{DetachChilds}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{DetachChilds()}{DetachChilds()}}
+{\footnotesize\ttfamily void GLTech2.\+Element.\+Detach\+Childs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Dettach all childs and make their parents = null. 
+
+Not widely tested. \mbox{\Hypertarget{class_g_l_tech2_1_1_element_a0c1d09747a9346f7719f32c4ed0b670c}\label{class_g_l_tech2_1_1_element_a0c1d09747a9346f7719f32c4ed0b670c}} 
+\index{GLTech2.Element@{GLTech2.Element}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{Dispose()}{Dispose()}}
+{\footnotesize\ttfamily virtual void GLTech2.\+Element.\+Dispose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Releases unmanaged data, if any. 
+
+
+
+Reimplemented in \mbox{\hyperlink{class_g_l_tech2_1_1_wall_a237d60fe88a788ddb39a9585699b929e}{GLTech2.\+Wall}}, and \mbox{\hyperlink{class_g_l_tech2_1_1_observer_aa1f106d7d0802d7c31c08ec2f747ec7e}{GLTech2.\+Observer}}.
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_ae73ef650c65193263fe503d9908cbd3f}\label{class_g_l_tech2_1_1_element_ae73ef650c65193263fe503d9908cbd3f}} 
+\index{GLTech2.Element@{GLTech2.Element}!GetChild@{GetChild}}
+\index{GetChild@{GetChild}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{GetChild()}{GetChild()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} GLTech2.\+Element.\+Get\+Child (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+
+Gets a child from the element by index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Index\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Specified children
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a620f16979c7dc0596e7357e010756a86}\label{class_g_l_tech2_1_1_element_a620f16979c7dc0596e7357e010756a86}} 
+\index{GLTech2.Element@{GLTech2.Element}!RemoveAllBehaviours@{RemoveAllBehaviours}}
+\index{RemoveAllBehaviours@{RemoveAllBehaviours}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{RemoveAllBehaviours()}{RemoveAllBehaviours()}}
+{\footnotesize\ttfamily void GLTech2.\+Element.\+Remove\+All\+Behaviours (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Remove all behaviours from the element. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a542260d45da18d8242087ce46fe962ac}\label{class_g_l_tech2_1_1_element_a542260d45da18d8242087ce46fe962ac}} 
+\index{GLTech2.Element@{GLTech2.Element}!RemoveBehaviour@{RemoveBehaviour}}
+\index{RemoveBehaviour@{RemoveBehaviour}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{RemoveBehaviour()}{RemoveBehaviour()}}
+{\footnotesize\ttfamily void GLTech2.\+Element.\+Remove\+Behaviour (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}}}]{b }\end{DoxyParamCaption})}
+
+
+
+Removes an instance of behaviour from b. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em b} & \mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}}\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a3cfeddb4439d01a2521bfa64154e5bec}\label{class_g_l_tech2_1_1_element_a3cfeddb4439d01a2521bfa64154e5bec}} 
+\index{GLTech2.Element@{GLTech2.Element}!RemoveBehaviour$<$ BehaviourType $>$@{RemoveBehaviour$<$ BehaviourType $>$}}
+\index{RemoveBehaviour$<$ BehaviourType $>$@{RemoveBehaviour$<$ BehaviourType $>$}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{RemoveBehaviour$<$ BehaviourType $>$()}{RemoveBehaviour< BehaviourType >()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_g_l_tech2_1_1_element_a542260d45da18d8242087ce46fe962ac}{GLTech2.\+Element.\+Remove\+Behaviour}}$<$ Behaviour\+Type $>$ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Removes all instances of \mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}} from a given type from the element. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Behaviour\+Type} & \\
+\hline
+\end{DoxyTemplParams}
+\begin{Desc}
+\item[Type Constraints]\begin{description}
+\item[{\em Behaviour\+Type} : {\em Behaviour}]\end{description}
+\end{Desc}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_ab4341dd58606ebaf4d17fd2d4c18d706}\label{class_g_l_tech2_1_1_element_ab4341dd58606ebaf4d17fd2d4c18d706}} 
+\index{GLTech2.Element@{GLTech2.Element}!Rotate@{Rotate}}
+\index{Rotate@{Rotate}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{Rotate()}{Rotate()}}
+{\footnotesize\ttfamily void GLTech2.\+Element.\+Rotate (\begin{DoxyParamCaption}\item[{float}]{rotation }\end{DoxyParamCaption})}
+
+
+
+Rotate the object a specified amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rotation} & angle in degrees\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a4859a68a668c9aa71b88a8d96cdb1c19}\label{class_g_l_tech2_1_1_element_a4859a68a668c9aa71b88a8d96cdb1c19}} 
+\index{GLTech2.Element@{GLTech2.Element}!Translate@{Translate}}
+\index{Translate@{Translate}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{Translate()}{Translate()}}
+{\footnotesize\ttfamily void GLTech2.\+Element.\+Translate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{direction }\end{DoxyParamCaption})}
+
+
+
+Moves the object in one direction relatively to it\textquotesingle{}s direction; in other words, the direction of the module vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em direction} & Direction to move\\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a585edc055b0a0256ee31dfa67cefcedb}\label{class_g_l_tech2_1_1_element_a585edc055b0a0256ee31dfa67cefcedb}} 
+\index{GLTech2.Element@{GLTech2.Element}!AbsoluteNormal@{AbsoluteNormal}}
+\index{AbsoluteNormal@{AbsoluteNormal}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{AbsoluteNormal}{AbsoluteNormal}}
+{\footnotesize\ttfamily abstract \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Element.\+Absolute\+Normal\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}, {\ttfamily [protected]}}
+
+
+
+Private protected. Determines how the element stores its normal. 
+
+Remember to set it before parenting any object! \mbox{\Hypertarget{class_g_l_tech2_1_1_element_aeed443f8b0c0bb570d9af8a8e3faa644}\label{class_g_l_tech2_1_1_element_aeed443f8b0c0bb570d9af8a8e3faa644}} 
+\index{GLTech2.Element@{GLTech2.Element}!AbsolutePosition@{AbsolutePosition}}
+\index{AbsolutePosition@{AbsolutePosition}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{AbsolutePosition}{AbsolutePosition}}
+{\footnotesize\ttfamily abstract \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Element.\+Absolute\+Position\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}, {\ttfamily [protected]}}
+
+
+
+Private protected. Determines how the element stores its position. 
+
+Remember to set it before parenting any object! \mbox{\Hypertarget{class_g_l_tech2_1_1_element_a2ab96f9dcff0ff247af5eece1bb83d2a}\label{class_g_l_tech2_1_1_element_a2ab96f9dcff0ff247af5eece1bb83d2a}} 
+\index{GLTech2.Element@{GLTech2.Element}!ChildCount@{ChildCount}}
+\index{ChildCount@{ChildCount}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{ChildCount}{ChildCount}}
+{\footnotesize\ttfamily int GLTech2.\+Element.\+Child\+Count\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+How many childs the element has. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a27bdbdce9b1e0d4ae19726cf9e302ca3}\label{class_g_l_tech2_1_1_element_a27bdbdce9b1e0d4ae19726cf9e302ca3}} 
+\index{GLTech2.Element@{GLTech2.Element}!Normal@{Normal}}
+\index{Normal@{Normal}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{Normal}{Normal}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}? GLTech2.\+Element.\+Normal\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Gets and sets element\textquotesingle{}s normal relatively to it\textquotesingle{}s parent or, if it has no parent, it\textquotesingle{}s absolute normal. 
+
+Normal vector determines the rotation and the scale of an object and is used due to performance improvements when managing multiple childs. 
+
+Use wisely. \mbox{\Hypertarget{class_g_l_tech2_1_1_element_aed800c203d9dadc1189bf70d0290bd40}\label{class_g_l_tech2_1_1_element_aed800c203d9dadc1189bf70d0290bd40}} 
+\index{GLTech2.Element@{GLTech2.Element}!Parent@{Parent}}
+\index{Parent@{Parent}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{Parent}{Parent}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} GLTech2.\+Element.\+Parent\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Gets and sets element\textquotesingle{}s parent. Null is equivalent to no parent. 
+
+Setting a parent will make the object to move and rotate relatively to it\textquotesingle{}s parent, and if the parent element moves/rotate, then the child follows. \mbox{\Hypertarget{class_g_l_tech2_1_1_element_a2158d6c2610d88bf3b7991765d62036a}\label{class_g_l_tech2_1_1_element_a2158d6c2610d88bf3b7991765d62036a}} 
+\index{GLTech2.Element@{GLTech2.Element}!Position@{Position}}
+\index{Position@{Position}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{Position}{Position}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}? GLTech2.\+Element.\+Position\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Gets and sets element\textquotesingle{}s position relatively to it\textquotesingle{}s parent or, if it has no parent, it\textquotesingle{}s absolute position. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_aca666f90e12d34dd00e509a593ea02f0}\label{class_g_l_tech2_1_1_element_aca666f90e12d34dd00e509a593ea02f0}} 
+\index{GLTech2.Element@{GLTech2.Element}!Rotation@{Rotation}}
+\index{Rotation@{Rotation}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{Rotation}{Rotation}}
+{\footnotesize\ttfamily float? GLTech2.\+Element.\+Rotation\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Gets and sets directly the element\textquotesingle{}s rotation relative to it\textquotesingle{}s parent or, if it has no parents, it\textquotesingle{}s absolute rotation. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a9687d40a7e6ca4204ccacefadbf0ec17}\label{class_g_l_tech2_1_1_element_a9687d40a7e6ca4204ccacefadbf0ec17}} 
+\index{GLTech2.Element@{GLTech2.Element}!Scene@{Scene}}
+\index{Scene@{Scene}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{Scene}{Scene}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}} GLTech2.\+Element.\+Scene\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Its correspondent scene. If the element is not bound to any scene, returns null. 
+

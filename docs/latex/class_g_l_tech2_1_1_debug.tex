@@ -1,0 +1,157 @@
+\hypertarget{class_g_l_tech2_1_1_debug}{}\doxysection{GLTech2.\+Debug Class Reference}
+\label{class_g_l_tech2_1_1_debug}\index{GLTech2.Debug@{GLTech2.Debug}}
+
+
+Provides an interface for printing text on the screen.  
+
+
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{class_g_l_tech2_1_1_debug_a012f99be6c9ce76ae022b6283ee87a9c}{Options}} \{ {\bfseries Message}
+, {\bfseries Info}
+, {\bfseries Warning}
+, {\bfseries Error}
+ \}
+\begin{DoxyCompactList}\small\item\em Specifies constants that define the details of how a message should be printed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_g_l_tech2_1_1_debug_a0bf340569e09023b95da145286775249}{Enable\+Console}} ()
+\begin{DoxyCompactList}\small\item\em Enables a console that can be used to output and input text. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_g_l_tech2_1_1_debug_a32ddbf95b980d38423a854afb8c774a0}{Disable\+Console}} ()
+\begin{DoxyCompactList}\small\item\em Disables the console. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_g_l_tech2_1_1_debug_a662eafb492fac37aa1f0a82ba78c7591}{Clear}} ()
+\begin{DoxyCompactList}\small\item\em Clears the console. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_g_l_tech2_1_1_debug_a113b23387881334f731c8edb911219e7}{Log}} (string message=\char`\"{}\char`\"{}, \mbox{\hyperlink{class_g_l_tech2_1_1_debug_a012f99be6c9ce76ae022b6283ee87a9c}{Options}} debug\+Option=Options.\+Message)
+\begin{DoxyCompactList}\small\item\em Prints a message on the screen given an option. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_g_l_tech2_1_1_debug_a0ffa9407bd0959c24054964d5a629f9d}{Pause}} ()
+\begin{DoxyCompactList}\small\item\em Pauses the execution of the engine until the user presses a key on the console, if enabled. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_g_l_tech2_1_1_debug_a3e0c0b725d399c7761c53022c2e499fe}{Pause}} (string message)
+\begin{DoxyCompactList}\small\item\em Prints a message and pauses the execution of the engine until the user presses a key on the console, if enabled. \end{DoxyCompactList}\item 
+static string \mbox{\hyperlink{class_g_l_tech2_1_1_debug_a7fe4355e0099a03ed0803d18d789a6fa}{Read}} ()
+\begin{DoxyCompactList}\small\item\em Pauses the execution of engine until the user inserts a text on the console, if enabled, and then return it; if disabled, will always return an empty string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+static bool \mbox{\hyperlink{class_g_l_tech2_1_1_debug_ac3dd5ce549e336ce990252c8b43962cd}{Console\+Enabled}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets and sets whether the console should be enabled or not. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides an interface for printing text on the screen. 
+
+
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_debug_a012f99be6c9ce76ae022b6283ee87a9c}\label{class_g_l_tech2_1_1_debug_a012f99be6c9ce76ae022b6283ee87a9c}} 
+\index{GLTech2.Debug@{GLTech2.Debug}!Options@{Options}}
+\index{Options@{Options}!GLTech2.Debug@{GLTech2.Debug}}
+\doxysubsubsection{\texorpdfstring{Options}{Options}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{class_g_l_tech2_1_1_debug_a012f99be6c9ce76ae022b6283ee87a9c}{GLTech2.\+Debug.\+Options}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Specifies constants that define the details of how a message should be printed. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_debug_a662eafb492fac37aa1f0a82ba78c7591}\label{class_g_l_tech2_1_1_debug_a662eafb492fac37aa1f0a82ba78c7591}} 
+\index{GLTech2.Debug@{GLTech2.Debug}!Clear@{Clear}}
+\index{Clear@{Clear}!GLTech2.Debug@{GLTech2.Debug}}
+\doxysubsubsection{\texorpdfstring{Clear()}{Clear()}}
+{\footnotesize\ttfamily static void GLTech2.\+Debug.\+Clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Clears the console. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_debug_a32ddbf95b980d38423a854afb8c774a0}\label{class_g_l_tech2_1_1_debug_a32ddbf95b980d38423a854afb8c774a0}} 
+\index{GLTech2.Debug@{GLTech2.Debug}!DisableConsole@{DisableConsole}}
+\index{DisableConsole@{DisableConsole}!GLTech2.Debug@{GLTech2.Debug}}
+\doxysubsubsection{\texorpdfstring{DisableConsole()}{DisableConsole()}}
+{\footnotesize\ttfamily static void GLTech2.\+Debug.\+Disable\+Console (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Disables the console. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_debug_a0bf340569e09023b95da145286775249}\label{class_g_l_tech2_1_1_debug_a0bf340569e09023b95da145286775249}} 
+\index{GLTech2.Debug@{GLTech2.Debug}!EnableConsole@{EnableConsole}}
+\index{EnableConsole@{EnableConsole}!GLTech2.Debug@{GLTech2.Debug}}
+\doxysubsubsection{\texorpdfstring{EnableConsole()}{EnableConsole()}}
+{\footnotesize\ttfamily static void GLTech2.\+Debug.\+Enable\+Console (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Enables a console that can be used to output and input text. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_debug_a113b23387881334f731c8edb911219e7}\label{class_g_l_tech2_1_1_debug_a113b23387881334f731c8edb911219e7}} 
+\index{GLTech2.Debug@{GLTech2.Debug}!Log@{Log}}
+\index{Log@{Log}!GLTech2.Debug@{GLTech2.Debug}}
+\doxysubsubsection{\texorpdfstring{Log()}{Log()}}
+{\footnotesize\ttfamily static void GLTech2.\+Debug.\+Log (\begin{DoxyParamCaption}\item[{string}]{message = {\ttfamily \char`\"{}\char`\"{}},  }\item[{\mbox{\hyperlink{class_g_l_tech2_1_1_debug_a012f99be6c9ce76ae022b6283ee87a9c}{Options}}}]{debug\+Option = {\ttfamily Options.Message} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Prints a message on the screen given an option. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & Message\\
+\hline
+{\em debug\+Option} & Option\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_debug_a0ffa9407bd0959c24054964d5a629f9d}\label{class_g_l_tech2_1_1_debug_a0ffa9407bd0959c24054964d5a629f9d}} 
+\index{GLTech2.Debug@{GLTech2.Debug}!Pause@{Pause}}
+\index{Pause@{Pause}!GLTech2.Debug@{GLTech2.Debug}}
+\doxysubsubsection{\texorpdfstring{Pause()}{Pause()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily static void GLTech2.\+Debug.\+Pause (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Pauses the execution of the engine until the user presses a key on the console, if enabled. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_debug_a3e0c0b725d399c7761c53022c2e499fe}\label{class_g_l_tech2_1_1_debug_a3e0c0b725d399c7761c53022c2e499fe}} 
+\index{GLTech2.Debug@{GLTech2.Debug}!Pause@{Pause}}
+\index{Pause@{Pause}!GLTech2.Debug@{GLTech2.Debug}}
+\doxysubsubsection{\texorpdfstring{Pause()}{Pause()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily static void GLTech2.\+Debug.\+Pause (\begin{DoxyParamCaption}\item[{string}]{message }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Prints a message and pauses the execution of the engine until the user presses a key on the console, if enabled. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & Pause message\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_debug_a7fe4355e0099a03ed0803d18d789a6fa}\label{class_g_l_tech2_1_1_debug_a7fe4355e0099a03ed0803d18d789a6fa}} 
+\index{GLTech2.Debug@{GLTech2.Debug}!Read@{Read}}
+\index{Read@{Read}!GLTech2.Debug@{GLTech2.Debug}}
+\doxysubsubsection{\texorpdfstring{Read()}{Read()}}
+{\footnotesize\ttfamily static string GLTech2.\+Debug.\+Read (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Pauses the execution of engine until the user inserts a text on the console, if enabled, and then return it; if disabled, will always return an empty string. 
+
+\begin{DoxyReturn}{Returns}
+The string typed by the user on the console, if enabled; otherwise, string.\+Empty
+\end{DoxyReturn}
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_debug_ac3dd5ce549e336ce990252c8b43962cd}\label{class_g_l_tech2_1_1_debug_ac3dd5ce549e336ce990252c8b43962cd}} 
+\index{GLTech2.Debug@{GLTech2.Debug}!ConsoleEnabled@{ConsoleEnabled}}
+\index{ConsoleEnabled@{ConsoleEnabled}!GLTech2.Debug@{GLTech2.Debug}}
+\doxysubsubsection{\texorpdfstring{ConsoleEnabled}{ConsoleEnabled}}
+{\footnotesize\ttfamily bool GLTech2.\+Debug.\+Console\+Enabled\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Gets and sets whether the console should be enabled or not. 
+

@@ -1,0 +1,90 @@
+\hypertarget{class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a}{}\doxysection{GLTech2.\+Post\+Processing.\+FFXAA Class Reference}
+\label{class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a}\index{GLTech2.PostProcessing.FFXAA@{GLTech2.PostProcessing.FFXAA}}
+
+
+A faster version of FXAA that only blurs each edge.  
+
+
+Inheritance diagram for GLTech2.\+Post\+Processing.\+FFXAA\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a_a605772bd36a68397f988b672ea9fa012}{FFXAA}} (int width, int height, int threshold=128)
+\begin{DoxyCompactList}\small\item\em Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a}{FFXAA}} respecting the screen dimentions. \end{DoxyCompactList}\item 
+override void \mbox{\hyperlink{class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a_aacd6a471c42b2337555fbd26dab0d65f}{Process}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}} target)
+\begin{DoxyCompactList}\small\item\em Applies the post processing effect to a target Pixelbuffer. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a_ace17e813882dc70d970fbf74587f7f91}\label{class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a_ace17e813882dc70d970fbf74587f7f91}} 
+void {\bfseries Dispose} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a_a9a5e1be4b4cc5cfba7d42ffbc21831e9}{Show\+Edges}} = false\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Shows every dettected edge. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A faster version of FXAA that only blurs each edge. 
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a_a605772bd36a68397f988b672ea9fa012}\label{class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a_a605772bd36a68397f988b672ea9fa012}} 
+\index{GLTech2.PostProcessing.FFXAA@{GLTech2.PostProcessing.FFXAA}!FFXAA@{FFXAA}}
+\index{FFXAA@{FFXAA}!GLTech2.PostProcessing.FFXAA@{GLTech2.PostProcessing.FFXAA}}
+\doxysubsubsection{\texorpdfstring{FFXAA()}{FFXAA()}}
+{\footnotesize\ttfamily GLTech2.\+Post\+Processing.\+FFXAA.\+FFXAA (\begin{DoxyParamCaption}\item[{int}]{width,  }\item[{int}]{height,  }\item[{int}]{threshold = {\ttfamily 128} }\end{DoxyParamCaption})}
+
+
+
+Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a}{FFXAA}} respecting the screen dimentions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & Screen width\\
+\hline
+{\em height} & Screen height\\
+\hline
+{\em threshold} & The threshold that determines whether something is or not a border\\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a_aacd6a471c42b2337555fbd26dab0d65f}\label{class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a_aacd6a471c42b2337555fbd26dab0d65f}} 
+\index{GLTech2.PostProcessing.FFXAA@{GLTech2.PostProcessing.FFXAA}!Process@{Process}}
+\index{Process@{Process}!GLTech2.PostProcessing.FFXAA@{GLTech2.PostProcessing.FFXAA}}
+\doxysubsubsection{\texorpdfstring{Process()}{Process()}}
+{\footnotesize\ttfamily override void GLTech2.\+Post\+Processing.\+FFXAA.\+Process (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}}}]{target }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Applies the post processing effect to a target Pixelbuffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em target} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_g_l_tech2_1_1_post_processing_1_1_effect_a5fbe7e58c15f7d81a0a0fb96cbba56d7}{GLTech2.\+Post\+Processing.\+Effect}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a_a9a5e1be4b4cc5cfba7d42ffbc21831e9}\label{class_g_l_tech2_1_1_post_processing_1_1_f_f_x_a_a_a9a5e1be4b4cc5cfba7d42ffbc21831e9}} 
+\index{GLTech2.PostProcessing.FFXAA@{GLTech2.PostProcessing.FFXAA}!ShowEdges@{ShowEdges}}
+\index{ShowEdges@{ShowEdges}!GLTech2.PostProcessing.FFXAA@{GLTech2.PostProcessing.FFXAA}}
+\doxysubsubsection{\texorpdfstring{ShowEdges}{ShowEdges}}
+{\footnotesize\ttfamily bool GLTech2.\+Post\+Processing.\+FFXAA.\+Show\+Edges = false\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Shows every dettected edge. 
+

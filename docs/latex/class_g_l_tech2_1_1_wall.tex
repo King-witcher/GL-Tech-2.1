@@ -1,0 +1,130 @@
+\hypertarget{class_g_l_tech2_1_1_wall}{}\doxysection{GLTech2.\+Wall Class Reference}
+\label{class_g_l_tech2_1_1_wall}\index{GLTech2.Wall@{GLTech2.Wall}}
+
+
+Represents a wall that can be rendered on the screen.  
+
+
+Inheritance diagram for GLTech2.\+Wall\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_g_l_tech2_1_1_wall}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_g_l_tech2_1_1_wall_a83ba7b09a3f79f49b427c8192f4e1430}{Wall}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} start, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} end, \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} texture)
+\begin{DoxyCompactList}\small\item\em Gets a new instance of wall. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_wall_a2befcdd96fd20aaffc986847686b1215}\label{class_g_l_tech2_1_1_wall_a2befcdd96fd20aaffc986847686b1215}} 
+{\bfseries Wall} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} start, float angle\+\_\+deg, float length, \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} texture)
+\item 
+override void \mbox{\hyperlink{class_g_l_tech2_1_1_wall_a237d60fe88a788ddb39a9585699b929e}{Dispose}} ()
+\begin{DoxyCompactList}\small\item\em Releases unmanaged data, if any. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_wall_a5f0870cef3875ba747eaa7209ce9615b}\label{class_g_l_tech2_1_1_wall_a5f0870cef3875ba747eaa7209ce9615b}} 
+override string {\bfseries To\+String} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{class_g_l_tech2_1_1_wall_a4d3a46d752525f97ebcad4115c73edf6}{Start\+Point}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets and sets the starting point of the wall. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{class_g_l_tech2_1_1_wall_ac5a23328e4ae1ee4356be298a41440c3}{End\+Point}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets and sets the ending point of the wall. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_g_l_tech2_1_1_wall_a43cc1f146c1aff589ff7bbf8876474d9}{Length}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets and sets the length of the wall. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} \mbox{\hyperlink{class_g_l_tech2_1_1_wall_a84af2b34e155e8f35b1409b9ad5903ae}{Texture}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets and sets the material of the wall. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_wall_a255f57953b0f5ff55e8f3d6130a5b8d7}\label{class_g_l_tech2_1_1_wall_a255f57953b0f5ff55e8f3d6130a5b8d7}} 
+override \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} {\bfseries Absolute\+Position}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_wall_adc25003094fb24ab2bd154f224bf2c12}\label{class_g_l_tech2_1_1_wall_adc25003094fb24ab2bd154f224bf2c12}} 
+override \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} {\bfseries Absolute\+Normal}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a wall that can be rendered on the screen. 
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_wall_a83ba7b09a3f79f49b427c8192f4e1430}\label{class_g_l_tech2_1_1_wall_a83ba7b09a3f79f49b427c8192f4e1430}} 
+\index{GLTech2.Wall@{GLTech2.Wall}!Wall@{Wall}}
+\index{Wall@{Wall}!GLTech2.Wall@{GLTech2.Wall}}
+\doxysubsubsection{\texorpdfstring{Wall()}{Wall()}}
+{\footnotesize\ttfamily GLTech2.\+Wall.\+Wall (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{start,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{end,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}}]{texture }\end{DoxyParamCaption})}
+
+
+
+Gets a new instance of wall. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start} & Starting point\\
+\hline
+{\em end} & End point\\
+\hline
+{\em texture} & \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}\\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_wall_a237d60fe88a788ddb39a9585699b929e}\label{class_g_l_tech2_1_1_wall_a237d60fe88a788ddb39a9585699b929e}} 
+\index{GLTech2.Wall@{GLTech2.Wall}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!GLTech2.Wall@{GLTech2.Wall}}
+\doxysubsubsection{\texorpdfstring{Dispose()}{Dispose()}}
+{\footnotesize\ttfamily override void GLTech2.\+Wall.\+Dispose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Releases unmanaged data, if any. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_g_l_tech2_1_1_element_a0c1d09747a9346f7719f32c4ed0b670c}{GLTech2.\+Element}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_wall_ac5a23328e4ae1ee4356be298a41440c3}\label{class_g_l_tech2_1_1_wall_ac5a23328e4ae1ee4356be298a41440c3}} 
+\index{GLTech2.Wall@{GLTech2.Wall}!EndPoint@{EndPoint}}
+\index{EndPoint@{EndPoint}!GLTech2.Wall@{GLTech2.Wall}}
+\doxysubsubsection{\texorpdfstring{EndPoint}{EndPoint}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Wall.\+End\+Point\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Gets and sets the ending point of the wall. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_wall_a43cc1f146c1aff589ff7bbf8876474d9}\label{class_g_l_tech2_1_1_wall_a43cc1f146c1aff589ff7bbf8876474d9}} 
+\index{GLTech2.Wall@{GLTech2.Wall}!Length@{Length}}
+\index{Length@{Length}!GLTech2.Wall@{GLTech2.Wall}}
+\doxysubsubsection{\texorpdfstring{Length}{Length}}
+{\footnotesize\ttfamily float GLTech2.\+Wall.\+Length\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Gets and sets the length of the wall. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_wall_a4d3a46d752525f97ebcad4115c73edf6}\label{class_g_l_tech2_1_1_wall_a4d3a46d752525f97ebcad4115c73edf6}} 
+\index{GLTech2.Wall@{GLTech2.Wall}!StartPoint@{StartPoint}}
+\index{StartPoint@{StartPoint}!GLTech2.Wall@{GLTech2.Wall}}
+\doxysubsubsection{\texorpdfstring{StartPoint}{StartPoint}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Wall.\+Start\+Point\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Gets and sets the starting point of the wall. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_wall_a84af2b34e155e8f35b1409b9ad5903ae}\label{class_g_l_tech2_1_1_wall_a84af2b34e155e8f35b1409b9ad5903ae}} 
+\index{GLTech2.Wall@{GLTech2.Wall}!Texture@{Texture}}
+\index{Texture@{Texture}!GLTech2.Wall@{GLTech2.Wall}}
+\doxysubsubsection{\texorpdfstring{Texture}{Texture}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} GLTech2.\+Wall.\+Texture\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Gets and sets the material of the wall. 
+

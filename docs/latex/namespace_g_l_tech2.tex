@@ -1,0 +1,316 @@
+\hypertarget{namespace_g_l_tech2}{}\doxysection{GLTech2 Namespace Reference}
+\label{namespace_g_l_tech2}\index{GLTech2@{GLTech2}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}}
+\begin{DoxyCompactList}\small\item\em Represents a behaviour script that can be attached to an element. Similar to Mono\+Behaviours on Unity3D. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}}
+\begin{DoxyCompactList}\small\item\em Represents an element that can be part of a \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_g_l_tech2_1_1_empty}{Empty}}
+\begin{DoxyCompactList}\small\item\em Represents and empty element that can basically be used to parent groups of elements. \end{DoxyCompactList}\item 
+struct {\bfseries Observer\+Data}
+\item 
+class \mbox{\hyperlink{class_g_l_tech2_1_1_observer}{Observer}}
+\begin{DoxyCompactList}\small\item\em Represents a point of view from which the \mbox{\hyperlink{class_g_l_tech2_1_1_renderer}{Renderer}} can render a scene. \end{DoxyCompactList}\item 
+class {\bfseries Sprite}
+\item 
+class \mbox{\hyperlink{class_g_l_tech2_1_1_wall}{Wall}}
+\begin{DoxyCompactList}\small\item\em Represents a wall that can be rendered on the screen. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_g_l_tech2_1_1_renderer}{Renderer}}
+\begin{DoxyCompactList}\small\item\em Provides an interface to render scenes and output the video in a window. \end{DoxyCompactList}\item 
+class {\bfseries Display}
+\item 
+struct {\bfseries Ray}
+\item 
+struct {\bfseries Rendering\+Cache}
+\begin{DoxyCompactList}\small\item\em Stores important cache data to the renderer that can be shared with native modes. \end{DoxyCompactList}\item 
+struct {\bfseries Scene\+Data}
+\item 
+struct {\bfseries Sprite\+Data}
+\item 
+class {\bfseries Utilities}
+\item 
+struct {\bfseries Wall\+Data}
+\item 
+struct \mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}}
+\begin{DoxyCompactList}\small\item\em Represents a 32-\/bits-\/per-\/pixel pixel buffer. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}}
+\begin{DoxyCompactList}\small\item\em Represents a 32 bits \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} color. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}
+\begin{DoxyCompactList}\small\item\em Represents a scene, which stores a set of elements that can be or not rendered and, at least, one observer. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_g_l_tech2_1_1_debug}{Debug}}
+\begin{DoxyCompactList}\small\item\em Provides an interface for printing text on the screen. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_g_l_tech2_1_1_keyboard}{Keyboard}}
+\begin{DoxyCompactList}\small\item\em Provides an interface to handle keyboard inputs. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_g_l_tech2_1_1_mouse}{Mouse}}
+\begin{DoxyCompactList}\small\item\em Provides information about mouse inputs for each frame. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_g_l_tech2_1_1_time}{Time}}
+\begin{DoxyCompactList}\small\item\em Provides an interface to get time information from \mbox{\hyperlink{namespace_g_l_tech2}{GLTech2}}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}
+\begin{DoxyCompactList}\small\item\em Represents a texture that can be attached to a renderable object. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}
+\begin{DoxyCompactList}\small\item\em Represents a \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} in a bidimensional space. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_g_l_tech2_1_1_version_data}{Version\+Data}}
+\begin{DoxyCompactList}\small\item\em A strongly-\/typed resource class, for looking up localized strings, etc. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{Key}} \{ \newline
+{\bfseries Modifiers} = -\/65536
+, {\bfseries None} = 0
+, {\bfseries LButton} = 1
+, {\bfseries RButton} = 2
+, \newline
+{\bfseries Cancel} = 3
+, {\bfseries MButton} = 4
+, {\bfseries XButton1} = 5
+, {\bfseries XButton2} = 6
+, \newline
+{\bfseries Back} = 8
+, {\bfseries Tab} = 9
+, {\bfseries Line\+Feed} = 10
+, {\bfseries Clear} = 12
+, \newline
+{\bfseries Return} = 13
+, {\bfseries Enter} = 13
+, {\bfseries Shift\+Key} = 16
+, {\bfseries Control\+Key} = 17
+, \newline
+{\bfseries Menu} = 18
+, {\bfseries Pause} = 19
+, {\bfseries Capital} = 20
+, {\bfseries Caps\+Lock} = 20
+, \newline
+{\bfseries Kana\+Mode} = 21
+, {\bfseries Hanguel\+Mode} = 21
+, {\bfseries Hangul\+Mode} = 21
+, {\bfseries Junja\+Mode} = 23
+, \newline
+{\bfseries Final\+Mode} = 24
+, {\bfseries Hanja\+Mode} = 25
+, {\bfseries Kanji\+Mode} = 25
+, {\bfseries Escape} = 27
+, \newline
+{\bfseries IMEConvert} = 28
+, {\bfseries IMENonconvert} = 29
+, {\bfseries IMEAccept} = 30
+, {\bfseries IMEAceept} = 30
+, \newline
+{\bfseries IMEMode\+Change} = 31
+, {\bfseries Space} = 32
+, {\bfseries Prior} = 33
+, {\bfseries Page\+Up} = 33
+, \newline
+{\bfseries Next} = 34
+, {\bfseries Page\+Down} = 34
+, {\bfseries End} = 35
+, {\bfseries Home} = 36
+, \newline
+{\bfseries Left} = 37
+, {\bfseries Up} = 38
+, {\bfseries Right} = 39
+, {\bfseries Down} = 40
+, \newline
+{\bfseries Select} = 41
+, {\bfseries Print} = 42
+, {\bfseries Execute} = 43
+, {\bfseries Snapshot} = 44
+, \newline
+{\bfseries Print\+Screen} = 44
+, {\bfseries Insert} = 45
+, {\bfseries Delete} = 46
+, {\bfseries Help} = 47
+, \newline
+{\bfseries D0} = 48
+, {\bfseries D1} = 49
+, {\bfseries D2} = 50
+, {\bfseries D3} = 51
+, \newline
+{\bfseries D4} = 52
+, {\bfseries D5} = 53
+, {\bfseries D6} = 54
+, {\bfseries D7} = 55
+, \newline
+{\bfseries D8} = 56
+, {\bfseries D9} = 57
+, {\bfseries A} = 65
+, {\bfseries B} = 66
+, \newline
+{\bfseries C} = 67
+, {\bfseries D} = 68
+, {\bfseries E} = 69
+, {\bfseries F} = 70
+, \newline
+{\bfseries G} = 71
+, {\bfseries H} = 72
+, {\bfseries I} = 73
+, {\bfseries J} = 74
+, \newline
+{\bfseries K} = 75
+, {\bfseries L} = 76
+, {\bfseries M} = 77
+, {\bfseries N} = 78
+, \newline
+{\bfseries O} = 79
+, {\bfseries P} = 80
+, {\bfseries Q} = 81
+, {\bfseries R} = 82
+, \newline
+{\bfseries S} = 83
+, {\bfseries T} = 84
+, {\bfseries U} = 85
+, {\bfseries V} = 86
+, \newline
+{\bfseries W} = 87
+, {\bfseries X} = 88
+, {\bfseries Y} = 89
+, {\bfseries Z} = 90
+, \newline
+{\bfseries LWin} = 91
+, {\bfseries RWin} = 92
+, {\bfseries Apps} = 93
+, {\bfseries Sleep} = 95
+, \newline
+{\bfseries Num\+Pad0} = 96
+, {\bfseries Num\+Pad1} = 97
+, {\bfseries Num\+Pad2} = 98
+, {\bfseries Num\+Pad3} = 99
+, \newline
+{\bfseries Num\+Pad4} = 100
+, {\bfseries Num\+Pad5} = 101
+, {\bfseries Num\+Pad6} = 102
+, {\bfseries Num\+Pad7} = 103
+, \newline
+{\bfseries Num\+Pad8} = 104
+, {\bfseries Num\+Pad9} = 105
+, {\bfseries Multiply} = 106
+, {\bfseries Add} = 107
+, \newline
+{\bfseries Separator} = 108
+, {\bfseries Subtract} = 109
+, {\bfseries Decimal} = 110
+, {\bfseries Divide} = 111
+, \newline
+{\bfseries F1} = 112
+, {\bfseries F2} = 113
+, {\bfseries F3} = 114
+, {\bfseries F4} = 115
+, \newline
+{\bfseries F5} = 116
+, {\bfseries F6} = 117
+, {\bfseries F7} = 118
+, {\bfseries F8} = 119
+, \newline
+{\bfseries F9} = 120
+, {\bfseries F10} = 121
+, {\bfseries F11} = 122
+, {\bfseries F12} = 123
+, \newline
+{\bfseries F13} = 124
+, {\bfseries F14} = 125
+, {\bfseries F15} = 126
+, {\bfseries F16} = 127
+, \newline
+{\bfseries F17} = 128
+, {\bfseries F18} = 129
+, {\bfseries F19} = 130
+, {\bfseries F20} = 131
+, \newline
+{\bfseries F21} = 132
+, {\bfseries F22} = 133
+, {\bfseries F23} = 134
+, {\bfseries F24} = 135
+, \newline
+{\bfseries Num\+Lock} = 144
+, {\bfseries Scroll} = 145
+, {\bfseries LShift\+Key} = 160
+, {\bfseries RShift\+Key} = 161
+, \newline
+{\bfseries LControl\+Key} = 162
+, {\bfseries RControl\+Key} = 163
+, {\bfseries LMenu} = 164
+, {\bfseries RMenu} = 165
+, \newline
+{\bfseries Browser\+Back} = 166
+, {\bfseries Browser\+Forward} = 167
+, {\bfseries Browser\+Refresh} = 168
+, {\bfseries Browser\+Stop} = 169
+, \newline
+{\bfseries Browser\+Search} = 170
+, {\bfseries Browser\+Favorites} = 171
+, {\bfseries Browser\+Home} = 172
+, {\bfseries Volume\+Mute} = 173
+, \newline
+{\bfseries Volume\+Down} = 174
+, {\bfseries Volume\+Up} = 175
+, {\bfseries Media\+Next\+Track} = 176
+, {\bfseries Media\+Previous\+Track} = 177
+, \newline
+{\bfseries Media\+Stop} = 178
+, {\bfseries Media\+Play\+Pause} = 179
+, {\bfseries Launch\+Mail} = 180
+, {\bfseries Select\+Media} = 181
+, \newline
+{\bfseries Launch\+Application1} = 182
+, {\bfseries Launch\+Application2} = 183
+, {\bfseries Oem\+Semicolon} = 186
+, {\bfseries Oem1} = 186
+, \newline
+{\bfseries Oemplus} = 187
+, {\bfseries Oemcomma} = 188
+, {\bfseries Oem\+Minus} = 189
+, {\bfseries Oem\+Period} = 190
+, \newline
+{\bfseries Oem\+Question} = 191
+, {\bfseries Oem2} = 191
+, {\bfseries Oemtilde} = 192
+, {\bfseries Oem3} = 192
+, \newline
+{\bfseries Oem\+Open\+Brackets} = 219
+, {\bfseries Oem4} = 219
+, {\bfseries Oem\+Pipe} = 220
+, {\bfseries Oem5} = 220
+, \newline
+{\bfseries Oem\+Close\+Brackets} = 221
+, {\bfseries Oem6} = 221
+, {\bfseries Oem\+Quotes} = 222
+, {\bfseries Oem7} = 222
+, \newline
+{\bfseries Oem8} = 223
+, {\bfseries Oem\+Backslash} = 226
+, {\bfseries Oem102} = 226
+, {\bfseries Process\+Key} = 229
+, \newline
+{\bfseries Packet} = 231
+, {\bfseries Attn} = 246
+, {\bfseries Crsel} = 247
+, {\bfseries Exsel} = 248
+, \newline
+{\bfseries Erase\+Eof} = 249
+, {\bfseries Play} = 250
+, {\bfseries Zoom} = 251
+, {\bfseries No\+Name} = 252
+, \newline
+{\bfseries Pa1} = 253
+, {\bfseries Oem\+Clear} = 254
+, {\bfseries Key\+Code} = 65535
+, {\bfseries Shift} = 65536
+, \newline
+{\bfseries Control} = 131072
+, {\bfseries Alt} = 262144
+ \}
+\begin{DoxyCompactList}\small\item\em Represents a keyboard key. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}\label{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}} 
+\index{GLTech2@{GLTech2}!Key@{Key}}
+\index{Key@{Key}!GLTech2@{GLTech2}}
+\doxysubsubsection{\texorpdfstring{Key}{Key}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{GLTech2.\+Key}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Represents a keyboard key. 
+

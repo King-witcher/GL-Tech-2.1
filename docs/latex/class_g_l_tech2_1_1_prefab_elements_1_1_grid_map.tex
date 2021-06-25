@@ -1,0 +1,103 @@
+\hypertarget{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map}{}\doxysection{GLTech2.\+Prefab\+Elements.\+Grid\+Map Class Reference}
+\label{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map}\index{GLTech2.PrefabElements.GridMap@{GLTech2.PrefabElements.GridMap}}
+
+
+Provides a tool to build maps based on a image.  
+
+
+Inheritance diagram for GLTech2.\+Prefab\+Elements.\+Grid\+Map\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_1_1_texture_bindings}{Texture\+Bindings}}
+\begin{DoxyCompactList}\small\item\em Represents a list of associations between colors and textures used to remap pixels from a grid to textures. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_a40023cf02d66fe4ea20020fa1d287e2f}{Grid\+Map}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}} map)
+\begin{DoxyCompactList}\small\item\em Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map}{Grid\+Map}} based only on a \mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_adf58f98eea08f42d7a3bff5811f2ea2a}{Grid\+Map}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}} map, \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_1_1_texture_bindings}{Texture\+Bindings}} texture\+Bindings)
+\begin{DoxyCompactList}\small\item\em Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map}{Grid\+Map}} the remaps each color to a given texture. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_a84aafeea15cf63c4fae5a6edf0786523}\label{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_a84aafeea15cf63c4fae5a6edf0786523}} 
+override \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} {\bfseries Absolute\+Position} = \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a19e5c5e18b704bff60a794aeeeed351b}{Vector.\+Origin}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_a7262a5bf72477774967f36ed25817a6a}\label{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_a7262a5bf72477774967f36ed25817a6a}} 
+override \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} {\bfseries Absolute\+Normal} = \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_aa83c6eeb088131b6ba470398a2bd2c43}{Vector.\+Forward}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+int \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_ab4eba54a2a362291a665bb3acc517787}{Walls}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em How many walls does this \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map}{Grid\+Map}} contain. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_a55e6b455a184e543bdaa5c054c02ba2d}{Scale}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The scale of this \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map}{Grid\+Map}}. Cannot be zero. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides a tool to build maps based on a image. 
+
+Each pixel of the image can be converted into a block of its original color, a block with an especific \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} or nothing. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_a40023cf02d66fe4ea20020fa1d287e2f}\label{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_a40023cf02d66fe4ea20020fa1d287e2f}} 
+\index{GLTech2.PrefabElements.GridMap@{GLTech2.PrefabElements.GridMap}!GridMap@{GridMap}}
+\index{GridMap@{GridMap}!GLTech2.PrefabElements.GridMap@{GLTech2.PrefabElements.GridMap}}
+\doxysubsubsection{\texorpdfstring{GridMap()}{GridMap()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily GLTech2.\+Prefab\+Elements.\+Grid\+Map.\+Grid\+Map (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}}}]{map }\end{DoxyParamCaption})}
+
+
+
+Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map}{Grid\+Map}} based only on a \mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}}. 
+
+Totally black pixels won\textquotesingle{}t be 
+
+
+\begin{DoxyParams}{Parameters}
+{\em map} & A pixelbuffer that represents each block of the map.\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_adf58f98eea08f42d7a3bff5811f2ea2a}\label{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_adf58f98eea08f42d7a3bff5811f2ea2a}} 
+\index{GLTech2.PrefabElements.GridMap@{GLTech2.PrefabElements.GridMap}!GridMap@{GridMap}}
+\index{GridMap@{GridMap}!GLTech2.PrefabElements.GridMap@{GLTech2.PrefabElements.GridMap}}
+\doxysubsubsection{\texorpdfstring{GridMap()}{GridMap()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily GLTech2.\+Prefab\+Elements.\+Grid\+Map.\+Grid\+Map (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}}}]{map,  }\item[{\mbox{\hyperlink{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_1_1_texture_bindings}{Texture\+Bindings}}}]{texture\+Bindings }\end{DoxyParamCaption})}
+
+
+
+Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map}{Grid\+Map}} the remaps each color to a given texture. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em map} & The map\\
+\hline
+{\em texture\+Bindings} & A hashmap that binds a set of Colors to Textures\\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_a55e6b455a184e543bdaa5c054c02ba2d}\label{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_a55e6b455a184e543bdaa5c054c02ba2d}} 
+\index{GLTech2.PrefabElements.GridMap@{GLTech2.PrefabElements.GridMap}!Scale@{Scale}}
+\index{Scale@{Scale}!GLTech2.PrefabElements.GridMap@{GLTech2.PrefabElements.GridMap}}
+\doxysubsubsection{\texorpdfstring{Scale}{Scale}}
+{\footnotesize\ttfamily float GLTech2.\+Prefab\+Elements.\+Grid\+Map.\+Scale\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The scale of this \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map}{Grid\+Map}}. Cannot be zero. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_ab4eba54a2a362291a665bb3acc517787}\label{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_ab4eba54a2a362291a665bb3acc517787}} 
+\index{GLTech2.PrefabElements.GridMap@{GLTech2.PrefabElements.GridMap}!Walls@{Walls}}
+\index{Walls@{Walls}!GLTech2.PrefabElements.GridMap@{GLTech2.PrefabElements.GridMap}}
+\doxysubsubsection{\texorpdfstring{Walls}{Walls}}
+{\footnotesize\ttfamily int GLTech2.\+Prefab\+Elements.\+Grid\+Map.\+Walls\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+How many walls does this \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_elements_1_1_grid_map}{Grid\+Map}} contain. 
+

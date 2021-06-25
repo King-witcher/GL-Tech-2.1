@@ -4,7 +4,7 @@ using GLTech2.PrefabElements;
 
 namespace Test
 {
-    partial class Program
+    internal partial class Program
     {
         static void GridExample()
         {

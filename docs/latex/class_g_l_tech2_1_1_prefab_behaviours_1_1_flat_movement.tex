@@ -1,0 +1,156 @@
+\hypertarget{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement}{}\doxysection{GLTech2.\+Prefab\+Behaviours.\+Flat\+Movement Class Reference}
+\label{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement}\index{GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}}
+
+
+Allows the user to move the camera around the map using keyboard input.  
+
+
+Inheritance diagram for GLTech2.\+Prefab\+Behaviours.\+Flat\+Movement\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement}
+\end{center}
+\end{figure}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_aa783d1039d109d1c55c6f93729baf209}{Always\+Run}} = true\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Defines whether the camera moves, by default, in the run or walk speed. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a0fd2c39af6018ed468b3b94b1c1eeaeb}{Walk\+Speed}} = 0.\+75f\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The camera slower speed \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a4a9c5920cc9f98103fe1b1802797a8ac}{Run\+Speed}} = 2.\+5f\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The camera faster speed \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a3e1af0fec8c279271a232a27ee85ae8c}{Turn\+Speed}} = 90f\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The angular speed which the camera turns in degrees per second \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{Key}} \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_ab70387c2860cc7c4aafbbede2476f65e}{Step\+Forward}} = Key.\+W\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The key bound to forward movement \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{Key}} \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a40d93ebdd35619d26079b0ea3bb27ba1}{Step\+Back}} = Key.\+S\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The key bound to backward movement \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{Key}} \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a8e8dd02238c04ee361b02d488df13aae}{Step\+Left}} = Key.\+A\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The key bound to left movement \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{Key}} \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a295e5883289a20a9821ccd512516d4ed}{Step\+Right}} = Key.\+D\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The key bound to right movement \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{Key}} \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a6a34707c1606247e22d869d861c830ba}{Turn\+Right}} = Key.\+Right\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The key bound to turn right \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{Key}} \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a62f118899755f0b574f20f6c547abb1f}{Turn\+Left}} = Key.\+Left\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The key bound to turn left movement \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{Key}} \mbox{\hyperlink{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_aae164bec74e3322f71996fabfd8fefad}{Change\+Run\+\_\+\+Walk}} = Key.\+Shift\+Key\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The key that changes between walk and run speed \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Allows the user to move the camera around the map using keyboard input. 
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_aa783d1039d109d1c55c6f93729baf209}\label{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_aa783d1039d109d1c55c6f93729baf209}} 
+\index{GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}!AlwaysRun@{AlwaysRun}}
+\index{AlwaysRun@{AlwaysRun}!GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}}
+\doxysubsubsection{\texorpdfstring{AlwaysRun}{AlwaysRun}}
+{\footnotesize\ttfamily bool GLTech2.\+Prefab\+Behaviours.\+Flat\+Movement.\+Always\+Run = true\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Defines whether the camera moves, by default, in the run or walk speed. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_aae164bec74e3322f71996fabfd8fefad}\label{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_aae164bec74e3322f71996fabfd8fefad}} 
+\index{GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}!ChangeRun\_Walk@{ChangeRun\_Walk}}
+\index{ChangeRun\_Walk@{ChangeRun\_Walk}!GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}}
+\doxysubsubsection{\texorpdfstring{ChangeRun\_Walk}{ChangeRun\_Walk}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{Key}} GLTech2.\+Prefab\+Behaviours.\+Flat\+Movement.\+Change\+Run\+\_\+\+Walk = Key.\+Shift\+Key\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The key that changes between walk and run speed 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a4a9c5920cc9f98103fe1b1802797a8ac}\label{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a4a9c5920cc9f98103fe1b1802797a8ac}} 
+\index{GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}!RunSpeed@{RunSpeed}}
+\index{RunSpeed@{RunSpeed}!GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}}
+\doxysubsubsection{\texorpdfstring{RunSpeed}{RunSpeed}}
+{\footnotesize\ttfamily float GLTech2.\+Prefab\+Behaviours.\+Flat\+Movement.\+Run\+Speed = 2.\+5f\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The camera faster speed 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a40d93ebdd35619d26079b0ea3bb27ba1}\label{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a40d93ebdd35619d26079b0ea3bb27ba1}} 
+\index{GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}!StepBack@{StepBack}}
+\index{StepBack@{StepBack}!GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}}
+\doxysubsubsection{\texorpdfstring{StepBack}{StepBack}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{Key}} GLTech2.\+Prefab\+Behaviours.\+Flat\+Movement.\+Step\+Back = Key.\+S\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The key bound to backward movement 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_ab70387c2860cc7c4aafbbede2476f65e}\label{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_ab70387c2860cc7c4aafbbede2476f65e}} 
+\index{GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}!StepForward@{StepForward}}
+\index{StepForward@{StepForward}!GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}}
+\doxysubsubsection{\texorpdfstring{StepForward}{StepForward}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{Key}} GLTech2.\+Prefab\+Behaviours.\+Flat\+Movement.\+Step\+Forward = Key.\+W\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The key bound to forward movement 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a8e8dd02238c04ee361b02d488df13aae}\label{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a8e8dd02238c04ee361b02d488df13aae}} 
+\index{GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}!StepLeft@{StepLeft}}
+\index{StepLeft@{StepLeft}!GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}}
+\doxysubsubsection{\texorpdfstring{StepLeft}{StepLeft}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{Key}} GLTech2.\+Prefab\+Behaviours.\+Flat\+Movement.\+Step\+Left = Key.\+A\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The key bound to left movement 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a295e5883289a20a9821ccd512516d4ed}\label{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a295e5883289a20a9821ccd512516d4ed}} 
+\index{GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}!StepRight@{StepRight}}
+\index{StepRight@{StepRight}!GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}}
+\doxysubsubsection{\texorpdfstring{StepRight}{StepRight}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{Key}} GLTech2.\+Prefab\+Behaviours.\+Flat\+Movement.\+Step\+Right = Key.\+D\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The key bound to right movement 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a62f118899755f0b574f20f6c547abb1f}\label{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a62f118899755f0b574f20f6c547abb1f}} 
+\index{GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}!TurnLeft@{TurnLeft}}
+\index{TurnLeft@{TurnLeft}!GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}}
+\doxysubsubsection{\texorpdfstring{TurnLeft}{TurnLeft}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{Key}} GLTech2.\+Prefab\+Behaviours.\+Flat\+Movement.\+Turn\+Left = Key.\+Left\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The key bound to turn left movement 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a6a34707c1606247e22d869d861c830ba}\label{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a6a34707c1606247e22d869d861c830ba}} 
+\index{GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}!TurnRight@{TurnRight}}
+\index{TurnRight@{TurnRight}!GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}}
+\doxysubsubsection{\texorpdfstring{TurnRight}{TurnRight}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{Key}} GLTech2.\+Prefab\+Behaviours.\+Flat\+Movement.\+Turn\+Right = Key.\+Right\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The key bound to turn right 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a3e1af0fec8c279271a232a27ee85ae8c}\label{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a3e1af0fec8c279271a232a27ee85ae8c}} 
+\index{GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}!TurnSpeed@{TurnSpeed}}
+\index{TurnSpeed@{TurnSpeed}!GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}}
+\doxysubsubsection{\texorpdfstring{TurnSpeed}{TurnSpeed}}
+{\footnotesize\ttfamily float GLTech2.\+Prefab\+Behaviours.\+Flat\+Movement.\+Turn\+Speed = 90f\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The angular speed which the camera turns in degrees per second 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a0fd2c39af6018ed468b3b94b1c1eeaeb}\label{class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement_a0fd2c39af6018ed468b3b94b1c1eeaeb}} 
+\index{GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}!WalkSpeed@{WalkSpeed}}
+\index{WalkSpeed@{WalkSpeed}!GLTech2.PrefabBehaviours.FlatMovement@{GLTech2.PrefabBehaviours.FlatMovement}}
+\doxysubsubsection{\texorpdfstring{WalkSpeed}{WalkSpeed}}
+{\footnotesize\ttfamily float GLTech2.\+Prefab\+Behaviours.\+Flat\+Movement.\+Walk\+Speed = 0.\+75f\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The camera slower speed 
+

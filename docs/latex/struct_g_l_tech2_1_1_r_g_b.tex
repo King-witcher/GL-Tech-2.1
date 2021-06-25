@@ -1,0 +1,209 @@
+\hypertarget{struct_g_l_tech2_1_1_r_g_b}{}\doxysection{GLTech2.\+RGB Struct Reference}
+\label{struct_g_l_tech2_1_1_r_g_b}\index{GLTech2.RGB@{GLTech2.RGB}}
+
+
+Represents a 32 bits \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} color.  
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_r_g_b_a0cd1da95bb3bf942d36af3abfcd0df60}\label{struct_g_l_tech2_1_1_r_g_b_a0cd1da95bb3bf942d36af3abfcd0df60}} 
+{\bfseries RGB} (byte red, byte green, byte blue)
+\item 
+\mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b_aab2c4faa80b934334349d1d968d24f85}{Average}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} rgb)
+\begin{DoxyCompactList}\small\item\em Gets the average between this and another pixel. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b_a888cda2da73294bb17bf7f2d888e1de9}{Mix}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} rgb, float factor)
+\begin{DoxyCompactList}\small\item\em Gets a weighted average between this and another pixel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b_a9190fec094338ee7993b3323b559e8ba}{operator$\ast$}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} rgb, float factor)
+\begin{DoxyCompactList}\small\item\em Multiplies the intensity of a pixel by a certain amount. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_r_g_b_abfce98497a2ba73bf5964ba2a0ccc9c6}\label{struct_g_l_tech2_1_1_r_g_b_abfce98497a2ba73bf5964ba2a0ccc9c6}} 
+static implicit {\bfseries operator uint} (\mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} rgb)
+\item 
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_r_g_b_aff731728c5493d3d6d2555462e53ce44}\label{struct_g_l_tech2_1_1_r_g_b_aff731728c5493d3d6d2555462e53ce44}} 
+static implicit {\bfseries operator RGB} (uint rgb)
+\item 
+static implicit \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b_a1c1077ed7e9b1ed1caa2f6a0adef1dc7}{operator RGB}} ((byte r, byte g, byte b) components)
+\begin{DoxyCompactList}\small\item\em Implicitly casts a tuple into a \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} struct. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b_acd9ae8c10e92ad52121a49f8926f181a}{operator RGB}} (System.\+Drawing.\+Color color)
+\begin{DoxyCompactList}\small\item\em Explicitly converts a System.\+Drawing.\+Color instance to \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}}. \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} does not store the A component. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_r_g_b_a18e283aefb49dd329b34262d1cff62ae}\label{struct_g_l_tech2_1_1_r_g_b_a18e283aefb49dd329b34262d1cff62ae}} 
+static implicit {\bfseries operator System.\+Drawing.\+Color} (\mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} rgb)
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b_a36f122c9e537969f962ccbfe6fbd39e4}{Luma}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the luma of the pixel. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b_a6f6ee5057e6cacfb746a957ce48bbb34}{Fast\+Luma}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a less precise but faster calculated value of the luma of the color. \end{DoxyCompactList}\item 
+byte \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b_a3f124783544290db4144388fb586fc82}{Brightness}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the 0-\/255 brightness of the pixel. \end{DoxyCompactList}\item 
+byte \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b_aec302465cc957a0bfe61e2247e690ca0}{R}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The red component \end{DoxyCompactList}\item 
+byte \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b_a5ae53f3f73934fea4c5087b38ed5b1d1}{G}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The green component \end{DoxyCompactList}\item 
+byte \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b_a6a507e57da1e34fa8b1db0398aae0bcc}{B}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The blue component \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a 32 bits \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} color. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_r_g_b_aab2c4faa80b934334349d1d968d24f85}\label{struct_g_l_tech2_1_1_r_g_b_aab2c4faa80b934334349d1d968d24f85}} 
+\index{GLTech2.RGB@{GLTech2.RGB}!Average@{Average}}
+\index{Average@{Average}!GLTech2.RGB@{GLTech2.RGB}}
+\doxysubsubsection{\texorpdfstring{Average()}{Average()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} GLTech2.\+RGB.\+Average (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}}}]{rgb }\end{DoxyParamCaption})}
+
+
+
+Gets the average between this and another pixel. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rgb} & Another pixel\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The average between this and the other pixel.
+\end{DoxyReturn}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_r_g_b_a888cda2da73294bb17bf7f2d888e1de9}\label{struct_g_l_tech2_1_1_r_g_b_a888cda2da73294bb17bf7f2d888e1de9}} 
+\index{GLTech2.RGB@{GLTech2.RGB}!Mix@{Mix}}
+\index{Mix@{Mix}!GLTech2.RGB@{GLTech2.RGB}}
+\doxysubsubsection{\texorpdfstring{Mix()}{Mix()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} GLTech2.\+RGB.\+Mix (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}}}]{rgb,  }\item[{float}]{factor }\end{DoxyParamCaption})}
+
+
+
+Gets a weighted average between this and another pixel. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rgb} & Another pixel\\
+\hline
+{\em factor} & Weight of the other pixel\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The weighted average between this and the other pixel
+\end{DoxyReturn}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_r_g_b_a1c1077ed7e9b1ed1caa2f6a0adef1dc7}\label{struct_g_l_tech2_1_1_r_g_b_a1c1077ed7e9b1ed1caa2f6a0adef1dc7}} 
+\index{GLTech2.RGB@{GLTech2.RGB}!operator RGB@{operator RGB}}
+\index{operator RGB@{operator RGB}!GLTech2.RGB@{GLTech2.RGB}}
+\doxysubsubsection{\texorpdfstring{operator RGB()}{operator RGB()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily static implicit GLTech2.\+RGB.\+operator \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} (\begin{DoxyParamCaption}\item[{(byte r, byte g, byte b)}]{components }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Implicitly casts a tuple into a \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} struct. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em components} & The r, g, b components.\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_r_g_b_acd9ae8c10e92ad52121a49f8926f181a}\label{struct_g_l_tech2_1_1_r_g_b_acd9ae8c10e92ad52121a49f8926f181a}} 
+\index{GLTech2.RGB@{GLTech2.RGB}!operator RGB@{operator RGB}}
+\index{operator RGB@{operator RGB}!GLTech2.RGB@{GLTech2.RGB}}
+\doxysubsubsection{\texorpdfstring{operator RGB()}{operator RGB()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily static GLTech2.\+RGB.\+operator \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} (\begin{DoxyParamCaption}\item[{System.\+Drawing.\+Color}]{color }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}, {\ttfamily [static]}}
+
+
+
+Explicitly converts a System.\+Drawing.\+Color instance to \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}}. \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} does not store the A component. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em color} & The color to be converted\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_r_g_b_a9190fec094338ee7993b3323b559e8ba}\label{struct_g_l_tech2_1_1_r_g_b_a9190fec094338ee7993b3323b559e8ba}} 
+\index{GLTech2.RGB@{GLTech2.RGB}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!GLTech2.RGB@{GLTech2.RGB}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} GLTech2.\+RGB.\+operator$\ast$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}}}]{rgb,  }\item[{float}]{factor }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Multiplies the intensity of a pixel by a certain amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rgb} & The pixel\\
+\hline
+{\em factor} & The amount\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Resultint color
+\end{DoxyReturn}
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_r_g_b_a6a507e57da1e34fa8b1db0398aae0bcc}\label{struct_g_l_tech2_1_1_r_g_b_a6a507e57da1e34fa8b1db0398aae0bcc}} 
+\index{GLTech2.RGB@{GLTech2.RGB}!B@{B}}
+\index{B@{B}!GLTech2.RGB@{GLTech2.RGB}}
+\doxysubsubsection{\texorpdfstring{B}{B}}
+{\footnotesize\ttfamily byte GLTech2.\+RGB.\+B\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+The blue component 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_r_g_b_a3f124783544290db4144388fb586fc82}\label{struct_g_l_tech2_1_1_r_g_b_a3f124783544290db4144388fb586fc82}} 
+\index{GLTech2.RGB@{GLTech2.RGB}!Brightness@{Brightness}}
+\index{Brightness@{Brightness}!GLTech2.RGB@{GLTech2.RGB}}
+\doxysubsubsection{\texorpdfstring{Brightness}{Brightness}}
+{\footnotesize\ttfamily byte GLTech2.\+RGB.\+Brightness\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Gets the 0-\/255 brightness of the pixel. 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_r_g_b_a6f6ee5057e6cacfb746a957ce48bbb34}\label{struct_g_l_tech2_1_1_r_g_b_a6f6ee5057e6cacfb746a957ce48bbb34}} 
+\index{GLTech2.RGB@{GLTech2.RGB}!FastLuma@{FastLuma}}
+\index{FastLuma@{FastLuma}!GLTech2.RGB@{GLTech2.RGB}}
+\doxysubsubsection{\texorpdfstring{FastLuma}{FastLuma}}
+{\footnotesize\ttfamily float GLTech2.\+RGB.\+Fast\+Luma\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Gets a less precise but faster calculated value of the luma of the color. 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_r_g_b_a5ae53f3f73934fea4c5087b38ed5b1d1}\label{struct_g_l_tech2_1_1_r_g_b_a5ae53f3f73934fea4c5087b38ed5b1d1}} 
+\index{GLTech2.RGB@{GLTech2.RGB}!G@{G}}
+\index{G@{G}!GLTech2.RGB@{GLTech2.RGB}}
+\doxysubsubsection{\texorpdfstring{G}{G}}
+{\footnotesize\ttfamily byte GLTech2.\+RGB.\+G\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+The green component 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_r_g_b_a36f122c9e537969f962ccbfe6fbd39e4}\label{struct_g_l_tech2_1_1_r_g_b_a36f122c9e537969f962ccbfe6fbd39e4}} 
+\index{GLTech2.RGB@{GLTech2.RGB}!Luma@{Luma}}
+\index{Luma@{Luma}!GLTech2.RGB@{GLTech2.RGB}}
+\doxysubsubsection{\texorpdfstring{Luma}{Luma}}
+{\footnotesize\ttfamily float GLTech2.\+RGB.\+Luma\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Gets the luma of the pixel. 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_r_g_b_aec302465cc957a0bfe61e2247e690ca0}\label{struct_g_l_tech2_1_1_r_g_b_aec302465cc957a0bfe61e2247e690ca0}} 
+\index{GLTech2.RGB@{GLTech2.RGB}!R@{R}}
+\index{R@{R}!GLTech2.RGB@{GLTech2.RGB}}
+\doxysubsubsection{\texorpdfstring{R}{R}}
+{\footnotesize\ttfamily byte GLTech2.\+RGB.\+R\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+The red component 
+

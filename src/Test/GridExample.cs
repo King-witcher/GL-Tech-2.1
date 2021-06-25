@@ -38,7 +38,7 @@ namespace Test
                     binds[(128, 0, 255)] = hexagons;
                 }
 
-                GridMap gridMap = new GridMap(grid, binds);
+                GridMap gridMap = new GridMap(map: grid, textureBindings: binds);
                 scene.AddElement(gridMap);
             }
 

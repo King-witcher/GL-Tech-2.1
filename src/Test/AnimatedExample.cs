@@ -25,7 +25,7 @@ namespace Test
 
             // Pivot
             {
-                Empty pivot = new Empty(0, 0.2868f);
+                Empty pivot = new Empty(x: 0, y: 0.2868f);
                 pivot.AddBehaviour(new Rotate { Speed = -20f });
 
                 // Square
@@ -35,7 +35,11 @@ namespace Test
                         hoffset: 0f,
                         hrepeat: 2f);
 
-                    Element e = new RegularPolygon((-0.5f, 0f), 4, .354f, tex);
+                    Element e = new RegularPolygon(
+                        position: (-0.5f, 0f),
+                        vertices: 4,
+                        radius: .354f,
+                        texture: tex);
 
                     e.AddBehaviour(new Rotate { Speed = 180f });
                     e.Parent = pivot;
@@ -48,7 +52,11 @@ namespace Test
                         hoffset: 0f,
                         hrepeat: 4f);
 
-                    Element e = new RegularPolygon((0.5f, 0f), 100, .318f, tex);
+                    Element e = new RegularPolygon(
+                        position: (0.5f, 0f),
+                        vertices: 100,
+                        radius: .318f,
+                        texture: tex);
 
                     e.AddBehaviour(new Rotate { Speed = 180f });
                     e.Parent = pivot;
@@ -61,7 +69,11 @@ namespace Test
                         hoffset: 0f,
                         hrepeat: 1f);
 
-                    Element e = new RegularPolygon((0f, 0.866f), 3, .385f, tex);
+                    Element e = new RegularPolygon(
+                        position: (0f, 0.866f),
+                        vertices: 3,
+                        radius: .385f,
+                        texture: tex);
 
                     e.AddBehaviour(new Rotate { Speed = 180f });
                     e.Parent = pivot;
@@ -77,14 +89,18 @@ namespace Test
                     hoffset: 0f,
                     hrepeat: 32f);
 
-                Element e = new RegularPolygon(Vector.Origin, 4, 2, tex);
+                Element e = new RegularPolygon(
+                    position: Vector.Origin,
+                    vertices: 4,
+                    radius: 2f, 
+                    texture: tex);
 
                 scene.AddElement(e);
             }
 
             // Observer
             {
-                Observer pov = new Observer(Vector.Backward, 0);
+                Observer pov = new Observer(position: Vector.Backward, rotation: 0f);
 
                 pov.AddBehaviour<DebugPosition>();
                 pov.AddBehaviour<NoclipController>();

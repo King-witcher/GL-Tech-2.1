@@ -3,17 +3,16 @@ using GLTech2.PrefabElements;
 
 namespace GLTech2
 {
-    using GLTech2.Properties;
     partial class ProgramMain
     {
         static void AnimatedExample()
         {
             // Load buffers
-            using PixelBuffer background_buffer = (PixelBuffer)Resources.DoomSky;
-            using PixelBuffer carvedWall_buffer = (PixelBuffer)Resources.CarvedWall;
-            using PixelBuffer bricks_buffer = (PixelBuffer)Resources.Bricks;
-            using PixelBuffer wood_buffer = (PixelBuffer)Resources.Wood;
-            using PixelBuffer grayHexagons_buffer = (PixelBuffer)Resources.GrayHexagons;
+            using PixelBuffer background_buffer = (PixelBuffer)DemoTextures.HellSky;
+            using PixelBuffer carvedWall_buffer = (PixelBuffer)DemoTextures.CarvedWall;
+            using PixelBuffer bricks_buffer = (PixelBuffer)DemoTextures.Bricks;
+            using PixelBuffer wood_buffer = (PixelBuffer)DemoTextures.Wood;
+            using PixelBuffer grayHexagons_buffer = (PixelBuffer)DemoTextures.GrayHexagons;
 
             // Scene
             Texture background = new Texture(

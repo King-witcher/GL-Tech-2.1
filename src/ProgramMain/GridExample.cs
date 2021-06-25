@@ -4,16 +4,15 @@ using System.Collections.Generic;
 
 namespace GLTech2
 {
-    using GLTech2.Properties;
     partial class ProgramMain
     {
         static void GridExample()
         {
             // Buffers used
-            using PixelBuffer bricks_buffer = new PixelBuffer(Resources.Bricks);
-            using PixelBuffer wood_buffer = new PixelBuffer(Resources.Wood);
-            using PixelBuffer hexagons_buffer = new PixelBuffer(Resources.GrayHexagons);
-            using PixelBuffer background_buffer = new PixelBuffer(Resources.DoomSky);
+            using PixelBuffer bricks_buffer = new PixelBuffer(DemoTextures.Bricks);
+            using PixelBuffer wood_buffer = new PixelBuffer(DemoTextures.Wood);
+            using PixelBuffer hexagons_buffer = new PixelBuffer(DemoTextures.GrayHexagons);
+            using PixelBuffer background_buffer = new PixelBuffer(DemoTextures.HellSky);
 
             Texture background = new Texture(background_buffer);
 
@@ -21,7 +20,7 @@ namespace GLTech2
 
             // GridMap
             {
-                using PixelBuffer grid = new PixelBuffer(Resources.MapGrid);
+                using PixelBuffer grid = new PixelBuffer(DemoTextures.MapGrid);
                 Dictionary<RGB, Texture> dict = new Dictionary<RGB, Texture>();
                 {
                     Texture bricks = new Texture(

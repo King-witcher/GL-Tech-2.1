@@ -117,8 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="GL_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>gl icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="EngineName" xml:space="preserve">
+    <value>GL Tech 2.1</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Last Build" xml:space="preserve">
+    <value>2406.2</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>2.1</value>
   </data>
 </root>

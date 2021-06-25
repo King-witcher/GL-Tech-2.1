@@ -5,7 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <RootNamespace>GLTech2</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
-    <StartupObject>GLTech2.ProgramMain</StartupObject>
+    <StartupObject></StartupObject>
     <Nullable>annotations</Nullable>
     <AnalysisLevel>5.0</AnalysisLevel>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
@@ -32,17 +32,35 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Update="ProgramMain\DemoTextures.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoTextures.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="VersionData.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>VersionData.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="ProgramMain\DemoTextures.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DemoTextures.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="VersionData.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>VersionData.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GLTech2
+﻿namespace GLTech2
 {
     /// <summary>
     /// Represents and empty element that can basically be used to parent groups of elements.

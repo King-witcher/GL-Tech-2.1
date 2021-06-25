@@ -83,7 +83,7 @@ namespace GLTech2
         }
 
         [Obsolete]
-        public static Wall[] CreatePolygon(Texture texture, params Vector[] verts) //Beta
+        internal static Wall[] CreatePolygon(Texture texture, params Vector[] verts) //Beta
         {
             if (verts == null)
                 throw new ArgumentNullException("Verts cannot be null.");

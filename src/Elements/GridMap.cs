@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace GLTech2.PrefabElements
+﻿namespace GLTech2.PrefabElements
 {
     /// <summary>
     /// Provides a tool to build maps based on a image.
@@ -8,7 +6,7 @@ namespace GLTech2.PrefabElements
     /// Each pixel of the image can be converted into a block of its original color, a block with an especific Texture or nothing.
     /// </remarks>
     /// </summary>
-	class GridMap : Element
+	public partial class GridMap : Element
 	{
         private protected override Vector AbsolutePosition { get; set; } = Vector.Origin;
         private protected override Vector AbsoluteNormal { get; set; } = Vector.Forward;
@@ -44,12 +42,12 @@ namespace GLTech2.PrefabElements
         /// <param name="map">A pixelbuffer that represents each block of the map.</param>
         public GridMap(PixelBuffer map)
         {
-            Dictionary<RGB, Texture> textures = new Dictionary<RGB, Texture>();
+            TextureBindings textures = new TextureBindings();
 
-            // Gets a new texture if exists, otherwise creates it.
+            // Gets a new texture if exists; otherwise creates it.
             Texture getTexture(RGB rgb)
             {
-                if (textures.TryGetValue(rgb, out Texture texture))
+                if (textures.GetTexture(rgb, out Texture texture))
                     return texture;
                 else
                 {
@@ -90,14 +88,17 @@ namespace GLTech2.PrefabElements
         /// Gets a new instance of GridMap the remaps each color to a given texture.
         /// </summary>
         /// <param name="map">The map</param>
-        /// <param name="textures">A dictionary the links each pixel color to a texture</param>
-        public GridMap(PixelBuffer map, IDictionary<RGB, Texture> textures)
+        /// <param name="textureBindings">A hashmap that binds a set of Colors to Textures</param>
+        public GridMap(PixelBuffer map, TextureBindings textureBindings)
         {
+            if (textureBindings == null)
+                throw new System.ArgumentNullException("textureBindings");
+
             for (int column = 0; column < map.Width; column++)
             {
                 for (int line = 0; line < map.Height; line++)
                 {
-                    if (textures.TryGetValue(map[column, line], out Texture texture))
+                    if (textureBindings.GetTexture(map[column, line], out Texture texture))
                     {
                         Vector vert1 = (line, column);
                         Vector vert2 = (line + 1, column);

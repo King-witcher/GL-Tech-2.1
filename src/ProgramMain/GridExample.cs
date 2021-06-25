@@ -21,7 +21,7 @@ namespace GLTech2
             // GridMap
             {
                 using PixelBuffer grid = new PixelBuffer(DemoTextures.MapGrid);
-                Dictionary<RGB, Texture> dict = new Dictionary<RGB, Texture>();
+                GridMap.TextureBindings binds = new GridMap.TextureBindings();
                 {
                     Texture bricks = new Texture(
                         buffer: bricks_buffer,
@@ -33,12 +33,12 @@ namespace GLTech2
                         buffer: hexagons_buffer,
                         hrepeat: 2f);
 
-                    dict[(255, 255, 255)] = bricks;
-                    dict[(0, 192, 0)] = wood;
-                    dict[(128, 0, 255)] = hexagons;
+                    binds[(255, 255, 255)] = bricks;
+                    binds[(0, 192, 0)] = wood;
+                    binds[(128, 0, 255)] = hexagons;
                 }
 
-                GridMap gridMap = new GridMap(grid, dict);
+                GridMap gridMap = new GridMap(grid, binds);
                 scene.AddElement(gridMap);
             }
 

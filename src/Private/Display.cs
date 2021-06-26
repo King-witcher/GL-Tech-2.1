@@ -99,21 +99,21 @@ namespace GLTech2
         }
 
         private void Display_KeyDown(object sender, KeyEventArgs e) =>
-            Keyboard.KeyDown((Key)e.KeyCode);
+            Behaviour.Keyboard.KeyDown((Key)e.KeyCode);
 
         private void Display_KeyUp(object sender, KeyEventArgs e) =>
-            Keyboard.KeyUp((Key)e.KeyCode);
+            Behaviour.Keyboard.KeyUp((Key)e.KeyCode);
 
         private void OnFocus(object sender, EventArgs e)
         {
             if (Renderer.CaptureMouse)
-                Mouse.Enable();
+                Behaviour.Mouse.Enable();
         }
 
         private void OnLoseFocus(object _, EventArgs __)
         {
             if (Renderer.CaptureMouse)
-                Mouse.Disable();
+                Behaviour.Mouse.Disable();
         }
 
         private void Display_Load(object sender, EventArgs e)

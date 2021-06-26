@@ -1,4 +1,4 @@
-﻿namespace GLTech2.PrefabBehaviours
+﻿namespace GLTech2.Behaviours
 {
     /// <summary>
     /// Debugs all relative components of an object.

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace GLTech2.PostProcessing
+namespace GLTech2.PostProcessings
 {
     //Incomplete
-    internal sealed unsafe class GLTXAA : Effect, IDisposable
+    internal sealed unsafe class GLTXAA : PostProcessing, IDisposable
     {
         public GLTXAA(int width, int height, int threshold = 70)
         {

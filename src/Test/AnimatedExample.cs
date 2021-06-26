@@ -1,6 +1,6 @@
 ﻿using GLTech2;
-using GLTech2.PrefabBehaviours;
-using GLTech2.PrefabElements;
+using GLTech2.Behaviours;
+using GLTech2.Elements;
 
 namespace Test
 {

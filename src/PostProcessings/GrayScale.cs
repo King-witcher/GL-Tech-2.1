@@ -1,6 +1,6 @@
-﻿namespace GLTech2.PostProcessing
+﻿namespace GLTech2.PostProcessings
 {
-    public sealed class GrayScale : Effect
+    public sealed class GrayScale : PostProcessing
     {
         public override void Process(PixelBuffer target) =>
             target.Foreach(RGBToGray);

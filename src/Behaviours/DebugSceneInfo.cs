@@ -1,4 +1,4 @@
-﻿namespace GLTech2.PrefabBehaviours
+﻿namespace GLTech2.Behaviours
 {
     /// <summary>
     /// Debugs once how many walls are in the scene and then stops.

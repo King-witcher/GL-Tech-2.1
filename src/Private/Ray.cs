@@ -1,5 +1,6 @@
 ﻿namespace GLTech2
 {
+    // Spaguetti!
     internal unsafe struct Ray
     {
         private readonly Vector start;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GLTech2.PrefabBehaviours
+namespace GLTech2.Behaviours
 {
     /// <summary>
     /// Debugs performance stats about the scene.

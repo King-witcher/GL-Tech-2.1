@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GLTech2.PrefabElements
+namespace GLTech2.Elements
 {
     partial class GridMap
     {

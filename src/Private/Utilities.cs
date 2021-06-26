@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 
 namespace GLTech2
 {
     internal static unsafe class Utilities
     {
-
         internal const float ToRad = (float) Math.PI / 180f;
         internal const float ToDegree = 180f / (float)Math.PI;
 

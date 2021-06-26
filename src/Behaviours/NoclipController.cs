@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GLTech2.PrefabBehaviours
+namespace GLTech2.Behaviours
 {
     /// <summary>
     /// Allows the user to move the camera around the map using keyboard input in a quake-like way. May not work as expected yet.

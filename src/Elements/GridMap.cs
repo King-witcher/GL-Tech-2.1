@@ -1,4 +1,4 @@
-﻿namespace GLTech2.PrefabElements
+﻿namespace GLTech2.Elements
 {
     /// <summary>
     /// Provides a tool to build maps based on a image.

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace GLTech2.PostProcessing
+namespace GLTech2.PostProcessings
 {
     /// <summary>
     /// A faster version of FXAA that only blurs each edge.
     /// </summary>
-    public sealed unsafe class FFXAA : Effect, IDisposable
+    public sealed unsafe class FFXAA : PostProcessing, IDisposable
     {
         /// <summary>
         /// Shows every dettected edge.

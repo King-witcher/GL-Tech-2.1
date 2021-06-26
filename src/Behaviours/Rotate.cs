@@ -1,6 +1,6 @@
 ﻿#pragma warning disable IDE0051
 
-namespace GLTech2.PrefabBehaviours
+namespace GLTech2.Behaviours
 {
     /// <summary>
     /// A basic test script that makes the object rotate indefinitely.

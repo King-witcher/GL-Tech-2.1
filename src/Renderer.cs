@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GLTech2.PostProcessing;
+using GLTech2.PostProcessings;
 
 namespace GLTech2
 {
@@ -180,7 +180,7 @@ namespace GLTech2
         ///     Adds a new post processing effect to be applied every frame.
         /// </summary>
         /// <param name="postProcessing">Post processing effect to be applied</param>
-        public static void AddEffect(Effect postProcessing)
+        public static void AddEffect(PostProcessing postProcessing)
         {
             Renderer.postProcessing.Add(postProcessing);
         }
@@ -194,7 +194,7 @@ namespace GLTech2
         ///         Not every post processing effect can be added via Type because some needs to be setup manually.
         ///     </para>
         /// </remarks>
-        public static void AddPostProcessing<T>() where T : PostProcessing.Effect, new()
+        public static void AddPostProcessing<T>() where T : PostProcessing, new()
         {
             AddEffect(new T());
         }
@@ -325,7 +325,7 @@ namespace GLTech2
                 while (controlStopwatch.ElapsedMilliseconds < minframetime)
                     Thread.Yield();
 
-                Mouse.Measure();
+                Behaviour.Mouse.Measure();
                 Behaviour.Frame.RestartFrame();
                 Behaviour.Frame.BeginScript();
                 activeScene.InvokeUpdate();
@@ -345,7 +345,7 @@ namespace GLTech2
 
         }
 
-        private static List<Effect> postProcessing = new List<Effect>();
+        private static List<PostProcessing> postProcessing = new List<PostProcessing>();
         private static void PostProcess(PixelBuffer target)
         {
             foreach (var effect in postProcessing)

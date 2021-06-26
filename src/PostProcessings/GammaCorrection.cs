@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace GLTech2.PostProcessing
+namespace GLTech2.PostProcessings
 {
-    public unsafe sealed class GammaCorrection : Effect
+    public unsafe sealed class GammaCorrection : PostProcessing
     {
         float gamma;
         public float Gamma

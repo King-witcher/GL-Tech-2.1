@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GLTech2.PrefabElements
+namespace GLTech2.Elements
 {
     /// <summary>
     /// Stores a set of walls that makes a regular polygon.

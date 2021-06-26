@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GLTech2.PrefabElements
+namespace GLTech2.Elements
 {
     /// <summary>
     /// Represents a set of walls that make up a polygon.

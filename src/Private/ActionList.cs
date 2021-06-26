@@ -1,10 +1,10 @@
-﻿// Wasn't necessary yet.
+﻿// Performance optimization.
+// Wasn't necessary yet.
 
 using System;
 
 namespace GLTech2
 {
-
     internal class ActionList
     {
         Action[] actions;

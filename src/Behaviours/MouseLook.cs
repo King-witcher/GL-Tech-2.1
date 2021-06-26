@@ -1,5 +1,5 @@
 ﻿
-namespace GLTech2.PrefabBehaviours
+namespace GLTech2.Behaviours
 {
     /// <summary>
     /// Allows the user to move the camera horizontally using the mouse.

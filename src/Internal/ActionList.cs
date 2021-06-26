@@ -1,7 +1,10 @@
-﻿using System;
+﻿// Wasn't necessary yet.
+
+using System;
 
 namespace GLTech2
 {
+
     internal class ActionList
     {
         Action[] actions;

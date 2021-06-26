@@ -12,6 +12,10 @@ namespace GLTech2.PrefabBehaviours
         double totalScriptTime;
         int frameCount;
 
+        public bool DebugFrameTime { get; set; } = true;
+        public bool DebugRenderTime { get; set; } = true;
+        public bool DebugScriptTime { get; set; } = true;
+
         /// <summary>
         /// The debug step interval in seconds
         /// </summary>
@@ -34,9 +38,15 @@ namespace GLTech2.PrefabBehaviours
                 double renderRate = Math.Round(frameCount / totalRenderTime, 1);
                 double scriptRate = Math.Round(frameCount / totalScriptTime, 1);
 
-                Debug.Log($"Frame time (avg):\t{frameTime}ms ({frameRate} frames/s)");
-                Debug.Log($"Render time (avg):\t{renderTime}ms ({renderRate} frames/s)");
+                if (DebugFrameTime)
+                    Debug.Log($"Frame time (avg):\t{frameTime}ms ({frameRate} frames/s)");
+
+                if (DebugRenderTime)
+                    Debug.Log($"Render time (avg):\t{renderTime}ms ({renderRate} frames/s)");
+
+                if (DebugScriptTime)
                 Debug.Log($"Script time (avg):\t{scriptTime}ms ({scriptRate} cycles/s)");
+
                 Debug.Log();
 
                 totalFrameTime = 0;

@@ -283,11 +283,9 @@ namespace GLTech2
             ReloadCache();
 
             // Buffer where the image will be rendered
-            PixelBuffer activeBuffer;
-            if (DoubleBuffering)
-                activeBuffer = new PixelBuffer(outputBuffer.width, outputBuffer.height);
-            else
-                activeBuffer = outputBuffer;
+            PixelBuffer activeBuffer = DoubleBuffering ?
+                new PixelBuffer(outputBuffer.width, outputBuffer.height) :
+                outputBuffer;
 
             if (!DoubleBuffering && postProcessing.Count > 0)
                 Debug.InternalLog(
@@ -320,6 +318,7 @@ namespace GLTech2
                 // Copies the working buffer to the original.
                 if (DoubleBuffering)
                     outputBuffer.FastClone(activeBuffer);
+
                 Time.StopRender();
 
                 // This ensures that Time.DeltaTime won't be low enough to cause undefined physics behaviour.
@@ -329,7 +328,9 @@ namespace GLTech2
                 Mouse.Measure();
 
                 Time.BeginScript();
+
                 activeScene.InvokeUpdate();
+
                 Time.EndScript();
 
                 Time.RestartFrame();
@@ -338,7 +339,8 @@ namespace GLTech2
             // Tells the main thread that outputBuffer is up to be released.
             controlThreadRunning = false;
 
-            activeBuffer.Dispose();
+            if (DoubleBuffering)
+                activeBuffer.Dispose();
 
             Time.StopRunning();
         }

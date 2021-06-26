@@ -52,7 +52,7 @@ namespace GLTech2
             }
         }
 
-        // void EachFrame()
+        // void OnFrame()
         private Action updateMethod = null;
         internal Action UpdateMethod
         {
@@ -60,7 +60,7 @@ namespace GLTech2
             {
                 if (updateMethod is null)
                 {
-                    MethodInfo updateInfo = GetType().GetMethod("EachFrame",
+                    MethodInfo updateInfo = GetType().GetMethod("OnFrame",
                         BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
                         null,
                         new Type[0],

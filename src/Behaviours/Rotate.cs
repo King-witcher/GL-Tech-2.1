@@ -12,7 +12,7 @@ namespace GLTech2.PrefabBehaviours
         /// </summary>
         public float Speed { get; set; } = 30f;
 
-        void EachFrame()
+        void OnFrame()
         {
             Element.Rotate(Speed * Frame.DeltaTime);
         }

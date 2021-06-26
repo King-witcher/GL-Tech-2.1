@@ -23,7 +23,7 @@ namespace GLTech2.PrefabBehaviours
         /// </summary>
         public float Interval { get; set; } = 1f;
 
-        void EachFrame()
+        void OnFrame()
         {
             frameCount++;
             totalFrameTime += Frame.DeltaTime;
@@ -53,7 +53,7 @@ namespace GLTech2.PrefabBehaviours
                     Debug.Log($"Script time (avg):\t{scriptTime}ms ({scriptRate} cycles/s)");
 
                 if (DebugWindowTime)
-                    Debug.Log($"Window time (avg):\t{windowTime}ms ({windowRate} cycles/s)");
+                    Debug.Log($"Window time (avg):\t{windowTime}ms ({windowRate} frames/s)");
 
                 Debug.Log();
 

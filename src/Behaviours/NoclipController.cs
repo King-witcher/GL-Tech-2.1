@@ -32,7 +32,7 @@ namespace GLTech2.PrefabBehaviours
             velocity = Vector.Origin;
         }
 
-        void Update()
+        void EachFrame()
         {
             UpdateVelocity(GetMaxSpeed());
             UpdatePosition();

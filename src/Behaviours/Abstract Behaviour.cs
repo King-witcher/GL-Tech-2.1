@@ -52,7 +52,7 @@ namespace GLTech2
             }
         }
 
-        // void Update()
+        // void EachFrame()
         private Action updateMethod = null;
         internal Action UpdateMethod
         {
@@ -60,13 +60,13 @@ namespace GLTech2
             {
                 if (updateMethod is null)
                 {
-                    MethodInfo startInfo = GetType().GetMethod("Update",
+                    MethodInfo updateInfo = GetType().GetMethod("EachFrame",
                         BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
                         null,
                         new Type[0],
                         null);
 
-                    updateMethod = () => startInfo?.Invoke(this, null);
+                    updateMethod = () => updateInfo?.Invoke(this, null);
                 }
 
                 return updateMethod;

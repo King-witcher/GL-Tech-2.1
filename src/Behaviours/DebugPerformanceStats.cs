@@ -21,7 +21,7 @@ namespace GLTech2.PrefabBehaviours
         /// </summary>
         public float Interval { get; set; } = 1f;
 
-        void Update()
+        void EachFrame()
         {
             frameCount++;
             totalFrameTime += Time.DeltaTime;

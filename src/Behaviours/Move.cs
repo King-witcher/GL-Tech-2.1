@@ -17,7 +17,7 @@ namespace GLTech2.PrefabBehaviours
         /// </summary>
         public float Speed { get; set; } = 0.5f;
 
-        void Update()
+        void EachFrame()
         {
             Element.Translate(Direction * Speed * Time.DeltaTime);
         }

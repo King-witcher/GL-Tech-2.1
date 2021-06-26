@@ -30,7 +30,7 @@ namespace GLTech2.PrefabBehaviours
             this.Sensitivity = sensitivity;
         }
 
-        void Update()
+        void EachFrame()
         {
             if (Enabled)
                 element.Rotate(Mouse.HShift * 0.022f * Sensitivity);

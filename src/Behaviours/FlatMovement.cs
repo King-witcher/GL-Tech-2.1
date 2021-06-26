@@ -66,7 +66,7 @@ namespace GLTech2.PrefabBehaviours
         /// </summary>
         public Key ChangeRun_Walk { get; set; } = Key.ShiftKey;
 
-        void Update()
+        void EachFrame()
         {
             // Check speed
             bool run = AlwaysRun;

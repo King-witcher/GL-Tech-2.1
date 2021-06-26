@@ -27,7 +27,7 @@
 
         float timeSpent;
 
-        void Update()
+        void EachFrame()
         {
             timeSpent += Time.FrameTime;
 

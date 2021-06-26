@@ -11,24 +11,24 @@ namespace GLTech2
     /// Represents a 32-bits-per-pixel pixel buffer.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public unsafe struct PixelBuffer : IDisposable
+    public unsafe readonly struct PixelBuffer : IDisposable
     {
         [FieldOffset(0)]
-        internal int width;
+        internal readonly int width;
         [FieldOffset(4)]
-        internal int height;
+        internal readonly int height;
 
         // Theese are stored as float due to small optimizations.
         [FieldOffset(8)]
-        internal float height_float;
+        internal readonly float height_float;
         [FieldOffset(12)]
-        internal float width_float;
+        internal readonly float width_float;
 
         // Union
         [FieldOffset(16)]
-        internal uint* uint0;
+        internal readonly uint* uint0;
         [FieldOffset(16)]
-        internal RGB* rgb0;
+        internal readonly RGB* rgb0;
 
         /// <summary>
         /// Gets a RGB pixel given its cordinates.

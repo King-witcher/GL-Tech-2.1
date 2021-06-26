@@ -32,7 +32,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Elements\Gridmap.Bindings.cs" />
+    <None Include="Elements\GridMap.Bindings.cs" />
   </ItemGroup>
 
   <ItemGroup>

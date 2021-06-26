@@ -47,8 +47,8 @@ namespace Test
                 Observer pov = new Observer((5, 5), 180);
 
                 pov.AddBehaviour<DebugPerformanceStats>();
-                pov.AddBehaviour<DebugPosition>();
-                pov.AddBehaviour<DebugWallCount>();
+                pov.AddBehaviour<DebugComponents>();
+                pov.AddBehaviour<DebugSceneInfo>();
                 pov.AddBehaviour<FlatMovement>();
                 pov.AddBehaviour(new MouseLook(2.2f));
 

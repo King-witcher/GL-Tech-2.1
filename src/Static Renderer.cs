@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading;
@@ -38,7 +37,7 @@ namespace GLTech2
         /// </summary>
         public static Scene ActiveScene => activeScene;
 
-        private static float minframetime = 4;
+        private static float minframetime = 7;
         /// <summary>
         ///     Gets and sets the max framerate the engine can reach.
         /// </summary>

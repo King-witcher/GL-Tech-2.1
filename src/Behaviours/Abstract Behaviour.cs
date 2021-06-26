@@ -17,17 +17,17 @@ namespace GLTech2
         internal Element element;
 
         /// <summary>
-        ///     Makes possible the creation of derived classes.
+        /// Makes possible the creation of derived classes.
         /// </summary>
         protected internal Behaviour() { }
 
         /// <summary>
-        ///     Element to wich the script is attached.
+        /// Element to wich the script is attached.
         /// </summary>
         protected internal Element Element { get => element; }
 
         /// <summary>
-        ///     Scene to which the element is attached.
+        /// Scene to which the element is attached.
         /// </summary>
         protected internal Scene Scene { get => element.scene; }
 

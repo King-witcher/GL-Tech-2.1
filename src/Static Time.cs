@@ -16,14 +16,19 @@ namespace GLTech2
         private static double scriptTime = 0.0;
 
         /// <summary>
-        /// Gets the interval in seconds from the last frame to the current one.
+        /// The same as FrameTime. Similar to Unity3D.
         /// </summary>
-        public static float DeltaTime => GetTime(frameStopwatch);
+        public static float DeltaTime => FrameTime;
 
         /// <summary>
         /// Gets how much time, in seconds, have the engine spent rendering since the last Run() was call.
         /// </summary>
         public static float Elapsed => GetTime(sceneStopwatch);
+
+        /// <summary>
+        /// Gets the interval in seconds from the last frame to the current one.
+        /// </summary>
+        public static float FrameTime => GetTime(frameStopwatch);
 
         /// <summary>
         /// Gets the time in seconds spent only to generate the current frame, not considering time spent processing behaviours.

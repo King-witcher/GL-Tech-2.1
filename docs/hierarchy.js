@@ -1,9 +1,9 @@
 var hierarchy =
 [
     [ "GLTech2.Behaviour", "class_g_l_tech2_1_1_behaviour.html", [
-      [ "GLTech2.PrefabBehaviours.DebugFPS", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_f_p_s.html", null ],
-      [ "GLTech2.PrefabBehaviours.DebugPosition", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_position.html", null ],
-      [ "GLTech2.PrefabBehaviours.DebugWallCount", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_wall_count.html", null ],
+      [ "GLTech2.PrefabBehaviours.DebugComponents", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_components.html", null ],
+      [ "GLTech2.PrefabBehaviours.DebugPerformanceStats", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_performance_stats.html", null ],
+      [ "GLTech2.PrefabBehaviours.DebugSceneInfo", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_scene_info.html", null ],
       [ "GLTech2.PrefabBehaviours.FlatMovement", "class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement.html", null ],
       [ "GLTech2.PrefabBehaviours.MouseLook", "class_g_l_tech2_1_1_prefab_behaviours_1_1_mouse_look.html", null ],
       [ "GLTech2.PrefabBehaviours.Move", "class_g_l_tech2_1_1_prefab_behaviours_1_1_move.html", null ],
@@ -41,6 +41,5 @@ var hierarchy =
     [ "GLTech2.RGB", "struct_g_l_tech2_1_1_r_g_b.html", null ],
     [ "GLTech2.Texture", "struct_g_l_tech2_1_1_texture.html", null ],
     [ "GLTech2.PrefabElements.GridMap.TextureBindings", "class_g_l_tech2_1_1_prefab_elements_1_1_grid_map_1_1_texture_bindings.html", null ],
-    [ "GLTech2.Time", "class_g_l_tech2_1_1_time.html", null ],
     [ "GLTech2.VersionData", "class_g_l_tech2_1_1_version_data.html", null ]
 ];

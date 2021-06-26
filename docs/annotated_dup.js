@@ -8,9 +8,9 @@ var annotated_dup =
         [ "GrayScale", "class_g_l_tech2_1_1_post_processing_1_1_gray_scale.html", "class_g_l_tech2_1_1_post_processing_1_1_gray_scale" ]
       ] ],
       [ "PrefabBehaviours", "namespace_g_l_tech2_1_1_prefab_behaviours.html", [
-        [ "DebugFPS", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_f_p_s.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_f_p_s" ],
-        [ "DebugPosition", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_position.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_position" ],
-        [ "DebugWallCount", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_wall_count.html", null ],
+        [ "DebugComponents", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_components.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_components" ],
+        [ "DebugPerformanceStats", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_performance_stats.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_performance_stats" ],
+        [ "DebugSceneInfo", "class_g_l_tech2_1_1_prefab_behaviours_1_1_debug_scene_info.html", null ],
         [ "FlatMovement", "class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_flat_movement" ],
         [ "MouseLook", "class_g_l_tech2_1_1_prefab_behaviours_1_1_mouse_look.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_mouse_look" ],
         [ "Move", "class_g_l_tech2_1_1_prefab_behaviours_1_1_move.html", "class_g_l_tech2_1_1_prefab_behaviours_1_1_move" ],
@@ -34,7 +34,6 @@ var annotated_dup =
       [ "Debug", "class_g_l_tech2_1_1_debug.html", "class_g_l_tech2_1_1_debug" ],
       [ "Keyboard", "class_g_l_tech2_1_1_keyboard.html", "class_g_l_tech2_1_1_keyboard" ],
       [ "Mouse", "class_g_l_tech2_1_1_mouse.html", "class_g_l_tech2_1_1_mouse" ],
-      [ "Time", "class_g_l_tech2_1_1_time.html", "class_g_l_tech2_1_1_time" ],
       [ "Texture", "struct_g_l_tech2_1_1_texture.html", "struct_g_l_tech2_1_1_texture" ],
       [ "Vector", "struct_g_l_tech2_1_1_vector.html", "struct_g_l_tech2_1_1_vector" ],
       [ "VersionData", "class_g_l_tech2_1_1_version_data.html", "class_g_l_tech2_1_1_version_data" ]

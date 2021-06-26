@@ -8,8 +8,8 @@ namespace Test
         {
             Debug.ConsoleEnabled = true;
 
-            Debug.Pause("Press any key to start.");
-            GridExample();
+            //Debug.Pause("Press any key to start.");
+            //GridExample();
 
             Debug.Clear();
             Debug.Pause("Press any key to start.");

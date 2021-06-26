@@ -102,8 +102,9 @@ namespace Test
             {
                 Observer pov = new Observer(position: Vector.Backward, rotation: 0f);
 
-                pov.AddBehaviour<DebugPosition>();
+                // pov.AddBehaviour<DebugPosition>();
                 pov.AddBehaviour<NoclipController>();
+                pov.AddBehaviour<DebugPerformanceStats>();
                 pov.AddBehaviour(new MouseLook(2.2f));
 
                 scene.AddElement(pov);

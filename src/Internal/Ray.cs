@@ -1,15 +1,9 @@
-﻿//See Vector.cs before
-//See Wall.cs before
-//See Vector.cs before
-//See Material.cs before
-//See Texture32.cs before
-
-namespace GLTech2
+﻿namespace GLTech2
 {
     internal unsafe struct Ray
     {
-        private readonly Vector direction;
         private readonly Vector start;
+        private readonly Vector direction;
 
         public Ray(Vector start, float angle)
         {

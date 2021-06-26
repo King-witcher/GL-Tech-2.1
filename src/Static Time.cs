@@ -3,58 +3,81 @@
 namespace GLTech2
 {
     /// <summary>
-    ///     Provides an interface to get time information from GLTech2.
+    /// Provides an interface to get time information from GLTech2.
     /// </summary>
-    public static class Time // Can be changed.
+    public static class Time
     {
-        // Accessed by Renderer.
-        internal static double renderTime = 0f; // Must be 0 after stopping rendering.
-        internal static float fixedTime = 0f;
-
-        private static Stopwatch sceneStopwatch = new Stopwatch();
         private static Stopwatch frameStopwatch = new Stopwatch();
+        private static Stopwatch renderStopwatch = new Stopwatch();
+        private static Stopwatch sceneStopwatch = new Stopwatch();
+        private static Stopwatch scriptStopwatch = new Stopwatch();
+
+        private static double renderTime = 0.0;
+        private static double scriptTime = 0.0;
 
         /// <summary>
-        ///     Gets the interval in seconds from the last frame to the current one.
+        /// Gets the interval in seconds from the last frame to the current one.
         /// </summary>
         public static float DeltaTime => GetTime(frameStopwatch);
 
         /// <summary>
-        ///     Gets how much time, in seconds, have the engine spent rendering since the last Run() was call.
+        /// Gets how much time, in seconds, have the engine spent rendering since the last Run() was call.
         /// </summary>
         public static float Elapsed => GetTime(sceneStopwatch);
 
-        internal static float FixedTime => fixedTime; // Test
-
         /// <summary>
-        ///     Gets the time in seconds spent only to generate the current frame, not considering time spent processing behaviours.
+        /// Gets the time in seconds spent only to generate the current frame, not considering time spent processing behaviours.
         /// </summary>
         public static double RenderTime => renderTime;
 
+        /// <summary>
+        /// Gets the time in seconds spent only to run all behaviour scripts in the previous frame, not considering time spent rendering.
+        /// </summary>
+        public static double ScriptTime => scriptTime;
 
-        internal static void Start()
+        #region This region interface is used by Renderer
+        internal static void BeginRunning()
         {
             sceneStopwatch.Start();
             frameStopwatch.Start();
         }
 
-        internal static void Restart()
-        {
-            frameStopwatch.Restart();
-        }
-
-        /// <summary>
-        /// Interrupts measurement of time and redefines the to initial.
-        /// </summary>
-        internal static void Reset()
+        internal static void StopRunning()
         {
             sceneStopwatch.Reset();
             frameStopwatch.Reset();
 
-            renderTime = 0f;
-            fixedTime = 0f;
+            renderTime = 0;
+            scriptTime = 0;
         }
 
+        internal static void RestartFrame()
+        {
+            frameStopwatch.Restart();
+        }
+
+        internal static void BeginRender()
+        {
+            renderStopwatch.Restart();
+        }
+
+        internal static void StopRender()
+        {
+            renderStopwatch.Stop();
+            renderTime = (double)renderStopwatch.ElapsedTicks / Stopwatch.Frequency;
+        }
+
+        internal static void BeginScript()
+        {
+            scriptStopwatch.Restart();
+        }
+
+        internal static void EndScript()
+        {
+            scriptStopwatch.Stop();
+            scriptTime = (double)scriptStopwatch.ElapsedTicks / Stopwatch.Frequency;
+        }
+        #endregion
 
         private static float GetTime(Stopwatch sw) => ((float)sw.ElapsedTicks) / Stopwatch.Frequency;
     }

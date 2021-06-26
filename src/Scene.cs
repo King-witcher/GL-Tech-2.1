@@ -122,7 +122,10 @@ namespace GLTech2
                     unmanaged->activeObserver = value.unmanaged;
                 }
                 else
-                    Debug.InternalLog("Scene", "Can\'t set a camera that is not in this scene.", Debug.Options.Error);
+                    Debug.InternalLog(
+                        origin: "Scene",
+                        message: "Can\'t set a camera that is not in this scene.",
+                        debugOption: Debug.Options.Error);
             }
         }
 
@@ -225,6 +228,11 @@ namespace GLTech2
         private void UnmanagedAddObserver(Observer p)
         {
             ActiveObserver = p;
+        }
+
+        private Element RayCast()
+        {
+            return null;
         }
 
         /// <summary>

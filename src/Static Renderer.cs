@@ -304,36 +304,35 @@ namespace GLTech2
                         "more performance or less input lag, consider disabling DoubleBuffering.",
                     debugOption: Debug.Options.Info);
 
-            // Stopwatch that counts RenderTime.
-            Stopwatch controlSW = new Stopwatch();
-
             // Initialize everything before rendering first frame.
             activeScene.InvokeStart();
-            Time.Start();
+            Time.BeginRunning();
 
             // While this variable is set to true, outputBuffer cannot be released.
             controlThreadRunning = true;
 
             while (!cancellationRequest)
             {
-                controlSW.Restart();
-
+                Time.BeginRender();
                 CLRRenderLegacy(activeBuffer, activeScene.unmanaged);
                 PostProcess(activeBuffer);
 
                 // Copies the working buffer to the original.
                 if (DoubleBuffering)
                     outputBuffer.FastClone(activeBuffer);
-
-                Time.renderTime = (double)controlSW.ElapsedTicks / Stopwatch.Frequency;
+                Time.StopRender();
 
                 // This ensures that Time.DeltaTime won't be low enough to cause undefined physics behaviour.
                 while (Time.DeltaTime * 1000 < minframetime)
                     Thread.Yield();
 
                 Mouse.Measure();
+
+                Time.BeginScript();
                 activeScene.InvokeUpdate();
-                Time.Restart();
+                Time.EndScript();
+
+                Time.RestartFrame();
             }
 
             // Tells the main thread that outputBuffer is up to be released.
@@ -341,7 +340,7 @@ namespace GLTech2
 
             activeBuffer.Dispose();
 
-            Time.Reset();
+            Time.StopRunning();
         }
 
         private static void LoadScene(Scene scene)

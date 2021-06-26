@@ -29,7 +29,7 @@
 
         void EachFrame()
         {
-            timeSpent += Time.FrameTime;
+            timeSpent += Frame.Time;
 
             if (timeSpent >= Interval)
             {

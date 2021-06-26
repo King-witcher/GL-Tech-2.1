@@ -80,19 +80,19 @@ namespace GLTech2.PrefabBehaviours
 
             // Step
             if (Keyboard.IsKeyDown(StepForward))
-                Element.Translate(Vector.Forward * speed * Time.DeltaTime);
+                Element.Translate(Vector.Forward * speed * Frame.DeltaTime);
             if (Keyboard.IsKeyDown(StepBack))
-                Element.Translate(Vector.Backward * speed * Time.DeltaTime);
+                Element.Translate(Vector.Backward * speed * Frame.DeltaTime);
             if (Keyboard.IsKeyDown(StepLeft))
-                Element.Translate(Vector.Left * speed * Time.DeltaTime);
+                Element.Translate(Vector.Left * speed * Frame.DeltaTime);
             if (Keyboard.IsKeyDown(StepRight))
-                Element.Translate(Vector.Right * speed * Time.DeltaTime);
+                Element.Translate(Vector.Right * speed * Frame.DeltaTime);
 
             // Turn
             if (Keyboard.IsKeyDown(TurnLeft))
-                Element.Rotate(-TurnSpeed * Time.DeltaTime);
+                Element.Rotate(-TurnSpeed * Frame.DeltaTime);
             if (Keyboard.IsKeyDown(TurnRight))
-                Element.Rotate(TurnSpeed * Time.DeltaTime);
+                Element.Rotate(TurnSpeed * Frame.DeltaTime);
         }
     }
 }

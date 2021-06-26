@@ -12,7 +12,7 @@ namespace GLTech2
     ///         The Start() method, if any, will be executed once the scene is loaded. Update() method, otherwise, is called after every frame is rendered.
     ///     </para>
     /// </remarks>
-    public abstract class Behaviour
+    public abstract partial class Behaviour
     {
         internal Element element;
 

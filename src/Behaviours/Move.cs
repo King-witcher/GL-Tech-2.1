@@ -19,7 +19,7 @@ namespace GLTech2.PrefabBehaviours
 
         void EachFrame()
         {
-            Element.Translate(Direction * Speed * Time.DeltaTime);
+            Element.Translate(Direction * Speed * Frame.DeltaTime);
         }
     }
 }

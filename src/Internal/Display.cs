@@ -35,6 +35,8 @@ namespace GLTech2
 
         internal void RePaint(object _ = null, EventArgs __ = null)
         {
+            Behaviour.Frame.EndWindow();
+            Behaviour.Frame.BeginWindow();
             pictureBox.Image = image;
         }
 

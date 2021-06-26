@@ -14,7 +14,7 @@ namespace GLTech2.PrefabBehaviours
 
         void EachFrame()
         {
-            Element.Rotate(Speed * Time.DeltaTime);
+            Element.Rotate(Speed * Frame.DeltaTime);
         }
     }
 }

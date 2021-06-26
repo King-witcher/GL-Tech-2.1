@@ -56,7 +56,7 @@ namespace GLTech2.PrefabBehaviours
             Vector wishdir = GetWishDir();
 
             float currentspeed = Vector.DotProduct(velocity, wishdir);
-            float addspeed = Acceleration * Time.DeltaTime;
+            float addspeed = Acceleration * Frame.DeltaTime;
             if (addspeed < 0)
                 return;
             else if (addspeed > MaxSpeed - currentspeed)
@@ -67,7 +67,7 @@ namespace GLTech2.PrefabBehaviours
 
         void UpdatePosition()
         {
-            element.Position += velocity * Time.DeltaTime;
+            element.Position += velocity * Frame.DeltaTime;
         }
 
         Vector GetWishDir()
@@ -94,7 +94,7 @@ namespace GLTech2.PrefabBehaviours
 
         void ApplyFriction()
         {
-            velocity -= velocity * Time.DeltaTime * Friction;
+            velocity -= velocity * Frame.DeltaTime * Friction;
         }
     }
 }

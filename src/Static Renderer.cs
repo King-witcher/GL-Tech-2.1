@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -273,7 +274,7 @@ namespace GLTech2
         }
 
         private unsafe static void ControlTrhead(
-            PixelBuffer outputBuffer,
+            PixelBuffer frontBuffer,
             in bool cancellationRequest,
             ref bool controlThreadRunning)
         {
@@ -282,9 +283,9 @@ namespace GLTech2
             ReloadCache();
 
             // Buffer where the image will be rendered
-            PixelBuffer activeBuffer = DoubleBuffering ?
-                new PixelBuffer(outputBuffer.width, outputBuffer.height) :
-                outputBuffer;
+            PixelBuffer backBuffer = DoubleBuffering ?
+                new PixelBuffer(frontBuffer.width, frontBuffer.height) :
+                frontBuffer;
 
             if (!DoubleBuffering && postProcessing.Count > 0)
                 Debug.InternalLog(
@@ -301,47 +302,42 @@ namespace GLTech2
                         "more performance or less input lag, consider disabling DoubleBuffering.",
                     debugOption: Debug.Options.Info);
 
-            // Initialize everything before rendering first frame.
+            Stopwatch controlStopwatch = new Stopwatch();   // Need to cap framerate
+            Behaviour.Frame.RestartFrame();
+            Behaviour.Frame.BeginScript();
             activeScene.InvokeStart();
-            Time.BeginRunning();
+            Behaviour.Frame.EndScript();
 
-            // While this variable is set to true, outputBuffer cannot be released.
+            // While this variable is set to true, outputBuffer cannot be released by Renderer.Run() thread.
             controlThreadRunning = true;
 
             while (!cancellationRequest)
             {
-                Time.BeginRender();
-                CLRRenderLegacy(activeBuffer, activeScene.unmanaged);
-                PostProcess(activeBuffer);
+                controlStopwatch.Restart();
+                Behaviour.Frame.BeginRender();
+                CLRRenderLegacy(backBuffer, activeScene.unmanaged);
+                PostProcess(backBuffer);
 
-                // Copies the working buffer to the original.
                 if (DoubleBuffering)
-                    outputBuffer.FastClone(activeBuffer);
+                    frontBuffer.FastClone(backBuffer);
+                Behaviour.Frame.EndRender();
 
-                Time.StopRender();
-
-                // This ensures that Time.DeltaTime won't be low enough to cause undefined physics behaviour.
-                while (Time.DeltaTime * 1000 < minframetime)
+                while (controlStopwatch.ElapsedMilliseconds < minframetime)
                     Thread.Yield();
 
                 Mouse.Measure();
-
-                Time.BeginScript();
-
+                Behaviour.Frame.RestartFrame();
+                Behaviour.Frame.BeginScript();
                 activeScene.InvokeUpdate();
-
-                Time.EndScript();
-
-                Time.RestartFrame();
+                Behaviour.Frame.EndScript();
             }
+            controlStopwatch.Stop();
+            Behaviour.Frame.Stop();
 
-            // Tells the main thread that outputBuffer is up to be released.
+            // OutputBuffer is up to be released.
             controlThreadRunning = false;
-
             if (DoubleBuffering)
-                activeBuffer.Dispose();
-
-            Time.StopRunning();
+                backBuffer.Dispose();
         }
 
         private static void LoadScene(Scene scene)

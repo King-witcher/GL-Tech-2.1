@@ -3,18 +3,20 @@
 namespace GLTech2.PrefabBehaviours
 {
     /// <summary>
-    /// Debugs how much fps the scene is running.
+    /// Debugs performance stats about the scene.
     /// </summary>
     public class DebugPerformanceStats : Behaviour
     {
         float totalFrameTime;
         double totalRenderTime;
         double totalScriptTime;
+        float totalWindowTime;
         int frameCount;
 
         public bool DebugFrameTime { get; set; } = true;
         public bool DebugRenderTime { get; set; } = true;
         public bool DebugScriptTime { get; set; } = true;
+        public bool DebugWindowTime { get; set; } = true;
 
         /// <summary>
         /// The debug step interval in seconds
@@ -24,19 +26,22 @@ namespace GLTech2.PrefabBehaviours
         void EachFrame()
         {
             frameCount++;
-            totalFrameTime += Time.DeltaTime;
-            totalRenderTime += Time.RenderTime;
-            totalScriptTime += Time.ScriptTime;
+            totalFrameTime += Frame.DeltaTime;
+            totalRenderTime += Frame.RenderTime;
+            totalScriptTime += Frame.ScriptTime;
+            totalWindowTime += Frame.WindowTime;
 
             if (totalFrameTime >= Interval)
             {
                 double frameTime = Math.Round(1000.0 * totalFrameTime / frameCount, 2);
                 double renderTime = Math.Round(1000.0 * totalRenderTime / frameCount, 2);
                 double scriptTime = Math.Round(1000.0 * totalScriptTime / frameCount, 2);
+                double windowTime = Math.Round(1000.0 * totalWindowTime / frameCount, 2);
 
                 double frameRate = Math.Round(frameCount / totalFrameTime, 1);
                 double renderRate = Math.Round(frameCount / totalRenderTime, 1);
                 double scriptRate = Math.Round(frameCount / totalScriptTime, 1);
+                double windowRate = Math.Round(frameCount / totalWindowTime, 1);
 
                 if (DebugFrameTime)
                     Debug.Log($"Frame time (avg):\t{frameTime}ms ({frameRate} frames/s)");
@@ -45,13 +50,17 @@ namespace GLTech2.PrefabBehaviours
                     Debug.Log($"Render time (avg):\t{renderTime}ms ({renderRate} frames/s)");
 
                 if (DebugScriptTime)
-                Debug.Log($"Script time (avg):\t{scriptTime}ms ({scriptRate} cycles/s)");
+                    Debug.Log($"Script time (avg):\t{scriptTime}ms ({scriptRate} cycles/s)");
+
+                if (DebugWindowTime)
+                    Debug.Log($"Window time (avg):\t{windowTime}ms ({windowRate} cycles/s)");
 
                 Debug.Log();
 
                 totalFrameTime = 0;
                 totalRenderTime = 0;
                 totalScriptTime = 0;
+                totalWindowTime = 0;
                 frameCount = 0;
             }
         }

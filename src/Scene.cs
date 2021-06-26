@@ -40,7 +40,7 @@ namespace GLTech2
                 {
                     Vector start = (line, 0);
                     Vector end = (line + 1, 0);
-                    AddElement(new Wall(start, end, texture));
+                    AddElement(new Plane(start, end, texture));
                 }
             }
 
@@ -51,7 +51,7 @@ namespace GLTech2
                 {
                     Vector start = (line + 1, map.Width);
                     Vector end = (line, map.Width);
-                    AddElement(new Wall(start, end, texture));
+                    AddElement(new Plane(start, end, texture));
                 }
             }
 
@@ -62,7 +62,7 @@ namespace GLTech2
                 {
                     Vector start = (0, column + 1);
                     Vector end = (0, column);
-                    AddElement(new Wall(start, end, texture));
+                    AddElement(new Plane(start, end, texture));
                 }
             }
 
@@ -73,7 +73,7 @@ namespace GLTech2
                 {
                     Vector start = (map.Height, column);
                     Vector end = (map.Height, column + 1);
-                    AddElement(new Wall(start, end, texture));
+                    AddElement(new Plane(start, end, texture));
                 }
             }
 
@@ -90,7 +90,7 @@ namespace GLTech2
 					{
                         Vector start = (line + (leftIsFilled ? 1 : 0), col);
                         Vector end = (line + (currentIsFilled ? 1 : 0), col);
-                        AddElement(new Wall(start, end, texture));
+                        AddElement(new Plane(start, end, texture));
 
                         leftIsFilled = currentIsFilled;
                     }
@@ -179,8 +179,8 @@ namespace GLTech2
                 element.Parent = null;
             }
 
-            if (element is Wall)
-                UnmanagedAddWall(element as Wall);
+            if (element is Plane)
+                UnmanagedAddWall(element as Plane);
             else if (element is Sprite)
                 UnmanagedAddSprite(element as Sprite);
             else if (element is Observer)
@@ -217,7 +217,7 @@ namespace GLTech2
             AddElements((IEnumerable<Element>) elements);
         }
 
-        private void UnmanagedAddWall(Wall w)
+        private void UnmanagedAddWall(Plane w)
         {
             if (unmanaged->wall_count >= unmanaged->wall_max)
                 throw new IndexOutOfRangeException("Wall limit reached.");

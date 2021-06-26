@@ -8,7 +8,7 @@ namespace GLTech2
     /// <summary>
     /// Represents a wall that can be rendered on the screen.
     /// </summary>
-    public unsafe class Wall : Element
+    public unsafe class Plane : Element
     {
         internal WallData* unmanaged;
 
@@ -72,12 +72,12 @@ namespace GLTech2
         /// <param name="start">Starting point</param>
         /// <param name="end">End point</param>
         /// <param name="texture">Texture</param>
-        public Wall(Vector start, Vector end, Texture texture)
+        public Plane(Vector start, Vector end, Texture texture)
         {
             unmanaged = WallData.Create(start, end, texture);
         }
         
-        public Wall(Vector start, float angle_deg, float length, Texture texture)
+        public Plane(Vector start, float angle_deg, float length, Texture texture)
         {
             unmanaged = WallData.Create(start, angle_deg, length, texture);
         }

@@ -20,13 +20,12 @@ namespace GLTech2
             /// </summary>
             public static int VShift { get; private set; }
 
-
             static bool enabled = false;
             static int centerH = Screen.PrimaryScreen.Bounds.Width / 2;
             static int centerV = Screen.PrimaryScreen.Bounds.Height / 2;
             static Point center = new Point(centerH, centerV);
             static Point previousCursorPosition;
-
+            
             internal static void Enable()
             {
                 if (!enabled)

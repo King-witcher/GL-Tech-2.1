@@ -7,8 +7,8 @@ namespace GLTech2.Elements
     /// </summary>
     public class Polygon : Element
     {
-        public override Vector AbsolutePosition { get; set; }
-        public override Vector AbsoluteNormal { get; set; }
+        public override Vector AbsolutePosition { get; set; } = Vector.Origin;
+        public override Vector AbsoluteNormal { get; set; } = Vector.Forward;
 
         private protected Polygon() { }
 
@@ -21,9 +21,6 @@ namespace GLTech2.Elements
         {
             if (vertices is null)
                 throw new ArgumentNullException("\"vertices\" cannot be null.");
-
-            AbsolutePosition = Vector.Origin;
-            AbsoluteNormal = Vector.Forward;
 
             Build(vertices, texture);
         }

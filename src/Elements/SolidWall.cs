@@ -10,6 +10,7 @@ namespace GLTech2.Elements
         {
             AbsolutePosition = start;
             AbsoluteNormal = end - start;
+
             new VisualPlane(start, end, texture).ReferencePoint = this;
             new PhysicalPlane(start, end).ReferencePoint = this;
         }

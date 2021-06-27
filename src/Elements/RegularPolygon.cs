@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GLTech2.Elements
+﻿namespace GLTech2.Elements
 {
     /// <summary>
     /// Stores a set of walls that makes a regular polygon.
@@ -13,7 +11,7 @@ namespace GLTech2.Elements
         /// Gets a new instance of RegularPolygon.
         /// </summary>
         /// <remarks>
-        /// Its absolute position is equal to the center of the object, while its Normal.Module is equal to the radius.
+        /// The Element.Position property will be equal to it's center, while it's Element.Normal will point to Vector.Forward and have module equal to the polygon radius.
         /// </remarks>
         /// <param name="position">The center of the polygon</param>
         /// <param name="vertices">How many vertices the polygon has</param>

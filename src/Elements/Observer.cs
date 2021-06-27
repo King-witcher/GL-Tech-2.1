@@ -30,7 +30,7 @@ namespace GLTech2
     {
         internal ObserverData* unmanaged;
 
-        public Observer(Vector position, float rotation)
+        public Observer(Vector position, float rotation = 0f)
         {
             unmanaged = ObserverData.Create(position, rotation);
         }

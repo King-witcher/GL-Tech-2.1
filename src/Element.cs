@@ -8,32 +8,32 @@ namespace GLTech2
     /// </summary>
     public abstract class Element : IDisposable
     {
+        internal Action StartAction;
+        internal Action OnFrameAction;
+        private Element referencePoint = null;
+        private List<Behaviour> behaviours = new List<Behaviour>();
+        internal List<Element> childs = new List<Element>();
+        internal Scene scene;
+        private Vector relativePosition;
+        private Vector relativeNormal;
+
+        public Element() { }
+
         /// <summary>
-        /// Private protected. Determines how the element stores its position.
+        /// Gets and sets the absolute position of an Element without and allows subclasses to store the Position the way they want.
         /// </summary>
         /// <remarks>
-        /// Remember to set it before parenting any object!
+        /// Important: Elements that take this element as reference point will not follow it imediatelly for performance and code health reasons. Changing this property is only recommended if the element is not a reference point to any other and changing positions is a significant performance bottleneck in your application. Otherwise, always use Element.Position property instead.
         /// </remarks>
         public abstract Vector AbsolutePosition { get; set; }
 
         /// <summary>
-        /// Private protected. Determines how the element stores its normal.
+        /// Determines how the element stores its normal.
         /// </summary>
         /// <remarks>
         /// Remember to set it before parenting any object!
         /// </remarks>
         public abstract Vector AbsoluteNormal { get; set; } //Provides rotation and scale of the object.
-
-        public Element() { }
-
-        internal Action StartAction;
-        internal Action OnFrameAction;
-        private Element referencePoint = null;
-        private List<Behaviour> behaviours = new List<Behaviour>();
-        private Vector relativePosition;
-        private Vector relativeNormal;
-        internal Scene scene;
-        internal List<Element> childs = new List<Element>();
 
         /// <summary>
         /// Its correspondent scene. If the element is not bound to any scene, returns null.

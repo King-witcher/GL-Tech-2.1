@@ -40,7 +40,7 @@ namespace GLTech2
                 {
                     Vector start = (line, 0);
                     Vector end = (line + 1, 0);
-                    AddElement(new Plane(start, end, texture));
+                    AddElement(new VisualPlane(start, end, texture));
                 }
             }
 
@@ -51,7 +51,7 @@ namespace GLTech2
                 {
                     Vector start = (line + 1, map.Width);
                     Vector end = (line, map.Width);
-                    AddElement(new Plane(start, end, texture));
+                    AddElement(new VisualPlane(start, end, texture));
                 }
             }
 
@@ -62,7 +62,7 @@ namespace GLTech2
                 {
                     Vector start = (0, column + 1);
                     Vector end = (0, column);
-                    AddElement(new Plane(start, end, texture));
+                    AddElement(new VisualPlane(start, end, texture));
                 }
             }
 
@@ -73,7 +73,7 @@ namespace GLTech2
                 {
                     Vector start = (map.Height, column);
                     Vector end = (map.Height, column + 1);
-                    AddElement(new Plane(start, end, texture));
+                    AddElement(new VisualPlane(start, end, texture));
                 }
             }
 
@@ -90,7 +90,7 @@ namespace GLTech2
 					{
                         Vector start = (line + (leftIsFilled ? 1 : 0), col);
                         Vector end = (line + (currentIsFilled ? 1 : 0), col);
-                        AddElement(new Plane(start, end, texture));
+                        AddElement(new VisualPlane(start, end, texture));
 
                         leftIsFilled = currentIsFilled;
                     }
@@ -132,12 +132,12 @@ namespace GLTech2
         /// <summary>
         /// Gets how many walls the scene can fit.
         /// </summary>
-        public int MaxWalls => unmanaged->wall_max;
+        public int MaxWalls => unmanaged->plane_max;
 
         /// <summary>
         /// Gets how many walls the scene fits.
         /// </summary>
-        public int WallCount => unmanaged->wall_count;
+        public int WallCount => unmanaged->plane_count;
 
         /// <summary>
         /// Gets and sets the background texture of the Scene.
@@ -179,8 +179,8 @@ namespace GLTech2
                 element.Parent = null;
             }
 
-            if (element is Plane)
-                UnmanagedAddWall(element as Plane);
+            if (element is VisualPlane)
+                UnmanagedAddWall(element as VisualPlane);
             else if (element is Sprite)
                 UnmanagedAddSprite(element as Sprite);
             else if (element is Observer)
@@ -217,9 +217,9 @@ namespace GLTech2
             AddElements((IEnumerable<Element>) elements);
         }
 
-        private void UnmanagedAddWall(Plane w)
+        private void UnmanagedAddWall(VisualPlane w)
         {
-            if (unmanaged->wall_count >= unmanaged->wall_max)
+            if (unmanaged->plane_count >= unmanaged->plane_max)
                 throw new IndexOutOfRangeException("Wall limit reached.");
             unmanaged->Add(w.unmanaged);
         }

@@ -9,6 +9,22 @@ namespace GLTech2
     /// </summary>
     public abstract class Element : IDisposable
     {
+        /// <summary>
+        /// Private protected. Determines how the element stores its position.
+        /// </summary>
+        /// <remarks>
+        /// Remember to set it before parenting any object!
+        /// </remarks>
+        private protected abstract Vector AbsolutePosition { get; set; }
+
+        /// <summary>
+        /// Private protected. Determines how the element stores its normal.
+        /// </summary>
+        /// <remarks>
+        /// Remember to set it before parenting any object!
+        /// </remarks>
+        private protected abstract Vector AbsoluteNormal { get; set; } //Provides rotation and scale of the object.
+
         // Every element MUST call UpdateRelative() after construction. I have to fix it yet.
         private protected Element() { }
 
@@ -29,25 +45,7 @@ namespace GLTech2
         /// </summary>
         public int ChildCount => childs.Count;
 
-        /// <summary>
-        /// Private protected. Determines how the element stores its position.
-        /// </summary>
-        /// <remarks>
-        /// Remember to set it before parenting any object!
-        /// </remarks>
-        private protected abstract Vector AbsolutePosition { get; set; }
-
-        /// <summary>
-        /// Private protected. Determines how the element stores its normal.
-        /// </summary>
-        /// <remarks>
-        /// Remember to set it before parenting any object!
-        /// </remarks>
-        private protected abstract Vector AbsoluteNormal { get; set; } //Provides rotation and scale of the object.
-
-
         internal event Action OnMoveOrRotate;
-
 
         /// <summary>
         ///     Gets and sets element's position relatively to it's parent or, if it has no parent, it's absolute position. 

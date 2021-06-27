@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-
-namespace GLTech2
+﻿namespace GLTech2
 {
     /// <summary>
     /// Represents a wall that can be rendered on the screen.
     /// </summary>
-    public unsafe class Plane : Element
+    public unsafe class VisualPlane : Element
     {
-        internal WallData* unmanaged;
+        internal VisualPlaneData* unmanaged;
 
         /// <summary>
         /// Gets and sets the starting point of the wall.
@@ -72,19 +67,19 @@ namespace GLTech2
         /// <param name="start">Starting point</param>
         /// <param name="end">End point</param>
         /// <param name="texture">Texture</param>
-        public Plane(Vector start, Vector end, Texture texture)
+        public VisualPlane(Vector start, Vector end, Texture texture)
         {
-            unmanaged = WallData.Create(start, end, texture);
+            unmanaged = VisualPlaneData.Create(start, end, texture);
         }
         
-        public Plane(Vector start, float angle_deg, float length, Texture texture)
+        public VisualPlane(Vector start, float angle_deg, float length, Texture texture)
         {
-            unmanaged = WallData.Create(start, angle_deg, length, texture);
+            unmanaged = VisualPlaneData.Create(start, angle_deg, length, texture);
         }
 
         public override void Dispose()
         {
-            WallData.Delete(unmanaged);
+            VisualPlaneData.Delete(unmanaged);
             unmanaged = null;
         }
 

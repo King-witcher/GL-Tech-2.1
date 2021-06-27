@@ -74,10 +74,10 @@
                     Vector vert3 = (line + 1, column + 1);
                     Vector vert4 = (line, column + 1);
 
-                    new Plane(vert1, vert2, texture).Parent = this;
-                    new Plane(vert2, vert3, texture).Parent = this;
-                    new Plane(vert3, vert4, texture).Parent = this;
-                    new Plane(vert4, vert1, texture).Parent = this;
+                    new VisualPlane(vert1, vert2, texture).Parent = this;
+                    new VisualPlane(vert2, vert3, texture).Parent = this;
+                    new VisualPlane(vert3, vert4, texture).Parent = this;
+                    new VisualPlane(vert4, vert1, texture).Parent = this;
 
                     walls += 4;
                 }
@@ -105,10 +105,10 @@
                         Vector vert3 = (line + 1, column + 1);
                         Vector vert4 = (line, column + 1);
 
-                        new Plane(vert1, vert2, texture).Parent = this;
-                        new Plane(vert2, vert3, texture).Parent = this;
-                        new Plane(vert3, vert4, texture).Parent = this;
-                        new Plane(vert4, vert1, texture).Parent = this;
+                        new VisualPlane(vert1, vert2, texture).Parent = this;
+                        new VisualPlane(vert2, vert3, texture).Parent = this;
+                        new VisualPlane(vert3, vert4, texture).Parent = this;
+                        new VisualPlane(vert4, vert1, texture).Parent = this;
 
                         walls += 4;
                     }

@@ -14,9 +14,9 @@ Inheritance diagram for GLTech2.\+Scene\+:\begin{figure}[H]
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_g_l_tech2_1_1_scene_adcdbcecf3508e116e99113611bb432a3}{Scene}} (int max\+Walls=512, int max\+Sprities=512)
+\mbox{\hyperlink{class_g_l_tech2_1_1_scene_a8208fe98ce0ec42750545bea9e361c0c}{Scene}} ()
 \begin{DoxyCompactList}\small\item\em Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{class_g_l_tech2_1_1_scene_a15ffbcf5fbe322bce81d5ed80e31424e}{Scene}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} background, int max\+Walls=512, int max\+Sprities=512)
+\mbox{\hyperlink{class_g_l_tech2_1_1_scene_a426bcf862efb15d1a0e20af840024d8f}{Scene}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} background)
 \begin{DoxyCompactList}\small\item\em Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_g_l_tech2_1_1_scene_abdb094a97415efcf60c4dc3025ab4ef8}{Add\+Element}} (\mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} element)
 \begin{DoxyCompactList}\small\item\em Add a new element and every child it has to the scene. \end{DoxyCompactList}\item 
@@ -31,8 +31,6 @@ void \mbox{\hyperlink{class_g_l_tech2_1_1_scene_a1c7f731747698f69e67516ed3d256a1
 \item 
 \mbox{\hyperlink{class_g_l_tech2_1_1_observer}{Observer}} \mbox{\hyperlink{class_g_l_tech2_1_1_scene_a4c2a6432de7960baaf06a3b973b997d7}{Active\+Observer}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Gets and sets the current observer from where the scene will be rendered. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{class_g_l_tech2_1_1_scene_abb11e7872088d4d58abd1abf009d1b6a}{Max\+Walls}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
-\begin{DoxyCompactList}\small\item\em Gets how many walls the scene can fit. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{class_g_l_tech2_1_1_scene_a070db74209163f6b79d46d4e72c98a14}{Wall\+Count}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Gets how many walls the scene fits. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} \mbox{\hyperlink{class_g_l_tech2_1_1_scene_ae196cc715e79b19b9426e8e3a8e54819}{Background}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
@@ -45,28 +43,21 @@ Represents a scene, which stores a set of elements that can be or not rendered a
 
 
 \doxysubsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{class_g_l_tech2_1_1_scene_adcdbcecf3508e116e99113611bb432a3}\label{class_g_l_tech2_1_1_scene_adcdbcecf3508e116e99113611bb432a3}} 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_scene_a8208fe98ce0ec42750545bea9e361c0c}\label{class_g_l_tech2_1_1_scene_a8208fe98ce0ec42750545bea9e361c0c}} 
 \index{GLTech2.Scene@{GLTech2.Scene}!Scene@{Scene}}
 \index{Scene@{Scene}!GLTech2.Scene@{GLTech2.Scene}}
 \doxysubsubsection{\texorpdfstring{Scene()}{Scene()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily GLTech2.\+Scene.\+Scene (\begin{DoxyParamCaption}\item[{int}]{max\+Walls = {\ttfamily 512},  }\item[{int}]{max\+Sprities = {\ttfamily 512} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily GLTech2.\+Scene.\+Scene (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
 Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}. 
 
-
-\begin{DoxyParams}{Parameters}
-{\em max\+Walls} & Max walls that the scene can fit\\
-\hline
-{\em max\+Sprities} & Max sprities that the scene can fit\\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{class_g_l_tech2_1_1_scene_a15ffbcf5fbe322bce81d5ed80e31424e}\label{class_g_l_tech2_1_1_scene_a15ffbcf5fbe322bce81d5ed80e31424e}} 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_scene_a426bcf862efb15d1a0e20af840024d8f}\label{class_g_l_tech2_1_1_scene_a426bcf862efb15d1a0e20af840024d8f}} 
 \index{GLTech2.Scene@{GLTech2.Scene}!Scene@{Scene}}
 \index{Scene@{Scene}!GLTech2.Scene@{GLTech2.Scene}}
 \doxysubsubsection{\texorpdfstring{Scene()}{Scene()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily GLTech2.\+Scene.\+Scene (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}}]{background,  }\item[{int}]{max\+Walls = {\ttfamily 512},  }\item[{int}]{max\+Sprities = {\ttfamily 512} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily GLTech2.\+Scene.\+Scene (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}}]{background }\end{DoxyParamCaption})}
 
 
 
@@ -75,10 +66,6 @@ Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}.
 
 \begin{DoxyParams}{Parameters}
 {\em background} & Background material rendered behind everything\\
-\hline
-{\em max\+Walls} & Max walls that the scene can fit\\
-\hline
-{\em max\+Sprities} & Max sprities that the scene can fit\\
 \hline
 \end{DoxyParams}
 
@@ -165,16 +152,6 @@ Gets and sets the current observer from where the scene will be rendered.
 
 
 Gets and sets the background texture of the \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}. 
-
-\mbox{\Hypertarget{class_g_l_tech2_1_1_scene_abb11e7872088d4d58abd1abf009d1b6a}\label{class_g_l_tech2_1_1_scene_abb11e7872088d4d58abd1abf009d1b6a}} 
-\index{GLTech2.Scene@{GLTech2.Scene}!MaxWalls@{MaxWalls}}
-\index{MaxWalls@{MaxWalls}!GLTech2.Scene@{GLTech2.Scene}}
-\doxysubsubsection{\texorpdfstring{MaxWalls}{MaxWalls}}
-{\footnotesize\ttfamily int GLTech2.\+Scene.\+Max\+Walls\hspace{0.3cm}{\ttfamily [get]}}
-
-
-
-Gets how many walls the scene can fit. 
 
 \mbox{\Hypertarget{class_g_l_tech2_1_1_scene_a070db74209163f6b79d46d4e72c98a14}\label{class_g_l_tech2_1_1_scene_a070db74209163f6b79d46d4e72c98a14}} 
 \index{GLTech2.Scene@{GLTech2.Scene}!WallCount@{WallCount}}

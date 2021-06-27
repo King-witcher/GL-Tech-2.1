@@ -10,7 +10,7 @@ Provides an interface to render scenes and output the video in a window.
 \item 
 static \mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}} \mbox{\hyperlink{class_g_l_tech2_1_1_renderer_a9c0caa919ece3d3435f37949ba377ab7}{Get\+Screenshot}} ()
 \begin{DoxyCompactList}\small\item\em Takes a screenshot of the current frame as \mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}}. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{class_g_l_tech2_1_1_renderer_a6de1b7d46da441c649c9a1b085503e75}{Add\+Effect}} (\mbox{\hyperlink{class_g_l_tech2_1_1_post_processing_1_1_effect}{Effect}} post\+Processing)
+static void \mbox{\hyperlink{class_g_l_tech2_1_1_renderer_a4197e98dcd25f65b228ae679f3f07be9}{Add\+Effect}} (\mbox{\hyperlink{class_g_l_tech2_1_1_post_processing}{Post\+Processing}} post\+Processing)
 \begin{DoxyCompactList}\small\item\em Adds a new post processing effect to be applied every frame. \end{DoxyCompactList}\item 
 static void \mbox{\hyperlink{class_g_l_tech2_1_1_renderer_a4a5dd72d1e64d10cbe9e2de40495163b}{Add\+Post\+Processing$<$ T $>$}} ()
 \begin{DoxyCompactList}\small\item\em Adds a new instance of a given post processing effect to be applied every frame. \end{DoxyCompactList}\item 
@@ -49,11 +49,11 @@ Provides an interface to render scenes and output the video in a window.
 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{class_g_l_tech2_1_1_renderer_a6de1b7d46da441c649c9a1b085503e75}\label{class_g_l_tech2_1_1_renderer_a6de1b7d46da441c649c9a1b085503e75}} 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_renderer_a4197e98dcd25f65b228ae679f3f07be9}\label{class_g_l_tech2_1_1_renderer_a4197e98dcd25f65b228ae679f3f07be9}} 
 \index{GLTech2.Renderer@{GLTech2.Renderer}!AddEffect@{AddEffect}}
 \index{AddEffect@{AddEffect}!GLTech2.Renderer@{GLTech2.Renderer}}
 \doxysubsubsection{\texorpdfstring{AddEffect()}{AddEffect()}}
-{\footnotesize\ttfamily static void GLTech2.\+Renderer.\+Add\+Effect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g_l_tech2_1_1_post_processing_1_1_effect}{Effect}}}]{post\+Processing }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static void GLTech2.\+Renderer.\+Add\+Effect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g_l_tech2_1_1_post_processing}{Post\+Processing}}}]{post\+Processing }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -83,7 +83,7 @@ Adds a new instance of a given post processing effect to be applied every frame.
 
 Not every post processing effect can be added via Type because some needs to be setup manually. \begin{Desc}
 \item[Type Constraints]\begin{description}
-\item[{\em T} : {\em Post\+Processing.\+Effect}]\item[{\em T} : {\em new()}]\end{description}
+\item[{\em T} : {\em Post\+Processing}]\item[{\em T} : {\em new()}]\end{description}
 \end{Desc}
 \mbox{\Hypertarget{class_g_l_tech2_1_1_renderer_a9c0caa919ece3d3435f37949ba377ab7}\label{class_g_l_tech2_1_1_renderer_a9c0caa919ece3d3435f37949ba377ab7}} 
 \index{GLTech2.Renderer@{GLTech2.Renderer}!GetScreenshot@{GetScreenshot}}

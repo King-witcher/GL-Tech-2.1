@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['iskeydown_242',['IsKeyDown',['../class_g_l_tech2_1_1_keyboard.html#a31b4871b1674a2309e8f1a0fb2dd2e82',1,'GLTech2::Keyboard']]]
+  ['log_236',['Log',['../class_g_l_tech2_1_1_debug.html#a113b23387881334f731c8edb911219e7',1,'GLTech2::Debug']]]
 ];

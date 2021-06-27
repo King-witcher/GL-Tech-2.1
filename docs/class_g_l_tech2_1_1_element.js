@@ -20,11 +20,9 @@ var class_g_l_tech2_1_1_element =
     [ "AbsolutePosition", "class_g_l_tech2_1_1_element.html#aeed443f8b0c0bb570d9af8a8e3faa644", null ],
     [ "ChildCount", "class_g_l_tech2_1_1_element.html#a2ab96f9dcff0ff247af5eece1bb83d2a", null ],
     [ "Normal", "class_g_l_tech2_1_1_element.html#a27bdbdce9b1e0d4ae19726cf9e302ca3", null ],
-    [ "Parent", "class_g_l_tech2_1_1_element.html#aed800c203d9dadc1189bf70d0290bd40", null ],
     [ "Position", "class_g_l_tech2_1_1_element.html#a2158d6c2610d88bf3b7991765d62036a", null ],
+    [ "ReferencePoint", "class_g_l_tech2_1_1_element.html#a69e8d97b2bccd2a687778461e4873ee6", null ],
     [ "Rotation", "class_g_l_tech2_1_1_element.html#aca666f90e12d34dd00e509a593ea02f0", null ],
     [ "Scene", "class_g_l_tech2_1_1_element.html#a9687d40a7e6ca4204ccacefadbf0ec17", null ],
-    [ "OnMoveOrRotate", "class_g_l_tech2_1_1_element.html#a50264bbfb9c4794986c3059093d23da1", null ],
-    [ "StartEvent", "class_g_l_tech2_1_1_element.html#a23c9daac1c3899a32e06505fec790cd2", null ],
-    [ "UpdateEvent", "class_g_l_tech2_1_1_element.html#a813c01067a80cd4735e90d4d6d69a874", null ]
+    [ "OnChangeComponents", "class_g_l_tech2_1_1_element.html#a09a12718901d1b775c457c27a018ab28", null ]
 ];

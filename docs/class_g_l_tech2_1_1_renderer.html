@@ -98,9 +98,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a9c0caa919ece3d3435f37949ba377ab7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_g_l_tech2_1_1_pixel_buffer.html">PixelBuffer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_renderer.html#a9c0caa919ece3d3435f37949ba377ab7">GetScreenshot</a> ()</td></tr>
 <tr class="memdesc:a9c0caa919ece3d3435f37949ba377ab7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Takes a screenshot of the current frame as <a class="el" href="struct_g_l_tech2_1_1_pixel_buffer.html" title="Represents a 32-bits-per-pixel pixel buffer.">PixelBuffer</a>.  <a href="class_g_l_tech2_1_1_renderer.html#a9c0caa919ece3d3435f37949ba377ab7">More...</a><br /></td></tr>
 <tr class="separator:a9c0caa919ece3d3435f37949ba377ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6de1b7d46da441c649c9a1b085503e75"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_renderer.html#a6de1b7d46da441c649c9a1b085503e75">AddEffect</a> (<a class="el" href="class_g_l_tech2_1_1_post_processing_1_1_effect.html">Effect</a> postProcessing)</td></tr>
-<tr class="memdesc:a6de1b7d46da441c649c9a1b085503e75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new post processing effect to be applied every frame.  <a href="class_g_l_tech2_1_1_renderer.html#a6de1b7d46da441c649c9a1b085503e75">More...</a><br /></td></tr>
-<tr class="separator:a6de1b7d46da441c649c9a1b085503e75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4197e98dcd25f65b228ae679f3f07be9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_renderer.html#a4197e98dcd25f65b228ae679f3f07be9">AddEffect</a> (<a class="el" href="class_g_l_tech2_1_1_post_processing.html">PostProcessing</a> postProcessing)</td></tr>
+<tr class="memdesc:a4197e98dcd25f65b228ae679f3f07be9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new post processing effect to be applied every frame.  <a href="class_g_l_tech2_1_1_renderer.html#a4197e98dcd25f65b228ae679f3f07be9">More...</a><br /></td></tr>
+<tr class="separator:a4197e98dcd25f65b228ae679f3f07be9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a5dd72d1e64d10cbe9e2de40495163b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_renderer.html#a4a5dd72d1e64d10cbe9e2de40495163b">AddPostProcessing&lt; T &gt;</a> ()</td></tr>
 <tr class="memdesc:a4a5dd72d1e64d10cbe9e2de40495163b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new instance of a given post processing effect to be applied every frame.  <a href="class_g_l_tech2_1_1_renderer.html#a4a5dd72d1e64d10cbe9e2de40495163b">More...</a><br /></td></tr>
 <tr class="separator:a4a5dd72d1e64d10cbe9e2de40495163b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,8 +147,8 @@ Properties</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides an interface to render scenes and output the video in a window. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6de1b7d46da441c649c9a1b085503e75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6de1b7d46da441c649c9a1b085503e75">&#9670;&nbsp;</a></span>AddEffect()</h2>
+<a id="a4197e98dcd25f65b228ae679f3f07be9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4197e98dcd25f65b228ae679f3f07be9">&#9670;&nbsp;</a></span>AddEffect()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -159,7 +159,7 @@ Properties</h2></td></tr>
         <tr>
           <td class="memname">static void GLTech2.Renderer.AddEffect </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_g_l_tech2_1_1_post_processing_1_1_effect.html">Effect</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_g_l_tech2_1_1_post_processing.html">PostProcessing</a>&#160;</td>
           <td class="paramname"><em>postProcessing</em></td><td>)</td>
           <td></td>
         </tr>
@@ -215,7 +215,7 @@ Properties</h2></td></tr>
 <div class="typeconstraint">
 <dl><dt><b>Type Constraints</b></dt><dd>
 <table border="0" cellspacing="2" cellpadding="0">
-<tr><td valign="top"><em>T</em></td><td>&#160;:</td><td valign="top"><em>PostProcessing.Effect</em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>T</em></td><td>&#160;:</td><td valign="top"><em>PostProcessing</em></td><td>&#160;</td></tr>
 <tr><td valign="top"><em>T</em></td><td>&#160;:</td><td valign="top"><em>new()</em></td><td>&#160;</td></tr>
 </table>
 </dd>

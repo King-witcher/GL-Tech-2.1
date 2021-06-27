@@ -98,12 +98,14 @@ Inheritance diagram for GLTech2.Element:</div>
  <div class="center">
   <img src="class_g_l_tech2_1_1_element.png" usemap="#GLTech2.Element_map" alt=""/>
   <map id="GLTech2.Element_map" name="GLTech2.Element_map">
-<area href="class_g_l_tech2_1_1_empty.html" title="Represents and empty element that can basically be used to parent groups of elements." alt="GLTech2.Empty" shape="rect" coords="0,112,249,136"/>
-<area href="class_g_l_tech2_1_1_observer.html" title="Represents a point of view from which the Renderer can render a scene." alt="GLTech2.Observer" shape="rect" coords="259,112,508,136"/>
-<area href="class_g_l_tech2_1_1_prefab_elements_1_1_grid_map.html" title="Provides a tool to build maps based on a image." alt="GLTech2.PrefabElements.GridMap" shape="rect" coords="518,112,767,136"/>
-<area href="class_g_l_tech2_1_1_prefab_elements_1_1_polygon.html" title="Represents a set of walls that make up a polygon." alt="GLTech2.PrefabElements.Polygon" shape="rect" coords="777,112,1026,136"/>
-<area href="class_g_l_tech2_1_1_wall.html" title="Represents a wall that can be rendered on the screen." alt="GLTech2.Wall" shape="rect" coords="1036,112,1285,136"/>
-<area href="class_g_l_tech2_1_1_prefab_elements_1_1_regular_polygon.html" title="Stores a set of walls that makes a regular polygon." alt="GLTech2.PrefabElements.RegularPolygon" shape="rect" coords="777,168,1026,192"/>
+<area href="class_g_l_tech2_1_1_elements_1_1_grid_map.html" title="Provides a tool to build maps based on a image." alt="GLTech2.Elements.GridMap" shape="rect" coords="0,112,211,136"/>
+<area href="class_g_l_tech2_1_1_elements_1_1_polygon.html" title="Represents a set of walls that make up a polygon." alt="GLTech2.Elements.Polygon" shape="rect" coords="221,112,432,136"/>
+<area href="class_g_l_tech2_1_1_elements_1_1_solid_wall.html" alt="GLTech2.Elements.SolidWall" shape="rect" coords="442,112,653,136"/>
+<area href="class_g_l_tech2_1_1_empty.html" title="Represents and empty element that can basically be used to parent groups of elements." alt="GLTech2.Empty" shape="rect" coords="663,112,874,136"/>
+<area href="class_g_l_tech2_1_1_observer.html" title="Represents a point of view from which the Renderer can render a scene." alt="GLTech2.Observer" shape="rect" coords="884,112,1095,136"/>
+<area href="class_g_l_tech2_1_1_physical_plane.html" alt="GLTech2.PhysicalPlane" shape="rect" coords="1105,112,1316,136"/>
+<area href="class_g_l_tech2_1_1_visual_plane.html" title="Represents a plane that can be rendered on the screen." alt="GLTech2.VisualPlane" shape="rect" coords="1326,112,1537,136"/>
+<area href="class_g_l_tech2_1_1_elements_1_1_regular_polygon.html" title="Stores a set of walls that makes a regular polygon." alt="GLTech2.Elements.RegularPolygon" shape="rect" coords="221,168,432,192"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -116,7 +118,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ab4341dd58606ebaf4d17fd2d4c18d706"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotate the object a specified amount.  <a href="class_g_l_tech2_1_1_element.html#ab4341dd58606ebaf4d17fd2d4c18d706">More...</a><br /></td></tr>
 <tr class="separator:ab4341dd58606ebaf4d17fd2d4c18d706"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72a6c6676b1eccd40ac89036ca12cf4f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#a72a6c6676b1eccd40ac89036ca12cf4f">DetachChilds</a> ()</td></tr>
-<tr class="memdesc:a72a6c6676b1eccd40ac89036ca12cf4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dettach all childs and make their parents = null.  <a href="class_g_l_tech2_1_1_element.html#a72a6c6676b1eccd40ac89036ca12cf4f">More...</a><br /></td></tr>
+<tr class="memdesc:a72a6c6676b1eccd40ac89036ca12cf4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dettach all childs and make their reference point equal to null.  <a href="class_g_l_tech2_1_1_element.html#a72a6c6676b1eccd40ac89036ca12cf4f">More...</a><br /></td></tr>
 <tr class="separator:a72a6c6676b1eccd40ac89036ca12cf4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aabe6ae3c53c63648f1d43efa508b8cc5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#aabe6ae3c53c63648f1d43efa508b8cc5">AddBehaviour</a> (<a class="el" href="class_g_l_tech2_1_1_behaviour.html">Behaviour</a> behaviour)</td></tr>
 <tr class="memdesc:aabe6ae3c53c63648f1d43efa508b8cc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a behaviour script to the element by instance.  <a href="class_g_l_tech2_1_1_element.html#aabe6ae3c53c63648f1d43efa508b8cc5">More...</a><br /></td></tr>
@@ -157,18 +159,18 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
+<tr class="memitem:aeed443f8b0c0bb570d9af8a8e3faa644"><td class="memItemLeft" align="right" valign="top">abstract <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#aeed443f8b0c0bb570d9af8a8e3faa644">AbsolutePosition</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:aeed443f8b0c0bb570d9af8a8e3faa644"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets and sets the absolute position of an <a class="el" href="class_g_l_tech2_1_1_element.html" title="Represents an element that can be part of a Scene.">Element</a> without and allows subclasses to store the Position the way they want.  <a href="class_g_l_tech2_1_1_element.html#aeed443f8b0c0bb570d9af8a8e3faa644">More...</a><br /></td></tr>
+<tr class="separator:aeed443f8b0c0bb570d9af8a8e3faa644"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a585edc055b0a0256ee31dfa67cefcedb"><td class="memItemLeft" align="right" valign="top">abstract <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#a585edc055b0a0256ee31dfa67cefcedb">AbsoluteNormal</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a585edc055b0a0256ee31dfa67cefcedb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines how the element stores its normal.  <a href="class_g_l_tech2_1_1_element.html#a585edc055b0a0256ee31dfa67cefcedb">More...</a><br /></td></tr>
+<tr class="separator:a585edc055b0a0256ee31dfa67cefcedb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9687d40a7e6ca4204ccacefadbf0ec17"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_g_l_tech2_1_1_scene.html">Scene</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#a9687d40a7e6ca4204ccacefadbf0ec17">Scene</a><code> [get]</code></td></tr>
 <tr class="memdesc:a9687d40a7e6ca4204ccacefadbf0ec17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Its correspondent scene. If the element is not bound to any scene, returns null.  <a href="class_g_l_tech2_1_1_element.html#a9687d40a7e6ca4204ccacefadbf0ec17">More...</a><br /></td></tr>
 <tr class="separator:a9687d40a7e6ca4204ccacefadbf0ec17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ab96f9dcff0ff247af5eece1bb83d2a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#a2ab96f9dcff0ff247af5eece1bb83d2a">ChildCount</a><code> [get]</code></td></tr>
 <tr class="memdesc:a2ab96f9dcff0ff247af5eece1bb83d2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many childs the element has.  <a href="class_g_l_tech2_1_1_element.html#a2ab96f9dcff0ff247af5eece1bb83d2a">More...</a><br /></td></tr>
 <tr class="separator:a2ab96f9dcff0ff247af5eece1bb83d2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeed443f8b0c0bb570d9af8a8e3faa644"><td class="memItemLeft" align="right" valign="top">abstract <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#aeed443f8b0c0bb570d9af8a8e3faa644">AbsolutePosition</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:aeed443f8b0c0bb570d9af8a8e3faa644"><td class="mdescLeft">&#160;</td><td class="mdescRight">Private protected. Determines how the element stores its position.  <a href="class_g_l_tech2_1_1_element.html#aeed443f8b0c0bb570d9af8a8e3faa644">More...</a><br /></td></tr>
-<tr class="separator:aeed443f8b0c0bb570d9af8a8e3faa644"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a585edc055b0a0256ee31dfa67cefcedb"><td class="memItemLeft" align="right" valign="top">abstract <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#a585edc055b0a0256ee31dfa67cefcedb">AbsoluteNormal</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a585edc055b0a0256ee31dfa67cefcedb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Private protected. Determines how the element stores its normal.  <a href="class_g_l_tech2_1_1_element.html#a585edc055b0a0256ee31dfa67cefcedb">More...</a><br /></td></tr>
-<tr class="separator:a585edc055b0a0256ee31dfa67cefcedb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2158d6c2610d88bf3b7991765d62036a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#a2158d6c2610d88bf3b7991765d62036a">Position</a><code> [get, set]</code></td></tr>
 <tr class="memdesc:a2158d6c2610d88bf3b7991765d62036a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets and sets element's position relatively to it's parent or, if it has no parent, it's absolute position.  <a href="class_g_l_tech2_1_1_element.html#a2158d6c2610d88bf3b7991765d62036a">More...</a><br /></td></tr>
 <tr class="separator:a2158d6c2610d88bf3b7991765d62036a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -178,9 +180,9 @@ Properties</h2></td></tr>
 <tr class="memitem:aca666f90e12d34dd00e509a593ea02f0"><td class="memItemLeft" align="right" valign="top">float?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#aca666f90e12d34dd00e509a593ea02f0">Rotation</a><code> [get, set]</code></td></tr>
 <tr class="memdesc:aca666f90e12d34dd00e509a593ea02f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets and sets directly the element's rotation relative to it's parent or, if it has no parents, it's absolute rotation.  <a href="class_g_l_tech2_1_1_element.html#aca666f90e12d34dd00e509a593ea02f0">More...</a><br /></td></tr>
 <tr class="separator:aca666f90e12d34dd00e509a593ea02f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed800c203d9dadc1189bf70d0290bd40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_g_l_tech2_1_1_element.html">Element</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#aed800c203d9dadc1189bf70d0290bd40">Parent</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:aed800c203d9dadc1189bf70d0290bd40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets and sets element's parent. Null is equivalent to no parent.  <a href="class_g_l_tech2_1_1_element.html#aed800c203d9dadc1189bf70d0290bd40">More...</a><br /></td></tr>
-<tr class="separator:aed800c203d9dadc1189bf70d0290bd40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69e8d97b2bccd2a687778461e4873ee6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_g_l_tech2_1_1_element.html">Element</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#a69e8d97b2bccd2a687778461e4873ee6">ReferencePoint</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a69e8d97b2bccd2a687778461e4873ee6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets and sets element's reference point. A null value means that the element will take as reference point the scene.  <a href="class_g_l_tech2_1_1_element.html#a69e8d97b2bccd2a687778461e4873ee6">More...</a><br /></td></tr>
+<tr class="separator:a69e8d97b2bccd2a687778461e4873ee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents an element that can be part of a <a class="el" href="class_g_l_tech2_1_1_scene.html" title="Represents a scene, which stores a set of elements that can be or not rendered and,...">Scene</a>. </p>
@@ -393,7 +395,7 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Dettach all childs and make their parents = null. </p>
+<p>Dettach all childs and make their reference point equal to null. </p>
 <p>Not widely tested. </p>
 
 </div>
@@ -423,7 +425,7 @@ Properties</h2></td></tr>
 
 <p>Releases unmanaged data, if any. </p>
 
-<p>Reimplemented in <a class="el" href="class_g_l_tech2_1_1_wall.html#a237d60fe88a788ddb39a9585699b929e">GLTech2.Wall</a>, and <a class="el" href="class_g_l_tech2_1_1_observer.html#aa1f106d7d0802d7c31c08ec2f747ec7e">GLTech2.Observer</a>.</p>
+<p>Reimplemented in <a class="el" href="class_g_l_tech2_1_1_visual_plane.html#a76df953fd00325261c121a94664187e2">GLTech2.VisualPlane</a>, and <a class="el" href="class_g_l_tech2_1_1_observer.html#aa1f106d7d0802d7c31c08ec2f747ec7e">GLTech2.Observer</a>.</p>
 
 </div>
 </div>
@@ -600,12 +602,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Private protected. Determines how the element stores its normal. </p>
+<p>Determines how the element stores its normal. </p>
 <p>Remember to set it before parenting any object! </p>
 
 </div>
@@ -625,13 +627,13 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Private protected. Determines how the element stores its position. </p>
-<p>Remember to set it before parenting any object! </p>
+<p>Gets and sets the absolute position of an <a class="el" href="class_g_l_tech2_1_1_element.html" title="Represents an element that can be part of a Scene.">Element</a> without and allows subclasses to store the Position the way they want. </p>
+<p>Important: <a class="el" href="namespace_g_l_tech2_1_1_elements.html">Elements</a> that take this element as reference point will not follow it imediatelly for performance and code health reasons. Changing this property is only recommended if the element is not a reference point to any other and changing positions is a significant performance bottleneck in your application. Otherwise, always use <a class="el" href="class_g_l_tech2_1_1_element.html#a2158d6c2610d88bf3b7991765d62036a" title="Gets and sets element&#39;s position relatively to it&#39;s parent or, if it has no parent,...">Element.Position</a> property instead. </p>
 
 </div>
 </div>
@@ -685,31 +687,6 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="aed800c203d9dadc1189bf70d0290bd40"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed800c203d9dadc1189bf70d0290bd40">&#9670;&nbsp;</a></span>Parent</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_g_l_tech2_1_1_element.html">Element</a> GLTech2.Element.Parent</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets and sets element's parent. Null is equivalent to no parent. </p>
-<p>Setting a parent will make the object to move and rotate relatively to it's parent, and if the parent element moves/rotate, then the child follows. </p>
-
-</div>
-</div>
 <a id="a2158d6c2610d88bf3b7991765d62036a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2158d6c2610d88bf3b7991765d62036a">&#9670;&nbsp;</a></span>Position</h2>
 
@@ -731,6 +708,31 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets and sets element's position relatively to it's parent or, if it has no parent, it's absolute position. </p>
+
+</div>
+</div>
+<a id="a69e8d97b2bccd2a687778461e4873ee6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69e8d97b2bccd2a687778461e4873ee6">&#9670;&nbsp;</a></span>ReferencePoint</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_g_l_tech2_1_1_element.html">Element</a> GLTech2.Element.ReferencePoint</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets and sets element's reference point. A null value means that the element will take as reference point the scene. </p>
+<p>Setting a reference point will make the object to move and rotate relatively to it's reference point, and if the parent element moves/rotate, this element will follow. </p>
 
 </div>
 </div>

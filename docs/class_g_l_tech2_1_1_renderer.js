@@ -1,6 +1,6 @@
 var class_g_l_tech2_1_1_renderer =
 [
-    [ "AddEffect", "class_g_l_tech2_1_1_renderer.html#a6de1b7d46da441c649c9a1b085503e75", null ],
+    [ "AddEffect", "class_g_l_tech2_1_1_renderer.html#a4197e98dcd25f65b228ae679f3f07be9", null ],
     [ "AddPostProcessing< T >", "class_g_l_tech2_1_1_renderer.html#a4a5dd72d1e64d10cbe9e2de40495163b", null ],
     [ "GetScreenshot", "class_g_l_tech2_1_1_renderer.html#a9c0caa919ece3d3435f37949ba377ab7", null ],
     [ "Run", "class_g_l_tech2_1_1_renderer.html#a1edd1622745e0b3c0dd51fd901b1d7d3", null ],

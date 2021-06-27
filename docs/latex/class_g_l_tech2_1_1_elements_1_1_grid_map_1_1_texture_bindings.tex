@@ -1,0 +1,100 @@
+\hypertarget{class_g_l_tech2_1_1_elements_1_1_grid_map_1_1_texture_bindings}{}\doxysection{GLTech2.\+Elements.\+Grid\+Map.\+Texture\+Bindings Class Reference}
+\label{class_g_l_tech2_1_1_elements_1_1_grid_map_1_1_texture_bindings}\index{GLTech2.Elements.GridMap.TextureBindings@{GLTech2.Elements.GridMap.TextureBindings}}
+
+
+Represents a list of associations between colors and textures used to remap pixels from a grid to textures.  
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_g_l_tech2_1_1_elements_1_1_grid_map_1_1_texture_bindings_a2bfcda9bd2ea62ed3b87409b8085c599}{Texture\+Bindings}} ()
+\begin{DoxyCompactList}\small\item\em Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_elements_1_1_grid_map_1_1_texture_bindings}{Texture\+Bindings}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g_l_tech2_1_1_elements_1_1_grid_map_1_1_texture_bindings_a617d012ffdbc56dfbc7d4dcd3674a111}{Bind}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} color, \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} texture)
+\begin{DoxyCompactList}\small\item\em Bind a new Color to a \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_g_l_tech2_1_1_elements_1_1_grid_map_1_1_texture_bindings_a045ae1a7b636d1b4b9e1bf3694af427a}{Get\+Texture}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} color, out \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} texture)
+\begin{DoxyCompactList}\small\item\em Tries to get the \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} bound to a given Color and returns whether the texture was found or not. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} \mbox{\hyperlink{class_g_l_tech2_1_1_elements_1_1_grid_map_1_1_texture_bindings_a1ecff364319321c790478aa2f013315b}{this\mbox{[}\+RGB color\mbox{]}}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Indexes each Color to its \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a list of associations between colors and textures used to remap pixels from a grid to textures. 
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_elements_1_1_grid_map_1_1_texture_bindings_a2bfcda9bd2ea62ed3b87409b8085c599}\label{class_g_l_tech2_1_1_elements_1_1_grid_map_1_1_texture_bindings_a2bfcda9bd2ea62ed3b87409b8085c599}} 
+\index{GLTech2.Elements.GridMap.TextureBindings@{GLTech2.Elements.GridMap.TextureBindings}!TextureBindings@{TextureBindings}}
+\index{TextureBindings@{TextureBindings}!GLTech2.Elements.GridMap.TextureBindings@{GLTech2.Elements.GridMap.TextureBindings}}
+\doxysubsubsection{\texorpdfstring{TextureBindings()}{TextureBindings()}}
+{\footnotesize\ttfamily GLTech2.\+Elements.\+Grid\+Map.\+Texture\+Bindings.\+Texture\+Bindings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_elements_1_1_grid_map_1_1_texture_bindings}{Texture\+Bindings}}. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_elements_1_1_grid_map_1_1_texture_bindings_a617d012ffdbc56dfbc7d4dcd3674a111}\label{class_g_l_tech2_1_1_elements_1_1_grid_map_1_1_texture_bindings_a617d012ffdbc56dfbc7d4dcd3674a111}} 
+\index{GLTech2.Elements.GridMap.TextureBindings@{GLTech2.Elements.GridMap.TextureBindings}!Bind@{Bind}}
+\index{Bind@{Bind}!GLTech2.Elements.GridMap.TextureBindings@{GLTech2.Elements.GridMap.TextureBindings}}
+\doxysubsubsection{\texorpdfstring{Bind()}{Bind()}}
+{\footnotesize\ttfamily void GLTech2.\+Elements.\+Grid\+Map.\+Texture\+Bindings.\+Bind (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}}}]{color,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}}]{texture }\end{DoxyParamCaption})}
+
+
+
+Bind a new Color to a \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em color} & Color\\
+\hline
+{\em texture} & \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_elements_1_1_grid_map_1_1_texture_bindings_a045ae1a7b636d1b4b9e1bf3694af427a}\label{class_g_l_tech2_1_1_elements_1_1_grid_map_1_1_texture_bindings_a045ae1a7b636d1b4b9e1bf3694af427a}} 
+\index{GLTech2.Elements.GridMap.TextureBindings@{GLTech2.Elements.GridMap.TextureBindings}!GetTexture@{GetTexture}}
+\index{GetTexture@{GetTexture}!GLTech2.Elements.GridMap.TextureBindings@{GLTech2.Elements.GridMap.TextureBindings}}
+\doxysubsubsection{\texorpdfstring{GetTexture()}{GetTexture()}}
+{\footnotesize\ttfamily bool GLTech2.\+Elements.\+Grid\+Map.\+Texture\+Bindings.\+Get\+Texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}}}]{color,  }\item[{out \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}}]{texture }\end{DoxyParamCaption})}
+
+
+
+Tries to get the \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} bound to a given Color and returns whether the texture was found or not. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em color} & The possibly bound Color\\
+\hline
+{\em texture} & The \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}, if found; otherwise, the default value of \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if a \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} was found; otherise, false.
+\end{DoxyReturn}
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_elements_1_1_grid_map_1_1_texture_bindings_a1ecff364319321c790478aa2f013315b}\label{class_g_l_tech2_1_1_elements_1_1_grid_map_1_1_texture_bindings_a1ecff364319321c790478aa2f013315b}} 
+\index{GLTech2.Elements.GridMap.TextureBindings@{GLTech2.Elements.GridMap.TextureBindings}!this\mbox{[}RGB color\mbox{]}@{this[RGB color]}}
+\index{this\mbox{[}RGB color\mbox{]}@{this[RGB color]}!GLTech2.Elements.GridMap.TextureBindings@{GLTech2.Elements.GridMap.TextureBindings}}
+\doxysubsubsection{\texorpdfstring{this[RGB color]}{this[RGB color]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} GLTech2.\+Elements.\+Grid\+Map.\+Texture\+Bindings.\+this\mbox{[}\mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} color\mbox{]}\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Indexes each Color to its \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em color} & Color\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}, if found; otherwise, the default value of \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}.
+\end{DoxyReturn}

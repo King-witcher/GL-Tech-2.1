@@ -42,7 +42,7 @@ namespace Test
                         texture: tex);
 
                     e.AddBehaviour(new Rotate { Speed = 180f });
-                    e.Parent = pivot;
+                    e.ReferencePoint = pivot;
                 }
 
                 // Cylinder
@@ -59,7 +59,7 @@ namespace Test
                         texture: tex);
 
                     e.AddBehaviour(new Rotate { Speed = 180f });
-                    e.Parent = pivot;
+                    e.ReferencePoint = pivot;
                 }
 
                 // Triangle
@@ -76,7 +76,7 @@ namespace Test
                         texture: tex);
 
                     e.AddBehaviour(new Rotate { Speed = 180f });
-                    e.Parent = pivot;
+                    e.ReferencePoint = pivot;
                 }
 
                 scene.AddElement(pivot);

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace GLTech2
 {
     /// <summary>
-    ///     Represents an element that can be part of a Scene.
+    /// Represents an element that can be part of a Scene.
     /// </summary>
     public abstract class Element : IDisposable
     {
@@ -15,7 +14,7 @@ namespace GLTech2
         /// <remarks>
         /// Remember to set it before parenting any object!
         /// </remarks>
-        private protected abstract Vector AbsolutePosition { get; set; }
+        public abstract Vector AbsolutePosition { get; set; }
 
         /// <summary>
         /// Private protected. Determines how the element stores its normal.
@@ -23,12 +22,13 @@ namespace GLTech2
         /// <remarks>
         /// Remember to set it before parenting any object!
         /// </remarks>
-        private protected abstract Vector AbsoluteNormal { get; set; } //Provides rotation and scale of the object.
+        public abstract Vector AbsoluteNormal { get; set; } //Provides rotation and scale of the object.
 
-        // Every element MUST call UpdateRelative() after construction. I have to fix it yet.
-        private protected Element() { }
+        public Element() { }
 
-        private Element parent = null;
+        internal Action StartAction;
+        internal Action OnFrameAction;
+        private Element referencePoint = null;
         private List<Behaviour> behaviours = new List<Behaviour>();
         private Vector relativePosition;
         private Vector relativeNormal;
@@ -36,35 +36,35 @@ namespace GLTech2
         internal List<Element> childs = new List<Element>();
 
         /// <summary>
-        ///     Its correspondent scene. If the element is not bound to any scene, returns null.
+        /// Its correspondent scene. If the element is not bound to any scene, returns null.
         /// </summary>
         public Scene Scene => scene; // Maybe not necessary.
 
         /// <summary>
-        ///     How many childs the element has.
+        /// How many childs the element has.
         /// </summary>
         public int ChildCount => childs.Count;
 
-        internal event Action OnMoveOrRotate;
+        internal event Action OnChangeComponents;
 
         /// <summary>
-        ///     Gets and sets element's position relatively to it's parent or, if it has no parent, it's absolute position. 
+        /// Gets and sets element's position relatively to it's parent or, if it has no parent, it's absolute position. 
         /// </summary>
         public Vector Position
         {
             get
             {
-                if (parent is null)
+                if (referencePoint is null)
                     return AbsolutePosition;
                 else
                     return relativePosition;
             }
             set
             {
-                if (parent is null)
+                if (referencePoint is null)
                 {
                     AbsolutePosition = value;
-                    OnMoveOrRotate?.Invoke();
+                    OnChangeComponents?.Invoke();
                 }
                 else
                 {
@@ -75,29 +75,29 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Gets and sets element's normal relatively to it's parent or, if it has no parent, it's absolute normal. 
+        /// Gets and sets element's normal relatively to it's parent or, if it has no parent, it's absolute normal. 
         /// </summary>
         /// <remarks>
-        ///     Normal vector determines the rotation and the scale of an object and is used due to performance improvements when managing multiple childs.
+        /// Normal vector determines the rotation and the scale of an object and is used due to performance improvements when managing multiple childs.
         ///     <para>
-        ///         Use wisely.
+        ///     Use wisely.
         ///     </para>
         /// </remarks>
         public Vector Normal
         {
             get
             {
-                if (parent is null)
+                if (referencePoint is null)
                     return AbsoluteNormal;
                 else
                     return relativeNormal;
             }
             set
             {
-                if (parent is null)
+                if (referencePoint is null)
                 {
                     AbsoluteNormal = value;
-                    OnMoveOrRotate?.Invoke();
+                    OnChangeComponents?.Invoke();
                 }
                 else
                 {
@@ -108,25 +108,25 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Gets and sets directly the element's rotation relative to it's parent or, if it has no parents, it's absolute rotation.
+        /// Gets and sets directly the element's rotation relative to it's parent or, if it has no parents, it's absolute rotation.
         /// </summary>
         public float Rotation
         {
             get
             {
-                if (parent is null)
+                if (referencePoint is null)
                     return AbsoluteNormal.Angle;
                 else
                     return relativeNormal.Angle;
             }
             set
             {
-                if (parent is null)
+                if (referencePoint is null)
                 {
                     Vector newNormal = AbsoluteNormal;
                     newNormal.Angle = value;
                     AbsoluteNormal = newNormal;
-                    OnMoveOrRotate?.Invoke();
+                    OnChangeComponents?.Invoke();
                 }
                 else
                 {
@@ -137,16 +137,17 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Gets and sets element's parent. Null is equivalent to no parent.
+        /// Gets and sets element's reference point. A null value means that the element will take as reference point the scene.
         /// </summary>
         /// <remarks>
-        ///     Setting a parent will make the object to move and rotate relatively to it's parent, and if the parent element moves/rotate, then the child follows.
+        /// Setting a reference point will make the object to move and rotate relatively to it's reference point, and if the parent element moves/rotate, this element will follow.
         /// </remarks>
-        public Element Parent
+        public Element ReferencePoint
         {
-            get => parent;
+            get => referencePoint;
             set
             {
+                // Check if the scenes are compatible. Elements cannot take as reference point others that are in differente scnees.
                 if (value != null && scene != value.scene)
                 {
                     Debug.InternalLog(
@@ -156,59 +157,69 @@ namespace GLTech2
                     return;
                 }
 
-                if (parent != null)
+                // If it has a previous parent, unparent it first.
+                if (referencePoint != null)
                 {
-                    parent.OnMoveOrRotate -= UpdateAbsolute;
-                    parent.childs.Remove(this);
+                    referencePoint.OnChangeComponents -= UpdateAbsolute;
+                    referencePoint.childs.Remove(this);
                 }
 
+                // If it must have a new element as reference point, then
                 if (value != null)
                 {
-                    value.OnMoveOrRotate += UpdateAbsolute;
+                    // Subscribe to its OnChangeComponents so that you can follow the object whenever it changes position.
+                    value.OnChangeComponents += UpdateAbsolute;
+                    // Add itself to the parent's child list.
                     value.childs.Add(this);
                 }
-                this.parent = value;
+                this.referencePoint = value;
 
+                // Lastly, update your relative components to match the new reference point.
                 UpdateRelative();
             }
         }
 
-        // Update relative transform through parent and absolute transform.
-        // Called when attaches 
-        // Must be called after construction of every subclass.
+        // Update relative position/normal info based on parent and absolute components.
+        // Must be called when which parent element this element takes as reference point changes.
         private void UpdateRelative()
         {
-            if (parent is null)
+            // In case the reference point is the scene origin:
+            if (referencePoint is null)
             {
                 relativePosition = AbsolutePosition;
                 relativeNormal = AbsoluteNormal;
             }
+            // Otherwise, in case the reference point is another element:
             else
             {
-                relativePosition = AbsolutePosition.Projection(parent.AbsolutePosition, parent.AbsoluteNormal);
-                relativeNormal = AbsoluteNormal / parent.AbsoluteNormal;
+                relativePosition = AbsolutePosition.Projection(referencePoint.AbsolutePosition, referencePoint.AbsoluteNormal);
+                relativeNormal = AbsoluteNormal / referencePoint.AbsoluteNormal;
             }
         }
 
-        // Update absolute position through relative position and parent.
-        // Called either when the parent or this element changes its position.
+        // Update the real components of the element in the scene based on its reference point and its components
+        // relative to the reference.
+        // This method is called always when either the reference element or this element tries to change it's position.
         private void UpdateAbsolute()
         {
-            if (parent is null)
+            // In case the reference point is the scene origin:
+            if (referencePoint is null)
             {
                 AbsolutePosition = relativePosition;
                 AbsoluteNormal = relativeNormal;
             }
+            // Otherwise, in case the reference point is another element:
             else
             {
-                AbsolutePosition = relativePosition.AsProjectionOf(parent.AbsolutePosition, parent.AbsoluteNormal);
-                AbsoluteNormal = relativeNormal * parent.AbsoluteNormal;
+                AbsolutePosition = relativePosition.AsProjectionOf(referencePoint.AbsolutePosition, referencePoint.AbsoluteNormal);
+                AbsoluteNormal = relativeNormal * referencePoint.AbsoluteNormal;
             }
-            OnMoveOrRotate?.Invoke();
+            // Then, publish to all children elements that its position has changed so that they can follow you with their respective UpdateAbsolute() methods.
+            OnChangeComponents?.Invoke();
         }
 
         /// <summary>
-        ///     Moves the object in one direction relatively to it's direction; in other words, the direction of the module vector.
+        /// Moves the object in one direction relatively to it's direction; in other words, the direction of the module vector.
         /// </summary>
         /// <param name="direction">Direction to move</param>
         public void Translate(Vector direction)
@@ -217,7 +228,7 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Rotate the object a specified amount.
+        /// Rotate the object a specified amount.
         /// </summary>
         /// <param name="rotation">angle in degrees</param>
         public void Rotate(float rotation)
@@ -226,16 +237,16 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Dettach all childs and make their parents = null.
+        /// Dettach all childs and make their reference point equal to null.
         /// </summary>
         /// <remarks>
-        ///     Not widely tested.
+        /// Not widely tested.
         /// </remarks>
         public void DetachChilds()
         {
             foreach (Element child in childs)
             {
-                child.Parent = null;
+                child.ReferencePoint = null;
                 childs.Remove(child);
             }
         }
@@ -373,7 +384,7 @@ namespace GLTech2
         public void DetachChildren() // Not tested
         {
             foreach (Element child in childs)
-                child.Parent = null;
+                child.ReferencePoint = null;
         }
 
         /// <summary>
@@ -397,17 +408,14 @@ namespace GLTech2
         //Subscribe and unsubscribe a behaviour
         private void Subscribe(Behaviour b)
         {
-            Start += b.StartAction;
-            OnFrame += b.OnFrameAction;
+            StartAction += b.StartAction;
+            OnFrameAction += b.OnFrameAction;
         }
 
         private void Unsubscribe(Behaviour b)
         {
-            Start -= b.StartAction;
-            OnFrame -= b.OnFrameAction;
+            StartAction -= b.StartAction;
+            OnFrameAction -= b.OnFrameAction;
         }
-
-        internal Action Start;
-        internal Action OnFrame;
     }
 }

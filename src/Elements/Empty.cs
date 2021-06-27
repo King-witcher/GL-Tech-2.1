@@ -24,7 +24,7 @@
         {
         }
 
-        private protected override Vector AbsolutePosition { get; set; }
-        private protected override Vector AbsoluteNormal { get; set; }
+        public override Vector AbsolutePosition { get; set; }
+        public override Vector AbsoluteNormal { get; set; }
     }
 }

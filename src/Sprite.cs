@@ -8,13 +8,13 @@ namespace GLTech2
     {
         internal SpriteData* unmanaged;
 
-        private protected override Vector AbsolutePosition
+        public override Vector AbsolutePosition
         {
             get => unmanaged->position;
             set => unmanaged->position = value;
         }
 
-        private protected override Vector AbsoluteNormal { get; set; }
+        public override Vector AbsoluteNormal { get; set; }
 
         public Sprite(Vector position, Texture material)
         {

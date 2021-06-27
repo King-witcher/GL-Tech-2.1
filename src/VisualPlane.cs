@@ -46,13 +46,13 @@
             }
         }
 
-        private protected override Vector AbsolutePosition
+        public override Vector AbsolutePosition
         {
             get => Start;
             set => Start = value;
         }
 
-        private protected override Vector AbsoluteNormal
+        public override Vector AbsoluteNormal
         {
             get => unmanaged->geom_direction;
             set
@@ -70,11 +70,6 @@
         public VisualPlane(Vector start, Vector end, Texture texture)
         {
             unmanaged = VisualPlaneData.Create(start, end, texture);
-        }
-        
-        public VisualPlane(Vector start, float angle_deg, float length, Texture texture)
-        {
-            unmanaged = VisualPlaneData.Create(start, angle_deg, length, texture);
         }
 
         public override void Dispose()

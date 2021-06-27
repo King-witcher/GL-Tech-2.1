@@ -35,7 +35,7 @@ namespace GLTech2
             unmanaged = ObserverData.Create(position, rotation);
         }
 
-        private protected override Vector AbsolutePosition
+        public override Vector AbsolutePosition
         {
             get
             {
@@ -44,7 +44,7 @@ namespace GLTech2
             set => unmanaged->position = value;
         }
 
-        private protected override Vector AbsoluteNormal
+        public override Vector AbsoluteNormal
         {
             get => new Vector(unmanaged->rotation);
             set => unmanaged->rotation = value.Angle;

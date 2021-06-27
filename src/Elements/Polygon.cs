@@ -7,8 +7,8 @@ namespace GLTech2.Elements
     /// </summary>
     public class Polygon : Element
     {
-        private protected override Vector AbsolutePosition { get; set; }
-        private protected override Vector AbsoluteNormal { get; set; }
+        public override Vector AbsolutePosition { get; set; }
+        public override Vector AbsoluteNormal { get; set; }
 
         private protected Polygon() { }
 
@@ -47,7 +47,7 @@ namespace GLTech2.Elements
                     start: verts[i],
                     end: verts[i + 1],
                     texture: currentTexture)
-                        .Parent = this;
+                        .ReferencePoint = this;
             }
 
             currentTexture.hoffset = texture.hoffset + texture.hrepeat * (total_walls - 1) / total_walls;
@@ -56,7 +56,7 @@ namespace GLTech2.Elements
                 start: verts[total_walls - 1],
                 end: verts[0],
                 texture: currentTexture)
-                    .Parent = this;
+                    .ReferencePoint = this;
         }
     }
 }

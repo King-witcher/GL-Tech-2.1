@@ -9,6 +9,8 @@ namespace GLTech2
     /// </summary>
     public unsafe sealed partial class Scene : IDisposable
     {
+        internal Action StartAction;
+        internal Action OnFrameAction;
         internal SceneData* unmanaged;
         private Observer activeObserver;    //Provisional
         private List<Element> elements = new List<Element>();
@@ -92,11 +94,12 @@ namespace GLTech2
                 return;
             }
 
-            if (element.Parent != null && element.Parent.scene != this)       // Must be tested
+            if (element.ReferencePoint != null && element.ReferencePoint.scene != this)       // Must be tested
             {
-                element.Parent = null;
+                element.ReferencePoint = null;
             }
 
+            // Spaguetti!
             if (element is VisualPlane)
                 UnmanagedAddWall(element as VisualPlane);
             else if (element is Sprite)
@@ -104,8 +107,8 @@ namespace GLTech2
             else if (element is Observer)
                 UnmanagedAddObserver(element as Observer);
 
-            Start += element.Start;
-            OnFrame += element.OnFrame;
+            StartAction += element.StartAction;
+            OnFrameAction += element.OnFrameAction;
 
             elements.Add(element);
             element.scene = this;
@@ -168,8 +171,5 @@ namespace GLTech2
 
             elements.Clear();
         }
-
-        internal Action Start;
-        internal Action OnFrame;
     }
 }

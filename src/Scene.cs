@@ -14,7 +14,6 @@ namespace GLTech2
         internal SceneData* unmanaged;
         private Observer activeObserver;    //Provisional
         private List<Element> elements = new List<Element>();
-        private PhysicalPlane[] physicalPlanes;
 
         /// <summary>
         /// Gets a new instance of Scene.
@@ -38,10 +37,11 @@ namespace GLTech2
         /// </summary>
         public Observer ActiveObserver
         {
+            // Seems spaguetti!
             get => activeObserver;
             set
             {
-                if (value is null || value.scene == null)   // null pointer
+                if (value is null || value.scene is null)   // null pointer
                 {
                     activeObserver = value;
                     unmanaged->activeObserver = value.unmanaged;

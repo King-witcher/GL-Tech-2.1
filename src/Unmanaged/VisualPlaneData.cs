@@ -7,9 +7,10 @@ namespace GLTech2
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct VisualPlaneData
     {
-        internal Vector geom_direction;
         internal Vector geom_start;
-        internal Texture texture; // Yes, by value.
+        internal Vector geom_direction;
+        internal Texture texture;               // Yes, by value.
+        internal VisualPlaneData* next_link;    // Visual planes are stored in scenes a linked list.
 
         internal static VisualPlaneData* Create(Vector start, Vector end, Texture texture)
         {
@@ -17,6 +18,7 @@ namespace GLTech2
             result->texture = texture;
             result->geom_direction = end - start;
             result->geom_start = start;
+            result->next_link = null;
             return result;
         }
 
@@ -27,6 +29,7 @@ namespace GLTech2
             result->texture = texture;
             result->geom_direction = dir;
             result->geom_start = start;
+            result->next_link = null;
             return result;
         }
 

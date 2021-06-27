@@ -12,90 +12,17 @@ namespace GLTech2
         internal SceneData* unmanaged;
         private Observer activeObserver;    //Provisional
         private List<Element> elements = new List<Element>();
+        private PhysicalPlane[] physicalPlanes;
 
         /// <summary>
         /// Gets a new instance of Scene.
         /// </summary>
         /// <param name="maxWalls">Max walls that the scene can fit</param>
         /// <param name="maxSprities">Max sprities that the scene can fit</param>
-        public Scene(int maxWalls = 512, int maxSprities = 512)
+        public Scene()
         {
-            if (maxWalls <= 0)
-                throw new ArgumentException("maxWalls cannot be < 1.");
-            if (maxSprities <= 0)
-                throw new ArgumentException("maxSprities cannot be < 1.");
-
             Texture background = new Texture((PixelBuffer)new Bitmap(1, 1));
-            unmanaged = SceneData.Create(maxWalls, maxSprities, background);
-        }
-
-        // Fóssil
-        private void BuildFromPixelBuffer2(PixelBuffer map, IDictionary<RGB, Texture> textures)
-        {
-            // Paint borders
-            // Left
-            for (int line = 0; line < map.Height; line++)
-            {
-                if (textures.TryGetValue(map[0, line], out Texture texture))
-                {
-                    Vector start = (line, 0);
-                    Vector end = (line + 1, 0);
-                    AddElement(new VisualPlane(start, end, texture));
-                }
-            }
-
-            // Right
-            for (int line = 0; line < map.Height; line++)
-            {
-                if (textures.TryGetValue(map[map.Width - 1, line], out Texture texture))
-                {
-                    Vector start = (line + 1, map.Width);
-                    Vector end = (line, map.Width);
-                    AddElement(new VisualPlane(start, end, texture));
-                }
-            }
-
-            // Top
-            for (int column = 0; column < map.Width; column++)
-            {
-                if (textures.TryGetValue(map[column, 0], out Texture texture))
-                {
-                    Vector start = (0, column + 1);
-                    Vector end = (0, column);
-                    AddElement(new VisualPlane(start, end, texture));
-                }
-            }
-
-            // Bottom
-            for (int column = 0; column < map.Width; column++)
-            {
-                if (textures.TryGetValue(map[column, map.Height - 1], out Texture texture))
-                {
-                    Vector start = (map.Height, column);
-                    Vector end = (map.Height, column + 1);
-                    AddElement(new VisualPlane(start, end, texture));
-                }
-            }
-
-
-            bool[] upperIsFilled = new bool[map.Width];
-            for (int line = 0; line < map.Height - 1; line++)
-            {
-                bool leftIsFilled = false;
-                for (int col = 0; col < map.Width - 1; col++)
-                {
-                    bool currentIsFilled = textures.TryGetValue(map[col, line], out Texture texture);
-
-                    if (leftIsFilled ^ currentIsFilled)
-					{
-                        Vector start = (line + (leftIsFilled ? 1 : 0), col);
-                        Vector end = (line + (currentIsFilled ? 1 : 0), col);
-                        AddElement(new VisualPlane(start, end, texture));
-
-                        leftIsFilled = currentIsFilled;
-                    }
-                }
-            }
+            unmanaged = SceneData.Create(background);
         }
 
         /// <summary>
@@ -104,8 +31,8 @@ namespace GLTech2
         /// <param name="background">Background material rendered behind everything</param>
         /// <param name="maxWalls">Max walls that the scene can fit</param>
         /// <param name="maxSprities">Max sprities that the scene can fit</param>
-        public Scene(Texture background, int maxWalls = 512, int maxSprities = 512) =>
-            unmanaged = SceneData.Create(maxWalls, maxSprities, background);
+        public Scene(Texture background) =>
+            unmanaged = SceneData.Create(background);
 
 
         /// <summary>
@@ -128,11 +55,6 @@ namespace GLTech2
                         debugOption: Debug.Options.Error);
             }
         }
-
-        /// <summary>
-        /// Gets how many walls the scene can fit.
-        /// </summary>
-        public int MaxWalls => unmanaged->plane_max;
 
         /// <summary>
         /// Gets how many walls the scene fits.
@@ -219,8 +141,6 @@ namespace GLTech2
 
         private void UnmanagedAddWall(VisualPlane w)
         {
-            if (unmanaged->plane_count >= unmanaged->plane_max)
-                throw new IndexOutOfRangeException("Wall limit reached.");
             unmanaged->Add(w.unmanaged);
         }
         private void UnmanagedAddSprite(Sprite s) => throw new NotImplementedException();

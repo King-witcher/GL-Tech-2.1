@@ -114,7 +114,7 @@ namespace Test
             Renderer.FullScreen = true;
             Renderer.FieldOfView = 110f;
             Renderer.ParallelRendering = true;
-            Renderer.DoubleBuffering = true;
+            Renderer.DoubleBuffering = false;
             Renderer.CaptureMouse = true;
 
             // Run!

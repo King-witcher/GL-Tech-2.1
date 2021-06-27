@@ -1,32 +1,32 @@
 ﻿namespace GLTech2
 {
     /// <summary>
-    /// Represents a wall that can be rendered on the screen.
+    /// Represents a plane that can be rendered on the screen.
     /// </summary>
     public unsafe class VisualPlane : Element
     {
         internal VisualPlaneData* unmanaged;
 
         /// <summary>
-        /// Gets and sets the starting point of the wall.
+        /// Gets and sets the starting point of the plane.
         /// </summary>
-        public Vector StartPoint
+        public Vector Start
         {
             get => unmanaged->geom_start;
             set => unmanaged->geom_start = value;
         }
 
         /// <summary>
-        /// Gets and sets the ending point of the wall.
+        /// Gets and sets the ending point of the plane.
         /// </summary>
-        public Vector EndPoint
+        public Vector End
         {
             get => unmanaged->geom_start + unmanaged->geom_direction;
             set => unmanaged->geom_direction = value - unmanaged->geom_start;
         }
 
         /// <summary>
-        /// Gets and sets the length of the wall.
+        /// Gets and sets the length of the plane.
         /// </summary>
         public float Length
         {
@@ -35,7 +35,7 @@
         }
 
         /// <summary>
-        /// Gets and sets the material of the wall.
+        /// Gets and sets the material of the plane.
         /// </summary>
         public Texture Texture
         {
@@ -48,8 +48,8 @@
 
         private protected override Vector AbsolutePosition
         {
-            get => StartPoint;
-            set => StartPoint = value;
+            get => Start;
+            set => Start = value;
         }
 
         private protected override Vector AbsoluteNormal
@@ -62,7 +62,7 @@
         }
 
         /// <summary>
-        /// Gets a new instance of wall.
+        /// Gets a new instance of plane.
         /// </summary>
         /// <param name="start">Starting point</param>
         /// <param name="end">End point</param>
@@ -85,7 +85,7 @@
 
         public override string ToString()
         {
-            return $"|{ StartPoint } -- { EndPoint }| ";
+            return $"|{ Start } -- { End }| ";
         }
     }
 }

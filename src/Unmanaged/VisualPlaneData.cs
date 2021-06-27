@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace GLTech2
@@ -10,7 +9,7 @@ namespace GLTech2
         internal Vector geom_start;
         internal Vector geom_direction;
         internal Texture texture;               // Yes, by value.
-        internal VisualPlaneData* next_link;    // Visual planes are stored in scenes a linked list.
+        internal VisualPlaneData* link_next;    // Visual planes are stored in scenes a linked list.
 
         internal static VisualPlaneData* Create(Vector start, Vector end, Texture texture)
         {
@@ -18,7 +17,7 @@ namespace GLTech2
             result->texture = texture;
             result->geom_direction = end - start;
             result->geom_start = start;
-            result->next_link = null;
+            result->link_next = null;
             return result;
         }
 
@@ -29,7 +28,7 @@ namespace GLTech2
             result->texture = texture;
             result->geom_direction = dir;
             result->geom_start = start;
-            result->next_link = null;
+            result->link_next = null;
             return result;
         }
 

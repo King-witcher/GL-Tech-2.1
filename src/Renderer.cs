@@ -305,7 +305,7 @@ namespace GLTech2
             Stopwatch controlStopwatch = new Stopwatch();   // Need to cap framerate
             Behaviour.Frame.RestartFrame();
             Behaviour.Frame.BeginScript();
-            activeScene.InvokeStart();
+            activeScene.Start?.Invoke();
             Behaviour.Frame.EndScript();
 
             // While this variable is set to true, outputBuffer cannot be released by Renderer.Run() thread.
@@ -328,7 +328,7 @@ namespace GLTech2
                 Behaviour.Mouse.Measure();
                 Behaviour.Frame.RestartFrame();
                 Behaviour.Frame.BeginScript();
-                activeScene.InvokeUpdate();
+                activeScene.OnFrame?.Invoke();
                 Behaviour.Frame.EndScript();
             }
             controlStopwatch.Stop();

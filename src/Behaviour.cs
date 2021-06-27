@@ -32,12 +32,12 @@ namespace GLTech2
         protected internal Scene Scene { get => element.scene; }
 
         // void Start()
-        private Action startMethod = null;
-        internal Action StartMethod
+        private Action start = null;
+        internal Action StartAction
         {
             get
             {
-                if (startMethod is null)
+                if (start is null)
                 {
                     MethodInfo startInfo = GetType().GetMethod("Start",
                         BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
@@ -45,20 +45,21 @@ namespace GLTech2
                         new Type[0],
                         null);
 
-                    startMethod = () => startInfo?.Invoke(this, null);
+                    if (startInfo != null)
+                        start = () => startInfo?.Invoke(this, null);
                 }
 
-                return startMethod;
+                return start;
             }
         }
 
         // void OnFrame()
-        private Action updateMethod = null;
-        internal Action UpdateMethod
+        private Action onFrame = null;
+        internal Action OnFrameAction
         {
             get
             {
-                if (updateMethod is null)
+                if (onFrame is null)
                 {
                     MethodInfo updateInfo = GetType().GetMethod("OnFrame",
                         BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
@@ -66,10 +67,11 @@ namespace GLTech2
                         new Type[0],
                         null);
 
-                    updateMethod = () => updateInfo?.Invoke(this, null);
+                    if (updateInfo != null)
+                        onFrame = () => updateInfo?.Invoke(this, null);
                 }
 
-                return updateMethod;
+                return onFrame;
             }
         }
     }

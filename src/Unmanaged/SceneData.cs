@@ -43,7 +43,7 @@ namespace GLTech2
                 first_plane = last_plane = wall;
             else
             {
-                last_plane->next_link = wall;
+                last_plane->link_next = wall;
                 last_plane = wall;
             }
             plane_count++;
@@ -54,12 +54,12 @@ namespace GLTech2
             // 0 < distance <= infinity
             // 0 <= split < 1
             // split = 2f means no collision
-            void GetCollisionData(VisualPlaneData* wall, out float cur_dist, out float cur_split)
+            void GetCollisionData(VisualPlaneData* plane, out float cur_dist, out float cur_split)
             {
                 // Medium performance impact.
                 float
-                    drx = wall->geom_direction.x,
-                    dry = wall->geom_direction.y;
+                    drx = plane->geom_direction.x,
+                    dry = plane->geom_direction.y;
 
                 float det = ray.direction.x * dry - ray.direction.y * drx; // Caching can only be used here
 
@@ -70,8 +70,8 @@ namespace GLTech2
                     return;
                 }
 
-                float spldet = ray.direction.x * (ray.start.y - wall->geom_start.y) - ray.direction.y * (ray.start.x - wall->geom_start.x);
-                float dstdet = wall->geom_direction.x * (ray.start.y - wall->geom_start.y) - wall->geom_direction.y * (ray.start.x - wall->geom_start.x);
+                float spldet = ray.direction.x * (ray.start.y - plane->geom_start.y) - ray.direction.y * (ray.start.x - plane->geom_start.x);
+                float dstdet = drx * (ray.start.y - plane->geom_start.y) - dry * (ray.start.x - plane->geom_start.x);
                 float spltmp = spldet / det;
                 float dsttmp = dstdet / det;
                 if (spltmp < 0 || spltmp >= 1 || dsttmp <= 0) // dsttmp = 0 means column height = x/0.
@@ -84,15 +84,13 @@ namespace GLTech2
                 cur_dist = dsttmp;
             }
 
+            VisualPlaneData* nearest = null;
             nearest_dist = float.PositiveInfinity;
             nearest_ratio = 2f;
-            int wallcount = plane_count;
             VisualPlaneData* cur = first_plane;
-            VisualPlaneData* nearest = null;
 
             while(cur != null)
             {
-                //walls cannot be null.
                 GetCollisionData(cur, out float cur_dist, out float cur_ratio);
                 if (cur_dist < nearest_dist)
                 {
@@ -100,7 +98,7 @@ namespace GLTech2
                     nearest_dist = cur_dist;
                     nearest = cur;
                 }
-                cur = cur->next_link;
+                cur = cur->link_next;
             }
             return nearest;
 

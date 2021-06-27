@@ -17,8 +17,6 @@ namespace GLTech2
         /// <summary>
         /// Gets a new instance of Scene.
         /// </summary>
-        /// <param name="maxWalls">Max walls that the scene can fit</param>
-        /// <param name="maxSprities">Max sprities that the scene can fit</param>
         public Scene()
         {
             Texture background = new Texture((PixelBuffer)new Bitmap(1, 1));
@@ -29,8 +27,6 @@ namespace GLTech2
         /// Gets a new instance of Scene.
         /// </summary>
         /// <param name="background">Background material rendered behind everything</param>
-        /// <param name="maxWalls">Max walls that the scene can fit</param>
-        /// <param name="maxSprities">Max sprities that the scene can fit</param>
         public Scene(Texture background) =>
             unmanaged = SceneData.Create(background);
 
@@ -108,6 +104,9 @@ namespace GLTech2
             else if (element is Observer)
                 UnmanagedAddObserver(element as Observer);
 
+            Start += element.Start;
+            OnFrame += element.OnFrame;
+
             elements.Add(element);
             element.scene = this;
 
@@ -170,16 +169,7 @@ namespace GLTech2
             elements.Clear();
         }
 
-        internal void InvokeStart()
-        {
-            foreach (var element in elements)
-                element.InvokeStart();
-        }
-
-        internal void InvokeUpdate()
-        {
-            foreach (var element in elements)
-                element.InvokeUpdate();
-        }
+        internal Action Start;
+        internal Action OnFrame;
     }
 }

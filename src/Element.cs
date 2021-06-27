@@ -241,11 +241,11 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Adds a behaviour script to the element by instance.
+        /// Adds a behaviour script to the element by instance.
         /// </summary>
         /// <param name="behaviour">Instance of Behaviour to be added</param>
         /// <remarks>
-        ///     I made id just a copy of how MonoBehaviours works in Unity3D =D
+        /// I made id just a copy of how MonoBehaviours works in Unity3D =D
         /// </remarks>
         public void AddBehaviour(Behaviour behaviour)
         {
@@ -265,7 +265,7 @@ namespace GLTech2
             {
                 Debug.InternalLog(
                     origin: "Element", 
-                    message: $"Cannot add same behaviour instance to two different elements. Element without behaviour: {this}.",
+                    message: $"Cannot add the same instance of behaviour in two different elements. Element without behaviour: {this}.",
                     debugOption: Debug.Options.Error);
                 return;
             }
@@ -277,7 +277,7 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Add a new behaviour to the element by type.
+        /// Add a new behaviour to the element by type.
         /// </summary>
         /// <typeparam name="BehaviourType">Behaviour type</typeparam>
         public void AddBehaviour<BehaviourType>() where BehaviourType : Behaviour, new()
@@ -286,7 +286,7 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Adds a set of behaviours.
+        /// Adds a set of behaviours.
         /// </summary>
         /// <param name="behaviours">Set of behaviours</param>
         public void AddBehaviours(IEnumerable<Behaviour> behaviours)
@@ -301,7 +301,7 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Adds a set of behaviours.
+        /// Adds a set of behaviours.
         /// </summary>
         /// <param name="behaviours">Array of behaviours</param>
         public void AddBehaviours(params Behaviour[] behaviours)
@@ -310,7 +310,7 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Checks if the element contains an especific behaviour by type.
+        /// Checks if the element contains an especific behaviour by type.
         /// </summary>
         /// <typeparam name="BehaviourType">Behaviour type</typeparam>
         /// <returns>true if it contains; otherwise, false</returns>
@@ -323,7 +323,7 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Checks if the element contains an especific behaviour by instance.
+        /// Checks if the element contains an especific behaviour by instance.
         /// </summary>
         /// <param name="b">Behaviour</param>
         /// <returns>true if it contains; otherwise, false</returns>
@@ -336,7 +336,7 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Removes an instance of behaviour from b.
+        /// Removes an instance of behaviour from b.
         /// </summary>
         /// <param name="b">Behaviour</param>
         public void RemoveBehaviour(Behaviour b)
@@ -346,7 +346,7 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Removes all instances of Behaviour from a given type from the element.
+        /// Removes all instances of Behaviour from a given type from the element.
         /// </summary>
         /// <typeparam name="BehaviourType"></typeparam>
         public void RemoveBehaviour<BehaviourType>() where BehaviourType : Behaviour
@@ -357,7 +357,7 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Remove all behaviours from the element.
+        /// Remove all behaviours from the element.
         /// </summary>
         public void RemoveAllBehaviours()
         {
@@ -368,7 +368,7 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Detach all children from the element.
+        /// Detach all children from the element.
         /// </summary>
         public void DetachChildren() // Not tested
         {
@@ -377,7 +377,7 @@ namespace GLTech2
         }
 
         /// <summary>
-        ///     Gets a child from the element by index.
+        /// Gets a child from the element by index.
         /// </summary>
         /// <param name="index">Index</param>
         /// <returns>Specified children</returns>
@@ -386,18 +386,8 @@ namespace GLTech2
             return childs[index];
         }
 
-        internal void InvokeStart()
-        {
-            StartEvent?.Invoke();
-        }
-
-        internal void InvokeUpdate()
-        {
-            UpdateEvent?.Invoke();
-        }
-
         /// <summary>
-        ///     Releases unmanaged data, if any.
+        /// Releases unmanaged data, if any.
         /// </summary>
         public virtual void Dispose()
         {
@@ -407,16 +397,17 @@ namespace GLTech2
         //Subscribe and unsubscribe a behaviour
         private void Subscribe(Behaviour b)
         {
-            StartEvent += b.StartMethod;
-            UpdateEvent += b.UpdateMethod;
-        }
-        private void Unsubscribe(Behaviour b)
-        {
-            StartEvent -= b.StartMethod;
-            UpdateEvent -= b.UpdateMethod;
+            Start += b.StartAction;
+            OnFrame += b.OnFrameAction;
         }
 
-        internal event Action StartEvent;
-        internal event Action UpdateEvent;
+        private void Unsubscribe(Behaviour b)
+        {
+            Start -= b.StartAction;
+            OnFrame -= b.OnFrameAction;
+        }
+
+        internal Action Start;
+        internal Action OnFrame;
     }
 }

@@ -74,10 +74,10 @@
                     Vector vert3 = (line + 1, column + 1);
                     Vector vert4 = (line, column + 1);
 
-                    new VisualPlane(vert1, vert2, texture).ReferencePoint = this;
-                    new VisualPlane(vert2, vert3, texture).ReferencePoint = this;
-                    new VisualPlane(vert3, vert4, texture).ReferencePoint = this;
-                    new VisualPlane(vert4, vert1, texture).ReferencePoint = this;
+                    new Wall(vert1, vert2, texture).ReferencePoint = this;
+                    new Wall(vert2, vert3, texture).ReferencePoint = this;
+                    new Wall(vert3, vert4, texture).ReferencePoint = this;
+                    new Wall(vert4, vert1, texture).ReferencePoint = this;
 
                     walls += 4;
                 }
@@ -105,10 +105,10 @@
                         Vector vert3 = (line + 1, column + 1);
                         Vector vert4 = (line, column + 1);
 
-                        new VisualPlane(vert1, vert2, texture).ReferencePoint = this;
-                        new VisualPlane(vert2, vert3, texture).ReferencePoint = this;
-                        new VisualPlane(vert3, vert4, texture).ReferencePoint = this;
-                        new VisualPlane(vert4, vert1, texture).ReferencePoint = this;
+                        new Wall(vert1, vert2, texture).ReferencePoint = this;
+                        new Wall(vert2, vert3, texture).ReferencePoint = this;
+                        new Wall(vert3, vert4, texture).ReferencePoint = this;
+                        new Wall(vert4, vert1, texture).ReferencePoint = this;
 
                         walls += 4;
                     }

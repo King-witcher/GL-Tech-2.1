@@ -1,104 +1,100 @@
 ﻿namespace GLTech2.Behaviours
 {
     /// <summary>
-    /// Allows the user to move the camera around the map using keyboard input.
+    /// Allows the user to move the camera around the map using keyboard input in a quake-like way. May not work as expected yet.
     /// </summary>
-    public sealed class FlatMovement : Behaviour
+    internal sealed class idMovement : Behaviour
     {
-        /// <summary>
-        /// Defines whether the script should or not treat collisions while moving.
-        /// </summary>
-        public bool TreatCollisions { get; set; } = true;
-
-        /// <summary>
-        /// Defines whether the element moves, by default, in the run or walk speed.
-        /// </summary>
         public bool AlwaysRun { get; set; } = true;
-
-        /// <summary>
-        /// The element slower speed
-        /// </summary>
-        public float WalkSpeed { get; set; } = 0.75f;
-
-        /// <summary>
-        /// The element faster speed
-        /// </summary>
-        public float RunSpeed { get; set; } = 2.5f;
-
-        /// <summary>
-        /// The angular speed which the element turns in degrees per second
-        /// </summary>
+        public float MaxSpeed { get; set; } = 1f;
+        public bool TreatCollisions { get; set; } = true;
         public float TurnSpeed { get; set; } = 90f;
-
-        /// <summary>
-        /// The key bound to forward movement
-        /// </summary>
+        public float Friction { get; set; } = 10f;
+        public float Acceleration { get; set; } = 50f;
         public Key StepForward { get; set; } = Key.W;
-
-        /// <summary>
-        /// The key bound to backward movement
-        /// </summary>
         public Key StepBack { get; set; } = Key.S;
-
-        /// <summary>
-        /// The key bound to left movement
-        /// </summary>
         public Key StepLeft { get; set; } = Key.A;
-
-        /// <summary>
-        /// The key bound to right movement
-        /// </summary>
         public Key StepRight { get; set; } = Key.D;
-
-        /// <summary>
-        /// The key bound to turn right
-        /// </summary>
         public Key TurnRight { get; set; } = Key.Right;
-
-        /// <summary>
-        /// The key bound to turn left movement
-        /// </summary>
         public Key TurnLeft { get; set; } = Key.Left;
-
-        /// <summary>
-        /// The key that changes between walk and run speed
-        /// </summary>
         public Key ChangeRun_Walk { get; set; } = Key.ShiftKey;
+
+        private float StopSpeed = 1f;
+
+        // Relative to the space.
+        Vector velocity;
+
+        void Start()
+        {
+            velocity = Vector.Origin;
+        }
 
         void OnFrame()
         {
-            // Check speed
+            UpdateVelocity(GetMaxSpeed());
+            UpdatePosition();
+        }
+
+        float GetMaxSpeed()
+        {
             bool run = AlwaysRun;
             if (Keyboard.IsKeyDown(ChangeRun_Walk))
                 run = !run;
 
-            float speed;
             if (run)
-                speed = RunSpeed;
-            else speed = WalkSpeed;
+                return MaxSpeed;
+            else
+                return MaxSpeed / 2;
+        }
 
+        void UpdateVelocity(float maxspeed)
+        {
+            ApplyFriction();
 
-            Vector wishdir = (0, 0);
+            Vector wishdir = GetWishDir();
+
+            float currentspeed = Vector.DotProduct(velocity, wishdir);
+            float addspeed = Acceleration * Frame.DeltaTime;
+            if (addspeed < 0)
+                return;
+            else if (addspeed > MaxSpeed - currentspeed)
+                addspeed = MaxSpeed - currentspeed;
+
+            velocity += addspeed * wishdir;
+            if (velocity.Module < 1f)
+                velocity.Module = 0;
+        }
+
+        void UpdatePosition()
+        {
+            TryTranslate(velocity * Frame.DeltaTime);
+        }
+
+        Vector GetWishDir()
+        {
+            Vector result = Vector.Origin;
+
             if (Keyboard.IsKeyDown(StepForward))
-                wishdir += Vector.Forward;
+                result += Vector.Forward;
             if (Keyboard.IsKeyDown(StepBack))
-                wishdir += Vector.Backward;
+                result += Vector.Backward;
             if (Keyboard.IsKeyDown(StepLeft))
-                wishdir += Vector.Left;
+                result += Vector.Left;
             if (Keyboard.IsKeyDown(StepRight))
-                wishdir += Vector.Right;
+                result += Vector.Right;
 
-            // Suboptimal
-            if (wishdir.Module != 0)
-                wishdir /= wishdir.Module;
+            result *= Element.Normal;
 
-            TryTranslate(wishdir * speed * Frame.Time);
+            if (result.Module == 0)
+                return Vector.Origin;
+            else
+                return result / result.Module;
+        }
 
-            // Turn
-            if (Keyboard.IsKeyDown(TurnLeft))
-                Element.Rotate(-TurnSpeed * Frame.DeltaTime);
-            if (Keyboard.IsKeyDown(TurnRight))
-                Element.Rotate(TurnSpeed * Frame.DeltaTime);
+
+        void ApplyFriction()
+        {
+            velocity -= velocity * Frame.DeltaTime * Friction;
         }
 
         private void TryTranslate(Vector translation)

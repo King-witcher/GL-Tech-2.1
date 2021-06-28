@@ -12,10 +12,10 @@ namespace GLTech2.Behaviours
     public sealed class NoclipController : Behaviour
     {
         public bool AlwaysRun { get; set; } = true;
-        public float MaxSpeed { get; set; } = 2f;
+        public float MaxSpeed { get; set; } = 6.67f;
         public float TurnSpeed { get; set; } = 90f;
         public float Friction { get; set; } = 10f;
-        public float Acceleration { get; set; } = 10f;
+        public float Acceleration { get; set; } = 25f;
         public Key StepForward { get; set; } = Key.W;
         public Key StepBack { get; set; } = Key.S;
         public Key StepLeft { get; set; } = Key.A;

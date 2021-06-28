@@ -46,8 +46,8 @@ namespace Test
             {
                 Observer pov = new Observer((5, 5), 180);
 
-                pov.AddBehaviour<DebugPerformanceStats>();
-                pov.AddBehaviour<DebugComponents>();
+                // pov.AddBehaviour<DebugPerformanceStats>();
+                // pov.AddBehaviour<DebugComponents>();
                 pov.AddBehaviour<DebugSceneInfo>();
                 pov.AddBehaviour<FlatMovement>();
                 pov.AddBehaviour(new MouseLook(2.2f));
@@ -56,7 +56,9 @@ namespace Test
             }
 
             // Renderer customization
-            Renderer.FullScreen = true;
+            Renderer.FullScreen = false;
+            Renderer.CustomWidth = 1600;
+            Renderer.CustomHeight = 900;
             Renderer.FieldOfView = 110f;
             Renderer.ParallelRendering = true;
             Renderer.DoubleBuffering = true;

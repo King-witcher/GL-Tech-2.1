@@ -14,6 +14,7 @@ namespace GLTech2
         internal SceneData* unmanaged;
         private Observer activeObserver;    //Provisional
         private List<Element> elements = new List<Element>();
+        private List<PhysicalPlane> physicalPlanes = new List<PhysicalPlane>(); // Provisional
 
         /// <summary>
         /// Gets a new instance of Scene.
@@ -100,12 +101,14 @@ namespace GLTech2
             }
 
             // Spaguetti!
-            if (element is VisualPlane)
-                UnmanagedAddWall(element as VisualPlane);
-            else if (element is Sprite)
-                UnmanagedAddSprite(element as Sprite);
-            else if (element is Observer)
-                UnmanagedAddObserver(element as Observer);
+            if (element is VisualPlane visualPlane)
+                UnmanagedAddWall(visualPlane);
+            else if (element is Sprite sprite)
+                UnmanagedAddSprite(sprite);
+            else if (element is Observer observer)
+                UnmanagedAddObserver(observer);
+            else if (element is PhysicalPlane physicalPlane)
+                physicalPlanes.Add(physicalPlane);
 
             StartAction += element.StartAction;
             OnFrameAction += element.OnFrameAction;
@@ -152,9 +155,55 @@ namespace GLTech2
             ActiveObserver = p;
         }
 
-        private Element RayCast()
+        public static bool RayTest(Ray ray, PhysicalPlane plane, out float distance)
         {
-            return null;
+            float
+                drx = plane.AbsoluteNormal.x,
+                dry = plane.AbsoluteNormal.y;
+
+            float det = ray.direction.x * dry - ray.direction.y * drx;
+
+            if (det == 0)
+            {
+                distance = float.PositiveInfinity;
+                return false;
+            }
+
+            float spldet = ray.direction.x * (ray.start.y - plane.AbsolutePosition.y) - ray.direction.y * (ray.start.x - plane.AbsolutePosition.x);
+            float dstdet = drx * (ray.start.y - plane.AbsolutePosition.y) - dry * (ray.start.x - plane.AbsolutePosition.x);
+            float spltmp = spldet / det;
+            float dsttmp = dstdet / det;
+            if (spltmp < 0 || spltmp >= 1 || dsttmp <= 0) // dsttmp = 0 means column height = x/0.
+            {
+                distance = float.PositiveInfinity;
+                return false;
+            }
+            distance = dsttmp;
+            return true;
+        }
+
+        private static bool CircleTest(Ray ray, PhysicalPlane plane, out float distance)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Provisional; must be improved
+        public PhysicalPlane RayCast(Ray ray, out float distance)
+        {
+            PhysicalPlane nearest = null;
+            distance = float.PositiveInfinity;
+
+            foreach (PhysicalPlane current in physicalPlanes)
+            {
+                RayTest(ray, current, out float currentDistance);
+
+                if (currentDistance < distance)
+                {
+                    nearest = current;
+                    distance = currentDistance;
+                }
+            }
+            return nearest;
         }
 
         /// <summary>

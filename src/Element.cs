@@ -17,8 +17,6 @@ namespace GLTech2
         private Vector relativePosition;
         private Vector relativeNormal;
 
-        public Element() { }
-
         /// <summary>
         /// Gets and sets the absolute position of an Element without and allows subclasses to store the Position the way they want.
         /// </summary>

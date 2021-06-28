@@ -33,7 +33,7 @@ namespace GLTech2
                 Ray ray = new Ray(scene->activeObserver->position, ray_angle);
 
                 //Cast the ray towards every wall.
-                VisualPlaneData* nearest = scene->PlaneRayCast(ray, out float nearest_dist, out float nearest_ratio);
+                VisualPlaneData* nearest = scene->VisualRayCast(ray, out float nearest_dist, out float nearest_ratio);
                 if (nearest_ratio != 2f)
                 {
                     float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); //Wall column size in pixels
@@ -100,7 +100,7 @@ namespace GLTech2
                 Ray ray = new Ray(scene->activeObserver->position, ray_angle);
 
                 //Cast the ray towards every wall.
-                VisualPlaneData* nearest = scene->PlaneRayCast(ray, out float nearest_dist, out float nearest_ratio);
+                VisualPlaneData* nearest = scene->VisualRayCast(ray, out float nearest_dist, out float nearest_ratio);
                 if (nearest_ratio != 2f)
                 {
                     float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); //Wall column size in pixels

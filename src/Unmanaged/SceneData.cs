@@ -49,7 +49,7 @@ namespace GLTech2
             plane_count++;
         }
 
-        internal VisualPlaneData* PlaneRayCast(Ray ray, out float nearest_dist, out float nearest_ratio)
+        internal VisualPlaneData* VisualRayCast(Ray ray, out float nearest_dist, out float nearest_ratio)
         {
             // 0 < distance <= infinity
             // 0 <= split < 1

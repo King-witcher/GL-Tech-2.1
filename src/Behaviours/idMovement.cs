@@ -1,8 +1,5 @@
 ﻿namespace GLTech2.Behaviours
 {
-    /// <summary>
-    /// Allows the user to move the camera around the map using keyboard input in a quake-like way. May not work as expected yet.
-    /// </summary>
     internal sealed class idMovement : Behaviour
     {
         public bool AlwaysRun { get; set; } = true;
@@ -61,8 +58,6 @@
                 addspeed = MaxSpeed - currentspeed;
 
             velocity += addspeed * wishdir;
-            if (velocity.Module < 1f)
-                velocity.Module = 0;
         }
 
         void UpdatePosition()

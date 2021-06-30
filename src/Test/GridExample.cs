@@ -46,10 +46,10 @@ namespace Test
             {
                 Observer pov = new Observer((5, 5), 180);
 
-                // pov.AddBehaviour<DebugPerformanceStats>();
+                pov.AddBehaviour<DebugPerformanceStats>();
                 // pov.AddBehaviour<DebugComponents>();
                 pov.AddBehaviour<DebugSceneInfo>();
-                pov.AddBehaviour<FlatMovement>();
+                pov.AddBehaviour<NoclipController>();
                 pov.AddBehaviour(new MouseLook(2.2f));
 
                 scene.AddElement(pov);

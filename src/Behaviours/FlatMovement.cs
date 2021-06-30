@@ -116,7 +116,7 @@
                 PhysicalPlane plane = Scene.RayCast(new Ray(element.Position, wishdir), out float distance);
                 if (plane != null && wishdist > distance)
                 {
-                    Vector planeVersor = plane.AbsoluteNormal / plane.AbsoluteNormal.Module;
+                    Vector planeVersor = plane.WorldNormal / plane.WorldNormal.Module;
                     Vector wishdir_proj = (wishdir.x * planeVersor.x + wishdir.y * planeVersor.y) * planeVersor;
                     Vector wishdir_ortogonal = wishdir - wishdir_proj;
 

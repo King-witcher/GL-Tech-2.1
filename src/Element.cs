@@ -23,7 +23,7 @@ namespace GLTech2
         /// <remarks>
         /// Important: Elements that take this element as reference point will not follow it imediatelly for performance and code health reasons. Changing this property is only recommended if the element is not a reference point to any other and changing positions is a significant performance bottleneck in your application. Otherwise, always use Element.Position property instead.
         /// </remarks>
-        public abstract Vector AbsolutePosition { get; set; }
+        public abstract Vector WorldPosition { get; set; }
 
         /// <summary>
         /// Determines how the element stores its normal.
@@ -31,7 +31,7 @@ namespace GLTech2
         /// <remarks>
         /// Remember to set it before parenting any object!
         /// </remarks>
-        public abstract Vector AbsoluteNormal { get; set; } //Provides rotation and scale of the object.
+        public abstract Vector WorldNormal { get; set; } //Provides rotation and scale of the object.
 
         /// <summary>
         /// Its correspondent scene. If the element is not bound to any scene, returns null.
@@ -53,7 +53,7 @@ namespace GLTech2
             get
             {
                 if (referencePoint is null)
-                    return AbsolutePosition;
+                    return WorldPosition;
                 else
                     return relativePosition;
             }
@@ -61,7 +61,7 @@ namespace GLTech2
             {
                 if (referencePoint is null)
                 {
-                    AbsolutePosition = value;
+                    WorldPosition = value;
                     OnChangeComponents?.Invoke();
                 }
                 else
@@ -86,7 +86,7 @@ namespace GLTech2
             get
             {
                 if (referencePoint is null)
-                    return AbsoluteNormal;
+                    return WorldNormal;
                 else
                     return relativeNormal;
             }
@@ -94,7 +94,7 @@ namespace GLTech2
             {
                 if (referencePoint is null)
                 {
-                    AbsoluteNormal = value;
+                    WorldNormal = value;
                     OnChangeComponents?.Invoke();
                 }
                 else
@@ -113,7 +113,7 @@ namespace GLTech2
             get
             {
                 if (referencePoint is null)
-                    return AbsoluteNormal.Angle;
+                    return WorldNormal.Angle;
                 else
                     return relativeNormal.Angle;
             }
@@ -121,9 +121,9 @@ namespace GLTech2
             {
                 if (referencePoint is null)
                 {
-                    Vector newNormal = AbsoluteNormal;
+                    Vector newNormal = WorldNormal;
                     newNormal.Angle = value;
-                    AbsoluteNormal = newNormal;
+                    WorldNormal = newNormal;
                     OnChangeComponents?.Invoke();
                 }
                 else
@@ -184,14 +184,14 @@ namespace GLTech2
             // In case the reference point is the scene origin:
             if (referencePoint is null)
             {
-                relativePosition = AbsolutePosition;
-                relativeNormal = AbsoluteNormal;
+                relativePosition = WorldPosition;
+                relativeNormal = WorldNormal;
             }
             // Otherwise, in case the reference point is another element:
             else
             {
-                relativePosition = AbsolutePosition.Projection(referencePoint.AbsolutePosition, referencePoint.AbsoluteNormal);
-                relativeNormal = AbsoluteNormal / referencePoint.AbsoluteNormal;
+                relativePosition = WorldPosition.Projection(referencePoint.WorldPosition, referencePoint.WorldNormal);
+                relativeNormal = WorldNormal / referencePoint.WorldNormal;
             }
         }
 
@@ -203,14 +203,14 @@ namespace GLTech2
             // In case the reference point is the scene origin:
             if (referencePoint is null)
             {
-                AbsolutePosition = relativePosition;
-                AbsoluteNormal = relativeNormal;
+                WorldPosition = relativePosition;
+                WorldNormal = relativeNormal;
             }
             // Otherwise, in case the reference point is another element:
             else
             {
-                AbsolutePosition = relativePosition.AsProjectionOf(referencePoint.AbsolutePosition, referencePoint.AbsoluteNormal);
-                AbsoluteNormal = relativeNormal * referencePoint.AbsoluteNormal;
+                WorldPosition = relativePosition.AsProjectionOf(referencePoint.WorldPosition, referencePoint.WorldNormal);
+                WorldNormal = relativeNormal * referencePoint.WorldNormal;
             }
             // Then, publish to all children elements that its position has changed so that they can follow you with their respective UpdateAbsolute() methods.
             OnChangeComponents?.Invoke();
@@ -220,9 +220,9 @@ namespace GLTech2
         /// Moves the object in one direction relatively to it's direction; in other words, the direction of the module vector.
         /// </summary>
         /// <param name="direction">Direction to move</param>
-        public void Translate(Vector direction)
+        public void Translate(Vector direction, bool ignoreCollisions = false)
         {
-            Position += direction * Normal;
+            Position += direction;
         }
 
         /// <summary>

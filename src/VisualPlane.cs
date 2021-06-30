@@ -46,13 +46,13 @@
             }
         }
 
-        public override Vector AbsolutePosition
+        public override Vector WorldPosition
         {
             get => Start;
             set => Start = value;
         }
 
-        public override Vector AbsoluteNormal
+        public override Vector WorldNormal
         {
             get => unmanaged->geom_direction;
             set

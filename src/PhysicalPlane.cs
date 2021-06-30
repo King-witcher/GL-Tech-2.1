@@ -2,13 +2,13 @@
 {
     public class PhysicalPlane : Element
     {
-        public override Vector AbsolutePosition { get; set; }
-        public override Vector AbsoluteNormal { get; set; }
+        public override Vector WorldPosition { get; set; }
+        public override Vector WorldNormal { get; set; }
 
         public PhysicalPlane(Vector start, Vector end)
         {
-            AbsolutePosition = start;
-            AbsoluteNormal = end - start;
+            WorldPosition = start;
+            WorldNormal = end - start;
         }
     }
 }

@@ -11,8 +11,8 @@
         /// <param name="pos">The position of the empty.</param>
         public Empty(Vector pos)
         {
-            AbsolutePosition = pos;
-            AbsoluteNormal = Vector.Forward;
+            WorldPosition = pos;
+            WorldNormal = Vector.Forward;
         }
 
         /// <summary>
@@ -24,7 +24,7 @@
         {
         }
 
-        public override Vector AbsolutePosition { get; set; }
-        public override Vector AbsoluteNormal { get; set; }
+        public override Vector WorldPosition { get; set; }
+        public override Vector WorldNormal { get; set; }
     }
 }

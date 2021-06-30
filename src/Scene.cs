@@ -158,8 +158,8 @@ namespace GLTech2
         public static bool RayTest(Ray ray, PhysicalPlane plane, out float distance)
         {
             float
-                drx = plane.AbsoluteNormal.x,
-                dry = plane.AbsoluteNormal.y;
+                drx = plane.WorldNormal.x,
+                dry = plane.WorldNormal.y;
 
             float det = ray.direction.x * dry - ray.direction.y * drx;
 
@@ -169,8 +169,8 @@ namespace GLTech2
                 return false;
             }
 
-            float spldet = ray.direction.x * (ray.start.y - plane.AbsolutePosition.y) - ray.direction.y * (ray.start.x - plane.AbsolutePosition.x);
-            float dstdet = drx * (ray.start.y - plane.AbsolutePosition.y) - dry * (ray.start.x - plane.AbsolutePosition.x);
+            float spldet = ray.direction.x * (ray.start.y - plane.WorldPosition.y) - ray.direction.y * (ray.start.x - plane.WorldPosition.x);
+            float dstdet = drx * (ray.start.y - plane.WorldPosition.y) - dry * (ray.start.x - plane.WorldPosition.x);
             float spltmp = spldet / det;
             float dsttmp = dstdet / det;
             if (spltmp < 0 || spltmp >= 1 || dsttmp <= 0) // dsttmp = 0 means column height = x/0.

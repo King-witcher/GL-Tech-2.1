@@ -34,13 +34,13 @@
                     debugOption: Debug.Options.Error);
 
                 WorldPosition = position;
-                WorldNormal = Vector.Forward;
+                WorldRotation = Vector.Forward;
 
                 return;
             }
 
             WorldPosition = position;
-            WorldNormal = Vector.Forward * radius;
+            WorldRotation = Vector.Forward * radius;
 
             Build(
                 Vector.GetRegularPolygon(position, radius, vertices),

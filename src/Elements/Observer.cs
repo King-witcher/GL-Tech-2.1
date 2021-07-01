@@ -44,7 +44,7 @@ namespace GLTech2
             set => unmanaged->position = value;
         }
 
-        public override Vector WorldNormal
+        public override Vector WorldRotation
         {
             get => new Vector(unmanaged->rotation);
             set => unmanaged->rotation = value.Angle;

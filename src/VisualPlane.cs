@@ -52,7 +52,7 @@
             set => Start = value;
         }
 
-        public override Vector WorldNormal
+        public override Vector WorldRotation
         {
             get => unmanaged->geom_direction;
             set

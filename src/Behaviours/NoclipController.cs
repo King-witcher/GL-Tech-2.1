@@ -58,11 +58,12 @@ namespace GLTech2.Behaviours
                 addspeed = maxspeed - currentspeed;
 
             velocity += addspeed * wishdir;
+            if (velocity.Module < .01f) velocity = (0, 0);
         }
 
         void UpdatePosition()
         {
-            element.Position += velocity * Frame.DeltaTime;
+            element.Translation += velocity * Frame.DeltaTime;
         }
 
         Vector GetWishDir()
@@ -78,7 +79,7 @@ namespace GLTech2.Behaviours
             if (Keyboard.IsKeyDown(StepRight))
                 result += Vector.Right;
 
-            result *= Element.Normal;
+            result *= Element.Rotation;
 
             if (result.Module == 0)
                 return Vector.Origin;

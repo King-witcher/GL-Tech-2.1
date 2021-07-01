@@ -110,13 +110,13 @@
                 if (translation.Module == 0)
                     return;
                 float wishdist = translation.Module;
-                Vector wishdir = translation * element.Normal;
+                Vector wishdir = translation * element.Rotation;
                 wishdir /= wishdir.Module;
 
-                PhysicalPlane plane = Scene.RayCast(new Ray(element.Position, wishdir), out float distance);
+                PhysicalPlane plane = Scene.RayCast(new Ray(element.Translation, wishdir), out float distance);
                 if (plane != null && wishdist > distance)
                 {
-                    Vector planeVersor = plane.WorldNormal / plane.WorldNormal.Module;
+                    Vector planeVersor = plane.WorldRotation / plane.WorldRotation.Module;
                     Vector wishdir_proj = (wishdir.x * planeVersor.x + wishdir.y * planeVersor.y) * planeVersor;
                     Vector wishdir_ortogonal = wishdir - wishdir_proj;
 
@@ -124,13 +124,13 @@
                     wishdir = wishdir_proj / wishdir_proj.Module;
 
                     // Test
-                    Scene.RayCast(new Ray(element.Position, wishdir), out float newDist);
+                    Scene.RayCast(new Ray(element.Translation, wishdir), out float newDist);
 
                     if (newDist < wishdist)
                         wishdist = 0f;
                 }
 
-                Element.Position += wishdir * wishdist;
+                Element.Translation += wishdir * wishdist;
             }
         }
     }

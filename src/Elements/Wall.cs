@@ -4,14 +4,14 @@ namespace GLTech2.Elements
     class Wall : Element
     {
         public override Vector WorldPosition { get; set; }
-        public override Vector WorldNormal { get; set; }
+        public override Vector WorldRotation { get; set; }
         private VisualPlane visual;
         private PhysicalPlane physical;
 
         public Wall(Vector start, Vector end, Texture texture)
         {
             WorldPosition = start;
-            WorldNormal = end - start;
+            WorldRotation = end - start;
 
             (visual = new VisualPlane(start, end, texture)).ReferencePoint = this;
             (physical = new PhysicalPlane(start, end)).ReferencePoint = this;

@@ -34,13 +34,13 @@
             if (timeSpent >= Interval)
             {
                 if (DebugPosition)
-                    Debug.Log($"Relative position: {Element.Position}");
+                    Debug.Log($"Relative position: {Element.Translation}");
 
                 if (DebugRotation)
-                    Debug.Log($"Relative rotation: {Element.Rotation}");
+                    Debug.Log($"Relative rotation: {Element.Angle}");
 
                 if (DebugNormal)
-                    Debug.Log($"Relative normal: {Element.Normal}");
+                    Debug.Log($"Relative normal: {Element.Rotation}");
 
                 Debug.Log();
 

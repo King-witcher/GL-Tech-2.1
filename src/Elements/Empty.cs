@@ -12,7 +12,7 @@
         public Empty(Vector pos)
         {
             WorldPosition = pos;
-            WorldNormal = Vector.Forward;
+            WorldRotation = Vector.Forward;
         }
 
         /// <summary>
@@ -25,6 +25,6 @@
         }
 
         public override Vector WorldPosition { get; set; }
-        public override Vector WorldNormal { get; set; }
+        public override Vector WorldRotation { get; set; }
     }
 }

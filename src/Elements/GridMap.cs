@@ -9,7 +9,7 @@
 	public partial class GridMap : Element
 	{
         public override Vector WorldPosition { get; set; } = Vector.Origin;
-        public override Vector WorldNormal { get; set; } = Vector.Forward;
+        public override Vector WorldRotation { get; set; } = Vector.Forward;
 
         private int walls = 0;
 
@@ -23,12 +23,12 @@
         /// </summary>
         public float Scale
 		{
-            get => Normal.Module;
+            get => Rotation.Module;
             set
 			{
                 if (value != 0)
 				{
-                    Normal = Normal * value / Normal.Module;
+                    Rotation = Rotation * value / Rotation.Module;
                 }
 			}
 		}

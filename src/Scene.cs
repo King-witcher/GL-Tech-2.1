@@ -110,8 +110,8 @@ namespace GLTech2
             else if (element is PhysicalPlane physicalPlane)
                 physicalPlanes.Add(physicalPlane);
 
-            StartAction += element.StartAction;
-            OnFrameAction += element.OnFrameAction;
+            StartAction += element.OnStart;
+            OnFrameAction += element.OnFrame;
 
             elements.Add(element);
             element.scene = this;
@@ -158,8 +158,8 @@ namespace GLTech2
         public static bool RayTest(Ray ray, PhysicalPlane plane, out float distance)
         {
             float
-                drx = plane.WorldNormal.x,
-                dry = plane.WorldNormal.y;
+                drx = plane.WorldRotation.x,
+                dry = plane.WorldRotation.y;
 
             float det = ray.direction.x * dry - ray.direction.y * drx;
 

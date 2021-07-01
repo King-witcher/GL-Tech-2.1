@@ -14,7 +14,7 @@ namespace GLTech2
             set => unmanaged->position = value;
         }
 
-        public override Vector WorldNormal { get; set; }
+        public override Vector WorldRotation { get; set; }
 
         public Sprite(Vector position, Texture material)
         {

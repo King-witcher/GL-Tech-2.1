@@ -1,6 +1,6 @@
 ﻿using GLTech2;
-using GLTech2.Elements;
 using GLTech2.Behaviours;
+using GLTech2.Elements;
 
 namespace Test
 {
@@ -34,10 +34,8 @@ namespace Test
                 scene.AddElement(observer);
             }
 
-
             Renderer.CaptureMouse = true;
-            Renderer.CustomWidth = 1600;
-            Renderer.CustomHeight = 900;
+            Renderer.FullScreen = true;
             Renderer.Run(scene);
         }
     }

@@ -22,6 +22,7 @@
         /// <param name="y">The y cordinate</param>
         public Empty(float x, float y) : this(new Vector(x, y))
         {
+
         }
 
         public override Vector WorldPosition { get; set; }

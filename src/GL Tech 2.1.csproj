@@ -46,6 +46,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>VersionData.resx</DependentUpon>
     </Compile>
+    <Compile Update="Test\WE1M1.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>WE1M1.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +61,10 @@
     <EmbeddedResource Update="GLTech2\VersionData.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>VersionData.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Test\WE1M1.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>WE1M1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

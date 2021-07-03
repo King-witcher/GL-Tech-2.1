@@ -104,7 +104,7 @@
         private void TryTranslate(Vector translation)
         {
             if (!HandleCollisions)
-                element.Translate(translation);
+                element.Translate(translation * element.Rotation);
             else
             {
                 if (translation.Module == 0)

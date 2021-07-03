@@ -2,8 +2,6 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// Implementar culling para otimizar a detecção de muros
-
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]

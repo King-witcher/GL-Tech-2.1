@@ -2,120 +2,134 @@
 
 namespace GLTech2.Elements
 {
-    /// <summary>
-    /// Provides a tool to build maps based on a image.
-    /// <remarks>
-    /// Each pixel of the image can be converted into a block of its original color, a block with an especific Texture or nothing.
-    /// </remarks>
-    /// </summary>
+	/// <summary>
+	/// Provides a tool to build maps based on a image.
+	/// <remarks>
+	/// Each pixel of the image can be converted into a block of its original color, a block with an especific Texture or nothing.
+	/// </remarks>
+	/// </summary>
 	public partial class GridMap : Element
 	{
-        public override Vector WorldPosition { get; set; } = Vector.Origin;
-        public override Vector WorldRotation { get; set; } = Vector.Forward;
+		public override Vector WorldPosition { get; set; } = Vector.Origin;
+		public override Vector WorldRotation { get; set; } = Vector.Forward;
 
-        private int walls = 0;
+		private int walls = 0;
 
-        /// <summary>
-        /// How many walls does this GridMap contain.
-        /// </summary>
-        public int Walls => walls;
+		/// <summary>
+		/// How many walls does this GridMap contain.
+		/// </summary>
+		public int Walls => walls;
 
-        /// <summary>
-        /// The scale of this GridMap. Cannot be zero.
-        /// </summary>
-        public float Scale
+		/// <summary>
+		/// The scale of this GridMap. Cannot be zero.
+		/// </summary>
+		public float Scale
 		{
-            get => Rotation.Module;
-            set
+			get => Rotation.Module;
+			set
 			{
-                if (value != 0)
+				if (value != 0)
 				{
-                    Rotation = Rotation * value / Rotation.Module;
-                }
+					Rotation = Rotation * value / Rotation.Module;
+				}
 			}
 		}
 
-        /// <summary>
-        /// Gets a new instance of GridMap based only on a PixelBuffer.
-        /// <remarks>
-        /// Totally black pixels won't be
-        /// </remarks>
-        /// </summary>
-        /// <param name="map">A pixelbuffer that represents each block of the map.</param>
-        public GridMap(PixelBuffer map)
-        {
-            TextureBindings textures = new TextureBindings();
+		/// <summary>
+		/// Gets a new instance of GridMap based only on a PixelBuffer.
+		/// <remarks>
+		/// Totally black pixels won't be
+		/// </remarks>
+		/// </summary>
+		/// <param name="map">A pixelbuffer that represents each block of the map.</param>
+		public GridMap(PixelBuffer map)
+		{
+			TextureBindings textures = new TextureBindings();
 
-            // Gets a new texture if exists; otherwise creates it.
-            Texture getTexture(RGB rgb)
-            {
-                if (textures.GetTexture(rgb, out Texture texture))
-                    return texture;
-                else
-                {
-                    PixelBuffer buffer = new PixelBuffer(1, 1);     // Must be added to disposables
-                    buffer[0, 0] = rgb;
-                    Texture tex = new Texture(buffer);
-                    textures[rgb] = tex;
-                    return tex;
-                }
-            }
 
-            for (int column = 0; column < map.Width; column++)
-            {
-                for (int line = 0; line < map.Height; line++)
-                {
-                    // Checks for transparency.
-                    if (map[column, line] == (RGB)(0, 0, 0))
-                        continue;
+			// Gets a new texture if exists; otherwise creates it.
+			Texture getTexture(RGB rgb)
+			{
+				if (textures.GetTexture(rgb, out Texture texture))
+					return texture;
+				else
+				{
+					PixelBuffer buffer = new PixelBuffer(1, 1);     // Must be added to disposables
+					buffer[0, 0] = rgb;
+					Texture tex = new Texture(buffer);
+					textures[rgb] = tex;
+					return tex;
+				}
+			}
 
-                    Texture texture = getTexture(map[column, line]);
+			for (int column = 0; column < map.Width; column++)
+			{
+				for (int line = 0; line < map.Height; line++)
+				{
+					// Checks for transparency.
+					if (map[column, line] == (RGB)(0, 0, 0))
+						continue;
 
-                    Vector vert1 = (line, column);
-                    Vector vert2 = (line + 1, column);
-                    Vector vert3 = (line + 1, column + 1);
-                    Vector vert4 = (line, column + 1);
+					Texture texture = getTexture(map[column, line]);
 
-                    new Wall(vert1, vert2, texture).ReferencePoint = this;
-                    new Wall(vert2, vert3, texture).ReferencePoint = this;
-                    new Wall(vert3, vert4, texture).ReferencePoint = this;
-                    new Wall(vert4, vert1, texture).ReferencePoint = this;
+					Vector vert1 = (line, column);
+					Vector vert2 = (line + 1, column);
+					Vector vert3 = (line + 1, column + 1);
+					Vector vert4 = (line, column + 1);
 
-                    walls += 4;
-                }
-            }
-        }
+					new Wall(vert1, vert2, texture).ReferencePoint = this;
+					new Wall(vert2, vert3, texture).ReferencePoint = this;
+					new Wall(vert3, vert4, texture).ReferencePoint = this;
+					new Wall(vert4, vert1, texture).ReferencePoint = this;
 
-        /// <summary>
-        /// Gets a new instance of GridMap the remaps each color to a given texture.
-        /// </summary>
-        /// <param name="map">The map</param>
-        /// <param name="textureBindings">A hashmap that binds a set of Colors to Textures</param>
-        public GridMap(PixelBuffer map, TextureBindings textureBindings)
-        {
-            if (textureBindings == null)
-                throw new System.ArgumentNullException("textureBindings");
+					walls += 4;
+				}
+			}
+		}
 
-            for (int column = 0; column < map.Width; column++)
-            {
-                for (int line = 0; line < map.Height; line++)
-                {
-                    if (textureBindings.GetTexture(map[column, line], out Texture texture))
-                    {
-                        Vector vert1 = (line, column);
-                        Vector vert2 = (line + 1, column);
-                        Vector vert3 = (line + 1, column + 1);
-                        Vector vert4 = (line, column + 1);
+		/// <summary>
+		/// Gets a new instance of GridMap the remaps each color to a given texture.
+		/// </summary>
+		/// <param name="map">The map</param>
+		/// <param name="textureBindings">A hashmap that binds a set of Colors to Textures</param>
+		public GridMap(PixelBuffer map, TextureBindings textureBindings)
+		{
+			bool blockFree(int column, int line)
+			{
+				if (column < 0 || column >= map.height || line < 0 || line >= map.width)
+					return true;
+				if (textureBindings.GetTexture(map[column, line], out _))
+					return false;
+				return true;
+			}
 
-                        new Wall(vert1, vert2, texture).ReferencePoint = this;
-                        new Wall(vert2, vert3, texture).ReferencePoint = this;
-                        new Wall(vert3, vert4, texture).ReferencePoint = this;
-                        new Wall(vert4, vert1, texture).ReferencePoint = this;
+			if (textureBindings == null)
+				throw new System.ArgumentNullException("textureBindings");
 
-                        walls += 4;
-                    }
-                }
-            }
-        }
-    }
+			for (int column = 0; column < map.Width; column++)
+			{
+				for (int line = 0; line < map.Height; line++)
+				{
+					if (textureBindings.GetTexture(map[column, line], out Texture texture))
+					{
+						Vector vert1 = (line, column);
+						Vector vert2 = (line + 1, column);
+						Vector vert3 = (line + 1, column + 1);
+						Vector vert4 = (line, column + 1);
+
+						if (blockFree(column - 1, line))
+							new Wall(vert1, vert2, texture).ReferencePoint = this;
+						if (blockFree(column, line + 1))
+							new Wall(vert2, vert3, texture).ReferencePoint = this;
+						if (blockFree(column + 1, line))
+							new Wall(vert3, vert4, texture).ReferencePoint = this;
+						if (blockFree(column, line - 1))
+							new Wall(vert4, vert1, texture).ReferencePoint = this;
+
+						walls += 4;
+					}
+				}
+			}
+		}
+	}
 }

@@ -159,6 +159,13 @@ namespace GLTech2
 
         public static bool RayTest(Ray ray, PhysicalPlane plane, out float distance)
         {
+            // Culling
+            if (plane.WorldRotation.x * ray.direction.y - plane.WorldRotation.y * ray.direction.x <= 0)
+            {
+                distance = float.PositiveInfinity;
+                return false;
+            }
+
             float
                 drx = plane.WorldRotation.x,
                 dry = plane.WorldRotation.y;

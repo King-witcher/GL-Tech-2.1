@@ -17,7 +17,7 @@ namespace Test
 
             // Gridmap
             {
-                Texture tex = new Texture(texturebuf, 0f, 0.04f);
+                Texture tex = new Texture(texturebuf, 0f, 0.03f);
                 GridMap.TextureBindings tb = new GridMap.TextureBindings();
                 tb[(0, 0, 0)] = tex;
                 GridMap gm = new GridMap(gridmapbuf, tb);

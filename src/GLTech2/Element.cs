@@ -8,6 +8,7 @@ namespace GLTech2
     public abstract partial class Element : IDisposable
     {
         internal Scene scene;
+        private Vector worldVelocity;
 
         public Element() =>
             OnFrame += HandleVelocity;
@@ -32,6 +33,18 @@ namespace GLTech2
         /// Remember to set it before parenting any object!
         /// </remarks>
         public abstract Vector WorldRotation { get; set; } //Provides rotation and scale of the object.
+
+        public Vector WorldVelocity
+        {
+            get => worldVelocity;
+            set => worldVelocity = value;
+        }
+
+        public float WorldSpeed
+        {
+            get => worldVelocity.Module;
+            set => worldVelocity.Module = value;
+        }
 
         /// <summary>
         /// Releases unmanaged data, if any.

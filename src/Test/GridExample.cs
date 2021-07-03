@@ -4,7 +4,7 @@ using GLTech2.Elements;
 
 namespace Test
 {
-    internal partial class Program
+    partial class Program
     {
         static void GridExample()
         {

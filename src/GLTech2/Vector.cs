@@ -148,7 +148,7 @@ namespace GLTech2
 
 			Vector[] result = new Vector[edges];
 			for (int i = 0; i < edges; i++)
-				result[i] = center + radius * new Vector(i * 360 / edges);
+				result[i] = center + radius * new Vector(-i * 360 / edges);
 			return result;
 		}
 
@@ -184,7 +184,7 @@ namespace GLTech2
 		/// <param name="origin">The origin of the specified cartesian system.</param>
 		/// <param name="normal">The so called normal component (Y) of the the specified cartesian system.</param>
 		/// <returns>A new instance of vector that has the actual values of a vector as if it was a projection on a different cartesian system.</returns>
-		public Vector AsProjectionOf(Vector origin, Vector normal)
+		public Vector Disprojection(Vector origin, Vector normal)
 		{
 			return this * normal + origin;
 		}

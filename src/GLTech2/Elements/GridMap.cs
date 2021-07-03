@@ -1,4 +1,6 @@
-﻿namespace GLTech2.Elements
+﻿// Altamente otimizável
+
+namespace GLTech2.Elements
 {
     /// <summary>
     /// Provides a tool to build maps based on a image.

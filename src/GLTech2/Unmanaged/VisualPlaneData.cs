@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
+// Talvez seja válido implmenetar mapeamento de texturas aqui
+
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]

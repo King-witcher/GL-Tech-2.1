@@ -92,7 +92,7 @@ namespace Test
                 Element e = new RegularPolygon(
                     position: Vector.Origin,
                     vertices: 4,
-                    radius: 2f, 
+                    radius: -2f, 
                     texture: tex);
 
                 scene.AddElement(e);

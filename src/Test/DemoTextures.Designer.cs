@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 
 namespace Test {
+    using System;
     
     
     /// <summary>
@@ -38,7 +39,7 @@ namespace Test {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GLTech2.Test.DemoTextures", typeof(DemoTextures).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Test.DemoTextures", typeof(DemoTextures).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -105,6 +106,16 @@ namespace Test {
         internal static System.Drawing.Bitmap MapGrid {
             get {
                 object obj = ResourceManager.GetObject("MapGrid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Plant {
+            get {
+                object obj = ResourceManager.GetObject("Plant", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

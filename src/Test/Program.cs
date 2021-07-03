@@ -2,18 +2,14 @@
 
 namespace Test
 {
-    static partial class Program
+    static internal partial class Program
     {
         static void Main()
         {
             Debug.ConsoleEnabled = true;
 
             Debug.Pause("Press any key to start.");
-            GridExample();
-
-            Debug.Clear();
-            Debug.Pause("Press any key to start.");
-            // AnimatedExample();
+            ExtremePlanes();
 
             Debug.Pause("Press any key to close.");
             Debug.Log("Releasing resources...");

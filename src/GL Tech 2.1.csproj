@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
-    <RootNamespace>GLTech2</RootNamespace>
+    <RootNamespace></RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject></StartupObject>
     <Nullable>annotations</Nullable>
@@ -32,7 +32,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Elements\GridMap.Bindings.cs" />
+    <None Include="GLTech2\Elements\GridMap.Bindings.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,7 +41,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DemoTextures.resx</DependentUpon>
     </Compile>
-    <Compile Update="VersionData.Designer.cs">
+    <Compile Update="GLTech2\VersionData.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>VersionData.resx</DependentUpon>
@@ -53,7 +53,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DemoTextures.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="VersionData.resx">
+    <EmbeddedResource Update="GLTech2\VersionData.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>VersionData.Designer.cs</LastGenOutput>
     </EmbeddedResource>

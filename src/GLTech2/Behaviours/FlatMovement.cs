@@ -8,7 +8,7 @@
         /// <summary>
         /// Defines whether the script should or not treat collisions while moving.
         /// </summary>
-        public bool TreatCollisions { get; set; } = true;
+        public bool HandleCollisions { get; set; } = true;
 
         /// <summary>
         /// Defines whether the element moves, by default, in the run or walk speed.
@@ -103,7 +103,7 @@
 
         private void TryTranslate(Vector translation)
         {
-            if (!TreatCollisions)
+            if (!HandleCollisions)
                 element.Translate(translation);
             else
             {

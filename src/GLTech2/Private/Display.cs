@@ -82,7 +82,6 @@ namespace GLTech2
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Display";
-            this.Opacity = 0.99D;
             this.Text = "GL Tech 2.1";
             this.Load += new System.EventHandler(this.Display_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Display_KeyDown);

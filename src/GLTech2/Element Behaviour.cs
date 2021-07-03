@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 // Colocar simulação física (velocity/collision) dentro de Element?
 // Velocity deveria ser implementado em Element ou pode ser abstrato e implementado nas classes base?
+// Talvez as World devam atualizar as relativas tambem. Posso criar uma que atualize apenas a interna e usar por quest'oes de performance.
 
 namespace GLTech2
 {

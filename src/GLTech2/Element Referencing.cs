@@ -194,7 +194,7 @@ namespace GLTech2
             // Otherwise, in case the reference point is another element:
             else
             {
-                WorldPosition = relativePosition.AsProjectionOf(referencePoint.WorldPosition, referencePoint.WorldRotation);
+                WorldPosition = relativePosition.Disprojection(referencePoint.WorldPosition, referencePoint.WorldRotation);
                 WorldRotation = relativeNormal * referencePoint.WorldRotation;
             }
             // Then, publish to all children elements that its position has changed so that they can follow you with their respective UpdateAbsolute() methods.

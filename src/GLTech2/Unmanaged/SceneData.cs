@@ -58,8 +58,8 @@ namespace GLTech2
             // split = 2f means no collision
             void GetCollisionData(VisualPlaneData* plane, out float cur_dist, out float cur_split)
             {
-                float prod = plane->geom_direction.x * ray.direction.y - plane->geom_direction.y * ray.direction.x;
-                if (prod <= 0)
+                // Culling
+                if (plane->geom_direction.x * ray.direction.y - plane->geom_direction.y * ray.direction.x <= 0)
                 {
                     cur_dist = float.PositiveInfinity;
                     cur_split = 2f;

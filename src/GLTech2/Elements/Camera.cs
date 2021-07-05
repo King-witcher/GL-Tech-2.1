@@ -1,28 +1,7 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 
 namespace GLTech2
 {
-    [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct SCamera
-    {
-        internal Vector position;
-        internal float rotation; //MUST be 0 <= x < 360
-
-        static internal SCamera* Create(Vector position, float rotation) // a little bit optimizable
-        {
-            SCamera* result = (SCamera*)Marshal.AllocHGlobal(sizeof(SCamera));
-            result->position = position;
-            result->rotation = rotation;
-            return result;
-        }
-
-        static internal void Delete(SCamera* item)
-        {
-            Marshal.FreeHGlobal((IntPtr)item);
-        }
-    }
-
     /// <summary>
     /// Represents a point of view from which the Renderer can render a scene.
     /// </summary>

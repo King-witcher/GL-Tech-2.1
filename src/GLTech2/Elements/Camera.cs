@@ -35,7 +35,7 @@ namespace GLTech2
             unmanaged = SCamera.Create(position, rotation);
         }
 
-        public override Vector WorldPosition
+        private protected override Vector PositionData
         {
             get
             {
@@ -44,7 +44,7 @@ namespace GLTech2
             set => unmanaged->position = value;
         }
 
-        public override Vector WorldRotation
+        private protected override Vector DirectionData
         {
             get => new Vector(unmanaged->rotation);
             set => unmanaged->rotation = value.Angle;

@@ -17,33 +17,9 @@ namespace GLTech2
         /// </summary>
         public Scene Scene => scene;
 
-        /// <summary>
-        /// Gets and sets the absolute position of an Element without and allows subclasses to store the Position the way they want.
-        /// </summary>
-        /// <remarks>
-        /// Important: Elements that take this element as reference point will not follow it imediatelly for performance and code health reasons. Changing this property is only recommended if the element is not a reference point to any other and changing positions is a significant performance bottleneck in your application. Otherwise, always use Element.Position property instead.
-        /// </remarks>
-        public abstract Vector WorldPosition { get; set; }
+        private protected virtual Vector PositionData { get; set; }
 
-        /// <summary>
-        /// Determines how the element stores its normal.
-        /// </summary>
-        /// <remarks>
-        /// Remember to set it before parenting any object!
-        /// </remarks>
-        public abstract Vector WorldRotation { get; set; } //Provides rotation and scale of the object.
-
-        public Vector WorldVelocity
-        {
-            get => worldVelocity;
-            set => worldVelocity = value;
-        }
-
-        public float WorldSpeed
-        {
-            get => worldVelocity.Module;
-            set => worldVelocity.Module = value;
-        }
+        private protected virtual Vector DirectionData { get; set; }
 
         /// <summary>
         /// Releases unmanaged data, if any.

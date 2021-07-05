@@ -116,7 +116,7 @@
                 Collider plane = Scene.RayCast(new Ray(element.Translation, wishdir), out float distance);
                 if (plane != null && wishdist > distance)
                 {
-                    Vector planeVersor = plane.WorldRotation / plane.WorldRotation.Module;
+                    Vector planeVersor = plane.WorldDirection / plane.WorldDirection.Module;
                     Vector wishdir_proj = (wishdir.x * planeVersor.x + wishdir.y * planeVersor.y) * planeVersor;
                     Vector wishdir_ortogonal = wishdir - wishdir_proj;
 
@@ -137,7 +137,7 @@
         private void TryTranslate(Vector translation)
         {
             // Treats as original
-            translation *= element.WorldRotation;
+            translation *= element.WorldDirection;
 
             float translMod = translation.Module;
             if (translMod == 0)

@@ -33,14 +33,14 @@
                     message: "Radius cannot be zero. The polygon was not be created and the RegularPolygon was returned as an empty object.",
                     debugOption: Debug.Options.Error);
 
-                WorldPosition = position;
-                WorldRotation = Vector.Forward;
+                PositionData = position;
+                DirectionData = Vector.Forward;
 
                 return;
             }
 
-            WorldPosition = position;
-            WorldRotation = Vector.Forward * radius;
+            PositionData = position;
+            DirectionData = Vector.Forward * radius;
 
             Build(
                 Vector.GetRegularPolygon(position, radius, vertices),

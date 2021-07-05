@@ -26,10 +26,14 @@ namespace GLTech2
             result->first_sprite = null;
             result->first_plane = null;
             result->first_collider = null;
+            result->last_sprite = null;
+            result->last_plane = null;
+            result->last_collider = null;
             result->sprite_count = 0;
             result->plane_count = 0;
             result->collider_count = 0;
             result->background = background;
+            result->camera = null;
             return result;
         }
 

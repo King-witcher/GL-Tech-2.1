@@ -10,13 +10,13 @@ namespace GLTech2
         public Collider(Vector start, Vector end) =>
             unmanaged = SCollider.UnmanagedAlloc(start, end);
 
-        public override Vector WorldPosition
+        private protected override Vector PositionData
         {
             get => unmanaged->start;
             set => unmanaged->start = value;
         }
 
-        public override Vector WorldRotation
+        private protected override Vector DirectionData
         {
             get => unmanaged->direction;
             set => unmanaged->direction = value;

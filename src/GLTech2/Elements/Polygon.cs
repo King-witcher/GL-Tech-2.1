@@ -7,8 +7,8 @@ namespace GLTech2.Elements
     /// </summary>
     public class Polygon : Element
     {
-        public override Vector WorldPosition { get; set; } = Vector.Origin;
-        public override Vector WorldRotation { get; set; } = Vector.Forward;
+        private protected override Vector PositionData { get; set; } = Vector.Origin;
+        private protected override Vector DirectionData { get; set; } = Vector.Forward;
 
         private protected Polygon() { }
 

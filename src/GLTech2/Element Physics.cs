@@ -3,16 +3,6 @@
     partial class Element
     {
         /// <summary>
-        /// Determines wheter the element should or not handle collisions.
-        /// </summary>
-        internal bool HandleCollisions { get; set; } = true;
-
-        /// <summary>
-        /// Not implemented yet
-        /// </summary>
-        internal float CollisionRadius { get; set; } = 0f;
-
-        /// <summary>
         /// Moves the object in one direction relatively to it's direction; in other words, the direction of the module vector.
         /// </summary>
         /// <param name="translation">Direction to move</param>
@@ -25,16 +15,16 @@
             {
                 Vector worldTranslation = referencePoint == null ?
                     translation :
-                    translation.Disprojection(referencePoint.WorldPosition, referencePoint.WorldRotation);
+                    translation.Disprojection(referencePoint.PositionData, referencePoint.DirectionData);
 
                 Scene.RayCast(
-                    new Ray(WorldPosition, worldTranslation),
+                    new Ray(PositionData, worldTranslation),
                     out float distance);
 
                 if (distance < worldTranslation.Module)
                     worldTranslation.Module = distance;
 
-                translation = worldTranslation.Projection(referencePoint.WorldPosition, referencePoint.WorldPosition);
+                translation = worldTranslation.Projection(referencePoint.PositionData, referencePoint.PositionData);
 
                 Translation += translation;
             }
@@ -47,20 +37,6 @@
         public void Rotate(float rotation)
         {
             Angle += rotation;
-        }
-
-        private void HandleVelocity()
-        {
-        }
-
-        private void ClipVelocity()
-        {
-            if (WorldSpeed == 0f)
-                return;
-
-            Vector veldir = worldVelocity / worldVelocity.Module;
-
-            Collider plane = Scene.RayCast(new Ray(WorldPosition, veldir), out float distance);
         }
     }
 }

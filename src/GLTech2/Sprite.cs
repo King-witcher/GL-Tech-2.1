@@ -8,13 +8,13 @@ namespace GLTech2
     {
         internal SSprite* unmanaged;
 
-        public override Vector WorldPosition
+        private protected override Vector PositionData
         {
             get => unmanaged->position;
             set => unmanaged->position = value;
         }
 
-        public override Vector WorldRotation { get; set; }
+        private protected override Vector DirectionData { get; set; }
 
         public Sprite(Vector position, Texture material)
         {

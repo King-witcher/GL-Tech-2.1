@@ -11,8 +11,8 @@
         /// <param name="pos">The position of the empty.</param>
         public Empty(Vector pos)
         {
-            WorldPosition = pos;
-            WorldRotation = Vector.Forward;
+            PositionData = pos;
+            DirectionData = Vector.Forward;
         }
 
         /// <summary>
@@ -24,8 +24,5 @@
         {
 
         }
-
-        public override Vector WorldPosition { get; set; }
-        public override Vector WorldRotation { get; set; }
     }
 }

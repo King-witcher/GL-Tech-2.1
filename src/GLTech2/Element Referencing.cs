@@ -12,6 +12,40 @@ namespace GLTech2
         private Vector relativeNormal;
 
         /// <summary>
+        /// Gets and sets the absolute position of an Element without and allows subclasses to store the Position the way they want.
+        /// </summary>
+        /// <remarks>
+        /// Important: Elements that take this element as reference point will not follow it imediatelly for performance and code health reasons. Changing this property is only recommended if the element is not a reference point to any other and changing positions is a significant performance bottleneck in your application. Otherwise, always use Element.Position property instead.
+        /// </remarks>
+        public Vector WorldPosition     // Fase de testes!
+        {
+            get => PositionData;
+            set
+            {
+                PositionData = value;
+                UpdateRelative();
+                OnChangeComponents?.Invoke();
+            }
+        }
+
+        /// <summary>
+        /// Determines how the element stores its direction.
+        /// </summary>
+        /// <remarks>
+        /// Remember to set it before parenting any object!
+        /// </remarks>
+        public Vector WorldDirection    // Fase de testes!
+        {
+            get => DirectionData;
+            set
+            {
+                DirectionData = value;
+                UpdateRelative();
+                OnChangeComponents?.Invoke();
+            }
+        }
+
+        /// <summary>
         /// Gets and sets element's position relatively to it's parent or, if it has no parent, it's absolute position. 
         /// </summary>
         public Vector Translation
@@ -19,7 +53,7 @@ namespace GLTech2
             get
             {
                 if (referencePoint is null)
-                    return WorldPosition;
+                    return PositionData;
                 else
                     return relativePosition;
             }
@@ -27,13 +61,14 @@ namespace GLTech2
             {
                 if (referencePoint is null)
                 {
-                    WorldPosition = value;
+                    PositionData = value;
                     OnChangeComponents?.Invoke();
                 }
                 else
                 {
                     relativePosition = value;
                     UpdateAbsolute();
+                    OnChangeComponents?.Invoke();
                 }
             }
         }
@@ -52,7 +87,7 @@ namespace GLTech2
             get
             {
                 if (referencePoint is null)
-                    return WorldRotation;
+                    return DirectionData;
                 else
                     return relativeNormal;
             }
@@ -60,13 +95,14 @@ namespace GLTech2
             {
                 if (referencePoint is null)
                 {
-                    WorldRotation = value;
+                    DirectionData = value;
                     OnChangeComponents?.Invoke();
                 }
                 else
                 {
                     relativeNormal = value;
                     UpdateAbsolute();
+                    OnChangeComponents?.Invoke();
                 }
             }
         }
@@ -79,7 +115,7 @@ namespace GLTech2
             get
             {
                 if (referencePoint is null)
-                    return WorldRotation.Angle;
+                    return DirectionData.Angle;
                 else
                     return relativeNormal.Angle;
             }
@@ -87,15 +123,16 @@ namespace GLTech2
             {
                 if (referencePoint is null)
                 {
-                    Vector newNormal = WorldRotation;
+                    Vector newNormal = DirectionData;
                     newNormal.Angle = value;
-                    WorldRotation = newNormal;
+                    DirectionData = newNormal;
                     OnChangeComponents?.Invoke();
                 }
                 else
                 {
                     relativeNormal.Angle = value;
                     UpdateAbsolute();
+                    OnChangeComponents?.Invoke();
                 }
             }
         }
@@ -133,6 +170,7 @@ namespace GLTech2
                 {
                     // Subscribe to its OnChangeComponents so that you can follow the object whenever it changes position.
                     value.OnChangeComponents += UpdateAbsolute;
+
                     // Add itself to the parent's child list.
                     value.childs.Add(this);
                 }
@@ -169,14 +207,14 @@ namespace GLTech2
             // In case the reference point is the scene origin:
             if (referencePoint is null)
             {
-                relativePosition = WorldPosition;
-                relativeNormal = WorldRotation;
+                relativePosition = PositionData;
+                relativeNormal = DirectionData;
             }
             // Otherwise, in case the reference point is another element:
             else
             {
-                relativePosition = WorldPosition.Projection(referencePoint.WorldPosition, referencePoint.WorldRotation);
-                relativeNormal = WorldRotation / referencePoint.WorldRotation;
+                relativePosition = PositionData.Projection(referencePoint.PositionData, referencePoint.DirectionData);
+                relativeNormal = DirectionData / referencePoint.DirectionData;
             }
         }
 
@@ -188,17 +226,15 @@ namespace GLTech2
             // In case the reference point is the scene origin:
             if (referencePoint is null)
             {
-                WorldPosition = relativePosition;
-                WorldRotation = relativeNormal;
+                PositionData = relativePosition;
+                DirectionData = relativeNormal;
             }
             // Otherwise, in case the reference point is another element:
             else
             {
-                WorldPosition = relativePosition.Disprojection(referencePoint.WorldPosition, referencePoint.WorldRotation);
-                WorldRotation = relativeNormal * referencePoint.WorldRotation;
+                PositionData = relativePosition.Disprojection(referencePoint.PositionData, referencePoint.DirectionData);
+                DirectionData = relativeNormal * referencePoint.DirectionData;
             }
-            // Then, publish to all children elements that its position has changed so that they can follow you with their respective UpdateAbsolute() methods.
-            OnChangeComponents?.Invoke();
         }
 
         /// <summary>

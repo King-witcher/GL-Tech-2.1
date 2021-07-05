@@ -46,13 +46,13 @@
             }
         }
 
-        public override Vector WorldPosition
+        private protected override Vector PositionData
         {
             get => Start;
             set => Start = value;
         }
 
-        public override Vector WorldRotation
+        private protected override Vector DirectionData
         {
             get => unmanaged->direction;
             set

@@ -3,17 +3,17 @@
     /// <summary>
     /// Represents a plane that can be rendered on the screen.
     /// </summary>
-    public unsafe class VisualPlane : Element
+    public unsafe class Plane : Element
     {
-        internal VisualPlaneData* unmanaged;
+        internal SPlane* unmanaged;
 
         /// <summary>
         /// Gets and sets the starting point of the plane.
         /// </summary>
         public Vector Start
         {
-            get => unmanaged->geom_start;
-            set => unmanaged->geom_start = value;
+            get => unmanaged->start;
+            set => unmanaged->start = value;
         }
 
         /// <summary>
@@ -21,8 +21,8 @@
         /// </summary>
         public Vector End
         {
-            get => unmanaged->geom_start + unmanaged->geom_direction;
-            set => unmanaged->geom_direction = value - unmanaged->geom_start;
+            get => unmanaged->start + unmanaged->direction;
+            set => unmanaged->direction = value - unmanaged->start;
         }
 
         /// <summary>
@@ -30,8 +30,8 @@
         /// </summary>
         public float Length
         {
-            get => unmanaged->geom_direction.Module;
-            set => unmanaged->geom_direction *= value / unmanaged->geom_direction.Module;
+            get => unmanaged->direction.Module;
+            set => unmanaged->direction *= value / unmanaged->direction.Module;
         }
 
         /// <summary>
@@ -54,10 +54,10 @@
 
         public override Vector WorldRotation
         {
-            get => unmanaged->geom_direction;
+            get => unmanaged->direction;
             set
             {
-                unmanaged->geom_direction = value;
+                unmanaged->direction = value;
             }
         }
 
@@ -67,14 +67,15 @@
         /// <param name="start">Starting point</param>
         /// <param name="end">End point</param>
         /// <param name="texture">Texture</param>
-        public VisualPlane(Vector start, Vector end, Texture texture)
+        public Plane(Vector start, Vector end, Texture texture)
         {
-            unmanaged = VisualPlaneData.Create(start, end, texture);
+            unmanaged = SPlane.Create(start, end, texture);
         }
+
 
         public override void Dispose()
         {
-            VisualPlaneData.Delete(unmanaged);
+            SPlane.Delete(unmanaged);
             unmanaged = null;
         }
 
@@ -82,5 +83,8 @@
         {
             return $"|{ Start } -- { End }| ";
         }
+
+        internal override void AddToSScene(SScene* data) =>
+            data->Add(unmanaged);
     }
 }

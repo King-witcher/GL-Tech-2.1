@@ -5,16 +5,16 @@ namespace GLTech2.Elements
     {
         public override Vector WorldPosition { get; set; }
         public override Vector WorldRotation { get; set; }
-        private VisualPlane visual;
-        private PhysicalPlane physical;
+        private Plane visual;
+        private Collider physical;
 
         public Wall(Vector start, Vector end, Texture texture)
         {
             WorldPosition = start;
             WorldRotation = end - start;
 
-            (visual = new VisualPlane(start, end, texture)).ReferencePoint = this;
-            (physical = new PhysicalPlane(start, end)).ReferencePoint = this;
+            (visual = new Plane(start, end, texture)).ReferencePoint = this;
+            (physical = new Collider(start, end)).ReferencePoint = this;
         }
 
         /// <summary>

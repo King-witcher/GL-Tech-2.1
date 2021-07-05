@@ -42,14 +42,13 @@ namespace Test
                 scene.AddElement(gridMap);
             }
 
+            Camera pov = new Camera((5, 5), 180);
             // Observer
             {
-                Observer pov = new Observer((5, 5), 180);
-
                 pov.AddBehaviour<DebugPerformanceStats>();
                 // pov.AddBehaviour<DebugComponents>();
                 pov.AddBehaviour<DebugSceneInfo>();
-                pov.AddBehaviour<NoclipController>();
+                pov.AddBehaviour<FlatMovement>();
                 pov.AddBehaviour(new MouseLook(2.2f));
 
                 scene.AddElement(pov);
@@ -61,11 +60,11 @@ namespace Test
             Renderer.CustomHeight = 900;
             Renderer.FieldOfView = 110f;
             Renderer.ParallelRendering = true;
-            Renderer.DoubleBuffering = true;
+            Renderer.DoubleBuffer = true;
             Renderer.CaptureMouse = true;
 
             // Run!
-            Renderer.Run(scene);
+            Renderer.Start(pov);
         }
     }
 }

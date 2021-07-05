@@ -5,24 +5,26 @@ using System.Runtime.CompilerServices;
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct SpriteData
+    internal unsafe struct SSprite
     {
         internal Vector position;
         internal Texture material;
+        internal SSprite* link_next;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static SpriteData* Create(Vector position, Texture material)
+        internal static SSprite* Create(Vector position, Texture material)
         {
-            SpriteData* result = (SpriteData*)Marshal.AllocHGlobal(sizeof(SpriteData));
+            SSprite* result = (SSprite*)Marshal.AllocHGlobal(sizeof(SSprite));
             result->position = position;
             result->material = material;
+            result->link_next = null;
             return result;
         }
 
-        public static implicit operator SpriteData(Sprite sprite) =>
+        public static implicit operator SSprite(Sprite sprite) =>
             *sprite.unmanaged;
 
-        public static void Delete(SpriteData* item)
+        public static void Delete(SSprite* item)
         {
             Marshal.FreeHGlobal((IntPtr)item);
         }

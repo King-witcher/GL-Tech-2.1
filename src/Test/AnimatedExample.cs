@@ -99,8 +99,8 @@ namespace Test
             }
 
             // Observer
+            Camera pov = new Camera(position: Vector.Backward, rotation: 0f);
             {
-                Observer pov = new Observer(position: Vector.Backward, rotation: 0f);
 
                 // pov.AddBehaviour<DebugPosition>();
                 pov.AddBehaviour<NoclipController>();
@@ -114,11 +114,11 @@ namespace Test
             Renderer.FullScreen = true;
             Renderer.FieldOfView = 110f;
             Renderer.ParallelRendering = true;
-            Renderer.DoubleBuffering = false;
+            Renderer.DoubleBuffer = false;
             Renderer.CaptureMouse = true;
 
             // Run!
-            Renderer.Run(scene);
+            Renderer.Start(pov);
         }
     }
 }

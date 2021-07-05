@@ -6,7 +6,7 @@ namespace GLTech2
 {
     internal unsafe sealed class Sprite : Element
     {
-        internal SpriteData* unmanaged;
+        internal SSprite* unmanaged;
 
         public override Vector WorldPosition
         {
@@ -18,12 +18,12 @@ namespace GLTech2
 
         public Sprite(Vector position, Texture material)
         {
-            unmanaged = SpriteData.Create(position, material);
+            unmanaged = SSprite.Create(position, material);
         }
 
         public override void Dispose()
         {
-            SpriteData.Delete(unmanaged);
+            SSprite.Delete(unmanaged);
             unmanaged = null;
         }
     }

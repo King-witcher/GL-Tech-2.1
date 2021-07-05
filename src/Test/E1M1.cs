@@ -11,6 +11,10 @@ namespace Test
             // Buffers used
             using PixelBuffer textures = new PixelBuffer(WE1M1.WolfTextures);
             using PixelBuffer background_buffer = new PixelBuffer(WE1M1.Background);
+            using PixelBuffer lula_buffer = new PixelBuffer(WE1M1.lula);
+            using PixelBuffer pt_buffer = new PixelBuffer(WE1M1.pt);
+            using PixelBuffer bolsonaro_buffer = new PixelBuffer(WE1M1.bolsonaro);
+            using PixelBuffer dolar_buffer = new PixelBuffer(WE1M1._1dolar);
 
             Texture background = new Texture(background_buffer);
             using Scene scene = new Scene(background);
@@ -111,18 +115,23 @@ namespace Test
                         hoffset: 0 / 6f,
                         voffset: 17 / 19f);
 
+                    Texture pt = new Texture(pt_buffer);
+                    Texture lula = new Texture(lula_buffer);
+                    Texture bolsonaro = new Texture(bolsonaro_buffer);
+                    Texture dolar = new Texture(dolar_buffer);
+
                     binds[(0, 0, 255)] = blueStone1;
                     binds[(0, 0, 128)] = blueStone2;
                     binds[(0, 0, 64)] = bluestoneCell;
                     binds[(0, 128, 0)] = bluestoneCellSkeleton;
                     binds[(128, 128, 128)] = grayStone1;
                     binds[(64, 64, 64)] = grayStone2;
-                    binds[(255, 0, 0)] = gs_naziFlag;
-                    binds[(128, 64, 0)] = gs_hitler;
+                    binds[(255, 0, 0)] = dolar;
+                    binds[(128, 64, 0)] = bolsonaro;
                     binds[(255, 255, 0)] = gs_goldEagle;
                     binds[(255, 128, 0)] = woodPanelling;
                     binds[(255, 192, 128)] = wp_whiteEagle;
-                    binds[(80, 40, 0)] = wp_hitler;
+                    binds[(80, 40, 0)] = bolsonaro;
                     binds[(128, 255, 128)] = elevator;
                 }
 
@@ -131,8 +140,8 @@ namespace Test
             }
 
             // Observer
+            Camera pov = new Camera((57.5f, 29.5f), 0);
             {
-                Observer pov = new Observer((57.5f, 29.5f), 0);
 
                 pov.AddBehaviour<DebugPerformanceStats>();
                 pov.AddBehaviour<DebugSceneInfo>();
@@ -141,7 +150,7 @@ namespace Test
 
                 NoclipController fm = new NoclipController();
                 //fm.HandleCollisions = false;
-                //fm.RunSpeed = 2f;
+                fm.MaxSpeed = 3f;
                 pov.AddBehaviour(fm);
 
                 scene.AddElement(pov);
@@ -149,13 +158,13 @@ namespace Test
 
             // Renderer customization
             Renderer.FullScreen = true;
-            Renderer.FieldOfView = 90f;
+            Renderer.FieldOfView = 72f;
             Renderer.ParallelRendering = true;
-            Renderer.DoubleBuffering = true;
+            Renderer.DoubleBuffer = true;
             Renderer.CaptureMouse = true;
 
             // Run!
-            Renderer.Run(scene);
+            Renderer.Start(pov);
         }
     }
 }

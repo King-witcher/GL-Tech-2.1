@@ -11,12 +11,11 @@ namespace GLTech2
     /// </summary>
     public unsafe sealed partial class Scene : IDisposable
     {
-        internal Action StartAction;
-        internal Action OnFrameAction;
-        internal SceneData* unmanaged;
-        private Observer activeObserver;    //Provisional
+        internal Action OnStart;
+        internal Action OnFrame;
+        internal SScene* unmanaged;
         private List<Element> elements = new List<Element>();
-        private List<PhysicalPlane> physicalPlanes = new List<PhysicalPlane>(); // Provisional
+        private List<Collider> colliders = new List<Collider>();
 
         /// <summary>
         /// Gets a new instance of Scene.
@@ -24,38 +23,15 @@ namespace GLTech2
         public Scene()
         {
             Texture background = new Texture((PixelBuffer)new Bitmap(1, 1));
-            unmanaged = SceneData.Create(background);
+            unmanaged = SScene.Create(background);
         }
 
         /// <summary>
         /// Gets a new instance of Scene.
         /// </summary>
-        /// <param name="background">Background material rendered behind everything</param>
+        /// <param name="background">Background texture rendered behind everything</param>
         public Scene(Texture background) =>
-            unmanaged = SceneData.Create(background);
-
-
-        /// <summary>
-        /// Gets and sets the current observer from where the scene will be rendered.
-        /// </summary>
-        public Observer ActiveObserver
-        {
-            // Seems spaguetti!
-            get => activeObserver;
-            set
-            {
-                if (value is null || value.scene is null)   // null pointer
-                {
-                    activeObserver = value;
-                    unmanaged->activeObserver = value.unmanaged;
-                }
-                else
-                    Debug.InternalLog(
-                        origin: "Scene",
-                        message: "Can\'t set a camera that is not in this scene.",
-                        debugOption: Debug.Options.Error);
-            }
-        }
+            unmanaged = SScene.Create(background);
 
         /// <summary>
         /// Gets how many walls the scene fits.
@@ -85,9 +61,12 @@ namespace GLTech2
         /// <param name="element">An element to be added</param>
         public void AddElement(Element element)
         {
-            if (element is null)
+            #region Verifications
+            // Obvious thing
+            if (element == null)
                 throw new ArgumentNullException("Cannot add null elements.");
 
+            // Elements cannot be added twice + elements cannot have already been added to another scene.
             if (element.scene != null)
             {
                 Debug.InternalLog(
@@ -97,29 +76,43 @@ namespace GLTech2
                 return;
             }
 
-            if (element.ReferencePoint != null && element.ReferencePoint.scene != this)       // Must be tested
+            // Only root elements can be added to a Scene, which will add all of it's children.
+            // Besides, Element class's referencing system cannot allow elements to be added to different scenes.
+            if (element.ReferencePoint != null)
             {
-                element.ReferencePoint = null;
+                Debug.InternalLog(
+                    origin: "Scene",
+                    message: $"The element \"{element}\" you are trying to add to the scene has a ReferencePoint. {element.scene}. Only elements with no ReferencePoint are allowed to be directly added to a scene. If you want to add this element, add its root element and all it's child elements will recursively added.",
+                    debugOption: Debug.Options.Error);
+                return;
             }
+            #endregion
 
-            // Spaguetti!
-            if (element is VisualPlane visualPlane)
-                UnmanagedAddWall(visualPlane);
-            else if (element is Sprite sprite)
-                UnmanagedAddSprite(sprite);
-            else if (element is Observer observer)
-                UnmanagedAddObserver(observer);
-            else if (element is PhysicalPlane physicalPlane)
-                physicalPlanes.Add(physicalPlane);
+            Add(element);
 
-            StartAction += element.OnStart;
-            OnFrameAction += element.OnFrame;
+            void Add(Element element)
+            {
+                // Add element to element cache list.
+                elements.Add(element);
 
-            elements.Add(element);
-            element.scene = this;
+                // In case it's a collider, add to collider cache too.
+                if (element is Collider collider)
+                    colliders.Add(collider);
 
-            foreach (var item in element.childs)
-                AddElement(item);
+                // Set element.scene.
+                element.scene = this;
+
+                // Add element to scene unmanaged data. Each base element can be added on it's on way.
+                element.AddToSScene(unmanaged);
+
+                // Add element's behaviours.
+                OnStart += element.OnStart;
+                OnFrame += element.OnFrame;
+
+                // Make it recursively to all childs.
+                foreach (var item in element.childs)
+                    Add(item);
+            }
         }
 
         /// <summary>
@@ -141,79 +134,8 @@ namespace GLTech2
         ///     Add an array of elements via params.
         /// </summary>
         /// <param name="elements">Array of elements</param>
-        public void AddElements(params Element[] elements)
-        {
+        public void AddElements(params Element[] elements) =>
             AddElements((IEnumerable<Element>) elements);
-        }
-
-        private void UnmanagedAddWall(VisualPlane w)
-        {
-            unmanaged->Add(w.unmanaged);
-        }
-        private void UnmanagedAddSprite(Sprite s) => throw new NotImplementedException();
-
-        private void UnmanagedAddObserver(Observer p)
-        {
-            ActiveObserver = p;
-        }
-
-        public static bool RayTest(Ray ray, PhysicalPlane plane, out float distance)
-        {
-            // Culling
-            if (plane.WorldRotation.x * ray.direction.y - plane.WorldRotation.y * ray.direction.x <= 0)
-            {
-                distance = float.PositiveInfinity;
-                return false;
-            }
-
-            float
-                drx = plane.WorldRotation.x,
-                dry = plane.WorldRotation.y;
-
-            float det = ray.direction.x * dry - ray.direction.y * drx;
-
-            if (det == 0)
-            {
-                distance = float.PositiveInfinity;
-                return false;
-            }
-
-            float spldet = ray.direction.x * (ray.start.y - plane.WorldPosition.y) - ray.direction.y * (ray.start.x - plane.WorldPosition.x);
-            float dstdet = drx * (ray.start.y - plane.WorldPosition.y) - dry * (ray.start.x - plane.WorldPosition.x);
-            float spltmp = spldet / det;
-            float dsttmp = dstdet / det;
-            if (spltmp < 0 || spltmp >= 1 || dsttmp <= 0) // dsttmp = 0 means column height = x/0.
-            {
-                distance = float.PositiveInfinity;
-                return false;
-            }
-            distance = dsttmp;
-            return true;
-        }
-
-        private static bool CircleTest(Ray ray, PhysicalPlane plane, out float distance)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Provisional; must be improved
-        public PhysicalPlane RayCast(Ray ray, out float distance)
-        {
-            PhysicalPlane nearest = null;
-            distance = float.PositiveInfinity;
-
-            foreach (PhysicalPlane current in physicalPlanes)
-            {
-                RayTest(ray, current, out float currentDistance);
-
-                if (currentDistance < distance)
-                {
-                    nearest = current;
-                    distance = currentDistance;
-                }
-            }
-            return nearest;
-        }
 
         /// <summary>
         ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -223,11 +145,14 @@ namespace GLTech2
             foreach(Element item in elements)
                 item.Dispose();
 
-            SceneData.Delete(unmanaged);
+            SScene.Delete(unmanaged);
             unmanaged = null;
-            activeObserver = null;
 
             elements.Clear();
+            colliders.Clear();
+
+            OnStart = null;
+            OnFrame = null;
         }
     }
 }

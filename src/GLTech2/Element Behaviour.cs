@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace GLTech2
 {
-    public partial class Element
+    partial class Element
     {
         internal Action OnStart;
         internal Action OnFrame;

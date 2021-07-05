@@ -26,8 +26,8 @@ namespace Test
             }
 
             // Observer
+            Camera observer = new Camera((0, 0));
             {
-                Observer observer = new Observer((0, 0));
                 observer.AddBehaviour<MouseLook>();
                 observer.AddBehaviour<FlatMovement>();
                 observer.AddBehaviour<DebugPerformanceStats>();
@@ -36,7 +36,7 @@ namespace Test
 
             Renderer.CaptureMouse = true;
             Renderer.FullScreen = true;
-            Renderer.Run(scene);
+            Renderer.Start(observer);
         }
     }
 }

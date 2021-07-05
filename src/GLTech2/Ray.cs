@@ -2,8 +2,8 @@
 {
     public unsafe struct Ray
     {
-        internal readonly Vector start;
-        internal readonly Vector direction;
+        internal Vector start;
+        internal Vector direction;
 
         public Ray(Vector start, Vector direction)
         {

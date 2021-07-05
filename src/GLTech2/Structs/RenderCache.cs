@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
+// Mesclar isso de volta com Camera
+
 namespace GLTech2
 {
     /// <summary>
     /// Stores important cache data to the renderer that can be shared with native modes.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct RenderingCache : IDisposable
+    internal unsafe struct RenderCache : IDisposable
     {
         // Height that a column at 1 unit of distance from the spectator should be drawn on the screen.
         internal readonly float colHeight1;
@@ -15,7 +17,7 @@ namespace GLTech2
         internal readonly float* angles;
         internal readonly float* cosines;
 
-        internal RenderingCache(int width, int height, float FOV = 90f)
+        internal RenderCache(int width, int height, float FOV = 90f)
         {
             const double TORAD = Math.PI / 180f;
 
@@ -37,14 +39,14 @@ namespace GLTech2
             }
         }
 
-        internal static RenderingCache* Create(int width, int height, float FOV = 90f)
+        internal static RenderCache* Create(int width, int height, float FOV = 90f)
         {
-            RenderingCache* result = (RenderingCache*)Marshal.AllocHGlobal(sizeof(RenderingCache));
-            *result = new RenderingCache(width, height, FOV);
+            RenderCache* result = (RenderCache*)Marshal.AllocHGlobal(sizeof(RenderCache));
+            *result = new RenderCache(width, height, FOV);
             return result;
         }
 
-        internal static void Delete(RenderingCache* cache)
+        internal static void Delete(RenderCache* cache)
         {
             cache->Dispose();
             Marshal.FreeHGlobal((IntPtr)cache);

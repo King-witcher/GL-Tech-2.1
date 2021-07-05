@@ -6,24 +6,21 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GLTech2.PostProcessings;
 
 namespace GLTech2
 {
 
     /// <summary>
-    ///     Provides an interface to render scenes and output the video in a window.
+    /// Provides an interface to render scenes and output the video in a window.
     /// </summary>
     public static partial class Renderer
     {
-        unsafe static RenderingCache* cache;
-        static PixelBuffer outputBuffer;
+        unsafe static RenderCache* cache;
+        static PixelBuffer frontBuffer;
         static Scene activeScene = null;
+        static Camera activeCamera = null;
 
-        /// <summary>
-        ///     Gets and determines if the renderer will use native code. Currently disabled.
-        /// </summary>
-        public static bool NativeRendering { get; } = false;
+        // public static bool NativeRendering { get; } = false;
 
         /// <summary>
         ///     Gets and determines whether the renderer should use every CPU unit or just one.
@@ -60,25 +57,25 @@ namespace GLTech2
             }
         }
 
-        static bool doubleBuffering = true;
+        static bool doubleBuffer = true;
         /// <summary>
         ///     Gets and sets whether or not the engine should use different buffers to synthesise and display thet image.
         /// </summary>
         /// <remarks>
         ///     <para>
-        ///         Double buffering incresases input lat, reduces framerate but is important if you use post processing effects on the screen and needs to display each frame only after completely made.
+        ///         Double buffer incresases input lat, reduces framerate but is important if you use post processing effects on the screen and needs to display each frame only after completely made.
         ///     </para>
         ///     <para>
         ///         This property cannot be changed if the Renderer is running.
         ///     </para>
         /// </remarks>
-        public static bool DoubleBuffering
+        public static bool DoubleBuffer
         {
-            get => doubleBuffering;
-            set => ChangeIfNotRunning("DoubleBuffering", ref doubleBuffering, value);
+            get => doubleBuffer;
+            set => ChangeIfNotRunning("DoubleBuffer", ref doubleBuffer, value);
         }
 
-        private static int customWidth = 640;
+        private static int customWidth = 960;
         /// <summary>
         ///     Gets and sets the custom width of the screen.
         /// </summary>
@@ -93,7 +90,7 @@ namespace GLTech2
             set => ChangeIfNotRunning("CustomWidth", ref customWidth, value);
         }
 
-        private static int customHeight = 360;
+        private static int customHeight = 520;
         /// <summary>
         ///     Gets and sets the custom height of the screen.
         /// </summary>
@@ -172,7 +169,7 @@ namespace GLTech2
         public static PixelBuffer GetScreenshot()
         {
             PixelBuffer pb = new PixelBuffer(CustomWidth, customHeight);
-            pb.Clone(outputBuffer);
+            pb.Clone(frontBuffer);
             return pb;
         }
 
@@ -199,41 +196,35 @@ namespace GLTech2
             AddEffect(new T());
         }
 
-        /// <summary>
-        /// Renders the given scene from its default point of view and displays the video in a new window.
-        /// </summary>
-        /// <param name="scene">Scene to be rendered</param>
-        /// <remarks>
-        /// This method takes the control until the renderer is closed.
-        /// </remarks>
-        public unsafe static void Run(Scene scene)
+        public unsafe static void Start(Camera camera)
         {
-            if (scene.ActiveObserver is null)
-			{
-                Debug.InternalLog(
-                    origin: "Renderer",
-                    message: "The scene you are trying to render doesn't have an active observer. \n" +
-                        "Adding a default observer at origin.",
-                    debugOption: Debug.Options.Warning);
-
-                scene.ActiveObserver = new Observer(Vector.Origin, 0);
-            }
-
-
             if (IsRunning)
                 return;
             IsRunning = true;
 
+            Scene scene = camera.scene;
+
+            if (scene == null)
+			{
+                Debug.InternalLog(
+                    origin: "Renderer",
+                    message: "The camera you are trying to render isn't assigned to a scene. Renderer.Start() will be aborted.",
+                    debugOption: Debug.Options.Error);
+                return;
+            }
+
+            activeCamera = camera;
+
             activeScene = scene;
 
             // Unmanaged buffer where the video will be put.
-            outputBuffer = new PixelBuffer(CustomWidth, customHeight);
+            frontBuffer = new PixelBuffer(CustomWidth, customHeight);
 
-            // Create a whapper "Bitmap" that uses the same buffer.
+            // Create a wrapper "Bitmap" that uses the same buffer.
             var sourceBitmap = new Bitmap(
                 CustomWidth, CustomHeight,
                 CustomWidth * sizeof(uint), PixelFormat.Format32bppRgb,
-                (IntPtr)outputBuffer.uint0);
+                (IntPtr)frontBuffer.uint0);
 
             var display = new Display(FullScreen, CustomWidth, CustomHeight, sourceBitmap);
 
@@ -246,7 +237,7 @@ namespace GLTech2
 
             // And then start the control thread, which is reponsible for distributing the buffer among the threads
             // and running the scene scripts.
-            var controlThread = Task.Run(() => ControlTrhead(outputBuffer, in stopRequest, ref controlThreadRunning));
+            var controlThread = Task.Run(() => ControlTrhead(frontBuffer, in stopRequest, ref controlThreadRunning));
 
             // Finally passes control to the rendering screen and displays it.
             Application.Run(display);
@@ -260,8 +251,9 @@ namespace GLTech2
 
             // Finally, dispose everythihng.
             display.Dispose();
-            outputBuffer.Dispose();
+            frontBuffer.Dispose();
             sourceBitmap.Dispose();
+            activeCamera = null;
 
             IsRunning = false;
         }
@@ -269,25 +261,21 @@ namespace GLTech2
         private static unsafe void ReloadCache()
         {
             if (cache != null)
-                RenderingCache.Delete(cache);
-            cache = RenderingCache.Create(CustomWidth, CustomHeight, FieldOfView);
+                RenderCache.Delete(cache);
+            cache = RenderCache.Create(CustomWidth, CustomHeight, FieldOfView);
         }
 
-        private unsafe static void ControlTrhead(
-            PixelBuffer frontBuffer,
-            in bool cancellationRequest,
-            ref bool controlThreadRunning)
+        private unsafe static void ControlTrhead(PixelBuffer frontBuffer, in bool cancellationRequest, ref bool controlThreadRunning)
         {
-
-            // Caches numbers that will use repeatedly by the render.
             ReloadCache();
 
             // Buffer where the image will be rendered
-            PixelBuffer backBuffer = DoubleBuffering ?
+            PixelBuffer backBuffer = DoubleBuffer ?
                 new PixelBuffer(frontBuffer.width, frontBuffer.height) :
                 frontBuffer;
 
-            if (!DoubleBuffering && postProcessing.Count > 0)
+            #region Advices
+            if (!DoubleBuffer && postProcessing.Count > 0)
                 Debug.InternalLog(
                     origin: "Renderer",
                     message: "The renderer has post processing effects but DoubleBuffering is disabled. " +
@@ -295,17 +283,18 @@ namespace GLTech2
                         "behaviour.",
                     debugOption: Debug.Options.Warning);
 
-            if (DoubleBuffering && postProcessing.Count == 0)
+            if (DoubleBuffer && postProcessing.Count == 0)
                 Debug.InternalLog(
                     origin: "Renderer", 
-                    message: "DoubleBuffering is enabled but no post processing effect is active. If you need " +
+                    message: "DoubleBuffer is enabled but no post processing effect is active. If you need " +
                         "more performance or less input lag, consider disabling DoubleBuffering.",
                     debugOption: Debug.Options.Info);
+            #endregion
 
             Stopwatch controlStopwatch = new Stopwatch();   // Need to cap framerate
             Behaviour.Frame.RestartFrame();
             Behaviour.Frame.BeginScript();
-            activeScene.StartAction?.Invoke();
+            activeScene.OnStart?.Invoke();
             Behaviour.Frame.EndScript();
 
             // While this variable is set to true, outputBuffer cannot be released by Renderer.Run() thread.
@@ -318,7 +307,7 @@ namespace GLTech2
                 CLRRenderLegacy(backBuffer, activeScene.unmanaged);
                 PostProcess(backBuffer);
 
-                if (DoubleBuffering)
+                if (DoubleBuffer)
                     frontBuffer.FastClone(backBuffer);
                 Behaviour.Frame.EndRender();
 
@@ -328,7 +317,7 @@ namespace GLTech2
                 Behaviour.Mouse.Measure();
                 Behaviour.Frame.RestartFrame();
                 Behaviour.Frame.BeginScript();
-                activeScene.OnFrameAction?.Invoke();
+                activeScene.OnFrame?.Invoke();
                 Behaviour.Frame.EndScript();
             }
             controlStopwatch.Stop();
@@ -336,7 +325,7 @@ namespace GLTech2
 
             // OutputBuffer is up to be released.
             controlThreadRunning = false;
-            if (DoubleBuffering)
+            if (DoubleBuffer)
                 backBuffer.Dispose();
         }
 

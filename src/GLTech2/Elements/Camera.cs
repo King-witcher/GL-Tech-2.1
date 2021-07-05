@@ -4,20 +4,20 @@ using System.Runtime.InteropServices;
 namespace GLTech2
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct ObserverData
+    internal unsafe struct SCamera
     {
         internal Vector position;
         internal float rotation; //MUST be 0 <= x < 360
 
-        static internal ObserverData* Create(Vector position, float rotation) // a little bit optimizable
+        static internal SCamera* Create(Vector position, float rotation) // a little bit optimizable
         {
-            ObserverData* result = (ObserverData*)Marshal.AllocHGlobal(sizeof(ObserverData));
+            SCamera* result = (SCamera*)Marshal.AllocHGlobal(sizeof(SCamera));
             result->position = position;
             result->rotation = rotation;
             return result;
         }
 
-        static internal void Delete(ObserverData* item)
+        static internal void Delete(SCamera* item)
         {
             Marshal.FreeHGlobal((IntPtr)item);
         }
@@ -26,13 +26,13 @@ namespace GLTech2
     /// <summary>
     /// Represents a point of view from which the Renderer can render a scene.
     /// </summary>
-    public unsafe class Observer : Element, IDisposable
+    public unsafe class Camera : Element, IDisposable
     {
-        internal ObserverData* unmanaged;
+        internal SCamera* unmanaged;
 
-        public Observer(Vector position, float rotation = 0f)
+        public Camera(Vector position, float rotation = 0f)
         {
-            unmanaged = ObserverData.Create(position, rotation);
+            unmanaged = SCamera.Create(position, rotation);
         }
 
         public override Vector WorldPosition
@@ -52,8 +52,14 @@ namespace GLTech2
 
         public override void Dispose()
         {
-            ObserverData.Delete(unmanaged);
+            SCamera.Delete(unmanaged);
             unmanaged = null;
+        }
+
+        internal sealed override unsafe void AddToSScene(SScene* data)
+        {
+            if (data->camera == null)
+                data->camera = unmanaged;
         }
     }
 }

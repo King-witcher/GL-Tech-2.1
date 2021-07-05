@@ -10,8 +10,7 @@ namespace GLTech2
         internal Scene scene;
         private Vector worldVelocity;
 
-        public Element() =>
-            OnFrame += HandleVelocity;
+        internal Element() { }
 
         /// <summary>
         /// Its correspondent scene. If the element is not bound to any scene, returns null.
@@ -50,5 +49,7 @@ namespace GLTech2
         /// Releases unmanaged data, if any.
         /// </summary>
         public virtual void Dispose() { }
+
+        internal unsafe virtual void AddToSScene(SScene* data) { }
     }
 }

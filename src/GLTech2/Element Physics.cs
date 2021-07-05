@@ -60,7 +60,7 @@
 
             Vector veldir = worldVelocity / worldVelocity.Module;
 
-            PhysicalPlane plane = Scene.RayCast(new Ray(WorldPosition, veldir), out float distance);
+            Collider plane = Scene.RayCast(new Ray(WorldPosition, veldir), out float distance);
         }
     }
 }

@@ -121,10 +121,22 @@
   <data name="Background" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>wolfenstein\background.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="bolsonaro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>wolfenstein\bolsonaro.jpeg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lula" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>wolfenstein\lula.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="MapGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>wolfenstein\mapgrid.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="pt" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>wolfenstein\pt.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="WolfTextures" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>wolfenstein\wolftextures.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_1dolar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>wolfenstein\1dolar.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

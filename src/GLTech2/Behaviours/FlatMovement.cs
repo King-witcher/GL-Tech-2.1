@@ -101,7 +101,7 @@
                 Element.Rotate(TurnSpeed * Frame.DeltaTime);
         }
 
-        private void TryTranslate(Vector translation)
+        private void TryTranslate2(Vector translation)
         {
             if (!HandleCollisions)
                 element.Translate(translation * element.Rotation);
@@ -113,7 +113,7 @@
                 Vector wishdir = translation * element.Rotation;
                 wishdir /= wishdir.Module;
 
-                PhysicalPlane plane = Scene.RayCast(new Ray(element.Translation, wishdir), out float distance);
+                Collider plane = Scene.RayCast(new Ray(element.Translation, wishdir), out float distance);
                 if (plane != null && wishdist > distance)
                 {
                     Vector planeVersor = plane.WorldRotation / plane.WorldRotation.Module;
@@ -132,6 +132,42 @@
 
                 Element.Translation += wishdir * wishdist;
             }
+        }
+
+        private void TryTranslate(Vector translation)
+        {
+            // Treats as original
+            translation *= element.WorldRotation;
+
+            float translMod = translation.Module;
+            if (translMod == 0)
+                return;
+
+            if (HandleCollisions)
+            {
+                Scene.RayCast(
+                    new Ray(element.WorldPosition, translation),
+                    out float distance,
+                    out Vector normal);
+
+                if (translMod >= distance)
+                {
+                    Vector excess = (translMod - distance) * (translation / translMod);
+
+                    normal /= normal.Module; // Optimizable by fast inverse square root
+                    Vector compensation = normal * (Vector.DotProduct(excess, normal) - 0.01f);
+                    translation -= compensation;
+
+                    Scene.RayCast(new Ray(element.WorldPosition, translation), out float newDist, out Vector _);
+
+                    if (newDist < translMod)
+                    {
+                        translation = Vector.Origin;
+                    }
+                }
+            }
+
+            element.Translate(translation);
         }
     }
 }

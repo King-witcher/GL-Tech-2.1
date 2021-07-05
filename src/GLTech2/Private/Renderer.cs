@@ -8,7 +8,7 @@ namespace GLTech2
         //[DllImport(@"D:\GitHub\GLTech-2\bin\Release\glt2_nat.dll", CallingConvention = CallingConvention.Cdecl)]
         //private unsafe static extern void NativeRender(RendererData* camera);
 
-        private unsafe static void CLRRenderLegacy(PixelBuffer target, SceneData* scene)        // Must be changed
+        private unsafe static void CLRRenderLegacy(PixelBuffer target, SScene* scene)        // Must be changed
         {
             //Caching frequently used values.
             uint* buffer = target.uint0;
@@ -29,11 +29,11 @@ namespace GLTech2
             {
                 //Caching
                 float ray_cos = cache->cosines[ray_id];
-                float ray_angle = cache->angles[ray_id] + scene->activeObserver->rotation;
-                Ray ray = new Ray(scene->activeObserver->position, ray_angle);
+                float ray_angle = cache->angles[ray_id] + scene->camera->rotation;
+                Ray ray = new Ray(scene->camera->position, ray_angle);
 
                 //Cast the ray towards every wall.
-                VisualPlaneData* nearest = scene->VisualRayCast(ray, out float nearest_dist, out float nearest_ratio);
+                SPlane* nearest = scene->PlaneRayCast(ray, out float nearest_dist, out float nearest_ratio);
                 if (nearest_ratio != 2f)
                 {
                     float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); //Wall column size in pixels
@@ -75,7 +75,7 @@ namespace GLTech2
             }
         }
 
-        private unsafe static void CLRRender(PixelBuffer target, SceneData* scene)        // Must be changed
+        private unsafe static void CLRRender(PixelBuffer target, SScene* scene)        // Must be changed
         {
             //Caching frequently used values.
             uint* buffer = target.uint0;
@@ -96,11 +96,11 @@ namespace GLTech2
             {
                 //Caching
                 float ray_cos = cache->cosines[ray_id];
-                float ray_angle = cache->angles[ray_id] + scene->activeObserver->rotation;
-                Ray ray = new Ray(scene->activeObserver->position, ray_angle);
+                float ray_angle = cache->angles[ray_id] + scene->camera->rotation;
+                Ray ray = new Ray(scene->camera->position, ray_angle);
 
                 //Cast the ray towards every wall.
-                VisualPlaneData* nearest = scene->VisualRayCast(ray, out float nearest_dist, out float nearest_ratio);
+                SPlane* nearest = scene->PlaneRayCast(ray, out float nearest_dist, out float nearest_ratio);
                 if (nearest_ratio != 2f)
                 {
                     float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); //Wall column size in pixels

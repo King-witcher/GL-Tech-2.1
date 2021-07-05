@@ -40,7 +40,7 @@ namespace GLTech2.Elements
             {
                 currentTexture.hoffset = texture.hoffset + texture.hrepeat * i / (total_walls);
 
-                new VisualPlane(
+                new Plane(
                     start: verts[i],
                     end: verts[i + 1],
                     texture: currentTexture)
@@ -49,7 +49,7 @@ namespace GLTech2.Elements
 
             currentTexture.hoffset = texture.hoffset + texture.hrepeat * (total_walls - 1) / total_walls;
 
-            new VisualPlane(
+            new Plane(
                 start: verts[total_walls - 1],
                 end: verts[0],
                 texture: currentTexture)

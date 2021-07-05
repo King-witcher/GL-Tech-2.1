@@ -20,9 +20,9 @@ namespace GLTech2
 
         // Theese are stored as float due to small optimizations.
         [FieldOffset(8)]
-        internal readonly float height_float;
-        [FieldOffset(12)]
         internal readonly float width_float;
+        [FieldOffset(12)]
+        internal readonly float height_float;
 
         // Union
         [FieldOffset(16)]

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace GLTech2
@@ -11,11 +9,11 @@ namespace GLTech2
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct Texture
     {
+        internal PixelBuffer buffer; //Propositalmente salvo por valor
         internal float hoffset;
         internal float hrepeat;
-        internal PixelBuffer buffer; //Propositalmente salvo por valor
-        internal float voffset; //Ainda não implementado
-        internal float vrepeat; //Ainda não implmenetado
+        internal float voffset;
+        internal float vrepeat;
 
         /// <summary>
         /// Gets a new instance of Texture given a PixelBuffer.
@@ -27,9 +25,9 @@ namespace GLTech2
         /// <param name="vrepeat">Not implemented yet</param>
         public Texture(PixelBuffer buffer, float hoffset = 0f, float hrepeat = 1f, float voffset = 0f, float vrepeat = 1f)
         {
+            this.buffer = buffer;
             this.hoffset = hoffset;
             this.hrepeat = hrepeat;
-            this.buffer = buffer;
             this.voffset = voffset;
             this.vrepeat = vrepeat;
         }
@@ -42,24 +40,5 @@ namespace GLTech2
             int y = (int)(buffer.height_float * (vrepeat * vratio + voffset)) % buffer.height;
             return buffer.uint0[buffer.width * y + x];
         }
-
-        /// <summary>
-        /// Implicitly casts a PixelBuffer instance into a Texture.
-        /// </summary>
-        /// <param name="buffer">Buffer to be cast</param>
-        [Obsolete]
-        public static implicit operator Texture(PixelBuffer buffer) =>
-            new Texture(buffer);
-
-        /// <summary>
-        /// Explicitly casts a System.Drawing.Bitmap into a Texture.
-        /// </summary>
-        /// <param name="bitmap">Bitmap to be cast</param>
-        /// <remarks>
-        ///     Note that casting bitmaps directly to Texture will anonymously create a new Texture object that uses unmanaged resources each time it's done, but you won't be able to dispose them.
-        /// </remarks>
-        [Obsolete]
-        public static explicit operator Texture(Bitmap bitmap) =>
-            new Texture(new PixelBuffer(bitmap));
     }
 }

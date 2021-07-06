@@ -6,6 +6,24 @@ namespace Test
 {
     partial class Program
     {
+        class EnableNoclip : Behaviour
+        {
+            FlatMovement fm;
+
+            public EnableNoclip(FlatMovement fm)
+            {
+                this.fm = fm;
+            }
+
+            void OnFrame()
+            {
+                if (Keyboard.IsKeyDown(Key.F5))
+                    fm.HandleCollisions = false;
+                if (Keyboard.IsKeyDown(Key.F6))
+                    fm.HandleCollisions = true;
+            }
+        }
+
         static void E1M1()
         {
             // Buffers used
@@ -126,12 +144,12 @@ namespace Test
                     binds[(0, 128, 0)] = bluestoneCellSkeleton;
                     binds[(128, 128, 128)] = grayStone1;
                     binds[(64, 64, 64)] = grayStone2;
-                    binds[(255, 0, 0)] = dolar;
-                    binds[(128, 64, 0)] = bolsonaro;
+                    binds[(255, 0, 0)] = gs_naziFlag;
+                    binds[(128, 64, 0)] = gs_hitler;
                     binds[(255, 255, 0)] = gs_goldEagle;
                     binds[(255, 128, 0)] = woodPanelling;
                     binds[(255, 192, 128)] = wp_whiteEagle;
-                    binds[(80, 40, 0)] = bolsonaro;
+                    binds[(80, 40, 0)] = wp_hitler;
                     binds[(128, 255, 128)] = elevator;
                 }
 
@@ -139,21 +157,20 @@ namespace Test
                 scene.AddElement(gridMap);
             }
 
-            // Observer
-            Camera pov = new Camera((57.5f, 29.5f), 0);
+            // Camera
+            Camera camera = new Camera((57.5f, 29.5f), 0);
             {
+                camera.AddBehaviour<DebugPerformanceStats>();
+                camera.AddBehaviour<DebugSceneInfo>();
+                camera.AddBehaviour(new MouseLook(2.2f));
 
-                pov.AddBehaviour<DebugPerformanceStats>();
-                pov.AddBehaviour<DebugSceneInfo>();
-                //pov.AddBehaviour<FlatMovement>();
-                pov.AddBehaviour(new MouseLook(2.2f));
+                FlatMovement fm = new FlatMovement();
+                fm.RunSpeed = 5f;
+                fm.TurnSpeed = 180f;
+                camera.AddBehaviour(fm);
+                camera.AddBehaviour(new EnableNoclip(fm));
 
-                NoclipController fm = new NoclipController();
-                //fm.HandleCollisions = false;
-                fm.MaxSpeed = 3f;
-                pov.AddBehaviour(fm);
-
-                scene.AddElement(pov);
+                scene.AddElement(camera);
             }
 
             // Renderer customization
@@ -164,7 +181,7 @@ namespace Test
             Renderer.CaptureMouse = true;
 
             // Run!
-            Renderer.Start(pov);
+            Renderer.Start(camera);
         }
     }
 }

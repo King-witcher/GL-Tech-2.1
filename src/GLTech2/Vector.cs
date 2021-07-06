@@ -112,7 +112,7 @@ namespace GLTech2
 		/// <summary>
 		///		Gets the vector that is at the origin of the bidimensional space.
 		/// </summary>
-		public static Vector Origin { get => new Vector(0, 0); }
+		public static Vector Zero { get => new Vector(0, 0); }
 
 		/// <summary>
 		///		Equivalent to new Vector (0, 1);

@@ -13,8 +13,8 @@ namespace GLTech2.Elements
             PositionData = start;
             DirectionData = end - start;
 
-            (visual = new Plane(start, end, texture)).ReferencePoint = this;
-            (physical = new Collider(start, end)).ReferencePoint = this;
+            (visual = new Plane(start, end, texture)).Parent = this;
+            (physical = new Collider(start, end)).Parent = this;
         }
 
         /// <summary>

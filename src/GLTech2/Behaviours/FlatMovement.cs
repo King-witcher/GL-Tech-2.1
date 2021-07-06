@@ -160,9 +160,9 @@
 
                     Scene.RayCast(new Ray(element.WorldPosition, translation), out float newDist, out Vector _);
 
-                    if (newDist < translMod)
+                    if (newDist < translation.Module)
                     {
-                        translation = Vector.Origin;
+                        translation = Vector.Zero;
                     }
                 }
             }

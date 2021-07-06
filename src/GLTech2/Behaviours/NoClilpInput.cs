@@ -4,7 +4,7 @@ namespace GLTech2.Behaviours
     /// <summary>
     /// Allows the user to move the camera around the map using keyboard input in a quake-like way. May not work as expected yet.
     /// </summary>
-    public sealed class NoclipController : Behaviour
+    public sealed class NoClilpInput : Behaviour
     {
         public bool AlwaysRun { get; set; } = true;
         public float MaxSpeed { get; set; } = 2f;
@@ -24,7 +24,7 @@ namespace GLTech2.Behaviours
 
         void Start()
         {
-            velocity = Vector.Origin;
+            velocity = Vector.Zero;
         }
 
         void OnFrame()
@@ -68,7 +68,7 @@ namespace GLTech2.Behaviours
 
         Vector GetWishDir()
         {
-            Vector result = Vector.Origin;
+            Vector result = Vector.Zero;
 
             if (Keyboard.IsKeyDown(StepForward))
                 result += Vector.Forward;
@@ -82,7 +82,7 @@ namespace GLTech2.Behaviours
             result *= Element.Rotation;
 
             if (result.Module == 0)
-                return Vector.Origin;
+                return Vector.Zero;
             else
                 return result / result.Module;
         }

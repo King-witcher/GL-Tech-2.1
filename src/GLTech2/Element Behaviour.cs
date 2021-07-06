@@ -146,7 +146,7 @@ namespace GLTech2
         public void DetachChildren() // Not tested
         {
             foreach (Element child in childs)
-                child.ReferencePoint = null;
+                child.Parent = null;
         }
 
         //Subscribe and unsubscribe a behaviour

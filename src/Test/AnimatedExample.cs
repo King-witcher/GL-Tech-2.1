@@ -42,7 +42,7 @@ namespace Test
                         texture: tex);
 
                     e.AddBehaviour(new Rotate { Speed = 180f });
-                    e.ReferencePoint = pivot;
+                    e.Parent = pivot;
                 }
 
                 // Cylinder
@@ -59,7 +59,7 @@ namespace Test
                         texture: tex);
 
                     e.AddBehaviour(new Rotate { Speed = 180f });
-                    e.ReferencePoint = pivot;
+                    e.Parent = pivot;
                 }
 
                 // Triangle
@@ -76,7 +76,7 @@ namespace Test
                         texture: tex);
 
                     e.AddBehaviour(new Rotate { Speed = 180f });
-                    e.ReferencePoint = pivot;
+                    e.Parent = pivot;
                 }
 
                 scene.AddElement(pivot);
@@ -90,7 +90,7 @@ namespace Test
                     hrepeat: 32f);
 
                 Element e = new RegularPolygon(
-                    position: Vector.Origin,
+                    position: Vector.Zero,
                     vertices: 4,
                     radius: -2f, 
                     texture: tex);
@@ -103,7 +103,7 @@ namespace Test
             {
 
                 // pov.AddBehaviour<DebugPosition>();
-                pov.AddBehaviour<NoclipController>();
+                pov.AddBehaviour<NoClilpInput>();
                 pov.AddBehaviour<DebugPerformanceStats>();
                 pov.AddBehaviour(new MouseLook(2.2f));
 

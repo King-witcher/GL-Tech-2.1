@@ -78,7 +78,7 @@ namespace GLTech2
 
             // Only root elements can be added to a Scene, which will add all of it's children.
             // Besides, Element class's referencing system cannot allow elements to be added to different scenes.
-            if (element.ReferencePoint != null)
+            if (element.Parent != null)
             {
                 Debug.InternalLog(
                     origin: "Scene",

@@ -10,7 +10,7 @@ namespace GLTech2.Elements
 	/// </summary>
 	public partial class GridMap : Element
 	{
-		private protected override Vector PositionData { get; set; } = Vector.Origin;
+		private protected override Vector PositionData { get; set; } = Vector.Zero;
 		private protected override Vector DirectionData { get; set; } = Vector.Forward;
 
 		private int walls = 0;
@@ -77,10 +77,10 @@ namespace GLTech2.Elements
 					Vector vert3 = (line + 1, column + 1);
 					Vector vert4 = (line, column + 1);
 
-					new Wall(vert1, vert2, texture).ReferencePoint = this;
-					new Wall(vert2, vert3, texture).ReferencePoint = this;
-					new Wall(vert3, vert4, texture).ReferencePoint = this;
-					new Wall(vert4, vert1, texture).ReferencePoint = this;
+					new Wall(vert1, vert2, texture).Parent = this;
+					new Wall(vert2, vert3, texture).Parent = this;
+					new Wall(vert3, vert4, texture).Parent = this;
+					new Wall(vert4, vert1, texture).Parent = this;
 
 					walls += 4;
 				}
@@ -118,13 +118,13 @@ namespace GLTech2.Elements
 						Vector vert4 = (line, column + 1);
 
 						if (blockFree(column - 1, line))
-							new Wall(vert1, vert2, texture).ReferencePoint = this;
+							new Wall(vert1, vert2, texture).Parent = this;
 						if (blockFree(column, line + 1))
-							new Wall(vert2, vert3, texture).ReferencePoint = this;
+							new Wall(vert2, vert3, texture).Parent = this;
 						if (blockFree(column + 1, line))
-							new Wall(vert3, vert4, texture).ReferencePoint = this;
+							new Wall(vert3, vert4, texture).Parent = this;
 						if (blockFree(column, line - 1))
-							new Wall(vert4, vert1, texture).ReferencePoint = this;
+							new Wall(vert4, vert1, texture).Parent = this;
 
 						walls += 4;
 					}

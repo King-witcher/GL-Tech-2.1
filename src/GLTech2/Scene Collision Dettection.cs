@@ -52,7 +52,7 @@ namespace GLTech2
                 normal = new Vector(nearest->direction.y, -nearest->direction.x);
             }
             else
-                normal = Vector.Origin;
+                normal = Vector.Zero;
         }
     }
 }

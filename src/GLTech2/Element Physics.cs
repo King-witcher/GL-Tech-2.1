@@ -13,9 +13,9 @@
                 Translation += translation;
             else
             {
-                Vector worldTranslation = referencePoint == null ?
+                Vector worldTranslation = parent == null ?
                     translation :
-                    translation.Disprojection(referencePoint.PositionData, referencePoint.DirectionData);
+                    translation.Disprojection(parent.PositionData, parent.DirectionData);
 
                 Scene.RayCast(
                     new Ray(PositionData, worldTranslation),
@@ -24,7 +24,7 @@
                 if (distance < worldTranslation.Module)
                     worldTranslation.Module = distance;
 
-                translation = worldTranslation.Projection(referencePoint.PositionData, referencePoint.PositionData);
+                translation = worldTranslation.Projection(parent.PositionData, parent.PositionData);
 
                 Translation += translation;
             }

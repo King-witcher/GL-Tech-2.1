@@ -7,7 +7,7 @@ namespace GLTech2
     {
         internal Action OnChangeComponents;
         internal List<Element> childs = new List<Element>();
-        private Element referencePoint;
+        private Element parent;
         private Vector relativePosition;
         private Vector relativeNormal;
 
@@ -52,14 +52,14 @@ namespace GLTech2
         {
             get
             {
-                if (referencePoint is null)
+                if (parent is null)
                     return PositionData;
                 else
                     return relativePosition;
             }
             set
             {
-                if (referencePoint is null)
+                if (parent is null)
                 {
                     PositionData = value;
                     OnChangeComponents?.Invoke();
@@ -86,14 +86,14 @@ namespace GLTech2
         {
             get
             {
-                if (referencePoint is null)
+                if (parent is null)
                     return DirectionData;
                 else
                     return relativeNormal;
             }
             set
             {
-                if (referencePoint is null)
+                if (parent is null)
                 {
                     DirectionData = value;
                     OnChangeComponents?.Invoke();
@@ -114,14 +114,14 @@ namespace GLTech2
         {
             get
             {
-                if (referencePoint is null)
+                if (parent is null)
                     return DirectionData.Angle;
                 else
                     return relativeNormal.Angle;
             }
             set
             {
-                if (referencePoint is null)
+                if (parent is null)
                 {
                     Vector newNormal = DirectionData;
                     newNormal.Angle = value;
@@ -143,9 +143,9 @@ namespace GLTech2
         /// <remarks>
         /// Setting a reference point will make the object to move and rotate relatively to it's reference point, and if the parent element moves/rotate, this element will follow.
         /// </remarks>
-        public Element ReferencePoint
+        public Element Parent
         {
-            get => referencePoint;
+            get => parent;
             set
             {
                 // Check if the scenes are compatible. Elements cannot take as reference point others that are in differente scnees.
@@ -159,10 +159,10 @@ namespace GLTech2
                 }
 
                 // If it has a previous parent, unparent it first.
-                if (referencePoint != null)
+                if (parent != null)
                 {
-                    referencePoint.OnChangeComponents -= UpdateAbsolute;
-                    referencePoint.childs.Remove(this);
+                    parent.OnChangeComponents -= UpdateAbsolute;
+                    parent.childs.Remove(this);
                 }
 
                 // If it must have a new element as reference point, then
@@ -174,7 +174,7 @@ namespace GLTech2
                     // Add itself to the parent's child list.
                     value.childs.Add(this);
                 }
-                this.referencePoint = value;
+                this.parent = value;
 
                 // Lastly, update your relative components to match the new reference point.
                 UpdateRelative();
@@ -184,13 +184,13 @@ namespace GLTech2
         /// <summary>
         /// Gets the root reference point for this object.
         /// </summary>
-        public Element RootReferencePoint
+        public Element RootParent
         {
             get
             {
                 Element current = this;
-                while (current.referencePoint != null)
-                    current = current.referencePoint;
+                while (current.parent != null)
+                    current = current.parent;
                 return current;
             }
         }
@@ -205,7 +205,7 @@ namespace GLTech2
         private void UpdateRelative()
         {
             // In case the reference point is the scene origin:
-            if (referencePoint is null)
+            if (parent is null)
             {
                 relativePosition = PositionData;
                 relativeNormal = DirectionData;
@@ -213,8 +213,8 @@ namespace GLTech2
             // Otherwise, in case the reference point is another element:
             else
             {
-                relativePosition = PositionData.Projection(referencePoint.PositionData, referencePoint.DirectionData);
-                relativeNormal = DirectionData / referencePoint.DirectionData;
+                relativePosition = PositionData.Projection(parent.PositionData, parent.DirectionData);
+                relativeNormal = DirectionData / parent.DirectionData;
             }
         }
 
@@ -224,7 +224,7 @@ namespace GLTech2
         private void UpdateAbsolute()
         {
             // In case the reference point is the scene origin:
-            if (referencePoint is null)
+            if (parent is null)
             {
                 PositionData = relativePosition;
                 DirectionData = relativeNormal;
@@ -232,8 +232,8 @@ namespace GLTech2
             // Otherwise, in case the reference point is another element:
             else
             {
-                PositionData = relativePosition.Disprojection(referencePoint.PositionData, referencePoint.DirectionData);
-                DirectionData = relativeNormal * referencePoint.DirectionData;
+                PositionData = relativePosition.Disprojection(parent.PositionData, parent.DirectionData);
+                DirectionData = relativeNormal * parent.DirectionData;
             }
         }
 
@@ -257,7 +257,7 @@ namespace GLTech2
         {
             foreach (Element child in childs)
             {
-                child.ReferencePoint = null;
+                child.Parent = null;
                 childs.Remove(child);
             }
         }

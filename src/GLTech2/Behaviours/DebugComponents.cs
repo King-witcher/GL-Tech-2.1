@@ -29,7 +29,7 @@
 
         void OnFrame()
         {
-            timeSpent += Frame.Time;
+            timeSpent += Frame.DeltaTime;
 
             if (timeSpent >= Interval)
             {

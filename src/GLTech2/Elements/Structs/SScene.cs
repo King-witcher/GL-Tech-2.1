@@ -107,7 +107,7 @@ namespace GLTech2
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal SCollider* CollisionTest(Ray ray, out float distance)
+        internal SCollider* Cllsn_rcast(Ray ray, out float distance)
         {
             // 0 < distance <= infinity
             // 0 <= split < 1

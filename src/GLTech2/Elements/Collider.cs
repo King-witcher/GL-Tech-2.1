@@ -8,7 +8,7 @@ namespace GLTech2
         internal SCollider* unmanaged;
 
         public Collider(Vector start, Vector end) =>
-            unmanaged = SCollider.UnmanagedAlloc(start, end);
+            unmanaged = SCollider.Alloc(start, end);
 
         private protected override Vector PositionData
         {

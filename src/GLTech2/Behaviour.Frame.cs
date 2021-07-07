@@ -20,14 +20,9 @@ namespace GLTech2
             private static float windowTime = 0f;
 
             /// <summary>
-            /// The same as FrameTime. Similar to Unity3D.
-            /// </summary>
-            public static float DeltaTime => Time;
-
-            /// <summary>
             /// Gets the interval in seconds from the last frame to the current one.
             /// </summary>
-            public static float Time => frameTime;
+            public static float DeltaTime => frameTime;
 
             /// <summary>
             /// Gets the time in seconds spent only to generate the current frame, not considering time spent running behaviours.

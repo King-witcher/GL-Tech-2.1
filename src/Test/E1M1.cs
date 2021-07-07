@@ -164,11 +164,11 @@ namespace Test
                 camera.AddBehaviour<DebugSceneInfo>();
                 camera.AddBehaviour(new MouseLook(2.2f));
 
-                FlatMovement fm = new FlatMovement();
-                fm.RunSpeed = 5f;
-                fm.TurnSpeed = 180f;
-                camera.AddBehaviour(fm);
-                camera.AddBehaviour(new EnableNoclip(fm));
+                PointCollider pc = new PointCollider();
+                camera.AddBehaviour(pc);
+                SoftMovement movement = new SoftMovement(pc);
+                camera.AddBehaviour(movement);
+                // camera.AddBehaviour(new EnableNoclip(pc));
 
                 scene.AddElement(camera);
             }

@@ -11,7 +11,7 @@ namespace GLTech2
         internal Vector direction;
         internal SCollider* link_next;
 
-        internal static SCollider* UnmanagedAlloc(Vector start, Vector end)
+        internal static SCollider* Alloc(Vector start, Vector end)
         {
             SCollider* result = (SCollider*)Marshal.AllocHGlobal(sizeof(SCollider));
             result->start = start;

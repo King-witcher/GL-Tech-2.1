@@ -4,10 +4,17 @@ namespace GLTech2.Behaviours
     /// <summary>
     /// Allows the user to move the camera around the map using keyboard input in a quake-like way. May not work as expected yet.
     /// </summary>
-    public sealed class NoClilpInput : Behaviour
+    public sealed class SoftMovement : Behaviour
     {
+        KinematicBody body;
+
+        public SoftMovement(KinematicBody body)
+        {
+            this.body = body;
+        }
+
         public bool AlwaysRun { get; set; } = true;
-        public float MaxSpeed { get; set; } = 2f;
+        public float MaxSpeed { get; set; } = 5f;
         public float TurnSpeed { get; set; } = 90f;
         public float Friction { get; set; } = 10f;
         public float Acceleration { get; set; } = 10f;
@@ -19,18 +26,9 @@ namespace GLTech2.Behaviours
         public Key TurnLeft { get; set; } = Key.Left;
         public Key ChangeRun_Walk { get; set; } = Key.ShiftKey;
 
-        // Relative to the space.
-        Vector velocity;
-
-        void Start()
-        {
-            velocity = Vector.Zero;
-        }
-
         void OnFrame()
         {
             UpdateVelocity(GetMaxSpeed());
-            UpdatePosition();
         }
 
         float GetMaxSpeed()
@@ -50,20 +48,16 @@ namespace GLTech2.Behaviours
             ApplyFriction();
             Vector wishdir = GetWishDir();
 
-            float currentspeed = Vector.DotProduct(velocity, wishdir);
+            float currentspeed = Vector.DotProduct(body.Velocity, wishdir);
             float addspeed = Acceleration * Frame.DeltaTime * maxspeed;
             if (addspeed < 0)
                 return;
             else if (addspeed > maxspeed - currentspeed)
                 addspeed = maxspeed - currentspeed;
 
-            velocity += addspeed * wishdir;
-            if (velocity.Module < .01f) velocity = (0, 0);
-        }
+            body.Velocity += addspeed * wishdir;
 
-        void UpdatePosition()
-        {
-            element.Translation += velocity * Frame.DeltaTime;
+            if (body.Speed < .01f) body.Velocity = (0, 0);
         }
 
         Vector GetWishDir()
@@ -90,7 +84,7 @@ namespace GLTech2.Behaviours
 
         void ApplyFriction()
         {
-            velocity -= velocity * Frame.DeltaTime * Friction;
+            body.Velocity -= body.Velocity * Frame.DeltaTime * Friction;
         }
     }
 }

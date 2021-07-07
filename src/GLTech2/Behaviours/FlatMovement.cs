@@ -5,6 +5,18 @@
     /// </summary>
     public sealed class FlatMovement : Behaviour
     {
+        KinematicBody body;
+
+        public FlatMovement()
+        {
+            body = new PointCollider();
+        }
+
+        public FlatMovement(KinematicBody body)
+        {
+            this.body = body;
+        }
+
         /// <summary>
         /// Defines whether the script should or not treat collisions while moving.
         /// </summary>
@@ -92,7 +104,7 @@
             if (wishdir.Module != 0)
                 wishdir /= wishdir.Module;
 
-            TryTranslate(wishdir * speed * Frame.Time);
+            body.Velocity = wishdir * speed * element.WorldDirection;
 
             // Turn
             if (Keyboard.IsKeyDown(TurnLeft))

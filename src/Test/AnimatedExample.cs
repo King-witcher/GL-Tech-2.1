@@ -103,7 +103,6 @@ namespace Test
             {
 
                 // pov.AddBehaviour<DebugPosition>();
-                pov.AddBehaviour<NoClilpInput>();
                 pov.AddBehaviour<DebugPerformanceStats>();
                 pov.AddBehaviour(new MouseLook(2.2f));
 

@@ -79,7 +79,7 @@ namespace GLTech2 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2806.1.
+        ///   Looks up a localized string similar to 210706.1.
         /// </summary>
         public static string Last_Build {
             get {

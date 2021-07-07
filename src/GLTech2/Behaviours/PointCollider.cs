@@ -26,39 +26,43 @@ namespace GLTech2.Behaviours
             throw new NotImplementedException();
         }
 
-        void Update()
+        void OnFrame()
         {
             if (HandleCollisions)
                 ClipCollisions();
-            Element.WorldPosition += Velocity * Frame.Time;
+            Element.WorldPosition += Velocity * Frame.DeltaTime;
         }
 
         private void ClipCollisions()
         {
-            float speed = Speed;
-            if (speed == 0f)
+            if (Speed == 0)
                 return;
 
-            if (HandleCollisions)
+            // Step relative to current frame
+            float deltaS = Speed * Frame.DeltaTime;
+
+            Scene.RayCast(
+                new Ray(element.WorldPosition, Velocity),
+                out float cllsn_dist,
+                out Vector cllsn_normal);
+
+            // If it is in collision route for the next frame, cap the speed so that 
+            if (deltaS > cllsn_dist - 0.01f)
             {
+                // Compensate the current step.
+                Vector compensation = cllsn_normal * (Vector.DotProduct(Velocity, cllsn_normal));
+                Velocity -= compensation;
+
+                // Test against a second collision. If so, stop.
+                deltaS = Speed * Frame.DeltaTime;
+
                 Scene.RayCast(
                     new Ray(element.WorldPosition, Velocity),
-                    out float distance,
-                    out Vector normal);
+                    out cllsn_dist,
+                    out cllsn_normal);
 
-                if (speed >= distance)
-                {
-                    Vector excess = (speed - distance) * (Velocity / speed);
-
-                    normal /= normal.Module; // Optimizable by fast inverse square root
-                    Vector compensation = normal * (Vector.DotProduct(excess, normal) - 0.01f);
-                    Velocity -= compensation;
-
-                    Scene.RayCast(new Ray(element.WorldPosition, Velocity), out float newDist, out Vector _);
-
-                    if (newDist < Speed)
-                        Velocity = Vector.Zero;
-                }
+                if (deltaS > cllsn_dist - 0.01f)
+                    Velocity = Vector.Zero;
             }
         }
     }

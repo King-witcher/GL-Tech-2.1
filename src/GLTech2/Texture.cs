@@ -6,6 +6,7 @@ namespace GLTech2
     /// <summary>
     /// Represents a texture that can be attached to a renderable object.
     /// </summary>
+    [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct Texture
     {

@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace GLTech2
 {
+    [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct SSprite
     {

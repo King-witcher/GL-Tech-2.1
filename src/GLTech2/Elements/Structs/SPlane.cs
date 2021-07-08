@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace GLTech2
 {
+    [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct SPlane
     {

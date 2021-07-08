@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // Mesclar isso de volta com Camera
@@ -8,6 +9,7 @@ namespace GLTech2
     /// <summary>
     /// Stores important cache data to the renderer that can be shared with native modes.
     /// </summary>
+    [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct RenderCache : IDisposable
     {

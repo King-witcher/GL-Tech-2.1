@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace GLTech2
 {
@@ -84,12 +85,14 @@ namespace GLTech2
                     DrawColumn(i);
 
             // Render a vertical column of the screen.
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             void DrawColumn(int screen_column)
             {
                 //Caching
                 uint* buffer = screen.uint0;
                 float ray_cos = cache->cosines[screen_column];
                 float ray_angle = cache->angles[screen_column] + scene->camera->rotation;
+                Texture background = scene->background;
                 Ray ray = new Ray(scene->camera->position, ray_angle);
 
                 //Cast the ray towards every plane.
@@ -104,8 +107,8 @@ namespace GLTech2
                     float column_end = (screen.height_float + columnHeight) / 2f;
 
                     // Wall rendering bounds on the screen...
-                    int draw_column_start = (screen.height - (int) columnHeight) >> 1;
-                    int draw_column_end = (screen.height + (int) columnHeight) >> 1;
+                    int draw_column_start = (int)System.Math.Ceiling(column_start); // Inclusive
+                    int draw_column_end = (int)column_end;                          // Exclusive
 
                     // Which cannot exceed the full screen bounds.
                     if (draw_column_start < 0)
@@ -114,19 +117,8 @@ namespace GLTech2
                         draw_column_end = screen.height;
 
                     // Draws the background before the wall.
-                    {
-                        // Caches variables only for this scope.
-                        Texture background = scene->background;
-                        for (int line = 0; line < draw_column_start; line++)
-                        {
-                            //PURPOSELY REPEATED CODE!
-                            float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
-                            float screenVratio = line / screen.height_float;
-                            float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
-                            uint color = background.MapPixel(background_hratio, background_vratio);
-                            buffer[screen.width * line + screen_column] = color;
-                        }
-                    }
+                    for (int line = 0; line < draw_column_start; line++)
+                        drawBackground(line);
 
                     // Draw the wall
                     for (int line = draw_column_start; line < draw_column_end; line++)
@@ -137,32 +129,21 @@ namespace GLTech2
                     }
 
                     // Draw the other side of the background
-                    {
-                        Texture background = scene->background;
-                        for (int line = draw_column_end; line < screen.height; line++)
-                        {
-                            //PURPOSELY REPEATED CODE!
-                            float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
-                            float screenVratio = line / screen.height_float;
-                            float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
-                            uint color = background.MapPixel(background_hratio, background_vratio);
-                            buffer[screen.width * line + screen_column] = color;
-                        }
-                    }
+                    for (int line = draw_column_end; line < screen.height; line++)
+                        drawBackground(line);
                 }
                 else
-                {
-                    Texture background = scene->background;
                     for (int line = 0; line < screen.height; line++)
-                    {
-                        //Critical performance impact.
-                        //PURPOSELY REPEATED CODE!
-                        float background_hratio = ray_angle / 360 + 1;
-                        float screenVratio = line / screen.height_float;
-                        float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
-                        uint color = background.MapPixel(background_hratio, background_vratio);
-                        buffer[screen.width * line + screen_column] = color;
-                    }
+                        drawBackground(line);
+
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                void drawBackground(int line)
+                {
+                    float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
+                    float screenVratio = line / screen.height_float;
+                    float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
+                    uint color = background.MapPixel(background_hratio, background_vratio);
+                    buffer[screen.width * line + screen_column] = color;
                 }
             }
         }

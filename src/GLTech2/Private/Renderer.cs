@@ -77,27 +77,19 @@ namespace GLTech2
 
         private unsafe static void DrawPlanes(PixelBuffer screen, SScene* scene)        // Must be changed
         {
-            //Caching frequently used values.
-            uint* buffer = screen.uint0;
-            int width = screen.width;
-            int height = screen.height;
-            float height_f = screen.height_float;
-            Texture background = scene->background;
-
             if (ParallelRendering)
-            {
-                Parallel.For(0, width, Loop);
-            }
+                Parallel.For(0, screen.width, DrawColumn);
             else
-                for (int i = 0; i < width; i++)
-                    Loop(i);
+                for (int i = 0; i < screen.width; i++)
+                    DrawColumn(i);
 
-            void Loop(int ray_id)
-            //for (int ray_id = 0; ray_id < rendererData->bitmap_width; ray_id++)
+            // Render a vertical column of the screen.
+            void DrawColumn(int screen_column)
             {
                 //Caching
-                float ray_cos = cache->cosines[ray_id];
-                float ray_angle = cache->angles[ray_id] + scene->camera->rotation;
+                uint* buffer = screen.uint0;
+                float ray_cos = cache->cosines[screen_column];
+                float ray_angle = cache->angles[screen_column] + scene->camera->rotation;
                 Ray ray = new Ray(scene->camera->position, ray_angle);
 
                 //Cast the ray towards every plane.
@@ -108,28 +100,32 @@ namespace GLTech2
                     float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); //Wall column size in pixels
 
                     // Where the column starts and ends relative to the screen.
-                    float column_start = (height_f - columnHeight) / 2f;
-                    float column_end = (height_f + columnHeight) / 2f;
+                    float column_start = (screen.height_float - columnHeight) / 2f;
+                    float column_end = (screen.height_float + columnHeight) / 2f;
 
                     // Wall rendering bounds on the screen...
-                    int draw_column_start = (height - (int) columnHeight) >> 1;
-                    int draw_column_end = (height + (int) columnHeight) >> 1;
+                    int draw_column_start = (screen.height - (int) columnHeight) >> 1;
+                    int draw_column_end = (screen.height + (int) columnHeight) >> 1;
 
                     // Which cannot exceed the full screen bounds.
                     if (draw_column_start < 0)
                         draw_column_start = 0;
-                    if (draw_column_end > height)
-                        draw_column_end = height;
+                    if (draw_column_end > screen.height)
+                        draw_column_end = screen.height;
 
                     // Draws the background before the wall.
-                    for (int line = 0; line < draw_column_start; line++)
                     {
-                        //PURPOSELY REPEATED CODE!
-                        float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
-                        float screenVratio = line / height_f;
-                        float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
-                        uint color = background.MapPixel(background_hratio, background_vratio);
-                        buffer[width * line + ray_id] = color;
+                        // Caches variables only for this scope.
+                        Texture background = scene->background;
+                        for (int line = 0; line < draw_column_start; line++)
+                        {
+                            //PURPOSELY REPEATED CODE!
+                            float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
+                            float screenVratio = line / screen.height_float;
+                            float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
+                            uint color = background.MapPixel(background_hratio, background_vratio);
+                            buffer[screen.width * line + screen_column] = color;
+                        }
                     }
 
                     // Draw the wall
@@ -137,31 +133,35 @@ namespace GLTech2
                     {
                         float vratio = (line - column_start) / columnHeight;
                         uint pixel = nearest->texture.MapPixel(nearest_ratio, vratio);
-                        buffer[width * line + ray_id] = pixel;
+                        buffer[screen.width * line + screen_column] = pixel;
                     }
 
                     // Draw the other side of the background
-                    for (int line = draw_column_end; line < height; line++)
                     {
-                        //PURPOSELY REPEATED CODE!
-                        float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
-                        float screenVratio = line / height_f;
-                        float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
-                        uint color = background.MapPixel(background_hratio, background_vratio);
-                        buffer[width * line + ray_id] = color;
+                        Texture background = scene->background;
+                        for (int line = draw_column_end; line < screen.height; line++)
+                        {
+                            //PURPOSELY REPEATED CODE!
+                            float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
+                            float screenVratio = line / screen.height_float;
+                            float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
+                            uint color = background.MapPixel(background_hratio, background_vratio);
+                            buffer[screen.width * line + screen_column] = color;
+                        }
                     }
                 }
                 else
                 {
-                    for (int line = 0; line < height; line++)
+                    Texture background = scene->background;
+                    for (int line = 0; line < screen.height; line++)
                     {
                         //Critical performance impact.
                         //PURPOSELY REPEATED CODE!
                         float background_hratio = ray_angle / 360 + 1;
-                        float screenVratio = line / height_f;
+                        float screenVratio = line / screen.height_float;
                         float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
                         uint color = background.MapPixel(background_hratio, background_vratio);
-                        buffer[width * line + ray_id] = color;
+                        buffer[screen.width * line + screen_column] = color;
                     }
                 }
             }

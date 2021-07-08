@@ -304,7 +304,7 @@ namespace GLTech2
             {
                 controlStopwatch.Restart();
                 Behaviour.Frame.BeginRender();
-                CLRRenderLegacy(backBuffer, activeScene.unmanaged);
+                DrawPlanesLegacy(backBuffer, activeScene.unmanaged);
                 PostProcess(backBuffer);
 
                 if (DoubleBuffer)

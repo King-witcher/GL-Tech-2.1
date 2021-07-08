@@ -85,7 +85,7 @@ namespace GLTech2
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal SPlane* PlaneRayCast(Ray ray, out float nearest_dist, out float nearest_ratio)
+        internal SPlane* NearestPlane(Ray ray, out float nearest_dist, out float nearest_ratio)
         {
             SPlane* nearest = null;
             nearest_dist = float.PositiveInfinity;

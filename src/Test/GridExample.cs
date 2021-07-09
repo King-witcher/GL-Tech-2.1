@@ -65,7 +65,7 @@ namespace Test
             Renderer.CustomHeight = 900;
             Renderer.FieldOfView = 110f;
             Renderer.ParallelRendering = true;
-            Renderer.DoubleBuffer = true;
+            Renderer.DoubleBuffer = false;
             Renderer.CaptureMouse = true;
 
             // Run!

@@ -106,8 +106,8 @@ namespace GLTech2
                 float column_end = (screen.height_float + columnHeight) / 2f;
 
                 // Wall rendering bounds on the screen...
-                int draw_column_start = (int)System.Math.Ceiling(column_start); // Inclusive
-                int draw_column_end = (int)System.Math.Ceiling(column_end);                          // Exclusive
+                int draw_column_start = screen.height - (int)(screen.height - column_start);    // Inclusive
+                int draw_column_end = screen.height - (int)(screen.height - column_end);        // Exclusive
 
                 // Which cannot exceed the full screen bounds.
                 if (draw_column_start < 0)

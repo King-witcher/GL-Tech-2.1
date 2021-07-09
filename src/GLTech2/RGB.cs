@@ -13,12 +13,16 @@ namespace GLTech2
         //Union
         [FieldOffset(0)]
         internal uint rgb;
+
         [FieldOffset(0)]
         internal byte b;
+
         [FieldOffset(1)]
         internal byte g;
+
         [FieldOffset(2)]
         internal byte r;
+
         [FieldOffset(3)]
         private byte a;
 

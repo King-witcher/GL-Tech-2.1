@@ -19,7 +19,7 @@ namespace GLTech2.Behaviours
 
         void OnFrame()
         {
-            Element.Translate(Direction * Speed * Frame.DeltaTime);
+            Element.RelativePosition += Direction * Speed * Frame.DeltaTime;
         }
     }
 }

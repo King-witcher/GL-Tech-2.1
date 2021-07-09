@@ -107,40 +107,7 @@
             if (Keyboard.IsKeyDown(TurnRight))
                 Element.Rotate(TurnSpeed * Frame.DeltaTime);
         }
-
-        private void TryTranslate2(Vector translation)
-        {
-            if (!HandleCollisions)
-                element.Translate(translation * element.RelativeDirection);
-            else
-            {
-                if (translation.Module == 0)
-                    return;
-                float wishdist = translation.Module;
-                Vector wishdir = translation * element.RelativeDirection;
-                wishdir /= wishdir.Module;
-
-                Collider plane = Scene.RayCast(new Ray(element.RelativePosition, wishdir), out float distance);
-                if (plane != null && wishdist > distance)
-                {
-                    Vector planeVersor = plane.WorldDirection / plane.WorldDirection.Module;
-                    Vector wishdir_proj = (wishdir.x * planeVersor.x + wishdir.y * planeVersor.y) * planeVersor;
-                    Vector wishdir_ortogonal = wishdir - wishdir_proj;
-
-                    wishdist *= wishdir_proj.Module;
-                    wishdir = wishdir_proj / wishdir_proj.Module;
-
-                    // Test
-                    Scene.RayCast(new Ray(element.RelativePosition, wishdir), out float newDist);
-
-                    if (newDist < wishdist)
-                        wishdist = 0f;
-                }
-
-                Element.RelativePosition += wishdir * wishdist;
-            }
-        }
-
+        
         private void TryTranslate(Vector translation)
         {
             // Treats as original
@@ -174,7 +141,7 @@
                 }
             }
 
-            element.Translate(translation);
+            element.WorldPosition += translation;
         }
     }
 }

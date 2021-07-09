@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace GLTech2
 {
     partial class Element
     {
-        internal Action OnChangeComponents;
+        internal Action onMove;
         internal List<Element> childs = new List<Element>();
         private Element parent;
         private Vector relativePosition;
-        private Vector relativeNormal;
+        private Vector relativeDirection;
 
         /// <summary>
         /// Gets and sets the absolute position of an Element without and allows subclasses to store the Position the way they want.
@@ -17,14 +18,15 @@ namespace GLTech2
         /// <remarks>
         /// Important: Elements that take this element as reference point will not follow it imediatelly for performance and code health reasons. Changing this property is only recommended if the element is not a reference point to any other and changing positions is a significant performance bottleneck in your application. Otherwise, always use Element.Position property instead.
         /// </remarks>
-        public Vector WorldPosition     // Fase de testes!
+        public Vector WorldPosition
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => PositionData;
             set
             {
                 PositionData = value;
                 UpdateRelative();
-                OnChangeComponents?.Invoke();
+                onMove?.Invoke();
             }
         }
 
@@ -34,42 +36,52 @@ namespace GLTech2
         /// <remarks>
         /// Remember to set it before parenting any object!
         /// </remarks>
-        public Vector WorldDirection    // Fase de testes!
+        public Vector WorldDirection
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => DirectionData;
             set
             {
                 DirectionData = value;
                 UpdateRelative();
-                OnChangeComponents?.Invoke();
+                onMove?.Invoke();
+            }
+        }
+
+        /// <summary>
+        /// The scale of this GridMap. Cannot be zero.
+        /// </summary>
+        public float WorldScale
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => WorldDirection.Module;
+            set
+            {
+                if (value != 0)
+                {
+                    WorldDirection = WorldDirection * value / WorldDirection.Module;
+                    UpdateRelative();
+                    onMove?.Invoke();
+                }
             }
         }
 
         /// <summary>
         /// Gets and sets element's position relatively to it's parent or, if it has no parent, it's absolute position. 
         /// </summary>
-        public Vector Translation
+        public Vector RelativePosition
         {
             get
             {
-                if (parent is null)
+                if (parent == null)
                     return PositionData;
                 else
                     return relativePosition;
             }
             set
             {
-                if (parent is null)
-                {
-                    PositionData = value;
-                    OnChangeComponents?.Invoke();
-                }
-                else
-                {
-                    relativePosition = value;
-                    UpdateAbsolute();
-                    OnChangeComponents?.Invoke();
-                }
+                relativePosition = value;
+                FollowParent();
             }
         }
 
@@ -82,42 +94,33 @@ namespace GLTech2
         ///     Use wisely.
         ///     </para>
         /// </remarks>
-        public Vector Rotation
+        public Vector RelativeDirection
         {
             get
             {
                 if (parent is null)
                     return DirectionData;
                 else
-                    return relativeNormal;
+                    return relativeDirection;
             }
             set
             {
-                if (parent is null)
-                {
-                    DirectionData = value;
-                    OnChangeComponents?.Invoke();
-                }
-                else
-                {
-                    relativeNormal = value;
-                    UpdateAbsolute();
-                    OnChangeComponents?.Invoke();
-                }
+                relativeDirection = value;
+                FollowParent();
             }
         }
 
         /// <summary>
         /// Gets and sets directly the element's rotation relative to it's parent or, if it has no parents, it's absolute rotation.
         /// </summary>
-        public float Angle
+        public float RelativeRotation
         {
             get
             {
                 if (parent is null)
                     return DirectionData.Angle;
                 else
-                    return relativeNormal.Angle;
+                    return relativeDirection.Angle;
             }
             set
             {
@@ -126,13 +129,12 @@ namespace GLTech2
                     Vector newNormal = DirectionData;
                     newNormal.Angle = value;
                     DirectionData = newNormal;
-                    OnChangeComponents?.Invoke();
+                    onMove?.Invoke();
                 }
                 else
                 {
-                    relativeNormal.Angle = value;
-                    UpdateAbsolute();
-                    OnChangeComponents?.Invoke();
+                    relativeDirection.Angle = value;
+                    FollowParent();
                 }
             }
         }
@@ -161,7 +163,7 @@ namespace GLTech2
                 // If it has a previous parent, unparent it first.
                 if (parent != null)
                 {
-                    parent.OnChangeComponents -= UpdateAbsolute;
+                    parent.onMove -= FollowParent;    // Temos um erro aqui
                     parent.childs.Remove(this);
                 }
 
@@ -169,7 +171,7 @@ namespace GLTech2
                 if (value != null)
                 {
                     // Subscribe to its OnChangeComponents so that you can follow the object whenever it changes position.
-                    value.OnChangeComponents += UpdateAbsolute;
+                    value.onMove += FollowParent;
 
                     // Add itself to the parent's child list.
                     value.childs.Add(this);
@@ -205,36 +207,37 @@ namespace GLTech2
         private void UpdateRelative()
         {
             // In case the reference point is the scene origin:
-            if (parent is null)
+            if (parent == null)
             {
                 relativePosition = PositionData;
-                relativeNormal = DirectionData;
+                relativeDirection = DirectionData;
             }
             // Otherwise, in case the reference point is another element:
             else
             {
                 relativePosition = PositionData.Projection(parent.PositionData, parent.DirectionData);
-                relativeNormal = DirectionData / parent.DirectionData;
+                relativeDirection = DirectionData / parent.DirectionData;
             }
         }
 
         // Update the real components of the element in the scene based on its reference point and its components
-        // relative to the reference.
+        // relative to the parent.
         // This method is called always when either the reference element or this element tries to change it's position.
-        private void UpdateAbsolute()
+        private void FollowParent()
         {
             // In case the reference point is the scene origin:
-            if (parent is null)
+            if (parent == null)
             {
                 PositionData = relativePosition;
-                DirectionData = relativeNormal;
+                DirectionData = relativeDirection;
             }
             // Otherwise, in case the reference point is another element:
             else
             {
                 PositionData = relativePosition.Disprojection(parent.PositionData, parent.DirectionData);
-                DirectionData = relativeNormal * parent.DirectionData;
+                DirectionData = relativeDirection * parent.DirectionData;
             }
+            onMove?.Invoke();
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace GLTech2
@@ -101,6 +102,7 @@ namespace GLTech2
 		/// </remarks>
 		public float Module
 		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
 			get => (float)Math.Sqrt(x * x + y * y);
 			set
 			{

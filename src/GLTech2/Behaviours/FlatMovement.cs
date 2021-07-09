@@ -116,16 +116,16 @@
         private void TryTranslate2(Vector translation)
         {
             if (!HandleCollisions)
-                element.Translate(translation * element.Rotation);
+                element.Translate(translation * element.RelativeDirection);
             else
             {
                 if (translation.Module == 0)
                     return;
                 float wishdist = translation.Module;
-                Vector wishdir = translation * element.Rotation;
+                Vector wishdir = translation * element.RelativeDirection;
                 wishdir /= wishdir.Module;
 
-                Collider plane = Scene.RayCast(new Ray(element.Translation, wishdir), out float distance);
+                Collider plane = Scene.RayCast(new Ray(element.RelativePosition, wishdir), out float distance);
                 if (plane != null && wishdist > distance)
                 {
                     Vector planeVersor = plane.WorldDirection / plane.WorldDirection.Module;
@@ -136,13 +136,13 @@
                     wishdir = wishdir_proj / wishdir_proj.Module;
 
                     // Test
-                    Scene.RayCast(new Ray(element.Translation, wishdir), out float newDist);
+                    Scene.RayCast(new Ray(element.RelativePosition, wishdir), out float newDist);
 
                     if (newDist < wishdist)
                         wishdist = 0f;
                 }
 
-                Element.Translation += wishdir * wishdist;
+                Element.RelativePosition += wishdir * wishdist;
             }
         }
 

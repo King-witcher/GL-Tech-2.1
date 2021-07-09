@@ -21,7 +21,7 @@ namespace Test
                 GridMap.TextureBindings tb = new GridMap.TextureBindings();
                 tb[(0, 0, 0)] = tex;
                 GridMap gm = new GridMap(gridmapbuf, tb);
-                gm.Scale = 0.04f;
+                gm.WorldScale = 0.04f;
                 scene.AddElement(gm);
             }
 
@@ -29,8 +29,13 @@ namespace Test
             Camera observer = new Camera((0, 0));
             {
                 observer.AddBehaviour<MouseLook>();
-                observer.AddBehaviour<FlatMovement>();
                 observer.AddBehaviour<DebugPerformanceStats>();
+
+                KinematicBody kinematicBody = new PointCollider();
+                SoftMovement softMovement = new SoftMovement(kinematicBody);
+                observer.AddBehaviour(kinematicBody);
+                observer.AddBehaviour(softMovement);
+
                 scene.AddElement(observer);
             }
 

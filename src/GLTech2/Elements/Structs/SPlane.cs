@@ -37,13 +37,13 @@ namespace GLTech2
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal bool Test(Ray ray, out float cur_dist, out float cur_split)
+        internal void Test(Ray ray, out float cur_dist, out float cur_split)
         {
             if (direction.x * ray.direction.y - direction.y * ray.direction.x <= 0)
             {
                 cur_dist = float.PositiveInfinity;
                 cur_split = 2f;
-                return false;
+                return;
             }
 
             // Medium performance impact.
@@ -57,7 +57,7 @@ namespace GLTech2
             {
                 cur_dist = float.PositiveInfinity;
                 cur_split = 2f;
-                return false;
+                return;
             }
 
             float spldet = ray.direction.x * (ray.start.y - start.y) - ray.direction.y * (ray.start.x - start.x);
@@ -68,11 +68,11 @@ namespace GLTech2
             {
                 cur_dist = float.PositiveInfinity;
                 cur_split = 2f;
-                return false;
+                return;
             }
             cur_split = spltmp;
             cur_dist = dsttmp;
-            return true;
+            return;
         }
 
         internal static void Delete(SPlane* item)

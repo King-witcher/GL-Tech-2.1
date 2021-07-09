@@ -21,21 +21,6 @@ namespace GLTech2.Elements
 		public int Walls => walls;
 
 		/// <summary>
-		/// The scale of this GridMap. Cannot be zero.
-		/// </summary>
-		public float Scale
-		{
-			get => Rotation.Module;
-			set
-			{
-				if (value != 0)
-				{
-					Rotation = Rotation * value / Rotation.Module;
-				}
-			}
-		}
-
-		/// <summary>
 		/// Gets a new instance of GridMap based only on a PixelBuffer.
 		/// <remarks>
 		/// Totally black pixels won't be

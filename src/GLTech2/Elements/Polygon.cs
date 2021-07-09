@@ -19,7 +19,7 @@ namespace GLTech2.Elements
         /// <param name="texture">The texture that will be stretched on the polygon</param>
         public Polygon(Vector[] vertices, Texture texture)
         {
-            if (vertices is null)
+            if (vertices == null)
                 throw new ArgumentNullException("\"vertices\" cannot be null.");
 
             Build(vertices, texture);

@@ -8,7 +8,6 @@ namespace GLTech2
     public abstract partial class Element : IDisposable
     {
         internal Scene scene;
-        private Vector worldVelocity;
 
         internal Element() { }
 

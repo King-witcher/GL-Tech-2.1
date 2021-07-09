@@ -73,7 +73,7 @@ namespace GLTech2.Behaviours
             if (Keyboard.IsKeyDown(StepRight))
                 result += Vector.Right;
 
-            result *= Element.Rotation;
+            result *= Element.RelativeDirection;
 
             if (result.Module == 0)
                 return Vector.Zero;

@@ -10,7 +10,7 @@
         public void Translate(Vector translation, bool stopOnCollision = false)
         {
             if (!stopOnCollision)
-                Translation += translation;
+                RelativePosition += translation;
             else
             {
                 Vector worldTranslation = parent == null ?
@@ -26,7 +26,7 @@
 
                 translation = worldTranslation.Projection(parent.PositionData, parent.PositionData);
 
-                Translation += translation;
+                RelativePosition += translation;
             }
         }
 
@@ -36,7 +36,7 @@
         /// <param name="rotation">angle in degrees</param>
         public void Rotate(float rotation)
         {
-            Angle += rotation;
+            RelativeRotation += rotation;
         }
     }
 }

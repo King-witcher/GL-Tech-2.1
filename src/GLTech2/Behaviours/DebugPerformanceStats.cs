@@ -21,7 +21,7 @@ namespace GLTech2.Behaviours
         /// <summary>
         /// The debug step interval in seconds
         /// </summary>
-        public float Interval { get; set; } = 1f;
+        public float Interval { get; set; } = 4f;
 
         void OnFrame()
         {
@@ -50,7 +50,7 @@ namespace GLTech2.Behaviours
                     Debug.Log($"Render time (avg):\t{renderTime}ms ({renderRate} frames/s)");
 
                 if (DebugScriptTime)
-                    Debug.Log($"Script time (avg):\t{scriptTime}ms ({scriptRate} cycles/s)");
+                    Debug.Log($"Script time (avg):\t{scriptTime}ms ({scriptRate} cycles/s) (including this!)");
 
                 if (DebugWindowTime)
                     Debug.Log($"Window time (avg):\t{windowTime}ms ({windowRate} frames/s)");

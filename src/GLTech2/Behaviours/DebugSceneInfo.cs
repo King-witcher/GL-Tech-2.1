@@ -7,7 +7,10 @@
     {
         void Start()
         {
-            Debug.Log($"Walls: {Scene.WallCount}");
+            Debug.Log($"Scene info:");
+            Debug.Log($"\tElements: {Scene.ElementCount}");
+            Debug.Log($"\tPlanes: {Scene.PlaneCount}");
+            Debug.Log($"\tColliders: {Scene.ColliderCount}");
             Debug.Log();
         }
     }

@@ -6,7 +6,7 @@ namespace Test
 {
     partial class Program
     {
-        static void ExtremePlanes()
+        static void ExtremeGrid()
         {
             using PixelBuffer BlockMapbuf = new PixelBuffer(DemoTextures.Plant);
             using PixelBuffer texturebuf = new PixelBuffer(DemoTextures.GrayHexagons);
@@ -17,7 +17,7 @@ namespace Test
 
             // BlockMap
             {
-                Texture tex = new Texture(texturebuf, 0f, 0.03f);
+                Texture tex = new Texture(BlockMapbuf, 0f, 1f);
                 BlockMap.TextureMapper tb = new BlockMap.TextureMapper();
                 tb[(0, 0, 0)] = tex;
                 BlockMap gm = new BlockMap(BlockMapbuf, tb);
@@ -28,7 +28,7 @@ namespace Test
             // Observer
             Camera observer = new Camera((0, 0));
             {
-                observer.AddBehaviour<MouseLook>();
+                observer.AddBehaviour(new MouseLook(2.2f));
                 observer.AddBehaviour<DebugPerformanceStats>();
                 observer.AddBehaviour<DebugSceneInfo>();
 

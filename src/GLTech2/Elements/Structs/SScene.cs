@@ -82,7 +82,7 @@ namespace GLTech2
                 last_collider->link_next = collider;
                 last_collider = collider;
             }
-            plane_count++;
+            collider_count++;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

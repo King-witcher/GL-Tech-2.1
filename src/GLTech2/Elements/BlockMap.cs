@@ -1,9 +1,11 @@
-﻿// Altamente otimizável
+﻿// Otimizável
+
+using System;
 
 namespace GLTech2.Elements
 {
 	/// <summary>
-	/// Provides a tool to build maps based on a image.
+	/// Provides a tool to build elements based on textures..
 	/// <remarks>
 	/// Each pixel of the image can be converted into a block of its original color, a block with an especific Texture or nothing.
 	/// </remarks>
@@ -20,13 +22,14 @@ namespace GLTech2.Elements
 		/// </summary>
 		public int Walls => walls;
 
-		/// <summary>
-		/// Gets a new instance of BlockMap based only on a PixelBuffer.
-		/// <remarks>
-		/// Totally black pixels won't be
-		/// </remarks>
-		/// </summary>
-		/// <param name="map">A pixelbuffer that represents each block of the map.</param>
+        /// <summary>
+        /// Gets a new instance of BlockMap based only on a PixelBuffer.
+        /// <remarks>
+        /// Totally black pixels won't be
+        /// </remarks>
+        /// </summary>
+        /// <param name="map">A pixelbuffer that represents each block of the map.</param>
+        [Obsolete]
 		public BlockMap(PixelBuffer map)
 		{
 			TextureMapper textures = new TextureMapper();
@@ -73,7 +76,7 @@ namespace GLTech2.Elements
 		}
 
 		/// <summary>
-		/// Gets a new instance of BlockMap the remaps each color to a given texture.
+		/// Gets a new instance of BlockMap the maps each color to a given texture.
 		/// </summary>
 		/// <param name="map">The map</param>
 		/// <param name="textureBindings">A hashmap that binds a set of Colors to Textures</param>
@@ -103,15 +106,29 @@ namespace GLTech2.Elements
 						Vector vert4 = (line, column + 1);
 
 						if (blockFree(column - 1, line))
-							new Wall(vert1, vert2, texture).Parent = this;
+						{
+							new Plane(vert1, vert2, texture).Parent = this;
+							new Collider(vert1, vert2).Parent = this;
+							walls++;
+						}
 						if (blockFree(column, line + 1))
-							new Wall(vert2, vert3, texture).Parent = this;
+						{
+							new Plane(vert2, vert3, texture).Parent = this;
+							new Collider(vert2, vert3).Parent = this;
+							walls++;
+						}
 						if (blockFree(column + 1, line))
-							new Wall(vert3, vert4, texture).Parent = this;
+						{
+							new Plane(vert3, vert4, texture).Parent = this;
+							new Collider(vert3, vert4).Parent = this;
+							walls++;
+						}
 						if (blockFree(column, line - 1))
-							new Wall(vert4, vert1, texture).Parent = this;
-
-						walls += 4;
+						{
+							new Plane(vert4, vert1, texture).Parent = this;
+							new Collider(vert4, vert1).Parent = this;
+							walls++;
+						}
 					}
 				}
 			}

@@ -116,10 +116,13 @@ namespace GLTech2
                     draw_column_end = screen.height;
 
                 // Draws the background before the wall.
-                for (int line = 0; line < draw_column_start; line++)
-                    drawBackground(line);
+                // Critical performance impact.
+                if (scene->background.buffer.uint0 != null)
+                    for (int line = 0; line < draw_column_start; line++)
+                        drawBackground(line);
 
                 // Draw the wall
+                // Critical performance impact.
                 for (int line = draw_column_start; line < draw_column_end; line++)
                 {
                     float vratio = (line - column_start) / columnHeight;
@@ -128,8 +131,10 @@ namespace GLTech2
                 }
 
                 // Draw the other side of the background
-                for (int line = draw_column_end; line < screen.height; line++)
-                    drawBackground(line);
+                // Critical performance impact.
+                if (scene->background.buffer.uint0 != null)
+                    for (int line = draw_column_end; line < screen.height; line++)
+                        drawBackground(line);
                 #endregion
 
                 // Draws background

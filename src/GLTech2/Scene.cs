@@ -36,7 +36,17 @@ namespace GLTech2
         /// <summary>
         /// Gets how many walls the scene fits.
         /// </summary>
-        public int WallCount => unmanaged->plane_count;
+        public int ColliderCount => colliders.Count;
+
+        /// <summary>
+        /// Gets how many walls the scene fits.
+        /// </summary>
+        public int ElementCount => elements.Count;
+
+        /// <summary>
+        /// Gets how many walls the scene fits.
+        /// </summary>
+        public int PlaneCount => unmanaged->plane_count;
 
         /// <summary>
         /// Gets and sets the background texture of the Scene.

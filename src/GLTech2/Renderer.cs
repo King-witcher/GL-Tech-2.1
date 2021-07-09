@@ -274,7 +274,7 @@ namespace GLTech2
                 new PixelBuffer(frontBuffer.width, frontBuffer.height) :
                 frontBuffer;
 
-            #region Advices
+            #region Warnings
             if (!DoubleBuffer && postProcessing.Count > 0)
                 Debug.InternalLog(
                     origin: "Renderer",
@@ -323,7 +323,7 @@ namespace GLTech2
             controlStopwatch.Stop();
             Behaviour.Frame.Stop();
 
-            // OutputBuffer is up to be released.
+            // FrontBuffer is up to be released, if used.
             controlThreadRunning = false;
             if (DoubleBuffer)
                 backBuffer.Dispose();

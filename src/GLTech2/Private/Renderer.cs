@@ -5,10 +5,6 @@ namespace GLTech2
 {
     partial class Renderer
     {
-        //Don't know how to pinvoke fromm current directory =/
-        //[DllImport(@"D:\GitHub\GLTech-2\bin\Release\glt2_nat.dll", CallingConvention = CallingConvention.Cdecl)]
-        //private unsafe static extern void NativeRender(RendererData* camera);
-
         private unsafe static void DrawPlanesLegacy(PixelBuffer target, SScene* scene)        // Must be changed
         {
             //Caching frequently used values.
@@ -76,66 +72,67 @@ namespace GLTech2
             }
         }
 
-        private unsafe static void DrawPlanes(PixelBuffer screen, SScene* scene)        // Must be changed
+        private unsafe static void DrawPlanes(PixelBuffer screen, SScene* scene)
         {
             if (ParallelRendering)
                 Parallel.For(0, screen.width, DrawColumn);
             else
                 for (int i = 0; i < screen.width; i++)
                     DrawColumn(i);
+            return;
 
             // Render a vertical column of the screen.
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             void DrawColumn(int screen_column)
             {
-                //Caching
+                // Caching frequently used variables
                 uint* buffer = screen.uint0;
                 float ray_cos = cache->cosines[screen_column];
                 float ray_angle = cache->angles[screen_column] + scene->camera->rotation;
                 Texture background = scene->background;
                 Ray ray = new Ray(scene->camera->position, ray_angle);
 
-                //Cast the ray towards every plane.
+                // Cast the ray towards every plane.
                 SPlane* nearest = scene->NearestPlane(ray, out float nearest_dist, out float nearest_ratio);
-                if (nearest_ratio != 2f)
+
+                // Found out that optimizing this part by separing the case when it hits and not a wall is unecessary.
+                #region Render the plane
+
+                // Height that the current column should have on the screen.
+                float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); // Wall column size in pixels
+
+                // Where the column starts and ends relative to the screen.
+                float column_start = (screen.height_float - columnHeight) / 2f;
+                float column_end = (screen.height_float + columnHeight) / 2f;
+
+                // Wall rendering bounds on the screen...
+                int draw_column_start = (int)System.Math.Ceiling(column_start); // Inclusive
+                int draw_column_end = (int)column_end;                          // Exclusive
+
+                // Which cannot exceed the full screen bounds.
+                if (draw_column_start < 0)
+                    draw_column_start = 0;
+                if (draw_column_end > screen.height)
+                    draw_column_end = screen.height;
+
+                // Draws the background before the wall.
+                for (int line = 0; line < draw_column_start; line++)
+                    drawBackground(line);
+
+                // Draw the wall
+                for (int line = draw_column_start; line < draw_column_end; line++)
                 {
-                    // Height that the current column should have on the screen.
-                    float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); //Wall column size in pixels
-
-                    // Where the column starts and ends relative to the screen.
-                    float column_start = (screen.height_float - columnHeight) / 2f;
-                    float column_end = (screen.height_float + columnHeight) / 2f;
-
-                    // Wall rendering bounds on the screen...
-                    int draw_column_start = (int)System.Math.Ceiling(column_start); // Inclusive
-                    int draw_column_end = (int)column_end;                          // Exclusive
-
-                    // Which cannot exceed the full screen bounds.
-                    if (draw_column_start < 0)
-                        draw_column_start = 0;
-                    if (draw_column_end > screen.height)
-                        draw_column_end = screen.height;
-
-                    // Draws the background before the wall.
-                    for (int line = 0; line < draw_column_start; line++)
-                        drawBackground(line);
-
-                    // Draw the wall
-                    for (int line = draw_column_start; line < draw_column_end; line++)
-                    {
-                        float vratio = (line - column_start) / columnHeight;
-                        uint pixel = nearest->texture.MapPixel(nearest_ratio, vratio);
-                        buffer[screen.width * line + screen_column] = pixel;
-                    }
-
-                    // Draw the other side of the background
-                    for (int line = draw_column_end; line < screen.height; line++)
-                        drawBackground(line);
+                    float vratio = (line - column_start) / columnHeight;
+                    uint pixel = nearest->texture.MapPixel(nearest_ratio, vratio);
+                    buffer[screen.width * line + screen_column] = pixel;
                 }
-                else
-                    for (int line = 0; line < screen.height; line++)
-                        drawBackground(line);
 
+                // Draw the other side of the background
+                for (int line = draw_column_end; line < screen.height; line++)
+                    drawBackground(line);
+                #endregion
+
+                // Draws background
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 void drawBackground(int line)
                 {

@@ -37,10 +37,10 @@ namespace Test
             Texture background = new Texture(background_buffer);
             using Scene scene = new Scene(background);
 
-            // GridMap
+            // BlockMap
             {
                 using PixelBuffer grid = new PixelBuffer(WE1M1.MapGrid);
-                GridMap.TextureBindings binds = new GridMap.TextureBindings();
+                BlockMap.TextureMapper binds = new BlockMap.TextureMapper();
                 {
                     Texture blueStone1 = new Texture(
                         buffer: textures,
@@ -153,8 +153,8 @@ namespace Test
                     binds[(128, 255, 128)] = elevator;
                 }
 
-                GridMap gridMap = new GridMap(map: grid, textureBindings: binds);
-                scene.AddElement(gridMap);
+                BlockMap BlockMap = new BlockMap(map: grid, textureBindings: binds);
+                scene.AddElement(BlockMap);
             }
 
             // Camera

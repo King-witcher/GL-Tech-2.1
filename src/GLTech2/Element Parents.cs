@@ -49,7 +49,7 @@ namespace GLTech2
         }
 
         /// <summary>
-        /// The scale of this GridMap. Cannot be zero.
+        /// The scale of this BlockMap. Cannot be zero.
         /// </summary>
         public float WorldScale
         {

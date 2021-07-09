@@ -9,7 +9,7 @@ namespace Test
             Debug.ConsoleEnabled = true;
 
             Debug.Pause("Press any key to start.");
-            ExtremePlanes();
+            GridExample();
 
             Debug.Pause("Press any key to close.");
             Debug.Log("Releasing resources...");

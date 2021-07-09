@@ -32,10 +32,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="GLTech2\Elements\GridMap.Bindings.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Test\DemoTextures.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

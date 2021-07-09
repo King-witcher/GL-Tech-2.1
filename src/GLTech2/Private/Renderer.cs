@@ -107,7 +107,7 @@ namespace GLTech2
 
                 // Wall rendering bounds on the screen...
                 int draw_column_start = (int)System.Math.Ceiling(column_start); // Inclusive
-                int draw_column_end = (int)column_end;                          // Exclusive
+                int draw_column_end = (int)System.Math.Ceiling(column_end);                          // Exclusive
 
                 // Which cannot exceed the full screen bounds.
                 if (draw_column_start < 0)

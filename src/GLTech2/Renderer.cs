@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace GLTech2
 {
@@ -308,7 +309,9 @@ namespace GLTech2
                 PostProcess(backBuffer);
 
                 if (DoubleBuffer)
+                {
                     frontBuffer.FastClone(backBuffer);
+                }
                 Behaviour.Frame.EndRender();
 
                 while (controlStopwatch.ElapsedMilliseconds < minframetime)
@@ -327,6 +330,7 @@ namespace GLTech2
             controlThreadRunning = false;
             if (DoubleBuffer)
                 backBuffer.Dispose();
+            return;
         }
 
         private static void LoadScene(Scene scene)

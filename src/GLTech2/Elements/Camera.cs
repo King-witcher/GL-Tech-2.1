@@ -16,10 +16,7 @@ namespace GLTech2
 
         private protected override Vector PositionData
         {
-            get
-            {
-                return unmanaged->position;
-            }
+            get => unmanaged->position;
             set => unmanaged->position = value;
         }
 

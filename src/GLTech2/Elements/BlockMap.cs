@@ -8,7 +8,7 @@ namespace GLTech2.Elements
 	/// Each pixel of the image can be converted into a block of its original color, a block with an especific Texture or nothing.
 	/// </remarks>
 	/// </summary>
-	public partial class GridMap : Element
+	public partial class BlockMap : Element
 	{
 		private protected override Vector PositionData { get; set; } = Vector.Zero;
 		private protected override Vector DirectionData { get; set; } = Vector.Forward;
@@ -16,20 +16,20 @@ namespace GLTech2.Elements
 		private int walls = 0;
 
 		/// <summary>
-		/// How many walls does this GridMap contain.
+		/// How many walls does this BlockMap contain.
 		/// </summary>
 		public int Walls => walls;
 
 		/// <summary>
-		/// Gets a new instance of GridMap based only on a PixelBuffer.
+		/// Gets a new instance of BlockMap based only on a PixelBuffer.
 		/// <remarks>
 		/// Totally black pixels won't be
 		/// </remarks>
 		/// </summary>
 		/// <param name="map">A pixelbuffer that represents each block of the map.</param>
-		public GridMap(PixelBuffer map)
+		public BlockMap(PixelBuffer map)
 		{
-			TextureBindings textures = new TextureBindings();
+			TextureMapper textures = new TextureMapper();
 
 
 			// Gets a new texture if exists; otherwise creates it.
@@ -73,11 +73,11 @@ namespace GLTech2.Elements
 		}
 
 		/// <summary>
-		/// Gets a new instance of GridMap the remaps each color to a given texture.
+		/// Gets a new instance of BlockMap the remaps each color to a given texture.
 		/// </summary>
 		/// <param name="map">The map</param>
 		/// <param name="textureBindings">A hashmap that binds a set of Colors to Textures</param>
-		public GridMap(PixelBuffer map, TextureBindings textureBindings)
+		public BlockMap(PixelBuffer map, TextureMapper textureBindings)
 		{
 			bool blockFree(int column, int line)
 			{

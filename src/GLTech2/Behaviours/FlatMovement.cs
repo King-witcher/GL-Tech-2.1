@@ -7,11 +7,6 @@
     {
         KinematicBody body;
 
-        public FlatMovement()
-        {
-            body = new PointCollider();
-        }
-
         public FlatMovement(KinematicBody body)
         {
             this.body = body;

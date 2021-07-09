@@ -8,19 +8,19 @@ namespace Test
     {
         static void ExtremePlanes()
         {
-            using PixelBuffer gridmapbuf = new PixelBuffer(DemoTextures.Plant);
+            using PixelBuffer BlockMapbuf = new PixelBuffer(DemoTextures.Plant);
             using PixelBuffer texturebuf = new PixelBuffer(DemoTextures.GrayHexagons);
             using PixelBuffer backgroundbuf = new PixelBuffer(DemoTextures.HellSky);
 
             Texture background = new Texture(backgroundbuf);
             Scene scene = new Scene(background);
 
-            // Gridmap
+            // BlockMap
             {
                 Texture tex = new Texture(texturebuf, 0f, 0.03f);
-                GridMap.TextureBindings tb = new GridMap.TextureBindings();
+                BlockMap.TextureMapper tb = new BlockMap.TextureMapper();
                 tb[(0, 0, 0)] = tex;
-                GridMap gm = new GridMap(gridmapbuf, tb);
+                BlockMap gm = new BlockMap(BlockMapbuf, tb);
                 gm.WorldScale = 0.04f;
                 scene.AddElement(gm);
             }
@@ -30,6 +30,7 @@ namespace Test
             {
                 observer.AddBehaviour<MouseLook>();
                 observer.AddBehaviour<DebugPerformanceStats>();
+                observer.AddBehaviour<DebugSceneInfo>();
 
                 KinematicBody kinematicBody = new PointCollider();
                 SoftMovement softMovement = new SoftMovement(kinematicBody);
@@ -41,6 +42,7 @@ namespace Test
 
             Renderer.CaptureMouse = true;
             Renderer.FullScreen = true;
+            Renderer.DoubleBuffer = true;
             Renderer.Start(observer);
         }
     }

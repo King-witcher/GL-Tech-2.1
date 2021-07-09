@@ -156,6 +156,7 @@ namespace GLTech2
             Marshal.FreeHGlobal(Scan0);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void FastClone(PixelBuffer buffer)
         {
             Buffer.MemoryCopy(buffer.uint0, this.uint0, 4 * height * width, 4 * height * width);

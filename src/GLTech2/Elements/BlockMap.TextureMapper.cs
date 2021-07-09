@@ -2,20 +2,20 @@
 
 namespace GLTech2.Elements
 {
-    partial class GridMap
+    partial class BlockMap
     {
         /// <summary>
         /// Represents a list of associations between colors and textures used to remap pixels from a grid to textures.
         /// </summary>
-        public class TextureBindings
+        public class TextureMapper
         {
-            Dictionary<uint, Texture> bindings;
+            Dictionary<uint, Texture> mapper;
 
             /// <summary>
             /// Gets a new instance of TextureBindings.
             /// </summary>
-            public TextureBindings() =>
-                bindings = new Dictionary<uint, Texture>(32);
+            public TextureMapper() =>
+                mapper = new Dictionary<uint, Texture>(32);
 
             /// <summary>
             /// Indexes each Color to its Texture.
@@ -26,10 +26,10 @@ namespace GLTech2.Elements
             {
                 get
                 {
-                    bindings.TryGetValue(color, out Texture texture);
+                    mapper.TryGetValue(color, out Texture texture);
                     return texture;
                 }
-                set => bindings[color] = value;
+                set => mapper[color] = value;
             }
 
             /// <summary>
@@ -38,7 +38,7 @@ namespace GLTech2.Elements
             /// <param name="color">Color</param>
             /// <param name="texture">Texture</param>
             public void Bind(RGB color, Texture texture) =>
-                bindings[color] = texture;
+                mapper[color] = texture;
 
             /// <summary>
             /// Tries to get the Texture bound to a given Color and returns whether the texture was found or not.
@@ -47,7 +47,7 @@ namespace GLTech2.Elements
             /// <param name="texture">The Texture, if found; otherwise, the default value of Texture.</param>
             /// <returns>true if a Texture was found; otherise, false.</returns>
             public bool GetTexture(RGB color, out Texture texture) =>
-                bindings.TryGetValue(color, out texture);
+                mapper.TryGetValue(color, out texture);
         }
     }
 }

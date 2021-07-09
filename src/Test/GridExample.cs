@@ -18,10 +18,10 @@ namespace Test
 
             using Scene scene = new Scene(background);
 
-            // GridMap
+            // BlockMap
             {
                 using PixelBuffer grid = new PixelBuffer(DemoTextures.MapGrid);
-                GridMap.TextureBindings binds = new GridMap.TextureBindings();
+                BlockMap.TextureMapper mapper = new BlockMap.TextureMapper();
                 {
                     Texture bricks = new Texture(
                         buffer: bricks_buffer,
@@ -33,25 +33,30 @@ namespace Test
                         buffer: hexagons_buffer,
                         hrepeat: 2f);
 
-                    binds[(255, 255, 255)] = bricks;
-                    binds[(0, 192, 0)] = wood;
-                    binds[(128, 0, 255)] = hexagons;
+                    mapper[(255, 255, 255)] = bricks;
+                    mapper[(0, 192, 0)] = wood;
+                    mapper[(128, 0, 255)] = hexagons;
                 }
 
-                GridMap gridMap = new GridMap(map: grid, textureBindings: binds);
-                scene.AddElement(gridMap);
+                BlockMap map = new BlockMap(map: grid, textureBindings: mapper);
+                scene.AddElement(map);
             }
 
-            Camera pov = new Camera((5, 5), 180);
-            // Observer
+            Camera camera = new Camera((5, 5), 180);
+            // Camera
             {
-                pov.AddBehaviour<DebugPerformanceStats>();
-                // pov.AddBehaviour<DebugComponents>();
-                pov.AddBehaviour<DebugSceneInfo>();
-                pov.AddBehaviour<FlatMovement>();
-                pov.AddBehaviour(new MouseLook(2.2f));
+                camera.AddBehaviour<DebugPerformanceStats>();
+                camera.AddBehaviour<DebugSceneInfo>();
 
-                scene.AddElement(pov);
+                PointCollider collider = new PointCollider();
+                SoftMovement movement = new SoftMovement(collider);
+                MouseLook mouseLook = new MouseLook(2.2f);
+
+                camera.AddBehaviour(collider);
+                camera.AddBehaviour(movement);
+                camera.AddBehaviour(mouseLook);
+
+                scene.AddElement(camera);
             }
 
             // Renderer customization
@@ -60,11 +65,11 @@ namespace Test
             Renderer.CustomHeight = 900;
             Renderer.FieldOfView = 110f;
             Renderer.ParallelRendering = true;
-            Renderer.DoubleBuffer = false;
+            Renderer.DoubleBuffer = true;
             Renderer.CaptureMouse = true;
 
             // Run!
-            Renderer.Start(pov);
+            Renderer.Start(camera);
         }
     }
 }

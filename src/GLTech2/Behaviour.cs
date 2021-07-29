@@ -4,7 +4,7 @@ using System.Reflection;
 namespace GLTech2
 {
     /// <summary>
-    ///     Represents a behaviour script that can be attached to an element. Similar to MonoBehaviours on Unity3D.
+    ///     Represents a behaviour script that can be attached to an element. Similar to MonoBehaviours from Unity3D.
     /// </summary>
     /// <remarks>
     ///     When a scene starts running, the engine is responsible for finding and executing Start() and Update() method properly.
@@ -31,7 +31,7 @@ namespace GLTech2
         /// </summary>
         protected internal Scene Scene { get => element.scene; }
 
-        // void Start()
+        // Gets the method called void Start()
         private Action start = null;
         internal Action StartAction
         {
@@ -53,7 +53,7 @@ namespace GLTech2
             }
         }
 
-        // void OnFrame()
+        // Gets the method called void OnFrame()
         private Action onFrame = null;
         internal Action OnFrameAction
         {

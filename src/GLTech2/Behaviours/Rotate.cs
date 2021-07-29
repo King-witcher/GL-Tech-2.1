@@ -10,11 +10,9 @@ namespace GLTech2.Behaviours
         /// <summary>
         /// The angular speed the object turns in degrees per second
         /// </summary>
-        public float Speed { get; set; } = 30f;
+        public float AngularSpeed { get; set; } = 30f;
 
-        void OnFrame()
-        {
-            Element.Rotate(Speed * Frame.DeltaTime);
-        }
+        void OnFrame() =>
+            Element.Rotate(AngularSpeed * Frame.DeltaTime);
     }
 }

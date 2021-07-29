@@ -14,20 +14,16 @@ Inheritance diagram for GLTech2.\+Behaviours.\+Debug\+Performance\+Stats\+:\begi
 \doxysubsection*{Properties}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a957d6a7775dd8a6513d43da54e4783b5}\label{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a957d6a7775dd8a6513d43da54e4783b5}} 
-bool {\bfseries Debug\+Frame\+Time} = true\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\item 
-\mbox{\Hypertarget{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a6f72afd98b7553ea4030995b8cb5dd33}\label{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a6f72afd98b7553ea4030995b8cb5dd33}} 
-bool {\bfseries Debug\+Render\+Time} = true\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\item 
-\mbox{\Hypertarget{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a303b1ddf069fa0b92c724fd479275cfb}\label{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a303b1ddf069fa0b92c724fd479275cfb}} 
-bool {\bfseries Debug\+Script\+Time} = true\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\item 
-\mbox{\Hypertarget{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a5cd35c25d51e2aadc795356ae0fac6c2}\label{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a5cd35c25d51e2aadc795356ae0fac6c2}} 
-bool {\bfseries Debug\+Window\+Time} = true\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\item 
-float \mbox{\hyperlink{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a70c8b86365d22a230fbf1a82da887058}{Interval}} = 1f\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\begin{DoxyCompactList}\small\item\em The debug step interval in seconds \end{DoxyCompactList}\end{DoxyCompactItemize}
+bool \mbox{\hyperlink{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a957d6a7775dd8a6513d43da54e4783b5}{Debug\+Frame\+Time}} = true\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Defines whether or not the frame time sould be printed. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a6f72afd98b7553ea4030995b8cb5dd33}{Debug\+Render\+Time}} = true\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Defines whether or not the time to render sould be printed. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a303b1ddf069fa0b92c724fd479275cfb}{Debug\+Script\+Time}} = true\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Defines whether or not the time to run scripts sould be printed. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a5cd35c25d51e2aadc795356ae0fac6c2}{Debug\+Window\+Time}} = true\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Defines whether or not the window\textquotesingle{}s frametime. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a70c8b86365d22a230fbf1a82da887058}{Interval}} = 4f\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The polling interval in seconds. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -36,13 +32,53 @@ Debugs performance stats about the scene.
 
 
 \doxysubsection{Property Documentation}
-\mbox{\Hypertarget{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a70c8b86365d22a230fbf1a82da887058}\label{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a70c8b86365d22a230fbf1a82da887058}} 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a957d6a7775dd8a6513d43da54e4783b5}\label{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a957d6a7775dd8a6513d43da54e4783b5}} 
+\index{GLTech2.Behaviours.DebugPerformanceStats@{GLTech2.Behaviours.DebugPerformanceStats}!DebugFrameTime@{DebugFrameTime}}
+\index{DebugFrameTime@{DebugFrameTime}!GLTech2.Behaviours.DebugPerformanceStats@{GLTech2.Behaviours.DebugPerformanceStats}}
+\doxysubsubsection{\texorpdfstring{DebugFrameTime}{DebugFrameTime}}
+{\footnotesize\ttfamily bool GLTech2.\+Behaviours.\+Debug\+Performance\+Stats.\+Debug\+Frame\+Time = true\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Defines whether or not the frame time sould be printed. 
+
+Note that frame time is different from render time because a frame is considered as the entire cycle of rendering, scripting and controlling. \mbox{\Hypertarget{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a6f72afd98b7553ea4030995b8cb5dd33}\label{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a6f72afd98b7553ea4030995b8cb5dd33}} 
+\index{GLTech2.Behaviours.DebugPerformanceStats@{GLTech2.Behaviours.DebugPerformanceStats}!DebugRenderTime@{DebugRenderTime}}
+\index{DebugRenderTime@{DebugRenderTime}!GLTech2.Behaviours.DebugPerformanceStats@{GLTech2.Behaviours.DebugPerformanceStats}}
+\doxysubsubsection{\texorpdfstring{DebugRenderTime}{DebugRenderTime}}
+{\footnotesize\ttfamily bool GLTech2.\+Behaviours.\+Debug\+Performance\+Stats.\+Debug\+Render\+Time = true\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Defines whether or not the time to render sould be printed. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a303b1ddf069fa0b92c724fd479275cfb}\label{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a303b1ddf069fa0b92c724fd479275cfb}} 
+\index{GLTech2.Behaviours.DebugPerformanceStats@{GLTech2.Behaviours.DebugPerformanceStats}!DebugScriptTime@{DebugScriptTime}}
+\index{DebugScriptTime@{DebugScriptTime}!GLTech2.Behaviours.DebugPerformanceStats@{GLTech2.Behaviours.DebugPerformanceStats}}
+\doxysubsubsection{\texorpdfstring{DebugScriptTime}{DebugScriptTime}}
+{\footnotesize\ttfamily bool GLTech2.\+Behaviours.\+Debug\+Performance\+Stats.\+Debug\+Script\+Time = true\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Defines whether or not the time to run scripts sould be printed. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a5cd35c25d51e2aadc795356ae0fac6c2}\label{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a5cd35c25d51e2aadc795356ae0fac6c2}} 
+\index{GLTech2.Behaviours.DebugPerformanceStats@{GLTech2.Behaviours.DebugPerformanceStats}!DebugWindowTime@{DebugWindowTime}}
+\index{DebugWindowTime@{DebugWindowTime}!GLTech2.Behaviours.DebugPerformanceStats@{GLTech2.Behaviours.DebugPerformanceStats}}
+\doxysubsubsection{\texorpdfstring{DebugWindowTime}{DebugWindowTime}}
+{\footnotesize\ttfamily bool GLTech2.\+Behaviours.\+Debug\+Performance\+Stats.\+Debug\+Window\+Time = true\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Defines whether or not the window\textquotesingle{}s frametime. 
+
+Note that the window won\textquotesingle{}t always render at the same framerate as the engine. \mbox{\Hypertarget{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a70c8b86365d22a230fbf1a82da887058}\label{class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats_a70c8b86365d22a230fbf1a82da887058}} 
 \index{GLTech2.Behaviours.DebugPerformanceStats@{GLTech2.Behaviours.DebugPerformanceStats}!Interval@{Interval}}
 \index{Interval@{Interval}!GLTech2.Behaviours.DebugPerformanceStats@{GLTech2.Behaviours.DebugPerformanceStats}}
 \doxysubsubsection{\texorpdfstring{Interval}{Interval}}
-{\footnotesize\ttfamily float GLTech2.\+Behaviours.\+Debug\+Performance\+Stats.\+Interval = 1f\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+{\footnotesize\ttfamily float GLTech2.\+Behaviours.\+Debug\+Performance\+Stats.\+Interval = 4f\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
 
 
 
-The debug step interval in seconds 
+The polling interval in seconds. 
 

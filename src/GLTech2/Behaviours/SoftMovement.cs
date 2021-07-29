@@ -2,8 +2,11 @@
 namespace GLTech2.Behaviours
 {
     /// <summary>
-    /// Allows the user to move the camera around the map using keyboard input in a quake-like way. May not work as expected yet.
+    /// Allows the user to move the camera around the map using keyboard input in a Quakish way.
     /// </summary>
+    /// <remarks>
+    /// Beta. May not work as expected.
+    /// </remarks>
     public sealed class SoftMovement : Behaviour
     {
         KinematicBody body;

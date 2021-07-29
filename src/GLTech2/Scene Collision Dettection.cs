@@ -3,7 +3,12 @@ namespace GLTech2
 {
     partial class Scene
     {
-        // Provisional; must be optimized
+        /// <summary>
+        /// Gets the first instnace of Collider that collide with the Ray.
+        /// </summary>
+        /// <param name="ray">Ray to test</param>
+        /// <param name="distance">Distance between the ray's initial point and the collision point.</param>
+        /// <returns>The first instnace of Collider that collide with the Ray.</returns>
         public Collider RayCast(Ray ray, out float distance)
         {
             Collider nearest = null;
@@ -22,7 +27,16 @@ namespace GLTech2
             return nearest;
         }
 
-        // Faster, doesn't depend on managed resources.
+        /// <summary>
+        /// Gets information about the closest collision from a Ray.
+        /// </summary>
+        /// <param name="ray">Ray to test</param>
+        /// <param name="distance">Distance between the ray's initial point and the collision point</param>
+        /// <param name="normal">The normal vector from the collision</param>
+        /// <returns>The first instnace of Collider that collide with the Ray.</returns>
+        /// <remarks>
+        /// This method uses unmanaged data, which means it's faster.
+        /// </remarks>
         public unsafe void RayCast(Ray ray, out float distance, out Vector normal)
         {
             ray.direction /= ray.direction.Module;

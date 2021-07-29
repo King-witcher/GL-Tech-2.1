@@ -28,7 +28,7 @@ namespace Test
             // Observer
             Camera observer = new Camera((0, 0));
             {
-                observer.AddBehaviour(new MouseLook(2.2f));
+                observer.AddBehaviour(new MouseRotation(2.2f));
                 observer.AddBehaviour<DebugPerformanceStats>();
                 observer.AddBehaviour<DebugSceneInfo>();
 

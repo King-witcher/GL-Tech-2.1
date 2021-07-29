@@ -1,0 +1,93 @@
+\hypertarget{class_g_l_tech2_1_1_collider}{}\doxysection{GLTech2.\+Collider Class Reference}
+\label{class_g_l_tech2_1_1_collider}\index{GLTech2.Collider@{GLTech2.Collider}}
+
+
+Represents an invisible plane that can be dettected via collision dettection.  
+
+
+Inheritance diagram for GLTech2.\+Collider\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_g_l_tech2_1_1_collider}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_g_l_tech2_1_1_collider_ab35f0d479a184f0d91c324926f91657b}{Collider}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} start, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} end)
+\begin{DoxyCompactList}\small\item\em Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_collider}{Collider}}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_g_l_tech2_1_1_collider_ad73d9244aacd4e49e384f099dd0b10d4}{Test}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}} ray, out float distance)
+\begin{DoxyCompactList}\small\item\em Tests whether a a ray collides or not with this collider. \end{DoxyCompactList}\item 
+override void \mbox{\hyperlink{class_g_l_tech2_1_1_collider_a2313d64ec861716d0e8e87b509475e6b}{Dispose}} ()
+\begin{DoxyCompactList}\small\item\em Releases unmanaged data, if any. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_collider_a31283c478f7d5d7a1a53acfc19177218}\label{class_g_l_tech2_1_1_collider_a31283c478f7d5d7a1a53acfc19177218}} 
+override \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} {\bfseries Position\+Data}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_collider_ae0de6e05c45c50ba85c7004a6e48203e}\label{class_g_l_tech2_1_1_collider_ae0de6e05c45c50ba85c7004a6e48203e}} 
+override \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} {\bfseries Direction\+Data}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents an invisible plane that can be dettected via collision dettection. 
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_collider_ab35f0d479a184f0d91c324926f91657b}\label{class_g_l_tech2_1_1_collider_ab35f0d479a184f0d91c324926f91657b}} 
+\index{GLTech2.Collider@{GLTech2.Collider}!Collider@{Collider}}
+\index{Collider@{Collider}!GLTech2.Collider@{GLTech2.Collider}}
+\doxysubsubsection{\texorpdfstring{Collider()}{Collider()}}
+{\footnotesize\ttfamily GLTech2.\+Collider.\+Collider (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{start,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{end }\end{DoxyParamCaption})}
+
+
+
+Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_collider}{Collider}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start} & Inicial point\\
+\hline
+{\em end} & Final point\\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_collider_a2313d64ec861716d0e8e87b509475e6b}\label{class_g_l_tech2_1_1_collider_a2313d64ec861716d0e8e87b509475e6b}} 
+\index{GLTech2.Collider@{GLTech2.Collider}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!GLTech2.Collider@{GLTech2.Collider}}
+\doxysubsubsection{\texorpdfstring{Dispose()}{Dispose()}}
+{\footnotesize\ttfamily override void GLTech2.\+Collider.\+Dispose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Releases unmanaged data, if any. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_g_l_tech2_1_1_element_a0c1d09747a9346f7719f32c4ed0b670c}{GLTech2.\+Element}}.
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_collider_ad73d9244aacd4e49e384f099dd0b10d4}\label{class_g_l_tech2_1_1_collider_ad73d9244aacd4e49e384f099dd0b10d4}} 
+\index{GLTech2.Collider@{GLTech2.Collider}!Test@{Test}}
+\index{Test@{Test}!GLTech2.Collider@{GLTech2.Collider}}
+\doxysubsubsection{\texorpdfstring{Test()}{Test()}}
+{\footnotesize\ttfamily bool GLTech2.\+Collider.\+Test (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}}}]{ray,  }\item[{out float}]{distance }\end{DoxyParamCaption})}
+
+
+
+Tests whether a a ray collides or not with this collider. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ray} & A ray to test collision\\
+\hline
+{\em distance} & The distance beetween (idk how to write) the ray\textquotesingle{}s initial point and the collision point\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}

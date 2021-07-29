@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace GLTech2
 {
     /// <summary>
-    ///     Provides an interface for printing text on the screen.
+    /// Provides an interface for printing text on the screen.
     /// </summary>
     public static class Debug
     {

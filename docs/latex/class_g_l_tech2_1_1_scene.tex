@@ -14,6 +14,12 @@ Inheritance diagram for GLTech2.\+Scene\+:\begin{figure}[H]
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_scene_a3eebee399dba51e5e3ec66de1600b22b}\label{class_g_l_tech2_1_1_scene_a3eebee399dba51e5e3ec66de1600b22b}} 
+\mbox{\hyperlink{class_g_l_tech2_1_1_collider}{Collider}} {\bfseries Ray\+Cast} (\mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}} ray, out float distance)
+\item 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_scene_ad9d4a5193beda04a8ced8002af4cae3a}\label{class_g_l_tech2_1_1_scene_ad9d4a5193beda04a8ced8002af4cae3a}} 
+unsafe void {\bfseries Ray\+Cast} (\mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}} ray, out float distance, out \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} normal)
+\item 
 \mbox{\hyperlink{class_g_l_tech2_1_1_scene_a8208fe98ce0ec42750545bea9e361c0c}{Scene}} ()
 \begin{DoxyCompactList}\small\item\em Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{class_g_l_tech2_1_1_scene_a426bcf862efb15d1a0e20af840024d8f}{Scene}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} background)
@@ -29,9 +35,11 @@ void \mbox{\hyperlink{class_g_l_tech2_1_1_scene_a1c7f731747698f69e67516ed3d256a1
 \doxysubsection*{Properties}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_g_l_tech2_1_1_observer}{Observer}} \mbox{\hyperlink{class_g_l_tech2_1_1_scene_a4c2a6432de7960baaf06a3b973b997d7}{Active\+Observer}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\begin{DoxyCompactList}\small\item\em Gets and sets the current observer from where the scene will be rendered. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{class_g_l_tech2_1_1_scene_a070db74209163f6b79d46d4e72c98a14}{Wall\+Count}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+int \mbox{\hyperlink{class_g_l_tech2_1_1_scene_acfedead0b7c7b870dc01ffdacaafdf12}{Collider\+Count}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets how many walls the scene fits. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_g_l_tech2_1_1_scene_aeb7fa0a36b76613edeec237951dbaaf7}{Element\+Count}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets how many walls the scene fits. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_g_l_tech2_1_1_scene_a305d022c762010b106e156544b5a6308}{Plane\+Count}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Gets how many walls the scene fits. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} \mbox{\hyperlink{class_g_l_tech2_1_1_scene_ae196cc715e79b19b9426e8e3a8e54819}{Background}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Gets and sets the background texture of the \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -65,7 +73,7 @@ Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}.
 
 
 \begin{DoxyParams}{Parameters}
-{\em background} & Background material rendered behind everything\\
+{\em background} & Background texture rendered behind everything\\
 \hline
 \end{DoxyParams}
 
@@ -133,16 +141,6 @@ Performs application-\/defined tasks associated with freeing, releasing, or rese
 
 
 \doxysubsection{Property Documentation}
-\mbox{\Hypertarget{class_g_l_tech2_1_1_scene_a4c2a6432de7960baaf06a3b973b997d7}\label{class_g_l_tech2_1_1_scene_a4c2a6432de7960baaf06a3b973b997d7}} 
-\index{GLTech2.Scene@{GLTech2.Scene}!ActiveObserver@{ActiveObserver}}
-\index{ActiveObserver@{ActiveObserver}!GLTech2.Scene@{GLTech2.Scene}}
-\doxysubsubsection{\texorpdfstring{ActiveObserver}{ActiveObserver}}
-{\footnotesize\ttfamily \mbox{\hyperlink{class_g_l_tech2_1_1_observer}{Observer}} GLTech2.\+Scene.\+Active\+Observer\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
-
-
-
-Gets and sets the current observer from where the scene will be rendered. 
-
 \mbox{\Hypertarget{class_g_l_tech2_1_1_scene_ae196cc715e79b19b9426e8e3a8e54819}\label{class_g_l_tech2_1_1_scene_ae196cc715e79b19b9426e8e3a8e54819}} 
 \index{GLTech2.Scene@{GLTech2.Scene}!Background@{Background}}
 \index{Background@{Background}!GLTech2.Scene@{GLTech2.Scene}}
@@ -153,11 +151,31 @@ Gets and sets the current observer from where the scene will be rendered.
 
 Gets and sets the background texture of the \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}. 
 
-\mbox{\Hypertarget{class_g_l_tech2_1_1_scene_a070db74209163f6b79d46d4e72c98a14}\label{class_g_l_tech2_1_1_scene_a070db74209163f6b79d46d4e72c98a14}} 
-\index{GLTech2.Scene@{GLTech2.Scene}!WallCount@{WallCount}}
-\index{WallCount@{WallCount}!GLTech2.Scene@{GLTech2.Scene}}
-\doxysubsubsection{\texorpdfstring{WallCount}{WallCount}}
-{\footnotesize\ttfamily int GLTech2.\+Scene.\+Wall\+Count\hspace{0.3cm}{\ttfamily [get]}}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_scene_acfedead0b7c7b870dc01ffdacaafdf12}\label{class_g_l_tech2_1_1_scene_acfedead0b7c7b870dc01ffdacaafdf12}} 
+\index{GLTech2.Scene@{GLTech2.Scene}!ColliderCount@{ColliderCount}}
+\index{ColliderCount@{ColliderCount}!GLTech2.Scene@{GLTech2.Scene}}
+\doxysubsubsection{\texorpdfstring{ColliderCount}{ColliderCount}}
+{\footnotesize\ttfamily int GLTech2.\+Scene.\+Collider\+Count\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Gets how many walls the scene fits. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_scene_aeb7fa0a36b76613edeec237951dbaaf7}\label{class_g_l_tech2_1_1_scene_aeb7fa0a36b76613edeec237951dbaaf7}} 
+\index{GLTech2.Scene@{GLTech2.Scene}!ElementCount@{ElementCount}}
+\index{ElementCount@{ElementCount}!GLTech2.Scene@{GLTech2.Scene}}
+\doxysubsubsection{\texorpdfstring{ElementCount}{ElementCount}}
+{\footnotesize\ttfamily int GLTech2.\+Scene.\+Element\+Count\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Gets how many walls the scene fits. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_scene_a305d022c762010b106e156544b5a6308}\label{class_g_l_tech2_1_1_scene_a305d022c762010b106e156544b5a6308}} 
+\index{GLTech2.Scene@{GLTech2.Scene}!PlaneCount@{PlaneCount}}
+\index{PlaneCount@{PlaneCount}!GLTech2.Scene@{GLTech2.Scene}}
+\doxysubsubsection{\texorpdfstring{PlaneCount}{PlaneCount}}
+{\footnotesize\ttfamily int GLTech2.\+Scene.\+Plane\+Count\hspace{0.3cm}{\ttfamily [get]}}
 
 
 

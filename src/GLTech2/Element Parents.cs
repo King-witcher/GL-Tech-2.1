@@ -220,6 +220,15 @@ namespace GLTech2
             }
         }
 
+        /// <summary>
+        /// Rotate the object a specified amount.
+        /// </summary>
+        /// <param name="rotation">angle in degrees</param>
+        public void Rotate(float rotation)
+        {
+            RelativeRotation += rotation;
+        }
+
         // Update the real components of the element in the scene based on its reference point and its components
         // relative to the parent.
         // This method is called always when either the reference element or this element tries to change it's position.

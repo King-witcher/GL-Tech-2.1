@@ -6,14 +6,14 @@ namespace GLTech2
     public partial class Behaviour
     {
         /// <summary>
-        ///     Provides an interface to handle keyboard inputs.
+        /// Provides an interface to handle keyboard inputs.
         /// </summary>
         protected internal static class Keyboard
         {
             static LinkedList<Key> Keys = new LinkedList<Key>();
 
             /// <summary>
-            ///     Checks if a specified key is pressed.
+            /// Checks if a specified key is pressed.
             /// </summary>
             /// <param name="key">Key</param>
             /// <returns>true if the key is pressed; otherwise, false</returns>
@@ -22,7 +22,7 @@ namespace GLTech2
             public static event Action<Key> OnKeyUp;
 
             /// <summary>
-            ///     Occurs when a key is pressed.
+            /// Occurs when a key is pressed.
             /// </summary>
             /// <param name="key">Key that was pressed</param>
             internal static void KeyDown(Key key)

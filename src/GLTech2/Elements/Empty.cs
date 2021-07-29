@@ -1,8 +1,11 @@
 ﻿namespace GLTech2
 {
     /// <summary>
-    /// Represents and empty element that can basically be used to parent groups of elements.
+    /// Represents and empty element that does nothing.
     /// </summary>
+    /// <remarks>
+    /// This exists basically to allow the user to parent custom groups of elements.
+    /// </remarks>
     public sealed class Empty : Element
     {
         /// <summary>
@@ -20,9 +23,6 @@
         /// </summary>
         /// <param name="x">The x cordinate</param>
         /// <param name="y">The y cordinate</param>
-        public Empty(float x, float y) : this(new Vector(x, y))
-        {
-
-        }
+        public Empty(float x, float y) : this(new Vector(x, y)) { }
     }
 }

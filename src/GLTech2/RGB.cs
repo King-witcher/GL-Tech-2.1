@@ -26,6 +26,12 @@ namespace GLTech2
         [FieldOffset(3)]
         private byte a;
 
+        /// <summary>
+        /// Gets a new instance of RGB
+        /// </summary>
+        /// <param name="red">Red component</param>
+        /// <param name="green">Green component</param>
+        /// <param name="blue">Blue component</param>
         public RGB(byte red, byte green, byte blue)
 		{
             rgb = 0;

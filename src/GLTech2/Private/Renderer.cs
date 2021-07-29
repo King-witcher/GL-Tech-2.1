@@ -3,77 +3,12 @@ using System.Threading.Tasks;
 
 namespace GLTech2
 {
+    // This is the part really renders.
     partial class Renderer
     {
-        private unsafe static void DrawPlanesLegacy(PixelBuffer target, SScene* scene)        // Must be changed
-        {
-            //Caching frequently used values.
-            uint* buffer = target.uint0;
-            int width = target.width;
-            int height = target.height;
-            Texture background = scene->background;
-
-            if (ParallelRendering)
-            {
-                Parallel.For(0, width, Loop);
-            }
-            else
-                for (int i = 0; i < width; i++)
-                    Loop(i);
-
-            void Loop(int ray_id)
-            //for (int ray_id = 0; ray_id < rendererData->bitmap_width; ray_id++)
-            {
-                //Caching
-                float ray_cos = cache->cosines[ray_id];
-                float ray_angle = cache->angles[ray_id] + scene->camera->rotation;
-                Ray ray = new Ray(scene->camera->position, ray_angle);
-
-                //Cast the ray towards every wall.
-                SPlane* nearest = scene->NearestPlane(ray, out float nearest_dist, out float nearest_ratio);
-                if (nearest_ratio != 2f)
-                {
-                    float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); //Wall column size in pixels
-                    float fullColumnRatio = height / columnHeight;
-                    float topIndex = -(fullColumnRatio - 1f) / 2f;
-                    for (int line = 0; line < height; line++)
-                    {
-                        //Critical performance impact.
-                        float vratio = topIndex + fullColumnRatio * line / height;
-                        if (vratio < 0f || vratio >= 1f)
-                        {
-                            //PURPOSELY REPEATED CODE!
-                            float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
-                            float screenVratio = (float)line / height;
-                            float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
-                            uint color = background.MapPixel(background_hratio, background_vratio);
-                            buffer[width * line + ray_id] = color;
-                        }
-                        else
-                        {
-                            uint pixel = nearest->texture.MapPixel(nearest_ratio, vratio);
-                            buffer[width * line + ray_id] = pixel;
-                        }
-                    }
-                }
-                else
-                {
-                    for (int line = 0; line < height; line++)
-                    {
-                        //Critical performance impact.
-                        //PURPOSELY REPEATED CODE!
-                        float background_hratio = ray_angle / 360 + 1;
-                        float screenVratio = (float)line / height;
-                        float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
-                        uint color = background.MapPixel(background_hratio, background_vratio);
-                        buffer[width * line + ray_id] = color;
-                    }
-                }
-            }
-        }
-
         private unsafe static void DrawPlanes(PixelBuffer screen, SScene* scene)
         {
+            // Checks if the code should be run in all cores or just one.
             if (ParallelRendering)
                 Parallel.For(0, screen.width, DrawColumn);
             else
@@ -146,6 +81,75 @@ namespace GLTech2
                     float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
                     uint color = background.MapPixel(background_hratio, background_vratio);
                     buffer[screen.width * line + screen_column] = color;
+                }
+            }
+        }
+
+        // This method is not used anymore.
+        private unsafe static void DrawPlanesLegacy(PixelBuffer target, SScene* scene)        // Must be changed
+        {
+            // Caching frequently used values.
+            uint* buffer = target.uint0;
+            int width = target.width;
+            int height = target.height;
+            Texture background = scene->background;
+
+            // 
+            if (ParallelRendering)
+            {
+                Parallel.For(0, width, Loop);
+            }
+            else
+                for (int i = 0; i < width; i++)
+                    Loop(i);
+
+            void Loop(int ray_id)
+            //for (int ray_id = 0; ray_id < rendererData->bitmap_width; ray_id++)
+            {
+                // Caching
+                float ray_cos = cache->cosines[ray_id];
+                float ray_angle = cache->angles[ray_id] + scene->camera->rotation;
+                Ray ray = new Ray(scene->camera->position, ray_angle);
+
+                // Cast the ray towards every wall.
+                SPlane* nearest = scene->NearestPlane(ray, out float nearest_dist, out float nearest_ratio);
+                if (nearest_ratio != 2f)
+                {
+                    float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); //Wall column size in pixels
+                    float fullColumnRatio = height / columnHeight;
+                    float topIndex = -(fullColumnRatio - 1f) / 2f;
+                    for (int line = 0; line < height; line++)
+                    {
+                        // Critical performance impact.
+                        float vratio = topIndex + fullColumnRatio * line / height;
+                        if (vratio < 0f || vratio >= 1f)
+                        {
+                            //PURPOSELY REPEATED CODE!
+                            float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
+                            float screenVratio = (float)line / height;
+                            float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
+                            uint color = background.MapPixel(background_hratio, background_vratio);
+                            buffer[width * line + ray_id] = color;
+                        }
+                        else
+                        {
+                            uint pixel = nearest->texture.MapPixel(nearest_ratio, vratio);
+                            buffer[width * line + ray_id] = pixel;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int line = 0; line < height; line++)
+                    {
+                        //Critical performance impact.
+                        //PURPOSELY REPEATED CODE!
+                        float background_hratio = ray_angle / 360 + 1;
+                        float screenVratio = (float)line / height;
+                        float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
+                        uint color = background.MapPixel(background_hratio, background_vratio);
+                        buffer[width * line + ray_id] = color;
+                    }
                 }
             }
         }

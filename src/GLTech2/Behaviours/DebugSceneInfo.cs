@@ -1,7 +1,7 @@
 ﻿namespace GLTech2.Behaviours
 {
     /// <summary>
-    /// Debugs once how many walls are in the scene and then stops.
+    /// Debugs all info (elements, planes, colliders, etc.) about the corresponding scene on start.
     /// </summary>
     public class DebugSceneInfo : Behaviour
     {

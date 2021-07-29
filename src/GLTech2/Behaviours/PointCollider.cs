@@ -2,8 +2,14 @@
 
 namespace GLTech2.Behaviours
 {
+    /// <summary>
+    /// An initial implementation for KinematicBody that allows an object to respect collision behaviors.
+    /// </summary>
     class PointCollider : KinematicBody
     {
+        /// <summary>
+        /// Determines whether the object should or not respect collisions.
+        /// </summary>
         public bool HandleCollisions { get; set; } = true;
 
         public override void Accelerate(Vector direction)
@@ -33,6 +39,7 @@ namespace GLTech2.Behaviours
             Element.WorldPosition += Velocity * Frame.DeltaTime;
         }
 
+        // Esse método faz exatamente o que você sugeriu, professor =]
         private void ClipCollisions()
         {
             if (Speed == 0)

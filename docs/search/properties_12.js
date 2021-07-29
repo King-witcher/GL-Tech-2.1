@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['version_342',['Version',['../class_g_l_tech2_1_1_version_data.html#aa7ba4fd4ab1144373a31209bb22bbe56',1,'GLTech2::VersionData']]]
+  ['x_375',['X',['../struct_g_l_tech2_1_1_vector.html#a604f8fb01180a05b964b7621d87e200a',1,'GLTech2::Vector']]]
 ];

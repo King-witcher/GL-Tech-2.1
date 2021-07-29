@@ -26,7 +26,7 @@ namespace Test
             // Pivot
             {
                 Empty pivot = new Empty(x: 0, y: 0.2868f);
-                pivot.AddBehaviour(new Rotate { Speed = -20f });
+                pivot.AddBehaviour(new Rotate { AngularSpeed = -20f });
 
                 // Square
                 {
@@ -41,7 +41,7 @@ namespace Test
                         radius: .354f,
                         texture: tex);
 
-                    e.AddBehaviour(new Rotate { Speed = 180f });
+                    e.AddBehaviour(new Rotate { AngularSpeed = 180f });
                     e.Parent = pivot;
                 }
 
@@ -58,7 +58,7 @@ namespace Test
                         radius: .318f,
                         texture: tex);
 
-                    e.AddBehaviour(new Rotate { Speed = 180f });
+                    e.AddBehaviour(new Rotate { AngularSpeed = 180f });
                     e.Parent = pivot;
                 }
 
@@ -75,7 +75,7 @@ namespace Test
                         radius: .385f,
                         texture: tex);
 
-                    e.AddBehaviour(new Rotate { Speed = 180f });
+                    e.AddBehaviour(new Rotate { AngularSpeed = 180f });
                     e.Parent = pivot;
                 }
 
@@ -104,7 +104,7 @@ namespace Test
 
                 // pov.AddBehaviour<DebugPosition>();
                 pov.AddBehaviour<DebugPerformanceStats>();
-                pov.AddBehaviour(new MouseLook(2.2f));
+                pov.AddBehaviour(new MouseRotation(2.2f));
 
                 scene.AddElement(pov);
             }

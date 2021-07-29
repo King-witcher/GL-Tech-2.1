@@ -11,17 +11,25 @@ Inheritance diagram for GLTech2.\+Behaviours.\+Flat\+Movement\+:\begin{figure}[H
 \includegraphics[height=2.000000cm]{class_g_l_tech2_1_1_behaviours_1_1_flat_movement}
 \end{center}
 \end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_a733bcb1ca689a9ea0fa2a34fb2cf05f7}\label{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_a733bcb1ca689a9ea0fa2a34fb2cf05f7}} 
+{\bfseries Flat\+Movement} (\mbox{\hyperlink{class_g_l_tech2_1_1_behaviours_1_1_kinematic_body}{Kinematic\+Body}} body)
+\end{DoxyCompactItemize}
 \doxysubsection*{Properties}
 \begin{DoxyCompactItemize}
 \item 
+bool \mbox{\hyperlink{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_af97b6ed8908a5ca155f90dc2d7ab6c7b}{Handle\+Collisions}} = true\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Defines whether the script should or not treat collisions while moving. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_a00d9ca2fedd75d70a9fcf204cb373f64}{Always\+Run}} = true\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\begin{DoxyCompactList}\small\item\em Defines whether the camera moves, by default, in the run or walk speed. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Defines whether the element moves, by default, in the run or walk speed. \end{DoxyCompactList}\item 
 float \mbox{\hyperlink{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_a83c9e63d244341217cae6803703d81c0}{Walk\+Speed}} = 0.\+75f\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\begin{DoxyCompactList}\small\item\em The camera slower speed \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em The element slower speed \end{DoxyCompactList}\item 
 float \mbox{\hyperlink{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_a4e59eaa1afc362a089b5d07f9e9a48d4}{Run\+Speed}} = 2.\+5f\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\begin{DoxyCompactList}\small\item\em The camera faster speed \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em The element faster speed \end{DoxyCompactList}\item 
 float \mbox{\hyperlink{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_a491c62d88a5cf1e52a7f459f92b3934f}{Turn\+Speed}} = 90f\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\begin{DoxyCompactList}\small\item\em The angular speed which the camera turns in degrees per second \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em The angular speed which the element turns in degrees per second \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{Key}} \mbox{\hyperlink{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_a24780720801f5d54663b0a866ada93fc}{Step\+Forward}} = Key.\+W\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em The key bound to forward movement \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespace_g_l_tech2_a1244e7efde07ae6c1d25dcedea54653e}{Key}} \mbox{\hyperlink{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_a250a66210606cff4f9580da357df62a0}{Step\+Back}} = Key.\+S\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
@@ -52,7 +60,7 @@ Allows the user to move the camera around the map using keyboard input.
 
 
 
-Defines whether the camera moves, by default, in the run or walk speed. 
+Defines whether the element moves, by default, in the run or walk speed. 
 
 \mbox{\Hypertarget{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_a3f92db846d0da3f97513619d8ea4b73c}\label{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_a3f92db846d0da3f97513619d8ea4b73c}} 
 \index{GLTech2.Behaviours.FlatMovement@{GLTech2.Behaviours.FlatMovement}!ChangeRun\_Walk@{ChangeRun\_Walk}}
@@ -64,6 +72,16 @@ Defines whether the camera moves, by default, in the run or walk speed.
 
 The key that changes between walk and run speed 
 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_af97b6ed8908a5ca155f90dc2d7ab6c7b}\label{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_af97b6ed8908a5ca155f90dc2d7ab6c7b}} 
+\index{GLTech2.Behaviours.FlatMovement@{GLTech2.Behaviours.FlatMovement}!HandleCollisions@{HandleCollisions}}
+\index{HandleCollisions@{HandleCollisions}!GLTech2.Behaviours.FlatMovement@{GLTech2.Behaviours.FlatMovement}}
+\doxysubsubsection{\texorpdfstring{HandleCollisions}{HandleCollisions}}
+{\footnotesize\ttfamily bool GLTech2.\+Behaviours.\+Flat\+Movement.\+Handle\+Collisions = true\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Defines whether the script should or not treat collisions while moving. 
+
 \mbox{\Hypertarget{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_a4e59eaa1afc362a089b5d07f9e9a48d4}\label{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_a4e59eaa1afc362a089b5d07f9e9a48d4}} 
 \index{GLTech2.Behaviours.FlatMovement@{GLTech2.Behaviours.FlatMovement}!RunSpeed@{RunSpeed}}
 \index{RunSpeed@{RunSpeed}!GLTech2.Behaviours.FlatMovement@{GLTech2.Behaviours.FlatMovement}}
@@ -72,7 +90,7 @@ The key that changes between walk and run speed
 
 
 
-The camera faster speed 
+The element faster speed 
 
 \mbox{\Hypertarget{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_a250a66210606cff4f9580da357df62a0}\label{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_a250a66210606cff4f9580da357df62a0}} 
 \index{GLTech2.Behaviours.FlatMovement@{GLTech2.Behaviours.FlatMovement}!StepBack@{StepBack}}
@@ -142,7 +160,7 @@ The key bound to turn right
 
 
 
-The angular speed which the camera turns in degrees per second 
+The angular speed which the element turns in degrees per second 
 
 \mbox{\Hypertarget{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_a83c9e63d244341217cae6803703d81c0}\label{class_g_l_tech2_1_1_behaviours_1_1_flat_movement_a83c9e63d244341217cae6803703d81c0}} 
 \index{GLTech2.Behaviours.FlatMovement@{GLTech2.Behaviours.FlatMovement}!WalkSpeed@{WalkSpeed}}
@@ -152,5 +170,5 @@ The angular speed which the camera turns in degrees per second
 
 
 
-The camera slower speed 
+The element slower speed 
 

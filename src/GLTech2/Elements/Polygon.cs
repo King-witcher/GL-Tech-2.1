@@ -7,6 +7,7 @@ namespace GLTech2.Elements
     /// </summary>
     public class Polygon : Element
     {
+        // The reason behind this is SPAGUETTI. I must change as quick as possible.
         private protected override Vector PositionData { get; set; } = Vector.Zero;
         private protected override Vector DirectionData { get; set; } = Vector.Forward;
 

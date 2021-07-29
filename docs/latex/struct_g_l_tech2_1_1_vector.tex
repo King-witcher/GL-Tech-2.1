@@ -22,7 +22,7 @@ float \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a4c035d7086f7d5d05316e7dc54db
 \begin{DoxyCompactList}\small\item\em Gets the euclidian distance to another vector. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_ac8c1ac6f1f27f91b1d68a7433ea2dc9d}{Projection}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} origin, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} normal)
 \begin{DoxyCompactList}\small\item\em Creates a new instance of vector that represents it\textquotesingle{}s components in a different cartisian axis system. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a2e31490a41f700cce4d9913ad2a8e755}{As\+Projection\+Of}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} origin, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} normal)
+\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_aedd6a76845c993d2b14ae4bd1339a408}{Disprojection}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} origin, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} normal)
 \begin{DoxyCompactList}\small\item\em Gets a new instance of vector that has the actual values of a vector as if it was a projection on a different cartesian system. See \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} Projection (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}). \end{DoxyCompactList}\item 
 override string \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a4e746a7ea0c162636a2604ff63640129}{To\+String}} ()
 \begin{DoxyCompactList}\small\item\em Returns a string that represents the current object. \end{DoxyCompactList}\item 
@@ -74,7 +74,7 @@ float \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a5f23be00b8e83391bc50c9e64ad7
 \begin{DoxyCompactList}\small\item\em Gets and sets the angle, in degrees, of the vector, approximately preserving it\textquotesingle{}s angle. \end{DoxyCompactList}\item 
 float \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a4fffc364f183af3bc4dcaad5d464a8ac}{Module}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Gets and sets the module of the vector, approximately preserving its module. \end{DoxyCompactList}\item 
-static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a19e5c5e18b704bff60a794aeeeed351b}{Origin}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a0c0a939106d95dcfeea450fa31eefb29}{Zero}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Gets the vector that is at the origin of the bidimensional space. \end{DoxyCompactList}\item 
 static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_aa83c6eeb088131b6ba470398a2bd2c43}{Forward}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Equivalent to new \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} (0, 1); \end{DoxyCompactList}\item 
@@ -129,11 +129,11 @@ Angle conventions are such that angle 0 has (x = 0, y = 1) components and angle 
 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a2e31490a41f700cce4d9913ad2a8e755}\label{struct_g_l_tech2_1_1_vector_a2e31490a41f700cce4d9913ad2a8e755}} 
-\index{GLTech2.Vector@{GLTech2.Vector}!AsProjectionOf@{AsProjectionOf}}
-\index{AsProjectionOf@{AsProjectionOf}!GLTech2.Vector@{GLTech2.Vector}}
-\doxysubsubsection{\texorpdfstring{AsProjectionOf()}{AsProjectionOf()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+As\+Projection\+Of (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{origin,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{normal }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_aedd6a76845c993d2b14ae4bd1339a408}\label{struct_g_l_tech2_1_1_vector_aedd6a76845c993d2b14ae4bd1339a408}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!Disprojection@{Disprojection}}
+\index{Disprojection@{Disprojection}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{Disprojection()}{Disprojection()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+Disprojection (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{origin,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{normal }\end{DoxyParamCaption})}
 
 
 
@@ -515,17 +515,7 @@ Equivalent to new \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} (-\/1, 
 
 Gets and sets the module of the vector, approximately preserving its module. 
 
-Modifying the module of a vector is equivalent to multiplying the original vector by a certain factor. \mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a19e5c5e18b704bff60a794aeeeed351b}\label{struct_g_l_tech2_1_1_vector_a19e5c5e18b704bff60a794aeeeed351b}} 
-\index{GLTech2.Vector@{GLTech2.Vector}!Origin@{Origin}}
-\index{Origin@{Origin}!GLTech2.Vector@{GLTech2.Vector}}
-\doxysubsubsection{\texorpdfstring{Origin}{Origin}}
-{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+Origin\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}
-
-
-
-Gets the vector that is at the origin of the bidimensional space. 
-
-\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a723293e746b71287a2553d8e967218e6}\label{struct_g_l_tech2_1_1_vector_a723293e746b71287a2553d8e967218e6}} 
+Modifying the module of a vector is equivalent to multiplying the original vector by a certain factor. \mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a723293e746b71287a2553d8e967218e6}\label{struct_g_l_tech2_1_1_vector_a723293e746b71287a2553d8e967218e6}} 
 \index{GLTech2.Vector@{GLTech2.Vector}!Right@{Right}}
 \index{Right@{Right}!GLTech2.Vector@{GLTech2.Vector}}
 \doxysubsubsection{\texorpdfstring{Right}{Right}}
@@ -554,4 +544,14 @@ Gets and sets the X cordinate of the vector.
 
 
 Gets and sets the Y cordinate of the vector. 
+
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a0c0a939106d95dcfeea450fa31eefb29}\label{struct_g_l_tech2_1_1_vector_a0c0a939106d95dcfeea450fa31eefb29}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!Zero@{Zero}}
+\index{Zero@{Zero}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{Zero}{Zero}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+Zero\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}
+
+
+
+Gets the vector that is at the origin of the bidimensional space. 
 

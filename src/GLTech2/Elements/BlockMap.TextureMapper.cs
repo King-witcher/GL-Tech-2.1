@@ -9,6 +9,7 @@ namespace GLTech2.Elements
         /// </summary>
         public class TextureMapper
         {
+            // Fiz isso pra que o usuário seja capaz de programar utilizando somente a minha biblioteca, mas ainda posso otimizar o funcionamento disso futuramente, implementando na mão.
             Dictionary<uint, Texture> mapper;
 
             /// <summary>

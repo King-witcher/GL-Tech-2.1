@@ -162,7 +162,7 @@ namespace Test
             {
                 camera.AddBehaviour<DebugPerformanceStats>();
                 camera.AddBehaviour<DebugSceneInfo>();
-                camera.AddBehaviour(new MouseLook(2.2f));
+                camera.AddBehaviour(new MouseRotation(2.2f));
 
                 PointCollider pc = new PointCollider();
                 camera.AddBehaviour(pc);

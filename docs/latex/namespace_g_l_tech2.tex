@@ -4,18 +4,32 @@
 \begin{DoxyCompactItemize}
 \item 
 class \mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}}
-\begin{DoxyCompactList}\small\item\em Represents a behaviour script that can be attached to an element. Similar to Mono\+Behaviours on Unity3D. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Represents a behaviour script that can be attached to an element. Similar to Mono\+Behaviours from Unity3D. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{class_g_l_tech2_1_1_debug}{Debug}}
 \begin{DoxyCompactList}\small\item\em Provides an interface for printing text on the screen. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}}
 \begin{DoxyCompactList}\small\item\em Represents an element that can be part of a \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}. \end{DoxyCompactList}\item 
-class \mbox{\hyperlink{class_g_l_tech2_1_1_empty}{Empty}}
-\begin{DoxyCompactList}\small\item\em Represents and empty element that can basically be used to parent groups of elements. \end{DoxyCompactList}\item 
-struct {\bfseries Observer\+Data}
-\item 
-class \mbox{\hyperlink{class_g_l_tech2_1_1_observer}{Observer}}
+class \mbox{\hyperlink{class_g_l_tech2_1_1_camera}{Camera}}
 \begin{DoxyCompactList}\small\item\em Represents a point of view from which the \mbox{\hyperlink{class_g_l_tech2_1_1_renderer}{Renderer}} can render a scene. \end{DoxyCompactList}\item 
-class \mbox{\hyperlink{class_g_l_tech2_1_1_physical_plane}{Physical\+Plane}}
+class \mbox{\hyperlink{class_g_l_tech2_1_1_collider}{Collider}}
+\begin{DoxyCompactList}\small\item\em Represents an invisible plane that can be dettected via collision dettection. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_g_l_tech2_1_1_empty}{Empty}}
+\begin{DoxyCompactList}\small\item\em Represents and empty element that does nothing. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_g_l_tech2_1_1_plane}{Plane}}
+\begin{DoxyCompactList}\small\item\em Represents a vertical plane on the map. \end{DoxyCompactList}\item 
+struct {\bfseries Render\+Cache}
+\begin{DoxyCompactList}\small\item\em Stores important cache data to the renderer that can be shared with native modes. \end{DoxyCompactList}\item 
+struct {\bfseries SCamera}
+\item 
+struct {\bfseries SCollider}
+\item 
+struct {\bfseries SFloor}
+\item 
+struct {\bfseries SPlane}
+\item 
+struct {\bfseries SScene}
+\item 
+struct {\bfseries SSprite}
 \item 
 struct \mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}}
 \begin{DoxyCompactList}\small\item\em Represents a 32-\/bits-\/per-\/pixel pixel buffer. \end{DoxyCompactList}\item 
@@ -25,12 +39,12 @@ class {\bfseries Action\+List}
 \item 
 class {\bfseries Display}
 \item 
-struct {\bfseries Ray}
-\item 
 class \mbox{\hyperlink{class_g_l_tech2_1_1_renderer}{Renderer}}
 \begin{DoxyCompactList}\small\item\em Provides an interface to render scenes and output the video in a window. \end{DoxyCompactList}\item 
 class {\bfseries Utilities}
 \item 
+struct \mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}}
+\begin{DoxyCompactList}\small\item\em Represents a ray. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}}
 \begin{DoxyCompactList}\small\item\em Represents a 32 bits \mbox{\hyperlink{struct_g_l_tech2_1_1_r_g_b}{RGB}} color. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}
@@ -39,20 +53,10 @@ class {\bfseries Sprite}
 \item 
 struct \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}
 \begin{DoxyCompactList}\small\item\em Represents a texture that can be attached to a renderable object. \end{DoxyCompactList}\item 
-struct {\bfseries Rendering\+Cache}
-\begin{DoxyCompactList}\small\item\em Stores important cache data to the renderer that can be shared with native modes. \end{DoxyCompactList}\item 
-struct {\bfseries Scene\+Data}
-\item 
-struct {\bfseries Sprite\+Data}
-\item 
-struct {\bfseries Visual\+Plane\+Data}
-\item 
 struct \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}
 \begin{DoxyCompactList}\small\item\em Represents a \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} in a bidimensional space. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{class_g_l_tech2_1_1_version_data}{Version\+Data}}
-\begin{DoxyCompactList}\small\item\em A strongly-\/typed resource class, for looking up localized strings, etc. \end{DoxyCompactList}\item 
-class \mbox{\hyperlink{class_g_l_tech2_1_1_visual_plane}{Visual\+Plane}}
-\begin{DoxyCompactList}\small\item\em Represents a plane that can be rendered on the screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em A strongly-\/typed resource class, for looking up localized strings, etc. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 

@@ -292,7 +292,7 @@ namespace GLTech2
                     debugOption: Debug.Options.Info);
             #endregion
 
-            Stopwatch controlStopwatch = new Stopwatch();   // Need to cap framerate
+            Stopwatch controlStopwatch = new Stopwatch();   // Required to cap framerate
             Behaviour.Frame.RestartFrame();
             Behaviour.Frame.BeginScript();
             activeScene.OnStart?.Invoke();
@@ -305,13 +305,12 @@ namespace GLTech2
             {
                 controlStopwatch.Restart();
                 Behaviour.Frame.BeginRender();
+
                 DrawPlanes(backBuffer, activeScene.unmanaged);
                 PostProcess(backBuffer);
 
                 if (DoubleBuffer)
-                {
                     frontBuffer.FastClone(backBuffer);
-                }
                 Behaviour.Frame.EndRender();
 
                 while (controlStopwatch.ElapsedMilliseconds < minframetime)

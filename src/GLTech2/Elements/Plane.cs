@@ -1,17 +1,32 @@
 ﻿namespace GLTech2
 {
     /// <summary>
-    /// Represents a plane that can be rendered on the screen.
+    /// Represents a vertical plane on the map.
     /// </summary>
     public unsafe class Plane : Element
     {
+        #region What should happen to the unmanaged data if its position/direction changes? Here's where the class answers it.
         internal SPlane* unmanaged;
+
+        private protected override Vector PositionData
+        {
+            get => unmanaged->start;
+            set => unmanaged->start = value;
+        }
+
+        private protected override Vector DirectionData
+        {
+            get => unmanaged->direction;
+            set => unmanaged->direction = value;
+        }
+        #endregion
 
         /// <summary>
         /// Gets and sets the starting point of the plane.
         /// </summary>
         public Vector Start
         {
+            // Just a bit spaguetti
             get => unmanaged->start;
             set => unmanaged->start = value;
         }
@@ -21,6 +36,7 @@
         /// </summary>
         public Vector End
         {
+            // Spaguetti?
             get => unmanaged->start + unmanaged->direction;
             set => unmanaged->direction = value - unmanaged->start;
         }
@@ -43,21 +59,6 @@
             set
             {
                 unmanaged->texture = value;
-            }
-        }
-
-        private protected override Vector PositionData
-        {
-            get => Start;
-            set => Start = value;
-        }
-
-        private protected override Vector DirectionData
-        {
-            get => unmanaged->direction;
-            set
-            {
-                unmanaged->direction = value;
             }
         }
 

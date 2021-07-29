@@ -2,7 +2,7 @@ var struct_g_l_tech2_1_1_vector =
 [
     [ "Vector", "struct_g_l_tech2_1_1_vector.html#aef18436ab7d3b5d8ec85eecfb394511f", null ],
     [ "Vector", "struct_g_l_tech2_1_1_vector.html#a1c31a9f5e1b13c34a835131f0d603176", null ],
-    [ "AsProjectionOf", "struct_g_l_tech2_1_1_vector.html#a2e31490a41f700cce4d9913ad2a8e755", null ],
+    [ "Disprojection", "struct_g_l_tech2_1_1_vector.html#aedd6a76845c993d2b14ae4bd1339a408", null ],
     [ "DotProduct", "struct_g_l_tech2_1_1_vector.html#a838e9e218fa04c7963ae4e8500264bea", null ],
     [ "Equals", "struct_g_l_tech2_1_1_vector.html#ab3683172ac88123b6f77b6d98429d807", null ],
     [ "Equals", "struct_g_l_tech2_1_1_vector.html#a112996614e8ff27d153a957950ebb943", null ],
@@ -28,8 +28,8 @@ var struct_g_l_tech2_1_1_vector =
     [ "Forward", "struct_g_l_tech2_1_1_vector.html#aa83c6eeb088131b6ba470398a2bd2c43", null ],
     [ "Left", "struct_g_l_tech2_1_1_vector.html#ac043c62b79f31a19a3b7a5559c770dc3", null ],
     [ "Module", "struct_g_l_tech2_1_1_vector.html#a4fffc364f183af3bc4dcaad5d464a8ac", null ],
-    [ "Origin", "struct_g_l_tech2_1_1_vector.html#a19e5c5e18b704bff60a794aeeeed351b", null ],
     [ "Right", "struct_g_l_tech2_1_1_vector.html#a723293e746b71287a2553d8e967218e6", null ],
     [ "X", "struct_g_l_tech2_1_1_vector.html#a604f8fb01180a05b964b7621d87e200a", null ],
-    [ "Y", "struct_g_l_tech2_1_1_vector.html#ab7338a9dc65e9703d56a7d11f20e924d", null ]
+    [ "Y", "struct_g_l_tech2_1_1_vector.html#ab7338a9dc65e9703d56a7d11f20e924d", null ],
+    [ "Zero", "struct_g_l_tech2_1_1_vector.html#a0c0a939106d95dcfeea450fa31eefb29", null ]
 ];

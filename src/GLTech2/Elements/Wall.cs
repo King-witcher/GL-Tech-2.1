@@ -1,6 +1,9 @@
 ﻿
 namespace GLTech2.Elements
 {
+    /// <summary>
+    /// Represents a Plane that collides, or a union of a Plane with a Collider.
+    /// </summary>
     class Wall : Element
     {
         private protected override Vector PositionData { get; set; }
@@ -8,6 +11,12 @@ namespace GLTech2.Elements
         private Plane visual;
         private Collider physical;
 
+        /// <summary>
+        /// Gets a new instance of Wall.
+        /// </summary>
+        /// <param name="start">Initial point</param>
+        /// <param name="end">Final point</param>
+        /// <param name="texture">Texture</param>
         public Wall(Vector start, Vector end, Texture texture)
         {
             PositionData = start;
@@ -18,7 +27,7 @@ namespace GLTech2.Elements
         }
 
         /// <summary>
-        /// Gets and sets the material of the Wall.
+        /// Gets and sets the texture of the Wall.
         /// </summary>
         public unsafe Texture Texture
         {

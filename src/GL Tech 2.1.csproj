@@ -12,6 +12,8 @@
     <FileVersion>2.1.0.0</FileVersion>
     <ApplicationIcon />
     <Platforms>x64</Platforms>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageId>GLTech2.1</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -21,6 +23,7 @@
     <DocumentationFile>..\bin\Debug\GL Tech 2.1.xml</DocumentationFile>
     <NoWarn>1701;1702;CS1592</NoWarn>
     <WarningsAsErrors>;NU1605</WarningsAsErrors>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

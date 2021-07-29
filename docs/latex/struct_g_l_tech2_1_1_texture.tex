@@ -10,13 +10,6 @@ Represents a texture that can be attached to a renderable object.
 \item 
 \mbox{\hyperlink{struct_g_l_tech2_1_1_texture_aa9dded831257fd827fe6f60b59f25cb9}{Texture}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}} buffer, float hoffset=0f, float hrepeat=1f, float voffset=0f, float vrepeat=1f)
 \begin{DoxyCompactList}\small\item\em Gets a new instance of \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} given a \mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Static Public Member Functions}
-\begin{DoxyCompactItemize}
-\item 
-static implicit \mbox{\hyperlink{struct_g_l_tech2_1_1_texture_ab4f84c3b97458f768cf07ba2e31a6868}{operator Texture}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}} buffer)
-\begin{DoxyCompactList}\small\item\em Implicitly casts a \mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}} instance into a \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}. \end{DoxyCompactList}\item 
-static \mbox{\hyperlink{struct_g_l_tech2_1_1_texture_a43406b6e8ee0ddfcb585eddb32b80016}{operator Texture}} (Bitmap bitmap)
-\begin{DoxyCompactList}\small\item\em Explicitly casts a System.\+Drawing.\+Bitmap into a \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -46,40 +39,5 @@ Gets a new instance of \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} 
 {\em voffset} & Not implemented yet\\
 \hline
 {\em vrepeat} & Not implemented yet\\
-\hline
-\end{DoxyParams}
-
-
-\doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{struct_g_l_tech2_1_1_texture_a43406b6e8ee0ddfcb585eddb32b80016}\label{struct_g_l_tech2_1_1_texture_a43406b6e8ee0ddfcb585eddb32b80016}} 
-\index{GLTech2.Texture@{GLTech2.Texture}!operator Texture@{operator Texture}}
-\index{operator Texture@{operator Texture}!GLTech2.Texture@{GLTech2.Texture}}
-\doxysubsubsection{\texorpdfstring{operator Texture()}{operator Texture()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily static GLTech2.\+Texture.\+operator \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} (\begin{DoxyParamCaption}\item[{Bitmap}]{bitmap }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}, {\ttfamily [static]}}
-
-
-
-Explicitly casts a System.\+Drawing.\+Bitmap into a \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em bitmap} & Bitmap to be cast\\
-\hline
-\end{DoxyParams}
-
-
-Note that casting bitmaps directly to \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} will anonymously create a new \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} object that uses unmanaged resources each time it\textquotesingle{}s done, but you won\textquotesingle{}t be able to dispose them. \mbox{\Hypertarget{struct_g_l_tech2_1_1_texture_ab4f84c3b97458f768cf07ba2e31a6868}\label{struct_g_l_tech2_1_1_texture_ab4f84c3b97458f768cf07ba2e31a6868}} 
-\index{GLTech2.Texture@{GLTech2.Texture}!operator Texture@{operator Texture}}
-\index{operator Texture@{operator Texture}!GLTech2.Texture@{GLTech2.Texture}}
-\doxysubsubsection{\texorpdfstring{operator Texture()}{operator Texture()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily static implicit GLTech2.\+Texture.\+operator \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}}}]{buffer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
-
-
-
-Implicitly casts a \mbox{\hyperlink{struct_g_l_tech2_1_1_pixel_buffer}{Pixel\+Buffer}} instance into a \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em buffer} & Buffer to be cast\\
 \hline
 \end{DoxyParams}

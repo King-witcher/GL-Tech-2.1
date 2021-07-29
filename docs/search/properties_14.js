@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['x_347',['X',['../struct_g_l_tech2_1_1_vector.html#a604f8fb01180a05b964b7621d87e200a',1,'GLTech2::Vector']]]
+  ['zero_377',['Zero',['../struct_g_l_tech2_1_1_vector.html#a0c0a939106d95dcfeea450fa31eefb29',1,'GLTech2::Vector']]]
 ];

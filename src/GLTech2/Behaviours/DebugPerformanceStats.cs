@@ -13,13 +13,34 @@ namespace GLTech2.Behaviours
         float totalWindowTime;
         int frameCount;
 
+        /// <summary>
+        /// Defines whether or not the frame time sould be printed.
+        /// </summary>
+        /// <remarks>
+        /// Note that frame time is different from render time because a frame is considered as the entire cycle of rendering, scripting and controlling.
+        /// </remarks>
         public bool DebugFrameTime { get; set; } = true;
+
+        /// <summary>
+        /// Defines whether or not the time to render sould be printed.
+        /// </summary>
         public bool DebugRenderTime { get; set; } = true;
+
+        /// <summary>
+        /// Defines whether or not the time to run scripts sould be printed.
+        /// </summary>
         public bool DebugScriptTime { get; set; } = true;
+
+        /// <summary>
+        /// Defines whether or not the window's frametime.
+        /// </summary>
+        /// <remarks>
+        /// Note that the window won't always render at the same framerate as the engine.
+        /// </remarks>
         public bool DebugWindowTime { get; set; } = true;
 
         /// <summary>
-        /// The debug step interval in seconds
+        /// The polling interval in seconds.
         /// </summary>
         public float Interval { get; set; } = 4f;
 

@@ -14,12 +14,6 @@ Inheritance diagram for GLTech2.\+Element\+:\begin{figure}[H]
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{class_g_l_tech2_1_1_element_a4859a68a668c9aa71b88a8d96cdb1c19}{Translate}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} direction)
-\begin{DoxyCompactList}\small\item\em Moves the object in one direction relatively to it\textquotesingle{}s direction; in other words, the direction of the module vector. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{class_g_l_tech2_1_1_element_ab4341dd58606ebaf4d17fd2d4c18d706}{Rotate}} (float rotation)
-\begin{DoxyCompactList}\small\item\em Rotate the object a specified amount. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{class_g_l_tech2_1_1_element_a72a6c6676b1eccd40ac89036ca12cf4f}{Detach\+Childs}} ()
-\begin{DoxyCompactList}\small\item\em Dettach all childs and make their reference point equal to null. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_g_l_tech2_1_1_element_aabe6ae3c53c63648f1d43efa508b8cc5}{Add\+Behaviour}} (\mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}} behaviour)
 \begin{DoxyCompactList}\small\item\em Adds a behaviour script to the element by instance. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_g_l_tech2_1_1_element_ae726742694e9a4c42f5cd735aa3fa57c}{Add\+Behaviour$<$ Behaviour\+Type $>$}} ()
@@ -40,29 +34,43 @@ void \mbox{\hyperlink{class_g_l_tech2_1_1_element_a620f16979c7dc0596e7357e010756
 \begin{DoxyCompactList}\small\item\em Remove all behaviours from the element. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_g_l_tech2_1_1_element_a5933953f7da7f103f65b5739832dd598}{Detach\+Children}} ()
 \begin{DoxyCompactList}\small\item\em Detach all children from the element. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g_l_tech2_1_1_element_ab4341dd58606ebaf4d17fd2d4c18d706}{Rotate}} (float rotation)
+\begin{DoxyCompactList}\small\item\em Rotate the object a specified amount. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_ae73ef650c65193263fe503d9908cbd3f}{Get\+Child}} (int index)
 \begin{DoxyCompactList}\small\item\em Gets a child from the element by index. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g_l_tech2_1_1_element_ad9f4641580242d33c1154664d7882b01}{Release\+Childs}} ()
+\begin{DoxyCompactList}\small\item\em Release all childs and make their reference point equal to null. \end{DoxyCompactList}\item 
 virtual void \mbox{\hyperlink{class_g_l_tech2_1_1_element_a0c1d09747a9346f7719f32c4ed0b670c}{Dispose}} ()
 \begin{DoxyCompactList}\small\item\em Releases unmanaged data, if any. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Properties}
 \begin{DoxyCompactItemize}
 \item 
-abstract \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_aeed443f8b0c0bb570d9af8a8e3faa644}{Absolute\+Position}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}? \mbox{\hyperlink{class_g_l_tech2_1_1_element_af0da845772e67aedd609759990acff7c}{World\+Position}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Gets and sets the absolute position of an \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} without and allows subclasses to store the Position the way they want. \end{DoxyCompactList}\item 
-abstract \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_a585edc055b0a0256ee31dfa67cefcedb}{Absolute\+Normal}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\begin{DoxyCompactList}\small\item\em Determines how the element stores its normal. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_a9687d40a7e6ca4204ccacefadbf0ec17}{Scene}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
-\begin{DoxyCompactList}\small\item\em Its correspondent scene. If the element is not bound to any scene, returns null. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}? \mbox{\hyperlink{class_g_l_tech2_1_1_element_a4e176a48dfaae9445aa95d8a5ae9bbba}{World\+Direction}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Determines how the element stores its direction. \end{DoxyCompactList}\item 
+float? \mbox{\hyperlink{class_g_l_tech2_1_1_element_aec929d63a896cc5566332973be7f2217}{World\+Scale}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The scale of this Block\+Map. Cannot be zero. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_a762b6c12740a3ae50430c32c77011a46}{Relative\+Position}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets and sets element\textquotesingle{}s position relatively to it\textquotesingle{}s parent or, if it has no parent, it\textquotesingle{}s absolute position. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_a5c7e65b1e40f1250a20597dfe884ee68}{Relative\+Direction}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets and sets element\textquotesingle{}s normal relatively to it\textquotesingle{}s parent or, if it has no parent, it\textquotesingle{}s absolute normal. \end{DoxyCompactList}\item 
+float? \mbox{\hyperlink{class_g_l_tech2_1_1_element_af7cabbf2b7eb8d8f482924fbdd0ce0e0}{Relative\+Rotation}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets and sets directly the element\textquotesingle{}s rotation relative to it\textquotesingle{}s parent or, if it has no parents, it\textquotesingle{}s absolute rotation. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_aed800c203d9dadc1189bf70d0290bd40}{Parent}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets and sets element\textquotesingle{}s reference point. A null value means that the element will take as reference point the world. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_addb06058b413b0b40e48a7cb050bdea8}{Root\+Parent}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the root reference point for this object. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{class_g_l_tech2_1_1_element_a2ab96f9dcff0ff247af5eece1bb83d2a}{Child\+Count}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
 \begin{DoxyCompactList}\small\item\em How many childs the element has. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}? \mbox{\hyperlink{class_g_l_tech2_1_1_element_a2158d6c2610d88bf3b7991765d62036a}{Position}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\begin{DoxyCompactList}\small\item\em Gets and sets element\textquotesingle{}s position relatively to it\textquotesingle{}s parent or, if it has no parent, it\textquotesingle{}s absolute position. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}? \mbox{\hyperlink{class_g_l_tech2_1_1_element_a27bdbdce9b1e0d4ae19726cf9e302ca3}{Normal}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\begin{DoxyCompactList}\small\item\em Gets and sets element\textquotesingle{}s normal relatively to it\textquotesingle{}s parent or, if it has no parent, it\textquotesingle{}s absolute normal. \end{DoxyCompactList}\item 
-float? \mbox{\hyperlink{class_g_l_tech2_1_1_element_aca666f90e12d34dd00e509a593ea02f0}{Rotation}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\begin{DoxyCompactList}\small\item\em Gets and sets directly the element\textquotesingle{}s rotation relative to it\textquotesingle{}s parent or, if it has no parents, it\textquotesingle{}s absolute rotation. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_a69e8d97b2bccd2a687778461e4873ee6}{Reference\+Point}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\begin{DoxyCompactList}\small\item\em Gets and sets element\textquotesingle{}s reference point. A null value means that the element will take as reference point the scene. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_a9687d40a7e6ca4204ccacefadbf0ec17}{Scene}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Its correspondent scene. If the element is not bound to any scene, returns null. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a7fb26c1cf1264827e74af2ac95d1fcac}\label{class_g_l_tech2_1_1_element_a7fb26c1cf1264827e74af2ac95d1fcac}} 
+virtual \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} {\bfseries Position\+Data}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a5937158165ff572cadf3073fc28538e2}\label{class_g_l_tech2_1_1_element_a5937158165ff572cadf3073fc28538e2}} 
+virtual \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} {\bfseries Direction\+Data}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -187,17 +195,7 @@ true if it contains; otherwise, false
 
 Detach all children from the element. 
 
-\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a72a6c6676b1eccd40ac89036ca12cf4f}\label{class_g_l_tech2_1_1_element_a72a6c6676b1eccd40ac89036ca12cf4f}} 
-\index{GLTech2.Element@{GLTech2.Element}!DetachChilds@{DetachChilds}}
-\index{DetachChilds@{DetachChilds}!GLTech2.Element@{GLTech2.Element}}
-\doxysubsubsection{\texorpdfstring{DetachChilds()}{DetachChilds()}}
-{\footnotesize\ttfamily void GLTech2.\+Element.\+Detach\+Childs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
-
-
-
-Dettach all childs and make their reference point equal to null. 
-
-Not widely tested. \mbox{\Hypertarget{class_g_l_tech2_1_1_element_a0c1d09747a9346f7719f32c4ed0b670c}\label{class_g_l_tech2_1_1_element_a0c1d09747a9346f7719f32c4ed0b670c}} 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a0c1d09747a9346f7719f32c4ed0b670c}\label{class_g_l_tech2_1_1_element_a0c1d09747a9346f7719f32c4ed0b670c}} 
 \index{GLTech2.Element@{GLTech2.Element}!Dispose@{Dispose}}
 \index{Dispose@{Dispose}!GLTech2.Element@{GLTech2.Element}}
 \doxysubsubsection{\texorpdfstring{Dispose()}{Dispose()}}
@@ -209,7 +207,7 @@ Releases unmanaged data, if any.
 
 
 
-Reimplemented in \mbox{\hyperlink{class_g_l_tech2_1_1_visual_plane_a76df953fd00325261c121a94664187e2}{GLTech2.\+Visual\+Plane}}, and \mbox{\hyperlink{class_g_l_tech2_1_1_observer_aa1f106d7d0802d7c31c08ec2f747ec7e}{GLTech2.\+Observer}}.
+Reimplemented in \mbox{\hyperlink{class_g_l_tech2_1_1_plane_a4cb9c7089190618f02722137a68a8d69}{GLTech2.\+Plane}}, \mbox{\hyperlink{class_g_l_tech2_1_1_collider_a2313d64ec861716d0e8e87b509475e6b}{GLTech2.\+Collider}}, and \mbox{\hyperlink{class_g_l_tech2_1_1_camera_a576b5ccc4f0c2d6a208b63f3123dd7e8}{GLTech2.\+Camera}}.
 
 \mbox{\Hypertarget{class_g_l_tech2_1_1_element_ae73ef650c65193263fe503d9908cbd3f}\label{class_g_l_tech2_1_1_element_ae73ef650c65193263fe503d9908cbd3f}} 
 \index{GLTech2.Element@{GLTech2.Element}!GetChild@{GetChild}}
@@ -229,7 +227,17 @@ Gets a child from the element by index.
 \begin{DoxyReturn}{Returns}
 Specified children
 \end{DoxyReturn}
-\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a620f16979c7dc0596e7357e010756a86}\label{class_g_l_tech2_1_1_element_a620f16979c7dc0596e7357e010756a86}} 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_ad9f4641580242d33c1154664d7882b01}\label{class_g_l_tech2_1_1_element_ad9f4641580242d33c1154664d7882b01}} 
+\index{GLTech2.Element@{GLTech2.Element}!ReleaseChilds@{ReleaseChilds}}
+\index{ReleaseChilds@{ReleaseChilds}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{ReleaseChilds()}{ReleaseChilds()}}
+{\footnotesize\ttfamily void GLTech2.\+Element.\+Release\+Childs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Release all childs and make their reference point equal to null. 
+
+Not widely tested. \mbox{\Hypertarget{class_g_l_tech2_1_1_element_a620f16979c7dc0596e7357e010756a86}\label{class_g_l_tech2_1_1_element_a620f16979c7dc0596e7357e010756a86}} 
 \index{GLTech2.Element@{GLTech2.Element}!RemoveAllBehaviours@{RemoveAllBehaviours}}
 \index{RemoveAllBehaviours@{RemoveAllBehaviours}!GLTech2.Element@{GLTech2.Element}}
 \doxysubsubsection{\texorpdfstring{RemoveAllBehaviours()}{RemoveAllBehaviours()}}
@@ -288,45 +296,10 @@ Rotate the object a specified amount.
 {\em rotation} & angle in degrees\\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a4859a68a668c9aa71b88a8d96cdb1c19}\label{class_g_l_tech2_1_1_element_a4859a68a668c9aa71b88a8d96cdb1c19}} 
-\index{GLTech2.Element@{GLTech2.Element}!Translate@{Translate}}
-\index{Translate@{Translate}!GLTech2.Element@{GLTech2.Element}}
-\doxysubsubsection{\texorpdfstring{Translate()}{Translate()}}
-{\footnotesize\ttfamily void GLTech2.\+Element.\+Translate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{direction }\end{DoxyParamCaption})}
-
-
-
-Moves the object in one direction relatively to it\textquotesingle{}s direction; in other words, the direction of the module vector. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em direction} & Direction to move\\
-\hline
-\end{DoxyParams}
 
 
 \doxysubsection{Property Documentation}
-\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a585edc055b0a0256ee31dfa67cefcedb}\label{class_g_l_tech2_1_1_element_a585edc055b0a0256ee31dfa67cefcedb}} 
-\index{GLTech2.Element@{GLTech2.Element}!AbsoluteNormal@{AbsoluteNormal}}
-\index{AbsoluteNormal@{AbsoluteNormal}!GLTech2.Element@{GLTech2.Element}}
-\doxysubsubsection{\texorpdfstring{AbsoluteNormal}{AbsoluteNormal}}
-{\footnotesize\ttfamily abstract \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Element.\+Absolute\+Normal\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
-
-
-
-Determines how the element stores its normal. 
-
-Remember to set it before parenting any object! \mbox{\Hypertarget{class_g_l_tech2_1_1_element_aeed443f8b0c0bb570d9af8a8e3faa644}\label{class_g_l_tech2_1_1_element_aeed443f8b0c0bb570d9af8a8e3faa644}} 
-\index{GLTech2.Element@{GLTech2.Element}!AbsolutePosition@{AbsolutePosition}}
-\index{AbsolutePosition@{AbsolutePosition}!GLTech2.Element@{GLTech2.Element}}
-\doxysubsubsection{\texorpdfstring{AbsolutePosition}{AbsolutePosition}}
-{\footnotesize\ttfamily abstract \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Element.\+Absolute\+Position\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
-
-
-
-Gets and sets the absolute position of an \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} without and allows subclasses to store the Position the way they want. 
-
-Important\+: \mbox{\hyperlink{namespace_g_l_tech2_1_1_elements}{Elements}} that take this element as reference point will not follow it imediatelly for performance and code health reasons. Changing this property is only recommended if the element is not a reference point to any other and changing positions is a significant performance bottleneck in your application. Otherwise, always use \mbox{\hyperlink{class_g_l_tech2_1_1_element_a2158d6c2610d88bf3b7991765d62036a}{Element.\+Position}} property instead. \mbox{\Hypertarget{class_g_l_tech2_1_1_element_a2ab96f9dcff0ff247af5eece1bb83d2a}\label{class_g_l_tech2_1_1_element_a2ab96f9dcff0ff247af5eece1bb83d2a}} 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a2ab96f9dcff0ff247af5eece1bb83d2a}\label{class_g_l_tech2_1_1_element_a2ab96f9dcff0ff247af5eece1bb83d2a}} 
 \index{GLTech2.Element@{GLTech2.Element}!ChildCount@{ChildCount}}
 \index{ChildCount@{ChildCount}!GLTech2.Element@{GLTech2.Element}}
 \doxysubsubsection{\texorpdfstring{ChildCount}{ChildCount}}
@@ -336,11 +309,21 @@ Important\+: \mbox{\hyperlink{namespace_g_l_tech2_1_1_elements}{Elements}} that 
 
 How many childs the element has. 
 
-\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a27bdbdce9b1e0d4ae19726cf9e302ca3}\label{class_g_l_tech2_1_1_element_a27bdbdce9b1e0d4ae19726cf9e302ca3}} 
-\index{GLTech2.Element@{GLTech2.Element}!Normal@{Normal}}
-\index{Normal@{Normal}!GLTech2.Element@{GLTech2.Element}}
-\doxysubsubsection{\texorpdfstring{Normal}{Normal}}
-{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}? GLTech2.\+Element.\+Normal\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_aed800c203d9dadc1189bf70d0290bd40}\label{class_g_l_tech2_1_1_element_aed800c203d9dadc1189bf70d0290bd40}} 
+\index{GLTech2.Element@{GLTech2.Element}!Parent@{Parent}}
+\index{Parent@{Parent}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{Parent}{Parent}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} GLTech2.\+Element.\+Parent\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Gets and sets element\textquotesingle{}s reference point. A null value means that the element will take as reference point the world. 
+
+Setting a reference point will make the object to move and rotate relatively to it\textquotesingle{}s reference point, and if the parent element moves/rotate, this element will follow. \mbox{\Hypertarget{class_g_l_tech2_1_1_element_a5c7e65b1e40f1250a20597dfe884ee68}\label{class_g_l_tech2_1_1_element_a5c7e65b1e40f1250a20597dfe884ee68}} 
+\index{GLTech2.Element@{GLTech2.Element}!RelativeDirection@{RelativeDirection}}
+\index{RelativeDirection@{RelativeDirection}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{RelativeDirection}{RelativeDirection}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Element.\+Relative\+Direction\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
 
 
 
@@ -348,35 +331,35 @@ Gets and sets element\textquotesingle{}s normal relatively to it\textquotesingle
 
 Normal vector determines the rotation and the scale of an object and is used due to performance improvements when managing multiple childs. 
 
-Use wisely. \mbox{\Hypertarget{class_g_l_tech2_1_1_element_a2158d6c2610d88bf3b7991765d62036a}\label{class_g_l_tech2_1_1_element_a2158d6c2610d88bf3b7991765d62036a}} 
-\index{GLTech2.Element@{GLTech2.Element}!Position@{Position}}
-\index{Position@{Position}!GLTech2.Element@{GLTech2.Element}}
-\doxysubsubsection{\texorpdfstring{Position}{Position}}
-{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}? GLTech2.\+Element.\+Position\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+Use wisely. \mbox{\Hypertarget{class_g_l_tech2_1_1_element_a762b6c12740a3ae50430c32c77011a46}\label{class_g_l_tech2_1_1_element_a762b6c12740a3ae50430c32c77011a46}} 
+\index{GLTech2.Element@{GLTech2.Element}!RelativePosition@{RelativePosition}}
+\index{RelativePosition@{RelativePosition}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{RelativePosition}{RelativePosition}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Element.\+Relative\+Position\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
 
 
 
 Gets and sets element\textquotesingle{}s position relatively to it\textquotesingle{}s parent or, if it has no parent, it\textquotesingle{}s absolute position. 
 
-\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a69e8d97b2bccd2a687778461e4873ee6}\label{class_g_l_tech2_1_1_element_a69e8d97b2bccd2a687778461e4873ee6}} 
-\index{GLTech2.Element@{GLTech2.Element}!ReferencePoint@{ReferencePoint}}
-\index{ReferencePoint@{ReferencePoint}!GLTech2.Element@{GLTech2.Element}}
-\doxysubsubsection{\texorpdfstring{ReferencePoint}{ReferencePoint}}
-{\footnotesize\ttfamily \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} GLTech2.\+Element.\+Reference\+Point\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
-
-
-
-Gets and sets element\textquotesingle{}s reference point. A null value means that the element will take as reference point the scene. 
-
-Setting a reference point will make the object to move and rotate relatively to it\textquotesingle{}s reference point, and if the parent element moves/rotate, this element will follow. \mbox{\Hypertarget{class_g_l_tech2_1_1_element_aca666f90e12d34dd00e509a593ea02f0}\label{class_g_l_tech2_1_1_element_aca666f90e12d34dd00e509a593ea02f0}} 
-\index{GLTech2.Element@{GLTech2.Element}!Rotation@{Rotation}}
-\index{Rotation@{Rotation}!GLTech2.Element@{GLTech2.Element}}
-\doxysubsubsection{\texorpdfstring{Rotation}{Rotation}}
-{\footnotesize\ttfamily float? GLTech2.\+Element.\+Rotation\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_af7cabbf2b7eb8d8f482924fbdd0ce0e0}\label{class_g_l_tech2_1_1_element_af7cabbf2b7eb8d8f482924fbdd0ce0e0}} 
+\index{GLTech2.Element@{GLTech2.Element}!RelativeRotation@{RelativeRotation}}
+\index{RelativeRotation@{RelativeRotation}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{RelativeRotation}{RelativeRotation}}
+{\footnotesize\ttfamily float? GLTech2.\+Element.\+Relative\+Rotation\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
 
 
 
 Gets and sets directly the element\textquotesingle{}s rotation relative to it\textquotesingle{}s parent or, if it has no parents, it\textquotesingle{}s absolute rotation. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_addb06058b413b0b40e48a7cb050bdea8}\label{class_g_l_tech2_1_1_element_addb06058b413b0b40e48a7cb050bdea8}} 
+\index{GLTech2.Element@{GLTech2.Element}!RootParent@{RootParent}}
+\index{RootParent@{RootParent}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{RootParent}{RootParent}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} GLTech2.\+Element.\+Root\+Parent\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Gets the root reference point for this object. 
 
 \mbox{\Hypertarget{class_g_l_tech2_1_1_element_a9687d40a7e6ca4204ccacefadbf0ec17}\label{class_g_l_tech2_1_1_element_a9687d40a7e6ca4204ccacefadbf0ec17}} 
 \index{GLTech2.Element@{GLTech2.Element}!Scene@{Scene}}
@@ -387,4 +370,34 @@ Gets and sets directly the element\textquotesingle{}s rotation relative to it\te
 
 
 Its correspondent scene. If the element is not bound to any scene, returns null. 
+
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a4e176a48dfaae9445aa95d8a5ae9bbba}\label{class_g_l_tech2_1_1_element_a4e176a48dfaae9445aa95d8a5ae9bbba}} 
+\index{GLTech2.Element@{GLTech2.Element}!WorldDirection@{WorldDirection}}
+\index{WorldDirection@{WorldDirection}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{WorldDirection}{WorldDirection}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}? GLTech2.\+Element.\+World\+Direction\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Determines how the element stores its direction. 
+
+Remember to set it before parenting any object! \mbox{\Hypertarget{class_g_l_tech2_1_1_element_af0da845772e67aedd609759990acff7c}\label{class_g_l_tech2_1_1_element_af0da845772e67aedd609759990acff7c}} 
+\index{GLTech2.Element@{GLTech2.Element}!WorldPosition@{WorldPosition}}
+\index{WorldPosition@{WorldPosition}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{WorldPosition}{WorldPosition}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}? GLTech2.\+Element.\+World\+Position\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Gets and sets the absolute position of an \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} without and allows subclasses to store the Position the way they want. 
+
+Important\+: \mbox{\hyperlink{namespace_g_l_tech2_1_1_elements}{Elements}} that take this element as reference point will not follow it imediatelly for performance and code health reasons. Changing this property is only recommended if the element is not a reference point to any other and changing positions is a significant performance bottleneck in your application. Otherwise, always use Element.\+Position property instead. \mbox{\Hypertarget{class_g_l_tech2_1_1_element_aec929d63a896cc5566332973be7f2217}\label{class_g_l_tech2_1_1_element_aec929d63a896cc5566332973be7f2217}} 
+\index{GLTech2.Element@{GLTech2.Element}!WorldScale@{WorldScale}}
+\index{WorldScale@{WorldScale}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{WorldScale}{WorldScale}}
+{\footnotesize\ttfamily float? GLTech2.\+Element.\+World\+Scale\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The scale of this Block\+Map. Cannot be zero. 
 

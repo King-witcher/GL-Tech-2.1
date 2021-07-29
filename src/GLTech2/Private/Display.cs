@@ -4,6 +4,8 @@ using System.Drawing;
 
 namespace GLTech2
 {
+    // This is a complete cheat. I use a windows forms window with a PictureBox to render everything =]
+    // Unfortunately that's the only practical way I know yet.
     internal sealed class Display : Form, IDisposable
     {
         private Image image;

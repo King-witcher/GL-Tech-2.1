@@ -50,7 +50,7 @@ namespace Test
 
                 PointCollider collider = new PointCollider();
                 SoftMovement movement = new SoftMovement(collider);
-                MouseLook mouseLook = new MouseLook(2.2f);
+                MouseRotation mouseLook = new MouseRotation(2.2f);
 
                 camera.AddBehaviour(collider);
                 camera.AddBehaviour(movement);

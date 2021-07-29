@@ -3,16 +3,12 @@
 namespace GLTech2
 {
     /// <summary>
-    /// Represents a point of view from which the Renderer can render a scene.
+    /// Represents a camera view from which the Renderer can render a scene.
     /// </summary>
     public unsafe class Camera : Element, IDisposable
     {
+        #region What should happen to the unmanaged data if its position/direction changes? Here's where the class answers it.
         internal SCamera* unmanaged;
-
-        public Camera(Vector position, float rotation = 0f)
-        {
-            unmanaged = SCamera.Create(position, rotation);
-        }
 
         private protected override Vector PositionData
         {
@@ -24,6 +20,17 @@ namespace GLTech2
         {
             get => new Vector(unmanaged->rotation);
             set => unmanaged->rotation = value.Angle;
+        }
+        #endregion
+
+        /// <summary>
+        /// Gets a new instance of Camera.
+        /// </summary>
+        /// <param name="position">The position</param>
+        /// <param name="rotation">The rotation</param>
+        public Camera(Vector position, float rotation = 0f)
+        {
+            unmanaged = SCamera.Create(position, rotation);
         }
 
         public override void Dispose()

@@ -2,8 +2,6 @@
 using System.Drawing;
 using System.Collections.Generic;
 
-// Implementar culling de colisão
-
 namespace GLTech2
 {
     /// <summary>

@@ -7,6 +7,10 @@
     {
         KinematicBody body;
 
+        /// <summary>
+        /// Gets a new instance of FlatMovement.
+        /// </summary>
+        /// <param name="body"></param>
         public FlatMovement(KinematicBody body)
         {
             this.body = body;

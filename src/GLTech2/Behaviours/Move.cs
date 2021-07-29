@@ -17,9 +17,7 @@ namespace GLTech2.Behaviours
         /// </summary>
         public float Speed { get; set; } = 0.5f;
 
-        void OnFrame()
-        {
+        void OnFrame() =>
             Element.RelativePosition += Direction * Speed * Frame.DeltaTime;
-        }
     }
 }

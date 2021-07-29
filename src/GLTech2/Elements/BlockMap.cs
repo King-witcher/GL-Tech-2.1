@@ -5,9 +5,9 @@ using System;
 namespace GLTech2.Elements
 {
 	/// <summary>
-	/// Provides a tool to build elements based on textures..
+	/// Provides a tool to build maplevels from images.
 	/// <remarks>
-	/// Each pixel of the image can be converted into a block of its original color, a block with an especific Texture or nothing.
+	/// Each pixel of the image can be converted into a block of [its original color, a block with an especific Texture or nothing].
 	/// </remarks>
 	/// </summary>
 	public partial class BlockMap : Element
@@ -18,7 +18,7 @@ namespace GLTech2.Elements
 		private int walls = 0;
 
 		/// <summary>
-		/// How many walls does this BlockMap contain.
+		/// Gets how many walls does this BlockMap contain.
 		/// </summary>
 		public int Walls => walls;
 
@@ -82,6 +82,8 @@ namespace GLTech2.Elements
 		/// <param name="textureBindings">A hashmap that binds a set of Colors to Textures</param>
 		public BlockMap(PixelBuffer map, TextureMapper textureBindings)
 		{
+			// Cada bloco, em tese, geraria quatro paredes e quatro colisores ao seu redor.
+			// Esse método foi otimizado considerando-se que, se duas paredes forem desenhadas sobre o mesmo lugar, isso significa que não existe superfície visível por ali e, portanto, nenhuma das duas deverá ser realmente renderizada.
 			bool blockFree(int column, int line)
 			{
 				if (column < 0 || column >= map.height || line < 0 || line >= map.width)

@@ -14,20 +14,19 @@ static void \mbox{\hyperlink{class_g_l_tech2_1_1_renderer_a4197e98dcd25f65b228ae
 \begin{DoxyCompactList}\small\item\em Adds a new post processing effect to be applied every frame. \end{DoxyCompactList}\item 
 static void \mbox{\hyperlink{class_g_l_tech2_1_1_renderer_a4a5dd72d1e64d10cbe9e2de40495163b}{Add\+Post\+Processing$<$ T $>$}} ()
 \begin{DoxyCompactList}\small\item\em Adds a new instance of a given post processing effect to be applied every frame. \end{DoxyCompactList}\item 
-static unsafe void \mbox{\hyperlink{class_g_l_tech2_1_1_renderer_a1edd1622745e0b3c0dd51fd901b1d7d3}{Run}} (\mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}} scene)
-\begin{DoxyCompactList}\small\item\em Renders the given scene from its default point of view and displays the video in a new window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_renderer_adba3b8082aa82482d4409cf9ed14a366}\label{class_g_l_tech2_1_1_renderer_adba3b8082aa82482d4409cf9ed14a366}} 
+static unsafe void {\bfseries Start} (\mbox{\hyperlink{class_g_l_tech2_1_1_camera}{Camera}} camera)
+\end{DoxyCompactItemize}
 \doxysubsection*{Properties}
 \begin{DoxyCompactItemize}
 \item 
-static bool \mbox{\hyperlink{class_g_l_tech2_1_1_renderer_a60f6d38d194fb18cb0e7731bc48e41c1}{Native\+Rendering}} = false\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
-\begin{DoxyCompactList}\small\item\em Gets and determines if the renderer will use native code. Currently disabled. \end{DoxyCompactList}\item 
 static bool \mbox{\hyperlink{class_g_l_tech2_1_1_renderer_aa6f88102e816548e5104d8f6ffb1be9c}{Parallel\+Rendering}} = true\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Gets and determines whether the renderer should use every CPU unit or just one. \end{DoxyCompactList}\item 
 static \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}} \mbox{\hyperlink{class_g_l_tech2_1_1_renderer_a059c7497b850389664817f114f6f5d32}{Active\+Scene}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Gets which scene is being or will be rendered. \end{DoxyCompactList}\item 
 static int \mbox{\hyperlink{class_g_l_tech2_1_1_renderer_a0c1f688ce1db9e2d5fd52309af58e10e}{Max\+Fps}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Gets and sets the max framerate the engine can reach. \end{DoxyCompactList}\item 
-static bool \mbox{\hyperlink{class_g_l_tech2_1_1_renderer_a3fc9a0b7d6f13978b081b65e304f9a51}{Double\+Buffering}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+static bool \mbox{\hyperlink{class_g_l_tech2_1_1_renderer_a1d25f089ddf8124a523ebc31aba65960}{Double\+Buffer}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Gets and sets whether or not the engine should use different buffers to synthesise and display thet image. \end{DoxyCompactList}\item 
 static int \mbox{\hyperlink{class_g_l_tech2_1_1_renderer_a6b5955ab7486b9e722628a5a1f7e800b}{Custom\+Width}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Gets and sets the custom width of the screen. \end{DoxyCompactList}\item 
@@ -98,24 +97,7 @@ Takes a screenshot of the current frame as \mbox{\hyperlink{struct_g_l_tech2_1_1
 \begin{DoxyReturn}{Returns}
 A screenshot of the current frame.
 \end{DoxyReturn}
-\mbox{\Hypertarget{class_g_l_tech2_1_1_renderer_a1edd1622745e0b3c0dd51fd901b1d7d3}\label{class_g_l_tech2_1_1_renderer_a1edd1622745e0b3c0dd51fd901b1d7d3}} 
-\index{GLTech2.Renderer@{GLTech2.Renderer}!Run@{Run}}
-\index{Run@{Run}!GLTech2.Renderer@{GLTech2.Renderer}}
-\doxysubsubsection{\texorpdfstring{Run()}{Run()}}
-{\footnotesize\ttfamily static unsafe void GLTech2.\+Renderer.\+Run (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}}]{scene }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
-
-
-Renders the given scene from its default point of view and displays the video in a new window. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em scene} & \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}} to be rendered\\
-\hline
-\end{DoxyParams}
-
-
-This method takes the control until the renderer is closed. 
 
 \doxysubsection{Property Documentation}
 \mbox{\Hypertarget{class_g_l_tech2_1_1_renderer_a059c7497b850389664817f114f6f5d32}\label{class_g_l_tech2_1_1_renderer_a059c7497b850389664817f114f6f5d32}} 
@@ -158,17 +140,17 @@ This property cannot be changed if the \mbox{\hyperlink{class_g_l_tech2_1_1_rend
 
 Gets and sets the custom width of the screen. 
 
-This property cannot be changed if the \mbox{\hyperlink{class_g_l_tech2_1_1_renderer}{Renderer}} is running. \mbox{\Hypertarget{class_g_l_tech2_1_1_renderer_a3fc9a0b7d6f13978b081b65e304f9a51}\label{class_g_l_tech2_1_1_renderer_a3fc9a0b7d6f13978b081b65e304f9a51}} 
-\index{GLTech2.Renderer@{GLTech2.Renderer}!DoubleBuffering@{DoubleBuffering}}
-\index{DoubleBuffering@{DoubleBuffering}!GLTech2.Renderer@{GLTech2.Renderer}}
-\doxysubsubsection{\texorpdfstring{DoubleBuffering}{DoubleBuffering}}
-{\footnotesize\ttfamily bool GLTech2.\+Renderer.\+Double\+Buffering\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}, {\ttfamily [set]}}
+This property cannot be changed if the \mbox{\hyperlink{class_g_l_tech2_1_1_renderer}{Renderer}} is running. \mbox{\Hypertarget{class_g_l_tech2_1_1_renderer_a1d25f089ddf8124a523ebc31aba65960}\label{class_g_l_tech2_1_1_renderer_a1d25f089ddf8124a523ebc31aba65960}} 
+\index{GLTech2.Renderer@{GLTech2.Renderer}!DoubleBuffer@{DoubleBuffer}}
+\index{DoubleBuffer@{DoubleBuffer}!GLTech2.Renderer@{GLTech2.Renderer}}
+\doxysubsubsection{\texorpdfstring{DoubleBuffer}{DoubleBuffer}}
+{\footnotesize\ttfamily bool GLTech2.\+Renderer.\+Double\+Buffer\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}, {\ttfamily [set]}}
 
 
 
 Gets and sets whether or not the engine should use different buffers to synthesise and display thet image. 
 
-Double buffering incresases input lat, reduces framerate but is important if you use post processing effects on the screen and needs to display each frame only after completely made. 
+Double buffer incresases input lat, reduces framerate but is important if you use post processing effects on the screen and needs to display each frame only after completely made. 
 
 This property cannot be changed if the \mbox{\hyperlink{class_g_l_tech2_1_1_renderer}{Renderer}} is running. \mbox{\Hypertarget{class_g_l_tech2_1_1_renderer_adbe41e806d8ab4425409b34abb28093f}\label{class_g_l_tech2_1_1_renderer_adbe41e806d8ab4425409b34abb28093f}} 
 \index{GLTech2.Renderer@{GLTech2.Renderer}!FieldOfView@{FieldOfView}}
@@ -212,17 +194,7 @@ Gets and sets the max framerate the engine can reach.
 
 The value will always be clipped between 1 and 250. 
 
-Limiting framerate is important to avoid Time.\+Delta\+Time from being to low an being extremelly affected by floating point accuracy problems. \mbox{\Hypertarget{class_g_l_tech2_1_1_renderer_a60f6d38d194fb18cb0e7731bc48e41c1}\label{class_g_l_tech2_1_1_renderer_a60f6d38d194fb18cb0e7731bc48e41c1}} 
-\index{GLTech2.Renderer@{GLTech2.Renderer}!NativeRendering@{NativeRendering}}
-\index{NativeRendering@{NativeRendering}!GLTech2.Renderer@{GLTech2.Renderer}}
-\doxysubsubsection{\texorpdfstring{NativeRendering}{NativeRendering}}
-{\footnotesize\ttfamily bool GLTech2.\+Renderer.\+Native\+Rendering = false\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}
-
-
-
-Gets and determines if the renderer will use native code. Currently disabled. 
-
-\mbox{\Hypertarget{class_g_l_tech2_1_1_renderer_aa6f88102e816548e5104d8f6ffb1be9c}\label{class_g_l_tech2_1_1_renderer_aa6f88102e816548e5104d8f6ffb1be9c}} 
+Limiting framerate is important to avoid Time.\+Delta\+Time from being to low an being extremelly affected by floating point accuracy problems. \mbox{\Hypertarget{class_g_l_tech2_1_1_renderer_aa6f88102e816548e5104d8f6ffb1be9c}\label{class_g_l_tech2_1_1_renderer_aa6f88102e816548e5104d8f6ffb1be9c}} 
 \index{GLTech2.Renderer@{GLTech2.Renderer}!ParallelRendering@{ParallelRendering}}
 \index{ParallelRendering@{ParallelRendering}!GLTech2.Renderer@{GLTech2.Renderer}}
 \doxysubsubsection{\texorpdfstring{ParallelRendering}{ParallelRendering}}

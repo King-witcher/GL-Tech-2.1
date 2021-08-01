@@ -22,6 +22,15 @@ namespace GLTech2
         /// </remarks>
         public void AddBehaviour(Behaviour behaviour)
         {
+            if (scene != null)
+            {
+                Debug.InternalLog(
+                    "Element",
+                    "Cannot add or remove behaviours after adding an element to a scene.",
+                    Debug.Options.Error);
+                return;
+            }
+
             if (behaviour is null)
                 return;
 
@@ -114,6 +123,15 @@ namespace GLTech2
         /// <param name="b">Behaviour</param>
         public void RemoveBehaviour(Behaviour b)
         {
+            if (scene != null)
+            {
+                Debug.InternalLog(
+                    "Element",
+                    "Cannot add or remove behaviours after adding an element to a scene.",
+                    Debug.Options.Error);
+                return;
+            }
+
             behaviours.Remove(b);
             Unsubscribe(b);
         }
@@ -134,7 +152,16 @@ namespace GLTech2
         /// </summary>
         public void RemoveAllBehaviours()
         {
-            foreach(Behaviour b in behaviours)
+            if (scene != null)
+            {
+                Debug.InternalLog(
+                    "Element",
+                    "Cannot add or remove behaviours after adding an element to a scene.",
+                    Debug.Options.Error);
+                return;
+            }
+
+            foreach (Behaviour b in behaviours)
             {
                 RemoveBehaviour(b);
             }

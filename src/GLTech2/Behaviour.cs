@@ -9,7 +9,10 @@ namespace GLTech2
     /// <remarks>
     ///     When a scene starts running, the engine is responsible for finding and executing Start() and Update() method properly.
     ///     <para>
-    ///         The Start() method, if any, will be executed once the scene is loaded. Update() method, otherwise, is called after every frame is rendered.
+    ///     The Start() method, if any, will be executed once the scene is loaded. Update() method, otherwise, is called after every frame is rendered.
+    ///     </para>
+    ///     <para>
+    ///     Important note: all behaviours must be added to it's elements before adding the Element to a Scene. Otherwise, the Behaviour won't work properly.
     ///     </para>
     /// </remarks>
     public abstract partial class Behaviour

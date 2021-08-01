@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
-    <RootNamespace>GLTech2</RootNamespace>
+    <RootNamespace></RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject></StartupObject>
     <Nullable>disable</Nullable>

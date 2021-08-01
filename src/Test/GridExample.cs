@@ -6,6 +6,7 @@ namespace Test
 {
     partial class Program
     {
+        // Um pequeno mapa usando MapGrid
         static void GridExample()
         {
             // Buffers used
@@ -42,8 +43,8 @@ namespace Test
                 scene.AddElement(map);
             }
 
-            Camera camera = new Camera((5, 5), 180);
             // Camera
+            Camera camera = new Camera((5, 5), 180);
             {
                 camera.AddBehaviour<DebugPerformanceStats>();
                 camera.AddBehaviour<DebugSceneInfo>();

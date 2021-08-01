@@ -8,7 +8,7 @@ namespace Test
     {
         static void AnimatedExample()
         {
-            // Load buffers
+            // Firstly, load buffers
             using PixelBuffer background_buffer = (PixelBuffer)DemoTextures.HellSky;
             using PixelBuffer carvedWall_buffer = (PixelBuffer)DemoTextures.CarvedWall;
             using PixelBuffer bricks_buffer = (PixelBuffer)DemoTextures.Bricks;

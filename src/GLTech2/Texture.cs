@@ -33,6 +33,7 @@ namespace GLTech2
             this.vrepeat = vrepeat;
         }
 
+        // Mapeia um pixel da textura baseado em uma proporção x e uma y que vai de 0 a 1
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal unsafe uint MapPixel(float hratio, float vratio)
         {

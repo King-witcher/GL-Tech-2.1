@@ -24,6 +24,7 @@ namespace Test
             }
         }
 
+        // Essa é a priemira fase do Wolfenstein 3D
         static void E1M1()
         {
             // Buffers used

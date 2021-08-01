@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>GLTech2</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
-    <StartupObject>Test.Program</StartupObject>
-    <Nullable>annotations</Nullable>
+    <StartupObject></StartupObject>
+    <Nullable>disable</Nullable>
     <AnalysisLevel>5.0</AnalysisLevel>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
     <FileVersion>2.1.0.0</FileVersion>
@@ -14,6 +14,10 @@
     <Platforms>x64</Platforms>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>GLTech2.1</PackageId>
+    <IsPublishable>False</IsPublishable>
+    <BaseIntermediateOutputPath>../obj/</BaseIntermediateOutputPath>
+    <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -24,6 +28,7 @@
     <NoWarn>1701;1702;CS1592</NoWarn>
     <WarningsAsErrors>;NU1605</WarningsAsErrors>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -33,7 +38,16 @@
     <DocumentationFile>..\bin\Release\GL Tech 2.1.xml</DocumentationFile>
     <NoWarn>1701;1702;CS1592</NoWarn>
     <WarningsAsErrors>;NU1605</WarningsAsErrors>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Test\ExtremeGrid" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Test\ExtremeGrid" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Test\DemoTextures.Designer.cs">

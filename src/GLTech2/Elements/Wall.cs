@@ -4,7 +4,7 @@ namespace GLTech2.Elements
     /// <summary>
     /// Represents a Plane that collides, or a union of a Plane with a Collider.
     /// </summary>
-    class Wall : Element
+    public class Wall : Element
     {
         private protected override Vector PositionData { get; set; }
         private protected override Vector DirectionData { get; set; }

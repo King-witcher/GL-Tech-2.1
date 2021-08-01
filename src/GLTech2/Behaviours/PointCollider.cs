@@ -5,7 +5,7 @@ namespace GLTech2.Behaviours
     /// <summary>
     /// An initial implementation for KinematicBody that allows an object to respect collision behaviors.
     /// </summary>
-    class PointCollider : KinematicBody
+    public class PointCollider : KinematicBody
     {
         /// <summary>
         /// Determines whether the object should or not respect collisions.

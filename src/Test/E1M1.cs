@@ -169,7 +169,7 @@ namespace Test
                 camera.AddBehaviour(pc);
                 SoftMovement movement = new SoftMovement(pc);
                 camera.AddBehaviour(movement);
-                // camera.AddBehaviour(new EnableNoclip(pc));
+                camera.AddBehaviour<Rotate>();
 
                 scene.AddElement(camera);
             }

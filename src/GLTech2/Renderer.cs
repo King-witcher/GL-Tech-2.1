@@ -6,11 +6,9 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 
 namespace GLTech2
 {
-
     /// <summary>
     /// Provides an interface to render scenes and output the video in a window.
     /// </summary>

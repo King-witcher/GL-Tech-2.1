@@ -11,14 +11,14 @@ namespace GLTech2
 
         internal Element() { }
 
+        private protected virtual Vector PositionData { get; set; }
+
+        private protected virtual Vector DirectionData { get; set; }
+
         /// <summary>
         /// Its correspondent scene. If the element is not bound to any scene, returns null.
         /// </summary>
         public Scene Scene => scene;
-
-        private protected virtual Vector PositionData { get; set; }
-
-        private protected virtual Vector DirectionData { get; set; }
 
         /// <summary>
         /// Releases unmanaged data, if any.

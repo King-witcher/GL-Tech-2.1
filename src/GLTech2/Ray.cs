@@ -5,8 +5,18 @@
     /// </summary>
     public unsafe struct Ray
     {
-        internal Vector start;
-        internal Vector direction;
+        internal readonly Vector start;
+        internal readonly Vector direction;
+
+        /// <summary>
+        /// The only initial/final point of the ray.
+        /// </summary>
+        public Vector Start => start;
+
+        /// <summary>
+        /// The direction of the ray.
+        /// </summary>
+        public Vector Direction => direction;
 
         /// <summary>
         /// Gets a new instance of ray.

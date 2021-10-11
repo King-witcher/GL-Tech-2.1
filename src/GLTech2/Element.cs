@@ -11,8 +11,27 @@ namespace GLTech2
 
         internal Element() { }
 
+        /// <summary>
+        /// Allows subclasses to store the Position.
+        /// </summary>
+        /// <remarks>
+        /// Important: Elements that parent this will not follow it imediatelly for performance and code health reasons.
+        /// Changing this property is only recommended if the element is not a reference point to any other and changing positions is a significant performance bottleneck in your application.
+        /// Otherwise, always use Element.WorldPosition property instead.
+        /// </remarks>
         private protected virtual Vector PositionData { get; set; }
 
+        /// <summary>
+        /// Allows subclasses to store the Direction.
+        /// </summary>
+        /// <remarks>
+        /// Important: Elements that parent this will not follow it imediatelly for performance and code health reasons.
+        /// Changing this property is only recommended if the element is not a reference point to any other and changing positions is a significant performance bottleneck in your application.
+        /// Otherwise, always use Element.WorldDirection property instead.
+        /// </remarks>
+        /// <remarks>
+        /// Remember to set it before parenting any object!
+        /// </remarks>
         private protected virtual Vector DirectionData { get; set; }
 
         /// <summary>

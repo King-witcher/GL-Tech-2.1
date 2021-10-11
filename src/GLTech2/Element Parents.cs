@@ -13,11 +13,8 @@ namespace GLTech2
         private Vector relativeDirection;
 
         /// <summary>
-        /// Gets and sets the absolute position of an Element without and allows subclasses to store the Position the way they want.
+        /// Gets and sets the absolute position of an Element.
         /// </summary>
-        /// <remarks>
-        /// Important: Elements that take this element as reference point will not follow it imediatelly for performance and code health reasons. Changing this property is only recommended if the element is not a reference point to any other and changing positions is a significant performance bottleneck in your application. Otherwise, always use Element.Position property instead.
-        /// </remarks>
         public Vector WorldPosition
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -31,11 +28,8 @@ namespace GLTech2
         }
 
         /// <summary>
-        /// Determines how the element stores its direction.
+        /// Gets and sets the absolute direction of an Element.
         /// </summary>
-        /// <remarks>
-        /// Remember to set it before parenting any object!
-        /// </remarks>
         public Vector WorldDirection
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -49,7 +43,7 @@ namespace GLTech2
         }
 
         /// <summary>
-        /// The scale of this BlockMap. Cannot be zero.
+        /// The scale of this Element. Cannot be zero.
         /// </summary>
         public float WorldScale
         {

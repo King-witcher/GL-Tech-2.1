@@ -10,8 +10,8 @@ namespace GLTech2
 	[StructLayout(LayoutKind.Sequential)]
 	public unsafe struct Vector : IEquatable<Vector>
     {
-		private const float TORAD = (float)Math.PI / 180f;
-		private const float TODEGREE = 180f / (float)Math.PI;
+		private const float TORAD = (float) (Math.PI / 180.0);
+		private const float TODEGREE = (float) (180.0 / Math.PI);
 
 		internal readonly float x;
 		internal readonly float y;
@@ -46,12 +46,12 @@ namespace GLTech2
 		/// <param name="angle">Angle in degrees</param>
 		public Vector(float angle) // Not optimized by fast sin and fast cos
 		{
-			x = (float)Math.Sin(angle * Math.PI / 180);
-			y = (float)Math.Cos(angle * Math.PI / 180);
+			x = (float)Math.Sin(angle * TORAD);
+			y = (float)Math.Cos(angle * TORAD);
 		}
 
 		/// <summary>
-		///     Creates a instance of vector with specified angle and module.
+		///     Creates an instance of Vector with specified angle and module.
 		/// </summary>
 		/// <param name="angle">Angle in degrees</param>
 		/// <param name="module">Module</param>
@@ -62,6 +62,19 @@ namespace GLTech2
 			float y = (float)Math.Cos(angle * Math.PI / 180);
 			return new Vector(module * x, module * y);
 		}
+
+		/// <summary>
+		/// Creates a random instance of Vector up to a maximum module.
+		/// </summary>
+		/// <param name="maxModule">Max module of the vector</param>
+		/// <returns></returns>
+		public static Vector GetRandom(float maxModule)
+        {
+			Random rnd = new Random();
+
+			return new Vector((float) rnd.NextDouble() * 360f)
+				* ((float) rnd.NextDouble() * maxModule);
+        }
 
 		/// <summary>
 		///     Gets and sets the angle, in degrees, of the vector, approximately preserving it's angle.

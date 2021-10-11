@@ -5,8 +5,8 @@
     /// </summary>
     public unsafe struct Ray
     {
-        internal readonly Vector start;
-        internal readonly Vector direction;
+        internal Vector start;
+        internal Vector direction;
 
         /// <summary>
         /// The only initial/final point of the ray.

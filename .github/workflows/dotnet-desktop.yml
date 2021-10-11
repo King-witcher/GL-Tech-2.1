@@ -59,7 +59,7 @@ jobs:
       Solution_Name: GL Tech 2.1.sln                            # Replace with your solution name, i.e. MyWpfApp.sln.
       Test_Project_Path: nunit\Unit Tests.csproj                # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
       Wap_Project_Directory: src                                # Replace with the Wap project directory relative to the solution, i.e. MyWpfApp.Package.
-      Wap_Project_Path: sei la o que botar                   # Replace with the path to your Wap project, i.e. MyWpf.App.Package\MyWpfApp.Package.wapproj.
+      Wap_Project_Path: nunit\Unit Tests.csproj                   # Replace with the path to your Wap project, i.e. MyWpf.App.Package\MyWpfApp.Package.wapproj.
 
     steps:
     - name: Checkout

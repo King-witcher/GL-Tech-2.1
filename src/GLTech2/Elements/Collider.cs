@@ -48,7 +48,7 @@ namespace GLTech2
             unmanaged = null;
         }
 
-        internal override unsafe void AddToSScene(SScene* data) =>
+        internal override unsafe void ChangeSScene(SScene* data) =>
             data->Add(unmanaged);
     }
 }

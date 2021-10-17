@@ -39,7 +39,7 @@ namespace GLTech2
             unmanaged = null;
         }
 
-        internal sealed override unsafe void AddToSScene(SScene* data)
+        internal sealed override unsafe void ChangeSScene(SScene* data)
         {
             if (data->camera == null)
                 data->camera = unmanaged;

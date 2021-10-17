@@ -2,13 +2,16 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// Talvez seja válido implmenetar mapeamento de texturas aqui
-
 namespace GLTech2
 {
+    internal unsafe interface ISElement
+    {
+        internal void AddToSScene(SScene sScene) { }
+    }
+
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct SPlane
+    internal unsafe struct SPlane : ISElement
     {
         internal Vector start;
         internal Vector direction;
@@ -78,6 +81,11 @@ namespace GLTech2
         internal static void Delete(SPlane* item)
         {
             Marshal.FreeHGlobal((IntPtr)item);
+        }
+
+        void ISElement.AddToSScene(SScene s)
+        {
+            throw new NotImplementedException();
         }
     }
 }

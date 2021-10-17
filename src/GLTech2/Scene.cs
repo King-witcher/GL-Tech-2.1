@@ -11,9 +11,10 @@ namespace GLTech2
     {
         internal Action OnStart;
         internal Action OnFrame;
-        internal SScene* unmanaged;
-        private List<Element> elements = new List<Element>();
-        private List<Collider> colliders = new List<Collider>();
+        internal SScene* sScene;
+
+        private List<Element> element_cache = new List<Element>();
+        private List<Collider> collider_cache = new List<Collider>();
 
         /// <summary>
         /// Gets a new instance of Scene.
@@ -21,7 +22,7 @@ namespace GLTech2
         public Scene()
         {
             Texture background = new Texture((PixelBuffer)new Bitmap(1, 1));
-            unmanaged = SScene.Create(background);
+            sScene = SScene.Create(background);
         }
 
         /// <summary>
@@ -29,30 +30,30 @@ namespace GLTech2
         /// </summary>
         /// <param name="background">Background texture rendered behind everything</param>
         public Scene(Texture background) =>
-            unmanaged = SScene.Create(background);
+            sScene = SScene.Create(background);
 
         /// <summary>
         /// Gets how many walls the scene fits.
         /// </summary>
-        public int ColliderCount => colliders.Count;
+        public int ColliderCount => collider_cache.Count;
 
         /// <summary>
         /// Gets how many walls the scene fits.
         /// </summary>
-        public int ElementCount => elements.Count;
+        public int ElementCount => element_cache.Count;
 
         /// <summary>
         /// Gets how many walls the scene fits.
         /// </summary>
-        public int PlaneCount => unmanaged->plane_count;
+        public int PlaneCount => sScene->plane_count;
 
         /// <summary>
         /// Gets and sets the background texture of the Scene.
         /// </summary>
         public Texture Background
 		{
-            get => unmanaged->background;
-            set => unmanaged->background = value;
+            get => sScene->background;
+            set => sScene->background = value;
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace GLTech2
         /// <param name="element">An element to be added</param>
         public void AddElement(Element element)
         {
-            #region Verifications
+            #region Checks
             // Obvious thing
             if (element == null)
                 throw new ArgumentNullException("Cannot add null elements.");
@@ -96,22 +97,22 @@ namespace GLTech2
             }
             #endregion
 
-            Add(element);
+            add(element);
 
-            void Add(Element element)
+            void add(Element element)
             {
                 // Add element to element cache list.
-                elements.Add(element);
+                element_cache.Add(element);
 
-                // In case it's a collider, add to collider cache too.
+                // In case it's a collider, add to collider cache as well.
                 if (element is Collider collider)
-                    colliders.Add(collider);
+                    collider_cache.Add(collider);
 
                 // Set element.scene.
                 element.scene = this;
 
-                // Add element to scene unmanaged data. Each base element can be added on it's on way.
-                element.AddToSScene(unmanaged);
+                // Call element's custom method to add it's data to the unmanaged sScene.
+                element.ChangeSScene(sScene);
 
                 // Add element's behaviours.
                 OnStart += element.OnStart;
@@ -119,7 +120,7 @@ namespace GLTech2
 
                 // Make it recursively to all childs.
                 foreach (var item in element.childs)
-                    Add(item);
+                    add(item);
             }
         }
 
@@ -150,14 +151,14 @@ namespace GLTech2
         /// </summary>
         public void Dispose()
         {
-            foreach(Element item in elements)
+            foreach(Element item in element_cache)
                 item.Dispose();
 
-            SScene.Delete(unmanaged);
-            unmanaged = null;
+            SScene.Delete(sScene);
+            sScene = null;
 
-            elements.Clear();
-            colliders.Clear();
+            element_cache.Clear();
+            collider_cache.Clear();
 
             OnStart = null;
             OnFrame = null;

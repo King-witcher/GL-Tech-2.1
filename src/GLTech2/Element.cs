@@ -44,6 +44,6 @@ namespace GLTech2
         /// </summary>
         public virtual void Dispose() { }
 
-        internal unsafe virtual void AddToSScene(SScene* data) { }
+        internal unsafe virtual void ChangeSScene(SScene* data) { }
     }
 }

@@ -85,7 +85,7 @@
             return $"|{ Start } -- { End }| ";
         }
 
-        internal override void AddToSScene(SScene* data) =>
+        internal override void ChangeSScene(SScene* data) =>
             data->Add(unmanaged);
     }
 }

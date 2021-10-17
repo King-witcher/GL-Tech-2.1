@@ -14,7 +14,7 @@ namespace GLTech2
             Collider nearest = null;
             distance = float.PositiveInfinity;
 
-            foreach (Collider current in colliders)
+            foreach (Collider current in collider_cache)
             {
                 current.Test(ray, out float currentDistance);
 
@@ -59,7 +59,7 @@ namespace GLTech2
                 return y;
             }
 
-            SCollider* nearest = unmanaged->Cllsn_rcast(ray, out distance);
+            SCollider* nearest = sScene->Cllsn_rcast(ray, out distance);
 
             if (nearest != null)
             {

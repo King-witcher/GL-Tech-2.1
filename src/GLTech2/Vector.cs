@@ -27,10 +27,10 @@ namespace GLTech2
 		public float Y { get => y; }
 
 		/// <summary>
-		///     Creates a new instance of vector instance based on its cordinates.
+		///     Creates a new instance of vector instance based on its components.
 		/// </summary>
-		/// <param name="x">X cordinate</param>
-		/// <param name="y">Y cordinate</param>
+		/// <param name="x">The right component</param>
+		/// <param name="y">The forward component</param>
 		public Vector(float x, float y)
 		{
 			this.x = x;

@@ -15,7 +15,7 @@ Inheritance diagram for GLTech2.\+Vector\+:\begin{figure}[H]
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_aef18436ab7d3b5d8ec85eecfb394511f}{Vector}} (float x, float y)
-\begin{DoxyCompactList}\small\item\em Creates a new instance of vector instance based on its cordinates. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Creates a new instance of vector instance based on its components. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a1c31a9f5e1b13c34a835131f0d603176}{Vector}} (float angle)
 \begin{DoxyCompactList}\small\item\em Creates a new instance of vector that has module equal to 1 and a specified angle. \end{DoxyCompactList}\item 
 float \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a4c035d7086f7d5d05316e7dc54db5c14}{Get\+Distance}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} vector)
@@ -36,7 +36,9 @@ override int \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a441bd5662c2ed489860fc
 \begin{DoxyCompactItemize}
 \item 
 static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a5e4956f0fec3061aead351430cc0ade7}{From\+Angle}} (float angle, float module)
-\begin{DoxyCompactList}\small\item\em Creates a instance of vector with specified angle and module. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Creates an instance of \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} with specified angle and module. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a9d1a5c29ac1e058ddfddea4085e1be77}{Get\+Random}} (float max\+Module)
+\begin{DoxyCompactList}\small\item\em Creates a random instance of \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} up to a maximum module. \end{DoxyCompactList}\item 
 static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a7573392ce508902ed4f9404f16d9eda3}{Get\+Regular\+Polygon}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} center, float radius, int edges)
 \begin{DoxyCompactList}\small\item\em Gets an array of vectors that compose the verts of a regular polygon. \end{DoxyCompactList}\item 
 static float \mbox{\hyperlink{struct_g_l_tech2_1_1_vector_a838e9e218fa04c7963ae4e8500264bea}{Dot\+Product}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} left, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} right)
@@ -100,13 +102,13 @@ Represents a \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} in a bidimen
 
 
 
-Creates a new instance of vector instance based on its cordinates. 
+Creates a new instance of vector instance based on its components. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & X cordinate\\
+{\em x} & The right component\\
 \hline
-{\em y} & Y cordinate\\
+{\em y} & The forward component\\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a1c31a9f5e1b13c34a835131f0d603176}\label{struct_g_l_tech2_1_1_vector_a1c31a9f5e1b13c34a835131f0d603176}} 
@@ -213,7 +215,7 @@ true if the specified object is equal to the current object; otherwise, false.
 
 
 
-Creates a instance of vector with specified angle and module. 
+Creates an instance of \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} with specified angle and module. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -255,6 +257,24 @@ Serves as the default hash function.
 
 \begin{DoxyReturn}{Returns}
 A hash code for the current object.
+\end{DoxyReturn}
+\mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a9d1a5c29ac1e058ddfddea4085e1be77}\label{struct_g_l_tech2_1_1_vector_a9d1a5c29ac1e058ddfddea4085e1be77}} 
+\index{GLTech2.Vector@{GLTech2.Vector}!GetRandom@{GetRandom}}
+\index{GetRandom@{GetRandom}!GLTech2.Vector@{GLTech2.Vector}}
+\doxysubsubsection{\texorpdfstring{GetRandom()}{GetRandom()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Vector.\+Get\+Random (\begin{DoxyParamCaption}\item[{float}]{max\+Module }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a random instance of \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} up to a maximum module. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em max\+Module} & Max module of the vector\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
 \end{DoxyReturn}
 \mbox{\Hypertarget{struct_g_l_tech2_1_1_vector_a7573392ce508902ed4f9404f16d9eda3}\label{struct_g_l_tech2_1_1_vector_a7573392ce508902ed4f9404f16d9eda3}} 
 \index{GLTech2.Vector@{GLTech2.Vector}!GetRegularPolygon@{GetRegularPolygon}}

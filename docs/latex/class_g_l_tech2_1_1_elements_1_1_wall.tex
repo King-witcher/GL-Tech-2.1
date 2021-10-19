@@ -1,5 +1,10 @@
 \hypertarget{class_g_l_tech2_1_1_elements_1_1_wall}{}\doxysection{GLTech2.\+Elements.\+Wall Class Reference}
 \label{class_g_l_tech2_1_1_elements_1_1_wall}\index{GLTech2.Elements.Wall@{GLTech2.Elements.Wall}}
+
+
+Represents a \mbox{\hyperlink{class_g_l_tech2_1_1_plane}{Plane}} that collides, or a union of a \mbox{\hyperlink{class_g_l_tech2_1_1_plane}{Plane}} with a \mbox{\hyperlink{class_g_l_tech2_1_1_collider}{Collider}}.  
+
+
 Inheritance diagram for GLTech2.\+Elements.\+Wall\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -9,9 +14,8 @@ Inheritance diagram for GLTech2.\+Elements.\+Wall\+:\begin{figure}[H]
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{class_g_l_tech2_1_1_elements_1_1_wall_a3a2015a6a66ad7b09f68b5bd02713444}\label{class_g_l_tech2_1_1_elements_1_1_wall_a3a2015a6a66ad7b09f68b5bd02713444}} 
-{\bfseries Wall} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} start, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} end, \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} texture)
-\end{DoxyCompactItemize}
+\mbox{\hyperlink{class_g_l_tech2_1_1_elements_1_1_wall_a3a2015a6a66ad7b09f68b5bd02713444}{Wall}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} start, \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} end, \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} texture)
+\begin{DoxyCompactList}\small\item\em Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_elements_1_1_wall}{Wall}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Properties}
 \begin{DoxyCompactItemize}
 \item 
@@ -22,7 +26,34 @@ override \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} {\bfseries Posit
 override \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} {\bfseries Direction\+Data}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \item 
 unsafe \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} \mbox{\hyperlink{class_g_l_tech2_1_1_elements_1_1_wall_aa4568fc4fb1fa33cde2c926ceeeb26b3}{Texture}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\begin{DoxyCompactList}\small\item\em Gets and sets the material of the \mbox{\hyperlink{class_g_l_tech2_1_1_elements_1_1_wall}{Wall}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Gets and sets the texture of the \mbox{\hyperlink{class_g_l_tech2_1_1_elements_1_1_wall}{Wall}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a \mbox{\hyperlink{class_g_l_tech2_1_1_plane}{Plane}} that collides, or a union of a \mbox{\hyperlink{class_g_l_tech2_1_1_plane}{Plane}} with a \mbox{\hyperlink{class_g_l_tech2_1_1_collider}{Collider}}. 
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_elements_1_1_wall_a3a2015a6a66ad7b09f68b5bd02713444}\label{class_g_l_tech2_1_1_elements_1_1_wall_a3a2015a6a66ad7b09f68b5bd02713444}} 
+\index{GLTech2.Elements.Wall@{GLTech2.Elements.Wall}!Wall@{Wall}}
+\index{Wall@{Wall}!GLTech2.Elements.Wall@{GLTech2.Elements.Wall}}
+\doxysubsubsection{\texorpdfstring{Wall()}{Wall()}}
+{\footnotesize\ttfamily GLTech2.\+Elements.\+Wall.\+Wall (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{start,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{end,  }\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}}]{texture }\end{DoxyParamCaption})}
+
+
+
+Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_elements_1_1_wall}{Wall}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start} & Initial point\\
+\hline
+{\em end} & Final point\\
+\hline
+{\em texture} & \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}}\\
+\hline
+\end{DoxyParams}
 
 
 \doxysubsection{Property Documentation}
@@ -34,5 +65,5 @@ unsafe \mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} \mbox{\hyperlink
 
 
 
-Gets and sets the material of the \mbox{\hyperlink{class_g_l_tech2_1_1_elements_1_1_wall}{Wall}}. 
+Gets and sets the texture of the \mbox{\hyperlink{class_g_l_tech2_1_1_elements_1_1_wall}{Wall}}. 
 

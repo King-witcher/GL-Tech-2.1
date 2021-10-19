@@ -4,14 +4,10 @@ using System.Runtime.InteropServices;
 
 namespace GLTech2
 {
-    internal unsafe interface ISElement
-    {
-        internal void AddToSScene(SScene sScene) { }
-    }
 
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct SPlane : ISElement
+    internal unsafe struct SPlane : IStructElement
     {
         internal Vector start;
         internal Vector direction;
@@ -37,6 +33,11 @@ namespace GLTech2
             result->start = start;
             result->link_next = null;
             return result;
+        }
+
+        void IStructElement.AddToSScene(SScene s)
+        {
+            throw new NotImplementedException();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -81,11 +82,6 @@ namespace GLTech2
         internal static void Delete(SPlane* item)
         {
             Marshal.FreeHGlobal((IntPtr)item);
-        }
-
-        void ISElement.AddToSScene(SScene s)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -101,11 +101,11 @@ Inheritance diagram for GLTech2.Scene:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3eebee399dba51e5e3ec66de1600b22b"><td class="memItemLeft" align="right" valign="top"><a id="a3eebee399dba51e5e3ec66de1600b22b"></a>
-<a class="el" href="class_g_l_tech2_1_1_collider.html">Collider</a>&#160;</td><td class="memItemRight" valign="bottom"><b>RayCast</b> (<a class="el" href="struct_g_l_tech2_1_1_ray.html">Ray</a> ray, out float distance)</td></tr>
+<tr class="memitem:a3eebee399dba51e5e3ec66de1600b22b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_g_l_tech2_1_1_collider.html">Collider</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_scene.html#a3eebee399dba51e5e3ec66de1600b22b">RayCast</a> (<a class="el" href="struct_g_l_tech2_1_1_ray.html">Ray</a> ray, out float distance)</td></tr>
+<tr class="memdesc:a3eebee399dba51e5e3ec66de1600b22b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the first instnace of <a class="el" href="class_g_l_tech2_1_1_collider.html" title="Represents an invisible plane that can be dettected via collision dettection.">Collider</a> that collide with the <a class="el" href="struct_g_l_tech2_1_1_ray.html" title="Represents a ray.">Ray</a>.  <a href="class_g_l_tech2_1_1_scene.html#a3eebee399dba51e5e3ec66de1600b22b">More...</a><br /></td></tr>
 <tr class="separator:a3eebee399dba51e5e3ec66de1600b22b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9d4a5193beda04a8ced8002af4cae3a"><td class="memItemLeft" align="right" valign="top"><a id="ad9d4a5193beda04a8ced8002af4cae3a"></a>
-unsafe void&#160;</td><td class="memItemRight" valign="bottom"><b>RayCast</b> (<a class="el" href="struct_g_l_tech2_1_1_ray.html">Ray</a> ray, out float distance, out <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a> normal)</td></tr>
+<tr class="memitem:ad9d4a5193beda04a8ced8002af4cae3a"><td class="memItemLeft" align="right" valign="top">unsafe void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_scene.html#ad9d4a5193beda04a8ced8002af4cae3a">RayCast</a> (<a class="el" href="struct_g_l_tech2_1_1_ray.html">Ray</a> ray, out float distance, out <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a> normal)</td></tr>
+<tr class="memdesc:ad9d4a5193beda04a8ced8002af4cae3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets information about the closest collision from a <a class="el" href="struct_g_l_tech2_1_1_ray.html" title="Represents a ray.">Ray</a>.  <a href="class_g_l_tech2_1_1_scene.html#ad9d4a5193beda04a8ced8002af4cae3a">More...</a><br /></td></tr>
 <tr class="separator:ad9d4a5193beda04a8ced8002af4cae3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8208fe98ce0ec42750545bea9e361c0c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_scene.html#a8208fe98ce0ec42750545bea9e361c0c">Scene</a> ()</td></tr>
 <tr class="memdesc:a8208fe98ce0ec42750545bea9e361c0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a new instance of <a class="el" href="class_g_l_tech2_1_1_scene.html" title="Represents a scene, which stores a set of elements that can be or not rendered and,...">Scene</a>.  <a href="class_g_l_tech2_1_1_scene.html#a8208fe98ce0ec42750545bea9e361c0c">More...</a><br /></td></tr>
@@ -286,6 +286,90 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources. </p>
+
+</div>
+</div>
+<a id="a3eebee399dba51e5e3ec66de1600b22b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3eebee399dba51e5e3ec66de1600b22b">&#9670;&nbsp;</a></span>RayCast() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_g_l_tech2_1_1_collider.html">Collider</a> GLTech2.Scene.RayCast </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_g_l_tech2_1_1_ray.html">Ray</a>&#160;</td>
+          <td class="paramname"><em>ray</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">out float&#160;</td>
+          <td class="paramname"><em>distance</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the first instnace of <a class="el" href="class_g_l_tech2_1_1_collider.html" title="Represents an invisible plane that can be dettected via collision dettection.">Collider</a> that collide with the <a class="el" href="struct_g_l_tech2_1_1_ray.html" title="Represents a ray.">Ray</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ray</td><td><a class="el" href="struct_g_l_tech2_1_1_ray.html" title="Represents a ray.">Ray</a> to test</td></tr>
+    <tr><td class="paramname">distance</td><td>Distance between the ray's initial point and the collision point.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The first instnace of <a class="el" href="class_g_l_tech2_1_1_collider.html" title="Represents an invisible plane that can be dettected via collision dettection.">Collider</a> that collide with the <a class="el" href="struct_g_l_tech2_1_1_ray.html" title="Represents a ray.">Ray</a>.</dd></dl>
+
+</div>
+</div>
+<a id="ad9d4a5193beda04a8ced8002af4cae3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9d4a5193beda04a8ced8002af4cae3a">&#9670;&nbsp;</a></span>RayCast() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsafe void GLTech2.Scene.RayCast </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_g_l_tech2_1_1_ray.html">Ray</a>&#160;</td>
+          <td class="paramname"><em>ray</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">out float&#160;</td>
+          <td class="paramname"><em>distance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">out <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</td>
+          <td class="paramname"><em>normal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets information about the closest collision from a <a class="el" href="struct_g_l_tech2_1_1_ray.html" title="Represents a ray.">Ray</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ray</td><td><a class="el" href="struct_g_l_tech2_1_1_ray.html" title="Represents a ray.">Ray</a> to test</td></tr>
+    <tr><td class="paramname">distance</td><td>Distance between the ray's initial point and the collision point</td></tr>
+    <tr><td class="paramname">normal</td><td>The normal vector from the collision</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The first instnace of <a class="el" href="class_g_l_tech2_1_1_collider.html" title="Represents an invisible plane that can be dettected via collision dettection.">Collider</a> that collide with the <a class="el" href="struct_g_l_tech2_1_1_ray.html" title="Represents a ray.">Ray</a>.</dd></dl>
+<p>This method uses unmanaged data, which means it's faster. </p>
 
 </div>
 </div>

@@ -12,10 +12,11 @@ var searchData=
   ['debugscripttime_47',['DebugScriptTime',['../class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats.html#a303b1ddf069fa0b92c724fd479275cfb',1,'GLTech2::Behaviours::DebugPerformanceStats']]],
   ['debugwindowtime_48',['DebugWindowTime',['../class_g_l_tech2_1_1_behaviours_1_1_debug_performance_stats.html#a5cd35c25d51e2aadc795356ae0fac6c2',1,'GLTech2::Behaviours::DebugPerformanceStats']]],
   ['detachchildren_49',['DetachChildren',['../class_g_l_tech2_1_1_element.html#a5933953f7da7f103f65b5739832dd598',1,'GLTech2::Element']]],
-  ['direction_50',['Direction',['../class_g_l_tech2_1_1_behaviours_1_1_move.html#adf4ce3a6f57156fbbda505e5ceb8a9c2',1,'GLTech2::Behaviours::Move']]],
-  ['disableconsole_51',['DisableConsole',['../class_g_l_tech2_1_1_debug.html#a32ddbf95b980d38423a854afb8c774a0',1,'GLTech2::Debug']]],
-  ['dispose_52',['Dispose',['../class_g_l_tech2_1_1_element.html#a0c1d09747a9346f7719f32c4ed0b670c',1,'GLTech2.Element.Dispose()'],['../class_g_l_tech2_1_1_camera.html#a576b5ccc4f0c2d6a208b63f3123dd7e8',1,'GLTech2.Camera.Dispose()'],['../class_g_l_tech2_1_1_collider.html#a2313d64ec861716d0e8e87b509475e6b',1,'GLTech2.Collider.Dispose()'],['../class_g_l_tech2_1_1_plane.html#a4cb9c7089190618f02722137a68a8d69',1,'GLTech2.Plane.Dispose()'],['../struct_g_l_tech2_1_1_pixel_buffer.html#aa0da7bf121a380b3061a24d0542c0f77',1,'GLTech2.PixelBuffer.Dispose()'],['../class_g_l_tech2_1_1_scene.html#a1c7f731747698f69e67516ed3d256a15',1,'GLTech2.Scene.Dispose()']]],
-  ['disprojection_53',['Disprojection',['../struct_g_l_tech2_1_1_vector.html#aedd6a76845c993d2b14ae4bd1339a408',1,'GLTech2::Vector']]],
-  ['dotproduct_54',['DotProduct',['../struct_g_l_tech2_1_1_vector.html#a838e9e218fa04c7963ae4e8500264bea',1,'GLTech2::Vector']]],
-  ['doublebuffer_55',['DoubleBuffer',['../class_g_l_tech2_1_1_renderer.html#a1d25f089ddf8124a523ebc31aba65960',1,'GLTech2::Renderer']]]
+  ['direction_50',['Direction',['../class_g_l_tech2_1_1_behaviours_1_1_move.html#adf4ce3a6f57156fbbda505e5ceb8a9c2',1,'GLTech2.Behaviours.Move.Direction()'],['../struct_g_l_tech2_1_1_ray.html#a9a789990f8f8f6b083d70443585058b7',1,'GLTech2.Ray.Direction()']]],
+  ['directiondata_51',['DirectionData',['../class_g_l_tech2_1_1_element.html#a5937158165ff572cadf3073fc28538e2',1,'GLTech2::Element']]],
+  ['disableconsole_52',['DisableConsole',['../class_g_l_tech2_1_1_debug.html#a32ddbf95b980d38423a854afb8c774a0',1,'GLTech2::Debug']]],
+  ['dispose_53',['Dispose',['../class_g_l_tech2_1_1_element.html#a0c1d09747a9346f7719f32c4ed0b670c',1,'GLTech2.Element.Dispose()'],['../class_g_l_tech2_1_1_camera.html#a576b5ccc4f0c2d6a208b63f3123dd7e8',1,'GLTech2.Camera.Dispose()'],['../class_g_l_tech2_1_1_collider.html#a2313d64ec861716d0e8e87b509475e6b',1,'GLTech2.Collider.Dispose()'],['../class_g_l_tech2_1_1_plane.html#a4cb9c7089190618f02722137a68a8d69',1,'GLTech2.Plane.Dispose()'],['../struct_g_l_tech2_1_1_pixel_buffer.html#aa0da7bf121a380b3061a24d0542c0f77',1,'GLTech2.PixelBuffer.Dispose()'],['../class_g_l_tech2_1_1_scene.html#a1c7f731747698f69e67516ed3d256a15',1,'GLTech2.Scene.Dispose()']]],
+  ['disprojection_54',['Disprojection',['../struct_g_l_tech2_1_1_vector.html#aedd6a76845c993d2b14ae4bd1339a408',1,'GLTech2::Vector']]],
+  ['dotproduct_55',['DotProduct',['../struct_g_l_tech2_1_1_vector.html#a838e9e218fa04c7963ae4e8500264bea',1,'GLTech2::Vector']]],
+  ['doublebuffer_56',['DoubleBuffer',['../class_g_l_tech2_1_1_renderer.html#a1d25f089ddf8124a523ebc31aba65960',1,'GLTech2::Renderer']]]
 ];

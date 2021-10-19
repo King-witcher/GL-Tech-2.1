@@ -28,3 +28,5 @@ Represents a behaviour script that can be attached to an element. Similar to Mon
 When a scene starts running, the engine is responsible for finding and executing Start() and Update() method properly. 
 
 The Start() method, if any, will be executed once the scene is loaded. Update() method, otherwise, is called after every frame is rendered. 
+
+Important note\+: all behaviours must be added to it\textquotesingle{}s elements before adding the \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} to a \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}. Otherwise, the \mbox{\hyperlink{class_g_l_tech2_1_1_behaviour}{Behaviour}} won\textquotesingle{}t work properly. 

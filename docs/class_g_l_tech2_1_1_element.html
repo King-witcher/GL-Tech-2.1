@@ -98,11 +98,11 @@ Inheritance diagram for GLTech2.Element:</div>
  <div class="center">
   <img src="class_g_l_tech2_1_1_element.png" usemap="#GLTech2.Element_map" alt=""/>
   <map id="GLTech2.Element_map" name="GLTech2.Element_map">
-<area href="class_g_l_tech2_1_1_camera.html" title="Represents a point of view from which the Renderer can render a scene." alt="GLTech2.Camera" shape="rect" coords="0,112,211,136"/>
+<area href="class_g_l_tech2_1_1_camera.html" title="Represents a camera view from which the Renderer can render a scene." alt="GLTech2.Camera" shape="rect" coords="0,112,211,136"/>
 <area href="class_g_l_tech2_1_1_collider.html" title="Represents an invisible plane that can be dettected via collision dettection." alt="GLTech2.Collider" shape="rect" coords="221,112,432,136"/>
 <area href="class_g_l_tech2_1_1_elements_1_1_block_map.html" title="Provides a tool to build maplevels from images." alt="GLTech2.Elements.BlockMap" shape="rect" coords="442,112,653,136"/>
 <area href="class_g_l_tech2_1_1_elements_1_1_polygon.html" title="Represents a set of walls that make up a polygon." alt="GLTech2.Elements.Polygon" shape="rect" coords="663,112,874,136"/>
-<area href="class_g_l_tech2_1_1_elements_1_1_wall.html" alt="GLTech2.Elements.Wall" shape="rect" coords="884,112,1095,136"/>
+<area href="class_g_l_tech2_1_1_elements_1_1_wall.html" title="Represents a Plane that collides, or a union of a Plane with a Collider." alt="GLTech2.Elements.Wall" shape="rect" coords="884,112,1095,136"/>
 <area href="class_g_l_tech2_1_1_empty.html" title="Represents and empty element that does nothing." alt="GLTech2.Empty" shape="rect" coords="1105,112,1316,136"/>
 <area href="class_g_l_tech2_1_1_plane.html" title="Represents a vertical plane on the map." alt="GLTech2.Plane" shape="rect" coords="1326,112,1537,136"/>
 <area href="class_g_l_tech2_1_1_elements_1_1_regular_polygon.html" title="Stores a set of walls that makes a regular polygon." alt="GLTech2.Elements.RegularPolygon" shape="rect" coords="663,168,874,192"/>
@@ -157,13 +157,13 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:af0da845772e67aedd609759990acff7c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#af0da845772e67aedd609759990acff7c">WorldPosition</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:af0da845772e67aedd609759990acff7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets and sets the absolute position of an <a class="el" href="class_g_l_tech2_1_1_element.html" title="Represents an element that can be part of a Scene.">Element</a> without and allows subclasses to store the Position the way they want.  <a href="class_g_l_tech2_1_1_element.html#af0da845772e67aedd609759990acff7c">More...</a><br /></td></tr>
+<tr class="memdesc:af0da845772e67aedd609759990acff7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets and sets the absolute position of an <a class="el" href="class_g_l_tech2_1_1_element.html" title="Represents an element that can be part of a Scene.">Element</a>.  <a href="class_g_l_tech2_1_1_element.html#af0da845772e67aedd609759990acff7c">More...</a><br /></td></tr>
 <tr class="separator:af0da845772e67aedd609759990acff7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e176a48dfaae9445aa95d8a5ae9bbba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#a4e176a48dfaae9445aa95d8a5ae9bbba">WorldDirection</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a4e176a48dfaae9445aa95d8a5ae9bbba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines how the element stores its direction.  <a href="class_g_l_tech2_1_1_element.html#a4e176a48dfaae9445aa95d8a5ae9bbba">More...</a><br /></td></tr>
+<tr class="memdesc:a4e176a48dfaae9445aa95d8a5ae9bbba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets and sets the absolute direction of an <a class="el" href="class_g_l_tech2_1_1_element.html" title="Represents an element that can be part of a Scene.">Element</a>.  <a href="class_g_l_tech2_1_1_element.html#a4e176a48dfaae9445aa95d8a5ae9bbba">More...</a><br /></td></tr>
 <tr class="separator:a4e176a48dfaae9445aa95d8a5ae9bbba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec929d63a896cc5566332973be7f2217"><td class="memItemLeft" align="right" valign="top">float?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#aec929d63a896cc5566332973be7f2217">WorldScale</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:aec929d63a896cc5566332973be7f2217"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scale of this BlockMap. Cannot be zero.  <a href="class_g_l_tech2_1_1_element.html#aec929d63a896cc5566332973be7f2217">More...</a><br /></td></tr>
+<tr class="memdesc:aec929d63a896cc5566332973be7f2217"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scale of this <a class="el" href="class_g_l_tech2_1_1_element.html" title="Represents an element that can be part of a Scene.">Element</a>. Cannot be zero.  <a href="class_g_l_tech2_1_1_element.html#aec929d63a896cc5566332973be7f2217">More...</a><br /></td></tr>
 <tr class="separator:aec929d63a896cc5566332973be7f2217"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a762b6c12740a3ae50430c32c77011a46"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#a762b6c12740a3ae50430c32c77011a46">RelativePosition</a><code> [get, set]</code></td></tr>
 <tr class="memdesc:a762b6c12740a3ae50430c32c77011a46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets and sets element's position relatively to it's parent or, if it has no parent, it's absolute position.  <a href="class_g_l_tech2_1_1_element.html#a762b6c12740a3ae50430c32c77011a46">More...</a><br /></td></tr>
@@ -183,15 +183,15 @@ Properties</h2></td></tr>
 <tr class="memitem:a2ab96f9dcff0ff247af5eece1bb83d2a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#a2ab96f9dcff0ff247af5eece1bb83d2a">ChildCount</a><code> [get]</code></td></tr>
 <tr class="memdesc:a2ab96f9dcff0ff247af5eece1bb83d2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many childs the element has.  <a href="class_g_l_tech2_1_1_element.html#a2ab96f9dcff0ff247af5eece1bb83d2a">More...</a><br /></td></tr>
 <tr class="separator:a2ab96f9dcff0ff247af5eece1bb83d2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fb26c1cf1264827e74af2ac95d1fcac"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#a7fb26c1cf1264827e74af2ac95d1fcac">PositionData</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a7fb26c1cf1264827e74af2ac95d1fcac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows subclasses to store the Position.  <a href="class_g_l_tech2_1_1_element.html#a7fb26c1cf1264827e74af2ac95d1fcac">More...</a><br /></td></tr>
+<tr class="separator:a7fb26c1cf1264827e74af2ac95d1fcac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5937158165ff572cadf3073fc28538e2"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#a5937158165ff572cadf3073fc28538e2">DirectionData</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a5937158165ff572cadf3073fc28538e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows subclasses to store the Direction.  <a href="class_g_l_tech2_1_1_element.html#a5937158165ff572cadf3073fc28538e2">More...</a><br /></td></tr>
+<tr class="separator:a5937158165ff572cadf3073fc28538e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9687d40a7e6ca4204ccacefadbf0ec17"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_g_l_tech2_1_1_scene.html">Scene</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_l_tech2_1_1_element.html#a9687d40a7e6ca4204ccacefadbf0ec17">Scene</a><code> [get]</code></td></tr>
 <tr class="memdesc:a9687d40a7e6ca4204ccacefadbf0ec17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Its correspondent scene. If the element is not bound to any scene, returns null.  <a href="class_g_l_tech2_1_1_element.html#a9687d40a7e6ca4204ccacefadbf0ec17">More...</a><br /></td></tr>
 <tr class="separator:a9687d40a7e6ca4204ccacefadbf0ec17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7fb26c1cf1264827e74af2ac95d1fcac"><td class="memItemLeft" align="right" valign="top"><a id="a7fb26c1cf1264827e74af2ac95d1fcac"></a>
-virtual <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>PositionData</b><code> [get, set]</code></td></tr>
-<tr class="separator:a7fb26c1cf1264827e74af2ac95d1fcac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5937158165ff572cadf3073fc28538e2"><td class="memItemLeft" align="right" valign="top"><a id="a5937158165ff572cadf3073fc28538e2"></a>
-virtual <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>DirectionData</b><code> [get, set]</code></td></tr>
-<tr class="separator:a5937158165ff572cadf3073fc28538e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents an element that can be part of a <a class="el" href="class_g_l_tech2_1_1_scene.html" title="Represents a scene, which stores a set of elements that can be or not rendered and,...">Scene</a>. </p>
@@ -594,6 +594,32 @@ virtual <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</
 
 </div>
 </div>
+<a id="a5937158165ff572cadf3073fc28538e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5937158165ff572cadf3073fc28538e2">&#9670;&nbsp;</a></span>DirectionData</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a> GLTech2.Element.DirectionData</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Allows subclasses to store the Direction. </p>
+<p>Important: <a class="el" href="namespace_g_l_tech2_1_1_elements.html">Elements</a> that parent this will not follow it imediatelly for performance and code health reasons. Changing this property is only recommended if the element is not a reference point to any other and changing positions is a significant performance bottleneck in your application. Otherwise, always use <a class="el" href="class_g_l_tech2_1_1_element.html#a4e176a48dfaae9445aa95d8a5ae9bbba" title="Gets and sets the absolute direction of an Element.">Element.WorldDirection</a> property instead. </p>
+<p>Remember to set it before parenting any object! </p>
+
+</div>
+</div>
 <a id="aed800c203d9dadc1189bf70d0290bd40"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aed800c203d9dadc1189bf70d0290bd40">&#9670;&nbsp;</a></span>Parent</h2>
 
@@ -616,6 +642,31 @@ virtual <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</
 
 <p>Gets and sets element's reference point. A null value means that the element will take as reference point the world. </p>
 <p>Setting a reference point will make the object to move and rotate relatively to it's reference point, and if the parent element moves/rotate, this element will follow. </p>
+
+</div>
+</div>
+<a id="a7fb26c1cf1264827e74af2ac95d1fcac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fb26c1cf1264827e74af2ac95d1fcac">&#9670;&nbsp;</a></span>PositionData</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a> GLTech2.Element.PositionData</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Allows subclasses to store the Position. </p>
+<p>Important: <a class="el" href="namespace_g_l_tech2_1_1_elements.html">Elements</a> that parent this will not follow it imediatelly for performance and code health reasons. Changing this property is only recommended if the element is not a reference point to any other and changing positions is a significant performance bottleneck in your application. Otherwise, always use <a class="el" href="class_g_l_tech2_1_1_element.html#af0da845772e67aedd609759990acff7c" title="Gets and sets the absolute position of an Element.">Element.WorldPosition</a> property instead. </p>
 
 </div>
 </div>
@@ -761,8 +812,7 @@ virtual <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</
 </table>
 </div><div class="memdoc">
 
-<p>Determines how the element stores its direction. </p>
-<p>Remember to set it before parenting any object! </p>
+<p>Gets and sets the absolute direction of an <a class="el" href="class_g_l_tech2_1_1_element.html" title="Represents an element that can be part of a Scene.">Element</a>. </p>
 
 </div>
 </div>
@@ -786,8 +836,7 @@ virtual <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</
 </table>
 </div><div class="memdoc">
 
-<p>Gets and sets the absolute position of an <a class="el" href="class_g_l_tech2_1_1_element.html" title="Represents an element that can be part of a Scene.">Element</a> without and allows subclasses to store the Position the way they want. </p>
-<p>Important: <a class="el" href="namespace_g_l_tech2_1_1_elements.html">Elements</a> that take this element as reference point will not follow it imediatelly for performance and code health reasons. Changing this property is only recommended if the element is not a reference point to any other and changing positions is a significant performance bottleneck in your application. Otherwise, always use Element.Position property instead. </p>
+<p>Gets and sets the absolute position of an <a class="el" href="class_g_l_tech2_1_1_element.html" title="Represents an element that can be part of a Scene.">Element</a>. </p>
 
 </div>
 </div>
@@ -811,7 +860,7 @@ virtual <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</
 </table>
 </div><div class="memdoc">
 
-<p>The scale of this BlockMap. Cannot be zero. </p>
+<p>The scale of this <a class="el" href="class_g_l_tech2_1_1_element.html" title="Represents an element that can be part of a Scene.">Element</a>. Cannot be zero. </p>
 
 </div>
 </div>

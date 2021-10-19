@@ -103,7 +103,7 @@ Inheritance diagram for GLTech2.Vector:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aef18436ab7d3b5d8ec85eecfb394511f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_vector.html#aef18436ab7d3b5d8ec85eecfb394511f">Vector</a> (float x, float y)</td></tr>
-<tr class="memdesc:aef18436ab7d3b5d8ec85eecfb394511f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new instance of vector instance based on its cordinates.  <a href="struct_g_l_tech2_1_1_vector.html#aef18436ab7d3b5d8ec85eecfb394511f">More...</a><br /></td></tr>
+<tr class="memdesc:aef18436ab7d3b5d8ec85eecfb394511f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new instance of vector instance based on its components.  <a href="struct_g_l_tech2_1_1_vector.html#aef18436ab7d3b5d8ec85eecfb394511f">More...</a><br /></td></tr>
 <tr class="separator:aef18436ab7d3b5d8ec85eecfb394511f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c31a9f5e1b13c34a835131f0d603176"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_vector.html#a1c31a9f5e1b13c34a835131f0d603176">Vector</a> (float angle)</td></tr>
 <tr class="memdesc:a1c31a9f5e1b13c34a835131f0d603176"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new instance of vector that has module equal to 1 and a specified angle.  <a href="struct_g_l_tech2_1_1_vector.html#a1c31a9f5e1b13c34a835131f0d603176">More...</a><br /></td></tr>
@@ -133,8 +133,11 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a5e4956f0fec3061aead351430cc0ade7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_vector.html#a5e4956f0fec3061aead351430cc0ade7">FromAngle</a> (float angle, float module)</td></tr>
-<tr class="memdesc:a5e4956f0fec3061aead351430cc0ade7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a instance of vector with specified angle and module.  <a href="struct_g_l_tech2_1_1_vector.html#a5e4956f0fec3061aead351430cc0ade7">More...</a><br /></td></tr>
+<tr class="memdesc:a5e4956f0fec3061aead351430cc0ade7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an instance of <a class="el" href="struct_g_l_tech2_1_1_vector.html" title="Represents a Vector in a bidimensional space.">Vector</a> with specified angle and module.  <a href="struct_g_l_tech2_1_1_vector.html#a5e4956f0fec3061aead351430cc0ade7">More...</a><br /></td></tr>
 <tr class="separator:a5e4956f0fec3061aead351430cc0ade7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d1a5c29ac1e058ddfddea4085e1be77"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_vector.html#a9d1a5c29ac1e058ddfddea4085e1be77">GetRandom</a> (float maxModule)</td></tr>
+<tr class="memdesc:a9d1a5c29ac1e058ddfddea4085e1be77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a random instance of <a class="el" href="struct_g_l_tech2_1_1_vector.html" title="Represents a Vector in a bidimensional space.">Vector</a> up to a maximum module.  <a href="struct_g_l_tech2_1_1_vector.html#a9d1a5c29ac1e058ddfddea4085e1be77">More...</a><br /></td></tr>
+<tr class="separator:a9d1a5c29ac1e058ddfddea4085e1be77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7573392ce508902ed4f9404f16d9eda3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a>[]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_g_l_tech2_1_1_vector.html#a7573392ce508902ed4f9404f16d9eda3">GetRegularPolygon</a> (<a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a> center, float radius, int edges)</td></tr>
 <tr class="memdesc:a7573392ce508902ed4f9404f16d9eda3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an array of vectors that compose the verts of a regular polygon.  <a href="struct_g_l_tech2_1_1_vector.html#a7573392ce508902ed4f9404f16d9eda3">More...</a><br /></td></tr>
 <tr class="separator:a7573392ce508902ed4f9404f16d9eda3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -234,11 +237,11 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Creates a new instance of vector instance based on its cordinates. </p>
+<p>Creates a new instance of vector instance based on its components. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">x</td><td>X cordinate</td></tr>
-    <tr><td class="paramname">y</td><td>Y cordinate</td></tr>
+    <tr><td class="paramname">x</td><td>The right component</td></tr>
+    <tr><td class="paramname">y</td><td>The forward component</td></tr>
   </table>
   </dd>
 </dl>
@@ -445,7 +448,7 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Creates a instance of vector with specified angle and module. </p>
+<p>Creates an instance of <a class="el" href="struct_g_l_tech2_1_1_vector.html" title="Represents a Vector in a bidimensional space.">Vector</a> with specified angle and module. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">angle</td><td>Angle in degrees</td></tr>
@@ -501,6 +504,41 @@ Properties</h2></td></tr>
 
 <p>Serves as the default hash function. </p>
 <dl class="section return"><dt>Returns</dt><dd>A hash code for the current object.</dd></dl>
+
+</div>
+</div>
+<a id="a9d1a5c29ac1e058ddfddea4085e1be77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d1a5c29ac1e058ddfddea4085e1be77">&#9670;&nbsp;</a></span>GetRandom()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="struct_g_l_tech2_1_1_vector.html">Vector</a> GLTech2.Vector.GetRandom </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>maxModule</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a random instance of <a class="el" href="struct_g_l_tech2_1_1_vector.html" title="Represents a Vector in a bidimensional space.">Vector</a> up to a maximum module. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">maxModule</td><td>Max module of the vector</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1068,7 +1106,7 @@ Properties</h2></td></tr>
 <p>Gets and sets the angle, in degrees, of the vector, approximately preserving it's angle. </p>
 <p>Getting angle property will always return a value greater than -90 and less or equal to 270 due to performanceoptimizations and can be changed in future patches. </p>
 <p>Modifying the angle of a vector is equivalent to creating a new vector with the same module and the specified angle, which can be slow if done many times and, due to floating-point accuracy problems</p>
-<p>, can distort the original vector's module if changed many times. If you wish to constantly change the angle of a vector, consider holding the module value and constantly creating new vectors by module and angle via <a class="el" href="struct_g_l_tech2_1_1_vector.html#a5e4956f0fec3061aead351430cc0ade7" title="Creates a instance of vector with specified angle and module.">Vector.FromAngle(float, float)</a> or new Vector(flaot). </p>
+<p>, can distort the original vector's module if changed many times. If you wish to constantly change the angle of a vector, consider holding the module value and constantly creating new vectors by module and angle via <a class="el" href="struct_g_l_tech2_1_1_vector.html#a5e4956f0fec3061aead351430cc0ade7" title="Creates an instance of Vector with specified angle and module.">Vector.FromAngle(float, float)</a> or new Vector(flaot). </p>
 
 </div>
 </div>

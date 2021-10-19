@@ -9,6 +9,7 @@ var struct_g_l_tech2_1_1_vector =
     [ "FromAngle", "struct_g_l_tech2_1_1_vector.html#a5e4956f0fec3061aead351430cc0ade7", null ],
     [ "GetDistance", "struct_g_l_tech2_1_1_vector.html#a4c035d7086f7d5d05316e7dc54db5c14", null ],
     [ "GetHashCode", "struct_g_l_tech2_1_1_vector.html#a441bd5662c2ed489860fc82e22d07368", null ],
+    [ "GetRandom", "struct_g_l_tech2_1_1_vector.html#a9d1a5c29ac1e058ddfddea4085e1be77", null ],
     [ "GetRegularPolygon", "struct_g_l_tech2_1_1_vector.html#a7573392ce508902ed4f9404f16d9eda3", null ],
     [ "operator Vector", "struct_g_l_tech2_1_1_vector.html#a23874927ce78c859f16a44fb3c9cb307", null ],
     [ "operator!=", "struct_g_l_tech2_1_1_vector.html#adfbdc60d881ee3d480a629c6770e4963", null ],

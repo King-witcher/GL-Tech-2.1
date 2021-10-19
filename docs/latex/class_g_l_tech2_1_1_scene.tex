@@ -14,12 +14,10 @@ Inheritance diagram for GLTech2.\+Scene\+:\begin{figure}[H]
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{class_g_l_tech2_1_1_scene_a3eebee399dba51e5e3ec66de1600b22b}\label{class_g_l_tech2_1_1_scene_a3eebee399dba51e5e3ec66de1600b22b}} 
-\mbox{\hyperlink{class_g_l_tech2_1_1_collider}{Collider}} {\bfseries Ray\+Cast} (\mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}} ray, out float distance)
-\item 
-\mbox{\Hypertarget{class_g_l_tech2_1_1_scene_ad9d4a5193beda04a8ced8002af4cae3a}\label{class_g_l_tech2_1_1_scene_ad9d4a5193beda04a8ced8002af4cae3a}} 
-unsafe void {\bfseries Ray\+Cast} (\mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}} ray, out float distance, out \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} normal)
-\item 
+\mbox{\hyperlink{class_g_l_tech2_1_1_collider}{Collider}} \mbox{\hyperlink{class_g_l_tech2_1_1_scene_a3eebee399dba51e5e3ec66de1600b22b}{Ray\+Cast}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}} ray, out float distance)
+\begin{DoxyCompactList}\small\item\em Gets the first instnace of \mbox{\hyperlink{class_g_l_tech2_1_1_collider}{Collider}} that collide with the \mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}}. \end{DoxyCompactList}\item 
+unsafe void \mbox{\hyperlink{class_g_l_tech2_1_1_scene_ad9d4a5193beda04a8ced8002af4cae3a}{Ray\+Cast}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}} ray, out float distance, out \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} normal)
+\begin{DoxyCompactList}\small\item\em Gets information about the closest collision from a \mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}}. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{class_g_l_tech2_1_1_scene_a8208fe98ce0ec42750545bea9e361c0c}{Scene}} ()
 \begin{DoxyCompactList}\small\item\em Gets a new instance of \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}}. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{class_g_l_tech2_1_1_scene_a426bcf862efb15d1a0e20af840024d8f}{Scene}} (\mbox{\hyperlink{struct_g_l_tech2_1_1_texture}{Texture}} background)
@@ -138,7 +136,51 @@ Add an array of elements via params.
 
 Performs application-\/defined tasks associated with freeing, releasing, or resetting unmanaged resources. 
 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_scene_a3eebee399dba51e5e3ec66de1600b22b}\label{class_g_l_tech2_1_1_scene_a3eebee399dba51e5e3ec66de1600b22b}} 
+\index{GLTech2.Scene@{GLTech2.Scene}!RayCast@{RayCast}}
+\index{RayCast@{RayCast}!GLTech2.Scene@{GLTech2.Scene}}
+\doxysubsubsection{\texorpdfstring{RayCast()}{RayCast()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_g_l_tech2_1_1_collider}{Collider}} GLTech2.\+Scene.\+Ray\+Cast (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}}}]{ray,  }\item[{out float}]{distance }\end{DoxyParamCaption})}
 
+
+
+Gets the first instnace of \mbox{\hyperlink{class_g_l_tech2_1_1_collider}{Collider}} that collide with the \mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ray} & \mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}} to test\\
+\hline
+{\em distance} & Distance between the ray\textquotesingle{}s initial point and the collision point.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The first instnace of \mbox{\hyperlink{class_g_l_tech2_1_1_collider}{Collider}} that collide with the \mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}}.
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_g_l_tech2_1_1_scene_ad9d4a5193beda04a8ced8002af4cae3a}\label{class_g_l_tech2_1_1_scene_ad9d4a5193beda04a8ced8002af4cae3a}} 
+\index{GLTech2.Scene@{GLTech2.Scene}!RayCast@{RayCast}}
+\index{RayCast@{RayCast}!GLTech2.Scene@{GLTech2.Scene}}
+\doxysubsubsection{\texorpdfstring{RayCast()}{RayCast()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily unsafe void GLTech2.\+Scene.\+Ray\+Cast (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}}}]{ray,  }\item[{out float}]{distance,  }\item[{out \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}}]{normal }\end{DoxyParamCaption})}
+
+
+
+Gets information about the closest collision from a \mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ray} & \mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}} to test\\
+\hline
+{\em distance} & Distance between the ray\textquotesingle{}s initial point and the collision point\\
+\hline
+{\em normal} & The normal vector from the collision\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The first instnace of \mbox{\hyperlink{class_g_l_tech2_1_1_collider}{Collider}} that collide with the \mbox{\hyperlink{struct_g_l_tech2_1_1_ray}{Ray}}.
+\end{DoxyReturn}
+
+
+This method uses unmanaged data, which means it\textquotesingle{}s faster. 
 
 \doxysubsection{Property Documentation}
 \mbox{\Hypertarget{class_g_l_tech2_1_1_scene_ae196cc715e79b19b9426e8e3a8e54819}\label{class_g_l_tech2_1_1_scene_ae196cc715e79b19b9426e8e3a8e54819}} 

@@ -46,11 +46,11 @@ virtual void \mbox{\hyperlink{class_g_l_tech2_1_1_element_a0c1d09747a9346f7719f3
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}? \mbox{\hyperlink{class_g_l_tech2_1_1_element_af0da845772e67aedd609759990acff7c}{World\+Position}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\begin{DoxyCompactList}\small\item\em Gets and sets the absolute position of an \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} without and allows subclasses to store the Position the way they want. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Gets and sets the absolute position of an \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}}. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}}? \mbox{\hyperlink{class_g_l_tech2_1_1_element_a4e176a48dfaae9445aa95d8a5ae9bbba}{World\+Direction}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\begin{DoxyCompactList}\small\item\em Determines how the element stores its direction. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Gets and sets the absolute direction of an \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}}. \end{DoxyCompactList}\item 
 float? \mbox{\hyperlink{class_g_l_tech2_1_1_element_aec929d63a896cc5566332973be7f2217}{World\+Scale}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\begin{DoxyCompactList}\small\item\em The scale of this Block\+Map. Cannot be zero. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em The scale of this \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}}. Cannot be zero. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_a762b6c12740a3ae50430c32c77011a46}{Relative\+Position}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Gets and sets element\textquotesingle{}s position relatively to it\textquotesingle{}s parent or, if it has no parent, it\textquotesingle{}s absolute position. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_a5c7e65b1e40f1250a20597dfe884ee68}{Relative\+Direction}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
@@ -63,14 +63,12 @@ float? \mbox{\hyperlink{class_g_l_tech2_1_1_element_af7cabbf2b7eb8d8f482924fbdd0
 \begin{DoxyCompactList}\small\item\em Gets the root reference point for this object. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{class_g_l_tech2_1_1_element_a2ab96f9dcff0ff247af5eece1bb83d2a}{Child\+Count}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
 \begin{DoxyCompactList}\small\item\em How many childs the element has. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_a7fb26c1cf1264827e74af2ac95d1fcac}{Position\+Data}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Allows subclasses to store the Position. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_a5937158165ff572cadf3073fc28538e2}{Direction\+Data}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Allows subclasses to store the Direction. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{class_g_l_tech2_1_1_scene}{Scene}} \mbox{\hyperlink{class_g_l_tech2_1_1_element_a9687d40a7e6ca4204ccacefadbf0ec17}{Scene}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
-\begin{DoxyCompactList}\small\item\em Its correspondent scene. If the element is not bound to any scene, returns null. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a7fb26c1cf1264827e74af2ac95d1fcac}\label{class_g_l_tech2_1_1_element_a7fb26c1cf1264827e74af2ac95d1fcac}} 
-virtual \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} {\bfseries Position\+Data}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\item 
-\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a5937158165ff572cadf3073fc28538e2}\label{class_g_l_tech2_1_1_element_a5937158165ff572cadf3073fc28538e2}} 
-virtual \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} {\bfseries Direction\+Data}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Its correspondent scene. If the element is not bound to any scene, returns null. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -309,7 +307,19 @@ Rotate the object a specified amount.
 
 How many childs the element has. 
 
-\mbox{\Hypertarget{class_g_l_tech2_1_1_element_aed800c203d9dadc1189bf70d0290bd40}\label{class_g_l_tech2_1_1_element_aed800c203d9dadc1189bf70d0290bd40}} 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_a5937158165ff572cadf3073fc28538e2}\label{class_g_l_tech2_1_1_element_a5937158165ff572cadf3073fc28538e2}} 
+\index{GLTech2.Element@{GLTech2.Element}!DirectionData@{DirectionData}}
+\index{DirectionData@{DirectionData}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{DirectionData}{DirectionData}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Element.\+Direction\+Data\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}, {\ttfamily [protected]}}
+
+
+
+Allows subclasses to store the Direction. 
+
+Important\+: \mbox{\hyperlink{namespace_g_l_tech2_1_1_elements}{Elements}} that parent this will not follow it imediatelly for performance and code health reasons. Changing this property is only recommended if the element is not a reference point to any other and changing positions is a significant performance bottleneck in your application. Otherwise, always use \mbox{\hyperlink{class_g_l_tech2_1_1_element_a4e176a48dfaae9445aa95d8a5ae9bbba}{Element.\+World\+Direction}} property instead. 
+
+Remember to set it before parenting any object! \mbox{\Hypertarget{class_g_l_tech2_1_1_element_aed800c203d9dadc1189bf70d0290bd40}\label{class_g_l_tech2_1_1_element_aed800c203d9dadc1189bf70d0290bd40}} 
 \index{GLTech2.Element@{GLTech2.Element}!Parent@{Parent}}
 \index{Parent@{Parent}!GLTech2.Element@{GLTech2.Element}}
 \doxysubsubsection{\texorpdfstring{Parent}{Parent}}
@@ -319,7 +329,17 @@ How many childs the element has.
 
 Gets and sets element\textquotesingle{}s reference point. A null value means that the element will take as reference point the world. 
 
-Setting a reference point will make the object to move and rotate relatively to it\textquotesingle{}s reference point, and if the parent element moves/rotate, this element will follow. \mbox{\Hypertarget{class_g_l_tech2_1_1_element_a5c7e65b1e40f1250a20597dfe884ee68}\label{class_g_l_tech2_1_1_element_a5c7e65b1e40f1250a20597dfe884ee68}} 
+Setting a reference point will make the object to move and rotate relatively to it\textquotesingle{}s reference point, and if the parent element moves/rotate, this element will follow. \mbox{\Hypertarget{class_g_l_tech2_1_1_element_a7fb26c1cf1264827e74af2ac95d1fcac}\label{class_g_l_tech2_1_1_element_a7fb26c1cf1264827e74af2ac95d1fcac}} 
+\index{GLTech2.Element@{GLTech2.Element}!PositionData@{PositionData}}
+\index{PositionData@{PositionData}!GLTech2.Element@{GLTech2.Element}}
+\doxysubsubsection{\texorpdfstring{PositionData}{PositionData}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{struct_g_l_tech2_1_1_vector}{Vector}} GLTech2.\+Element.\+Position\+Data\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}, {\ttfamily [protected]}}
+
+
+
+Allows subclasses to store the Position. 
+
+Important\+: \mbox{\hyperlink{namespace_g_l_tech2_1_1_elements}{Elements}} that parent this will not follow it imediatelly for performance and code health reasons. Changing this property is only recommended if the element is not a reference point to any other and changing positions is a significant performance bottleneck in your application. Otherwise, always use \mbox{\hyperlink{class_g_l_tech2_1_1_element_af0da845772e67aedd609759990acff7c}{Element.\+World\+Position}} property instead. \mbox{\Hypertarget{class_g_l_tech2_1_1_element_a5c7e65b1e40f1250a20597dfe884ee68}\label{class_g_l_tech2_1_1_element_a5c7e65b1e40f1250a20597dfe884ee68}} 
 \index{GLTech2.Element@{GLTech2.Element}!RelativeDirection@{RelativeDirection}}
 \index{RelativeDirection@{RelativeDirection}!GLTech2.Element@{GLTech2.Element}}
 \doxysubsubsection{\texorpdfstring{RelativeDirection}{RelativeDirection}}
@@ -379,9 +399,9 @@ Its correspondent scene. If the element is not bound to any scene, returns null.
 
 
 
-Determines how the element stores its direction. 
+Gets and sets the absolute direction of an \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}}. 
 
-Remember to set it before parenting any object! \mbox{\Hypertarget{class_g_l_tech2_1_1_element_af0da845772e67aedd609759990acff7c}\label{class_g_l_tech2_1_1_element_af0da845772e67aedd609759990acff7c}} 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_af0da845772e67aedd609759990acff7c}\label{class_g_l_tech2_1_1_element_af0da845772e67aedd609759990acff7c}} 
 \index{GLTech2.Element@{GLTech2.Element}!WorldPosition@{WorldPosition}}
 \index{WorldPosition@{WorldPosition}!GLTech2.Element@{GLTech2.Element}}
 \doxysubsubsection{\texorpdfstring{WorldPosition}{WorldPosition}}
@@ -389,9 +409,9 @@ Remember to set it before parenting any object! \mbox{\Hypertarget{class_g_l_tec
 
 
 
-Gets and sets the absolute position of an \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}} without and allows subclasses to store the Position the way they want. 
+Gets and sets the absolute position of an \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}}. 
 
-Important\+: \mbox{\hyperlink{namespace_g_l_tech2_1_1_elements}{Elements}} that take this element as reference point will not follow it imediatelly for performance and code health reasons. Changing this property is only recommended if the element is not a reference point to any other and changing positions is a significant performance bottleneck in your application. Otherwise, always use Element.\+Position property instead. \mbox{\Hypertarget{class_g_l_tech2_1_1_element_aec929d63a896cc5566332973be7f2217}\label{class_g_l_tech2_1_1_element_aec929d63a896cc5566332973be7f2217}} 
+\mbox{\Hypertarget{class_g_l_tech2_1_1_element_aec929d63a896cc5566332973be7f2217}\label{class_g_l_tech2_1_1_element_aec929d63a896cc5566332973be7f2217}} 
 \index{GLTech2.Element@{GLTech2.Element}!WorldScale@{WorldScale}}
 \index{WorldScale@{WorldScale}!GLTech2.Element@{GLTech2.Element}}
 \doxysubsubsection{\texorpdfstring{WorldScale}{WorldScale}}
@@ -399,5 +419,5 @@ Important\+: \mbox{\hyperlink{namespace_g_l_tech2_1_1_elements}{Elements}} that 
 
 
 
-The scale of this Block\+Map. Cannot be zero. 
+The scale of this \mbox{\hyperlink{class_g_l_tech2_1_1_element}{Element}}. Cannot be zero. 
 

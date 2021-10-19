@@ -10,4 +10,4 @@ If you already have Visual Studio Community 2019 and .NET 5.0 installed, just op
 
 For full documentation, see https://king-witcher.github.io/GL-Tech-2.1/.
 
-For a Wiki in PT-BR, see https://king-witcher.visualstudio.com/GL-Tech-2.1/_wiki/wikis/Wiki/9/GL-Tech-2.1.
+For a Wiki in PT-BR, see https://king-witcher.visualstudio.com/GL-Tech-2.1/_wiki.

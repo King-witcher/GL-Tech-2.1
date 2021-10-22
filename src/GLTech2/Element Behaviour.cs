@@ -25,8 +25,7 @@ namespace GLTech2
             if (scene != null)
             {
                 Debug.InternalLog(
-                    "Element",
-                    "Cannot add or remove behaviours after adding an element to a scene.",
+                    $"Cannot add behaviour \"{behaviour}\" to element \"{this}\" because it's already bound to a scene.",
                     Debug.Options.Error);
                 return;
             }
@@ -37,8 +36,7 @@ namespace GLTech2
             if (ContainsBehaviour(behaviour))
             {
                 Debug.InternalLog(
-                    origin: "Element",
-                    message: $"Cannot add same behaviour twice. {typeof(Behaviour).Name} second instance will be ignored.",
+                    message: $"Cannot add behaviour \"{behaviour}\" twice to the same element \"{this}\".",
                     debugOption: Debug.Options.Warning);
                 return;
             }
@@ -46,8 +44,7 @@ namespace GLTech2
             if (behaviour.element is null is false)
             {
                 Debug.InternalLog(
-                    origin: "Element", 
-                    message: $"Cannot add the same instance of behaviour in two different elements. Element without behaviour: {this}.",
+                    message: $"Cannot add the same instance of behaviour \"{behaviour}\" to more than one element. The behaviour was not added to \"{this}\".",
                     debugOption: Debug.Options.Error);
                 return;
             }
@@ -126,8 +123,7 @@ namespace GLTech2
             if (scene != null)
             {
                 Debug.InternalLog(
-                    "Element",
-                    "Cannot add or remove behaviours after adding an element to a scene.",
+                    $"Cannot remove behaviour \"{b}\" from element \"{this}\" because it's already bound to a scene.",
                     Debug.Options.Error);
                 return;
             }
@@ -155,16 +151,13 @@ namespace GLTech2
             if (scene != null)
             {
                 Debug.InternalLog(
-                    "Element",
-                    "Cannot add or remove behaviours after adding an element to a scene.",
+                    $"Cannot remove behaviours from element \"{this}\" because it already was bound to a scene.",
                     Debug.Options.Error);
                 return;
             }
 
             foreach (Behaviour b in behaviours)
-            {
                 RemoveBehaviour(b);
-            }
         }
 
         /// <summary>

@@ -6,21 +6,19 @@ namespace Test
     {
         static void Main()
         {
-            Debug.ConsoleEnabled = true;
-
-            Debug.Pause("Press any key to start.");
+            Debug.Pause();
             Debug.Clear();
             E1M1();
 
-            Debug.Pause("Press any key to start.");
+            Debug.Pause();
             Debug.Clear();
             AnimatedExample();
 
-            Debug.Pause("Press any key to start.");
+            Debug.Pause();
             Debug.Clear();
             ExtremeGrid();
 
-            Debug.Pause("Press any key to close.");
+            Debug.Pause();
             Debug.Log("Releasing resources...");
         }
     }

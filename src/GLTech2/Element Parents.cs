@@ -148,8 +148,7 @@ namespace GLTech2
                 if (value != null && scene != value.scene)
                 {
                     Debug.InternalLog(
-                        origin: "Element",
-                        message: $"Cannot parent {this} to an element that is in other scene. Operation aborted.",
+                        message: $"The element \"{value}\" cannot be set parent of \"{this}\" because they are bound to different scenes.",
                         debugOption: Debug.Options.Error);
                     return;
                 }

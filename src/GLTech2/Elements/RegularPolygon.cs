@@ -21,16 +21,14 @@
         {
             if (vertices <= 2)
                 Debug.InternalLog(
-                    origin: className,
-                    message: "An actual polygon has at least 3 vertices. If you want to make a polygon with only 2 vertices, consider simply creating a Wall.",
+                    message: "An actual polygon has at least 3 vertices. If you want to make a polygon with only 2 vertices, consider creating two walls manually.",
                     debugOption: Debug.Options.Warning);
 
 
             if (radius == 0)
             {
                 Debug.InternalLog(
-                    origin: className,
-                    message: "Radius cannot be zero. The polygon was not be created and the RegularPolygon was returned as an empty object.",
+                    message: "Radius cannot be zero. The polygon was not be created and the RegularPolygon was returned as an empty RegularPolygon.",
                     debugOption: Debug.Options.Error);
 
                 PositionData = position;

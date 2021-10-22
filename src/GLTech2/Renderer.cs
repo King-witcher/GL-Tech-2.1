@@ -34,7 +34,7 @@ namespace GLTech2
         /// </summary>
         public static Scene ActiveScene => activeScene;
 
-        private static float minframetime = 7;
+        private static float minframetime = 4;
         /// <summary>
         ///     Gets and sets the max framerate the engine can reach.
         /// </summary>
@@ -161,6 +161,21 @@ namespace GLTech2
         /// </summary>
         public static bool IsRunning { get; private set; } = false;
 
+
+        public enum Environments { Development, Production }
+        private static Environments environment = Environments.Development;
+        /// <summary>
+        /// Determines which environment should the engine be optimized to.
+        /// </summary>
+        public static Environments Environment
+        {
+            get => environment;
+            set
+            {
+                ChangeIfNotRunning("Environment", ref environment, value);
+            }
+        }
+
         /// <summary>
         /// Takes a screenshot of the current frame as PixelBuffer.
         /// </summary>
@@ -206,8 +221,7 @@ namespace GLTech2
             if (scene == null)
 			{
                 Debug.InternalLog(
-                    origin: "Renderer",
-                    message: "The camera you are trying to render isn't assigned to a scene. Renderer.Start() will be aborted.",
+                    message: $"Cannot render from Camera \"{camera}\" because it's not bound to any Scene.",
                     debugOption: Debug.Options.Error);
                 return;
             }
@@ -226,6 +240,10 @@ namespace GLTech2
                 (IntPtr)frontBuffer.uint0);
 
             var display = new Display(FullScreen, CustomWidth, CustomHeight, sourceBitmap);
+
+            // Alloc a new console window if the environment is set to development.
+            if (environment == Environments.Development)
+                Debug.Enable();
 
             // We must define two booleans to communicate with the tread.
             // The first is necessary to send a stop request.
@@ -276,18 +294,9 @@ namespace GLTech2
             #region Warnings
             if (!DoubleBuffer && postProcessing.Count > 0)
                 Debug.InternalLog(
-                    origin: "Renderer",
-                    message: "The renderer has post processing effects but DoubleBuffering is disabled. " +
-                        "The engine will display incompletely post processed frames and cause a probably unexpected " +
-                        "behaviour.",
+                    message: "The renderer has post processing effects set but DoubleBuffering is disabled. " +
+                        "Post processing effects may not work properly.",
                     debugOption: Debug.Options.Warning);
-
-            if (DoubleBuffer && postProcessing.Count == 0)
-                Debug.InternalLog(
-                    origin: "Renderer", 
-                    message: "DoubleBuffer is enabled but no post processing effect is active. If you need " +
-                        "more performance or less input lag, consider disabling DoubleBuffering.",
-                    debugOption: Debug.Options.Info);
             #endregion
 
             Stopwatch controlStopwatch = new Stopwatch();   // Required to cap framerate
@@ -330,11 +339,6 @@ namespace GLTech2
             return;
         }
 
-        private static void LoadScene(Scene scene)
-        {
-
-        }
-
         private static List<PostProcessing> postProcessing = new List<PostProcessing>();
         private static void PostProcess(PixelBuffer target)
         {
@@ -346,8 +350,7 @@ namespace GLTech2
         {
             if (IsRunning)
                 Debug.InternalLog(
-                    origin: "Renderer",
-                    message: name + " cannot be modified while running.",
+                    message: $"The value of \"{name}\" cannot be modified while running. Value will keep \"{obj}\".",
                     debugOption: Debug.Options.Warning);
             else
                 obj = value;

@@ -79,8 +79,7 @@ namespace GLTech2
             if (element.scene != null)
             {
                 Debug.InternalLog(
-                    origin: "Scene",
-                    message: $"\"{element}\" is already bound to scene {element.scene}. Adding operation will be aborted.",
+                    message: $"The element \"{element}\" cannot be added to the scene \"{this}\" because it's already bound to \"{element.scene}\".",
                     debugOption: Debug.Options.Error);
                 return;
             }
@@ -90,8 +89,7 @@ namespace GLTech2
             if (element.Parent != null)
             {
                 Debug.InternalLog(
-                    origin: "Scene",
-                    message: $"The element \"{element}\" you are trying to add to the scene has a ReferencePoint. {element.scene}. Only elements with no ReferencePoint are allowed to be directly added to a scene. If you want to add this element, add its root element and all it's child elements will recursively added.",
+                    message: $"The element \"{element}\" cannot be added to the scene \"{this}\" because it already has a parent element. Only root elements are allowed to be directly added to a scene. Consider adding root element and all the child elements will recursively added.",
                     debugOption: Debug.Options.Error);
                 return;
             }

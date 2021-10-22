@@ -271,7 +271,7 @@ namespace GLTech2
             frontBuffer.Dispose();
             sourceBitmap.Dispose();
             activeCamera = null;
-            // Debug.Disable();
+            Debug.Disable();
 
             IsRunning = false;
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace GLTech2
@@ -8,14 +9,7 @@ namespace GLTech2
     /// </summary>
     public static class Debug
     {
-        /// <summary>
-        /// Clears the console.
-        /// </summary>
-        public static void Clear()
-        {
-            if (enabled)
-                Console.Clear();
-        }
+        // static TextWriter o = Console.Out;
 
         /// <summary>
         /// Specifies constants that define the details of how a message should be printed.
@@ -40,21 +34,32 @@ namespace GLTech2
                 Options.Success => ConsoleColor.Green,
                 Options.Warning => ConsoleColor.DarkYellow,
                 Options.Error => ConsoleColor.DarkRed,
-                _ => ConsoleColor.White
+                _ => ConsoleColor.White,
             };
 
             string pre = debugOption switch
             {
                 Options.Normal => "",
-                Options.Success => "",
+                Options.Success => "[Success]: ",
                 Options.Warning => "[WARNING]: ",
-                Options.Error => "[ERROR]: "
+                Options.Error => "[ERROR]: ",
+                _ => "",
             };
 
             Console.WriteLine(pre + message);
 
             Console.ForegroundColor = prev;
         }
+
+        /// <summary>
+        /// Clears the console.
+        /// </summary>
+        public static void Clear()
+        {
+            if (enabled)
+                Console.Clear();
+        }
+
 
         /// <summary>
         /// Pauses the execution of the engine until the user presses a key on the console, if enabled.
@@ -95,14 +100,6 @@ namespace GLTech2
             Log(message + "\n", debugOption);
         }
 
-        private static void DebuggerMessage(string message)
-        {
-            ConsoleColor prev = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine(message);
-            Console.ForegroundColor = prev;
-        }
-
         private static bool enabled = false;
 
         internal static void Enable()
@@ -117,12 +114,20 @@ namespace GLTech2
 
         internal static void Disable()
         {
-            FreeConsole();
             enabled = false;
+            FreeConsole();
 
             [DllImport("kernel32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             static extern bool FreeConsole();
+        }
+
+        private static void DebuggerMessage(string message)
+        {
+            ConsoleColor prev = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine(message);
+            Console.ForegroundColor = prev;
         }
 
     }

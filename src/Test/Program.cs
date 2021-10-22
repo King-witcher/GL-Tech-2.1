@@ -10,7 +10,7 @@ namespace Test
 
             Debug.Pause();
             E1M1();
-            Debug.InternalLog("Log interno testando coisaaaaasdf ahskhw lorem ipsum dolorium set at amet amium sit amagarium loenzum tudus mundus tudusn di la unum", Debug.Options.Error);
+            Debug.InternalLog("Log interno testando coisaaaaasdf ahskhw lorem ipsum dolorium set at amet amium sit amagarium loenzum tudus mundus tudusn di la unum", Debug.Options.Success);
             Debug.Read();
 
             Debug.Pause();

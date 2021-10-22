@@ -6,16 +6,17 @@ namespace Test
     {
         static void Main()
         {
-            Debug.Pause();
-            Debug.Clear();
-            E1M1();
+            Debug.Read();
 
             Debug.Pause();
-            Debug.Clear();
+            E1M1();
+            Debug.InternalLog("Log interno testando coisaaaaasdf ahskhw lorem ipsum dolorium set at amet amium sit amagarium loenzum tudus mundus tudusn di la unum", Debug.Options.Error);
+            Debug.Read();
+
+            Debug.Pause();
             AnimatedExample();
 
             Debug.Pause();
-            Debug.Clear();
             ExtremeGrid();
 
             Debug.Pause();

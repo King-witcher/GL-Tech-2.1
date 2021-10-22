@@ -64,10 +64,10 @@ namespace GLTech2
             if (!enabled)
                 return;
 
-            Console.Write("Press any key to continue...");
+            DebuggerMessage("Waiting for a key...");
 
             Console.ReadKey();
-            Console.Write("\b \b");
+            Console.Write("\b \b\n");
         }
 
         /// <summary>
@@ -79,7 +79,11 @@ namespace GLTech2
             if (!enabled)
                 return string.Empty;
 
-            return Console.ReadLine();
+
+            DebuggerMessage("Waiting for input...");
+            string retn = Console.ReadLine();
+            Console.WriteLine();
+            return retn;
         }
 
         static internal void InternalLog(string message, Options debugOption = Options.Normal)
@@ -87,10 +91,15 @@ namespace GLTech2
             if (!enabled)
                 return;
 
+            DebuggerMessage("GL Tech 2.1 says:");
+            Log(message + "\n", debugOption);
+        }
+
+        private static void DebuggerMessage(string message)
+        {
             ConsoleColor prev = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine($"Internal Log:");
-            Log(message, debugOption);
+            Console.WriteLine(message);
             Console.ForegroundColor = prev;
         }
 

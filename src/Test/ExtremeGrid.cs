@@ -6,7 +6,7 @@ namespace Test
 {
     partial class Program
     {
-        // Esse é um mapa com uma quantidade extrema de planos, para testes de gargalo.
+        // Esse é um mapa com uma quantidade extrema de planos para testes de gargalo.
         static void ExtremeGrid()
         {
             using PixelBuffer BlockMapbuf = new PixelBuffer(DemoTextures.Plant);

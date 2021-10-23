@@ -243,7 +243,7 @@ namespace GLTech2
 
             // Alloc a new console window if the environment is set to development.
             if (environment == Environments.Development)
-                Debug.Enable();
+                Debug.OpenConsole();
 
             // We must define two booleans to communicate with the tread.
             // The first is necessary to send a stop request.
@@ -271,7 +271,9 @@ namespace GLTech2
             frontBuffer.Dispose();
             sourceBitmap.Dispose();
             activeCamera = null;
-            Debug.Disable();
+
+            if (environment == Environments.Development)
+                Debug.CloseConsole();
 
             IsRunning = false;
         }

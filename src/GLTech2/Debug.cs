@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
 
 namespace GLTech2
 {
@@ -9,7 +10,12 @@ namespace GLTech2
     /// </summary>
     public static class Debug
     {
-        // static TextWriter o = Console.Out;
+        private static bool consoleEnabled = false;
+
+        /// <summary>
+        /// Determines wheter the console window of the Debugger is enabled or not.
+        /// </summary>
+        public static bool Enabled => consoleEnabled;
 
         /// <summary>
         /// Specifies constants that define the details of how a message should be printed.
@@ -23,56 +29,32 @@ namespace GLTech2
         /// <param name="debugOption">Option</param>
         public static void Log(string message = "", Options debugOption = Options.Normal)
         {
-            if (!enabled)
-                return;
-
-            ConsoleColor prev = Console.ForegroundColor;
-
-            Console.ForegroundColor = debugOption switch
+            if (consoleEnabled)
             {
-                Options.Normal => ConsoleColor.Gray,
-                Options.Success => ConsoleColor.Green,
-                Options.Warning => ConsoleColor.DarkYellow,
-                Options.Error => ConsoleColor.DarkRed,
-                _ => ConsoleColor.White,
-            };
+                ConsoleColor prev = Console.ForegroundColor;
 
-            string pre = debugOption switch
-            {
-                Options.Normal => "",
-                Options.Success => "[Success]: ",
-                Options.Warning => "[WARNING]: ",
-                Options.Error => "[ERROR]: ",
-                _ => "",
-            };
+                Console.ForegroundColor = debugOption switch
+                {
+                    Options.Normal => ConsoleColor.Gray,
+                    Options.Success => ConsoleColor.Green,
+                    Options.Warning => ConsoleColor.DarkYellow,
+                    Options.Error => ConsoleColor.DarkRed,
+                    _ => ConsoleColor.White,
+                };
 
-            Console.WriteLine(pre + message);
+                string pre = debugOption switch
+                {
+                    Options.Normal => "",
+                    Options.Success => "[Success]: ",
+                    Options.Warning => "[WARNING]: ",
+                    Options.Error => "[ERROR]: ",
+                    _ => "",
+                };
 
-            Console.ForegroundColor = prev;
-        }
+                Console.WriteLine(pre + message);
 
-        /// <summary>
-        /// Clears the console.
-        /// </summary>
-        public static void Clear()
-        {
-            if (enabled)
-                Console.Clear();
-        }
-
-
-        /// <summary>
-        /// Pauses the execution of the engine until the user presses a key on the console, if enabled.
-        /// </summary>
-        public static void Pause()
-        {
-            if (!enabled)
-                return;
-
-            DebuggerMessage("Waiting for a key...");
-
-            Console.ReadKey();
-            Console.Write("\b \b\n");
+                Console.ForegroundColor = prev;
+            }
         }
 
         /// <summary>
@@ -81,45 +63,99 @@ namespace GLTech2
         /// <returns>The string typed by the user on the console, if enabled; otherwise, string.Empty</returns>
         public static string Read()
         {
-            if (!enabled)
+            if (consoleEnabled)
+            {
+                DebuggerMessage("Waiting for input...");
+                string retn = Console.ReadLine();
+                Console.WriteLine();
+                return retn;
+            }
+            else
                 return string.Empty;
-
-
-            DebuggerMessage("Waiting for input...");
-            string retn = Console.ReadLine();
-            Console.WriteLine();
-            return retn;
         }
 
-        static internal void InternalLog(string message, Options debugOption = Options.Normal)
+        /// <summary>
+        /// Pauses the execution of the engine until the user presses a key on the console, if enabled.
+        /// </summary>
+        public static void Pause()
         {
-            if (!enabled)
-                return;
-
-            DebuggerMessage("GL Tech 2.1 says:");
-            Log(message + "\n", debugOption);
+            if (consoleEnabled)
+            {
+                DebuggerMessage("Waiting for a key...");
+                Console.ReadKey();
+                Console.Write("\b \b\n");
+            }
         }
 
-        private static bool enabled = false;
-
-        internal static void Enable()
+        /// <summary>
+        /// Clears the console.
+        /// </summary>
+        public static void Clear()
         {
-            AllocConsole();
-            enabled = true;
+            if (consoleEnabled)
+                Console.Clear();
+        }
 
-            [DllImport("kernel32.dll", SetLastError = true)]
+        internal static void OpenConsole()
+        {
+            if (!consoleEnabled)
+            {
+                kernel32_AllocConsole();
+
+                IntPtr stdinh = kernel32_GetStdHandle(-10);
+                IntPtr stdouth = kernel32_GetStdHandle(-11);
+                IntPtr stderrh = kernel32_GetStdHandle(-12);
+
+                var safein = new SafeFileHandle(stdinh, true);
+                var safeout = new SafeFileHandle(stdouth, true);
+                var safeerr = new SafeFileHandle(stderrh, true);
+
+                var fsin = new FileStream(safein, FileAccess.Read);
+                var fsout = new FileStream(safeout, FileAccess.Write);
+                var fserr = new FileStream(safeerr, FileAccess.Write);
+
+                var srin = new StreamReader(fsin, Console.InputEncoding);
+                var srout = new StreamWriter(fsout, Console.OutputEncoding);
+
+                var srerr = new StreamWriter(fserr, Console.OutputEncoding);
+
+                srout.AutoFlush = srerr.AutoFlush = true;
+
+                Console.SetIn(srin);
+                Console.SetOut(srout);
+                Console.SetError(srerr);
+
+                Console.Title = "GL Tech 2.1 - Debugger";
+
+                consoleEnabled = true;
+            }
+            #region kernel32.dll
+            [DllImport("kernel32.dll", EntryPoint = "GetStdHandle")]
+            static extern IntPtr kernel32_GetStdHandle(int nStdHandle);
+
+            [DllImport("kernel32.dll", EntryPoint = "AllocConsole")]
+            static extern bool kernel32_AllocConsole();
+            #endregion
+        }
+
+        internal static void CloseConsole()
+        {
+            if (consoleEnabled)
+            {
+                consoleEnabled = false;
+
+                kernel32_FreeConsole();
+
+                // Those lines were responsible for making the entire .NET crash in the past, so I'll keep those standard devices as they are.
+                // Console.SetIn(TextReader.Null);
+                // Console.SetOut(TextWriter.Null);
+                // Console.SetError(TextWriter.Null);
+            }
+            #region kernel32.dll
+            [DllImport("kernel32.dll", EntryPoint = "FreeConsole", SetLastError = true, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            static extern bool AllocConsole();
-        }
-
-        internal static void Disable()
-        {
-            enabled = false;
-            FreeConsole();
-
-            [DllImport("kernel32.dll", SetLastError = true)]
-            [return: MarshalAs(UnmanagedType.Bool)]
-            static extern bool FreeConsole();
+            static extern bool kernel32_FreeConsole();
+            #endregion
         }
 
         private static void DebuggerMessage(string message)
@@ -130,5 +166,10 @@ namespace GLTech2
             Console.ForegroundColor = prev;
         }
 
+        internal static void InternalLog(string message, Options debugOption = Options.Normal)
+        {
+            DebuggerMessage("GL Tech 2.1 says:");
+            Log(message + "\n", debugOption);
+        }
     }
 }

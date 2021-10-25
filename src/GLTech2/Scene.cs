@@ -1,164 +1,143 @@
 ﻿using System;
-using System.Drawing;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace GLTech2
 {
-    /// <summary>
-    /// Represents a scene, which stores a set of elements that can be or not rendered and, at least, one observer.
-    /// </summary>
     public unsafe sealed partial class Scene : IDisposable
     {
-        internal Action OnStart;
-        internal Action OnFrame;
-        internal SScene* sScene;
+        internal SScene* unmanaged;
 
-        private List<Element> element_cache = new List<Element>();
-        private List<Collider> collider_cache = new List<Collider>();
+        private List<Entity> entities = new List<Entity>();
+        private List<Collider> colliders = new List<Collider>();
+        private Camera camera;
 
-        /// <summary>
-        /// Gets a new instance of Scene.
-        /// </summary>
         public Scene()
         {
             Texture background = new Texture((PixelBuffer)new Bitmap(1, 1));
-            sScene = SScene.Create(background);
+            unmanaged = SScene.Create(background);
+
+            var defaultCamera = new Camera();
+            AddElement(defaultCamera);
+            camera = defaultCamera;
         }
 
-        /// <summary>
-        /// Gets a new instance of Scene.
-        /// </summary>
-        /// <param name="background">Background texture rendered behind everything</param>
-        public Scene(Texture background) =>
-            sScene = SScene.Create(background);
+        internal Action Start { get; private set; }
 
-        /// <summary>
-        /// Gets how many walls the scene fits.
-        /// </summary>
-        public int ColliderCount => collider_cache.Count;
+        internal Action OnFrame { get; private set; }
 
-        /// <summary>
-        /// Gets how many walls the scene fits.
-        /// </summary>
-        public int ElementCount => element_cache.Count;
+        public int ColliderCount => colliders.Count;
 
-        /// <summary>
-        /// Gets how many walls the scene fits.
-        /// </summary>
-        public int PlaneCount => sScene->plane_count;
+        public int ElementCount => entities.Count;
 
-        /// <summary>
-        /// Gets and sets the background texture of the Scene.
-        /// </summary>
-        public Texture Background
-		{
-            get => sScene->background;
-            set => sScene->background = value;
-        }
+        public int PlaneCount => unmanaged->plane_count;
 
-        /// <summary>
-        ///     Add a new element and every child it has to the scene.
-        /// </summary>
-        /// <remarks>
-        ///     <para>
-        ///         Every element can only be added once to a scene. Trying to add an element twice or an element that is already bound to another scene will generate command line warning.
-        ///     </para>
-        ///     <para>
-        ///         This method was not yet fully tested!
-        ///     </para>
-        /// </remarks>
-        /// <param name="element">An element to be added</param>
-        public void AddElement(Element element)
+        internal void CacheScripts()
         {
-            #region Checks
+            Start = null;
+            OnFrame = null;
+            foreach (Entity entity in entities)
+            {
+                Start += entity.OnStart;
+                OnFrame += entity.OnFrame;
+            }
+        }
+
+        public Scene(Texture background) =>
+            unmanaged = SScene.Create(background);
+
+        public Texture Background
+        {
+            get => unmanaged->background;
+            set => unmanaged->background = value;
+        }
+
+        public Camera Camera => camera;
+
+        public void AddElement(Entity entity)
+        {
+            #region Entry vefifications
             // Obvious thing
-            if (element == null)
+            if (entity == null)
+                // Not sure if it's a good idea to make the application.
                 throw new ArgumentNullException("Cannot add null elements.");
 
             // Elements cannot be added twice + elements cannot have already been added to another scene.
-            if (element.scene != null)
+            if (entity.Scene != null)
             {
                 Debug.InternalLog(
-                    message: $"The element \"{element}\" cannot be added to the scene \"{this}\" because it's already bound to \"{element.scene}\".",
+                    message: $"The element \"{entity}\" cannot be added to the scene \"{this}\" because it's already bound to \"{entity.Scene}\".",
                     debugOption: Debug.Options.Error);
                 return;
             }
 
             // Only root elements can be added to a Scene, which will add all of it's children.
             // Besides, Element class's referencing system cannot allow elements to be added to different scenes.
-            if (element.Parent != null)
+            if (entity.Parent != null)
             {
                 Debug.InternalLog(
-                    message: $"The element \"{element}\" cannot be added to the scene \"{this}\" because it already has a parent element. Only root elements are allowed to be directly added to a scene. Consider adding root element and all the child elements will recursively added.",
+                    message: $"The element \"{entity}\" cannot be added to the scene \"{this}\" because it already has a parent element. Only root elements are allowed to be directly added to a scene. Consider adding root element and all the child elements will recursively added.",
                     debugOption: Debug.Options.Error);
                 return;
             }
             #endregion
 
-            add(element);
+            Queue<Entity> queue = new Queue<Entity>();
+            queue.Enqueue(entity);
 
-            void add(Element element)
+            while (queue.Count > 0)
             {
-                // Add element to element cache list.
-                element_cache.Add(element);
+                Entity current = queue.Dequeue();
+                addSingle(current);
+                current.childs.ForEach((child) => queue.Enqueue(child));
+            }
 
-                // In case it's a collider, add to collider cache as well.
-                if (element is Collider collider)
-                    collider_cache.Add(collider);
+            void addSingle(Entity entity)
+            {
+                entities.Add(entity);
 
-                // Set element.scene.
-                element.scene = this;
+                if (entity is Collider collider)
+                    colliders.Add(collider);
 
-                // Call element's custom method to add it's data to the unmanaged sScene.
-                element.ChangeSScene(sScene);
+                entity.AssignScene(this);
+                unmanaged->Add(entity);
 
-                // Add element's behaviours.
-                OnStart += element.OnStart;
-                OnFrame += element.OnFrame;
-
-                // Make it recursively to all childs.
-                foreach (var item in element.childs)
-                    add(item);
+                #region Caches every behaviour and subscribe to see when new behaviours are added.
+                foreach (Behaviour b in entity.Behaviours)
+                {
+                    Start += b.StartAction;
+                    OnFrame += b.OnFrameAction;
+                }
+                entity.OnAddBehaviour += (behaviour) =>
+                {
+                    Start += behaviour.StartAction;
+                    OnFrame += behaviour.OnFrameAction;
+                };
+                #endregion
             }
         }
 
-        /// <summary>
-        ///     Adds a whole set of elements.
-        /// </summary>
-        /// <param name="elements">Set of elements</param>
-        public void AddElements(IEnumerable<Element> elements)
+        public void AddElements(IEnumerable<Entity> entities)
         {
-            foreach (Element item in elements)
-            {
-                if (item is null)
-                    break;
-
+            foreach (Entity item in entities)
                 AddElement(item);
-            }
         }
 
-        /// <summary>
-        ///     Add an array of elements via params.
-        /// </summary>
-        /// <param name="elements">Array of elements</param>
-        public void AddElements(params Element[] elements) =>
-            AddElements((IEnumerable<Element>) elements);
+        public void AddElements(params Entity[] entities) =>
+            AddElements((IEnumerable<Entity>)entities);
 
-        /// <summary>
-        ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
         public void Dispose()
         {
-            foreach(Element item in element_cache)
+            foreach (Entity item in entities)
                 item.Dispose();
 
-            SScene.Delete(sScene);
-            sScene = null;
+            SScene.Delete(unmanaged);
+            unmanaged = null;
 
-            element_cache.Clear();
-            collider_cache.Clear();
+            entities.Clear();
+            colliders.Clear();
 
-            OnStart = null;
+            Start = null;
             OnFrame = null;
         }
     }

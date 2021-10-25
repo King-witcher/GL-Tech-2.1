@@ -13,9 +13,9 @@ namespace GLTech2.PostProcessings
         }
 
         public GammaCorrection()
-		{
+        {
             gamma = 2;
-		}
+        }
 
         public GammaCorrection(float factor = 2f)
         {

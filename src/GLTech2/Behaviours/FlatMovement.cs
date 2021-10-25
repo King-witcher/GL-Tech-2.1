@@ -1,79 +1,36 @@
 ﻿namespace GLTech2.Behaviours
 {
-    /// <summary>
-    /// Allows the user to move the camera around the map using keyboard input.
-    /// </summary>
     public sealed class FlatMovement : Behaviour
     {
         KinematicBody body;
 
-        /// <summary>
-        /// Gets a new instance of FlatMovement.
-        /// </summary>
-        /// <param name="body"></param>
         public FlatMovement(KinematicBody body)
         {
             this.body = body;
         }
 
-        /// <summary>
-        /// Defines whether the script should or not treat collisions while moving.
-        /// </summary>
         public bool HandleCollisions { get; set; } = true;
 
-        /// <summary>
-        /// Defines whether the element moves, by default, in the run or walk speed.
-        /// </summary>
         public bool AlwaysRun { get; set; } = true;
 
-        /// <summary>
-        /// The element slower speed
-        /// </summary>
         public float WalkSpeed { get; set; } = 0.75f;
 
-        /// <summary>
-        /// The element faster speed
-        /// </summary>
         public float RunSpeed { get; set; } = 2.5f;
 
-        /// <summary>
-        /// The angular speed which the element turns in degrees per second
-        /// </summary>
         public float TurnSpeed { get; set; } = 90f;
 
-        /// <summary>
-        /// The key bound to forward movement
-        /// </summary>
         public Key StepForward { get; set; } = Key.W;
 
-        /// <summary>
-        /// The key bound to backward movement
-        /// </summary>
         public Key StepBack { get; set; } = Key.S;
 
-        /// <summary>
-        /// The key bound to left movement
-        /// </summary>
         public Key StepLeft { get; set; } = Key.A;
 
-        /// <summary>
-        /// The key bound to right movement
-        /// </summary>
         public Key StepRight { get; set; } = Key.D;
 
-        /// <summary>
-        /// The key bound to turn right
-        /// </summary>
         public Key TurnRight { get; set; } = Key.Right;
 
-        /// <summary>
-        /// The key bound to turn left movement
-        /// </summary>
         public Key TurnLeft { get; set; } = Key.Left;
 
-        /// <summary>
-        /// The key that changes between walk and run speed
-        /// </summary>
         public Key ChangeRun_Walk { get; set; } = Key.ShiftKey;
 
         void OnFrame()
@@ -103,19 +60,19 @@
             if (wishdir.Module != 0)
                 wishdir /= wishdir.Module;
 
-            body.Velocity = wishdir * speed * element.WorldDirection;
+            body.Velocity = wishdir * speed * Entity.WorldDirection;
 
             // Turn
             if (Keyboard.IsKeyDown(TurnLeft))
-                Element.Rotate(-TurnSpeed * Frame.DeltaTime);
+                Entity.Rotate(-TurnSpeed * Frame.DeltaTime);
             if (Keyboard.IsKeyDown(TurnRight))
-                Element.Rotate(TurnSpeed * Frame.DeltaTime);
+                Entity.Rotate(TurnSpeed * Frame.DeltaTime);
         }
-        
+
         private void TryTranslate(Vector translation)
         {
             // Treats as original
-            translation *= element.WorldDirection;
+            translation *= Entity.WorldDirection;
 
             float translMod = translation.Module;
             if (translMod == 0)
@@ -124,7 +81,7 @@
             if (HandleCollisions)
             {
                 Scene.RayCast(
-                    new Ray(element.WorldPosition, translation),
+                    new Ray(Entity.WorldPosition, translation),
                     out float distance,
                     out Vector normal);
 
@@ -136,7 +93,7 @@
                     Vector compensation = normal * (Vector.DotProduct(excess, normal) - 0.01f);
                     translation -= compensation;
 
-                    Scene.RayCast(new Ray(element.WorldPosition, translation), out float newDist, out Vector _);
+                    Scene.RayCast(new Ray(Entity.WorldPosition, translation), out float newDist, out Vector _);
 
                     if (newDist < translation.Module)
                     {
@@ -145,7 +102,7 @@
                 }
             }
 
-            element.WorldPosition += translation;
+            Entity.WorldPosition += translation;
         }
     }
 }

@@ -44,8 +44,8 @@ namespace Test
             }
 
             // Camera
-            Camera camera = new Camera((5, 5), 180);
             {
+                Camera camera = scene.Camera;
                 camera.AddBehaviour<DebugPerformanceStats>();
                 camera.AddBehaviour<DebugSceneInfo>();
 
@@ -70,7 +70,7 @@ namespace Test
             Renderer.CaptureMouse = true;
 
             // Run!
-            Renderer.Start(camera);
+            Renderer.Start(scene);
         }
     }
 }

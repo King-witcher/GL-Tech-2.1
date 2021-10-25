@@ -4,17 +4,14 @@ using System.Runtime.CompilerServices;
 
 namespace GLTech2
 {
-    partial class Element
+    partial class Entity
     {
         internal Action onMove;
-        internal List<Element> childs = new List<Element>();
-        private Element parent;
+        internal List<Entity> childs = new List<Entity>();
+        private Entity parent;
         private Vector relativePosition;
         private Vector relativeDirection;
 
-        /// <summary>
-        /// Gets and sets the absolute position of an Element.
-        /// </summary>
         public Vector WorldPosition
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -27,9 +24,6 @@ namespace GLTech2
             }
         }
 
-        /// <summary>
-        /// Gets and sets the absolute direction of an Element.
-        /// </summary>
         public Vector WorldDirection
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -42,9 +36,6 @@ namespace GLTech2
             }
         }
 
-        /// <summary>
-        /// The scale of this Element. Cannot be zero.
-        /// </summary>
         public float WorldScale
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -60,9 +51,6 @@ namespace GLTech2
             }
         }
 
-        /// <summary>
-        /// Gets and sets element's position relatively to it's parent or, if it has no parent, it's absolute position. 
-        /// </summary>
         public Vector RelativePosition
         {
             get
@@ -79,15 +67,6 @@ namespace GLTech2
             }
         }
 
-        /// <summary>
-        /// Gets and sets element's normal relatively to it's parent or, if it has no parent, it's absolute normal. 
-        /// </summary>
-        /// <remarks>
-        /// Normal vector determines the rotation and the scale of an object and is used due to performance improvements when managing multiple childs.
-        ///     <para>
-        ///     Use wisely.
-        ///     </para>
-        /// </remarks>
         public Vector RelativeDirection
         {
             get
@@ -104,9 +83,6 @@ namespace GLTech2
             }
         }
 
-        /// <summary>
-        /// Gets and sets directly the element's rotation relative to it's parent or, if it has no parents, it's absolute rotation.
-        /// </summary>
         public float RelativeRotation
         {
             get
@@ -133,13 +109,7 @@ namespace GLTech2
             }
         }
 
-        /// <summary>
-        /// Gets and sets element's reference point. A null value means that the element will take as reference point the world.
-        /// </summary>
-        /// <remarks>
-        /// Setting a reference point will make the object to move and rotate relatively to it's reference point, and if the parent element moves/rotate, this element will follow.
-        /// </remarks>
-        public Element Parent
+        public Entity Parent
         {
             get => parent;
             set
@@ -176,23 +146,17 @@ namespace GLTech2
             }
         }
 
-        /// <summary>
-        /// Gets the root reference point for this object.
-        /// </summary>
-        public Element RootParent
+        public Entity RootParent
         {
             get
             {
-                Element current = this;
+                Entity current = this;
                 while (current.parent != null)
                     current = current.parent;
                 return current;
             }
         }
 
-        /// <summary>
-        /// How many childs the element has.
-        /// </summary>
         public int ChildCount => childs.Count;
 
         // Update relative position/normal info based on parent and absolute components.
@@ -213,10 +177,6 @@ namespace GLTech2
             }
         }
 
-        /// <summary>
-        /// Rotate the object a specified amount.
-        /// </summary>
-        /// <param name="rotation">angle in degrees</param>
         public void Rotate(float rotation)
         {
             RelativeRotation += rotation;
@@ -242,25 +202,14 @@ namespace GLTech2
             onMove?.Invoke();
         }
 
-        /// <summary>
-        /// Gets a child from the element by index.
-        /// </summary>
-        /// <param name="index">Index</param>
-        /// <returns>Specified children</returns>
-        public Element GetChild(int index)
+        public Entity GetChild(int index)
         {
             return childs[index];
         }
 
-        /// <summary>
-        /// Release all childs and make their reference point equal to null.
-        /// </summary>
-        /// <remarks>
-        /// Not widely tested.
-        /// </remarks>
         public void ReleaseChilds()
         {
-            foreach (Element child in childs)
+            foreach (Entity child in childs)
             {
                 child.Parent = null;
                 childs.Remove(child);

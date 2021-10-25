@@ -4,9 +4,6 @@ namespace GLTech2
 {
     partial class Behaviour
     {
-        /// <summary>
-        /// Provides an interface to get time information about the last frame.
-        /// </summary>
         protected internal static class Frame
         {
             private static Stopwatch frameStopwatch = new Stopwatch();
@@ -19,24 +16,12 @@ namespace GLTech2
             private static double scriptTime = 0.0;
             private static float windowTime = 0f;
 
-            /// <summary>
-            /// Gets the interval in seconds from the last frame to the current one.
-            /// </summary>
             public static float DeltaTime => frameTime;
 
-            /// <summary>
-            /// Gets the time in seconds spent only to generate the current frame, not considering time spent running behaviours.
-            /// </summary>
             public static double RenderTime => renderTime;
 
-            /// <summary>
-            /// Gets the time in seconds spent only to run all behaviour scripts in the previous frame, not considering time spent rendering.
-            /// </summary>
             public static double ScriptTime => scriptTime;
 
-            /// <summary>
-            /// Gets the time in seconds spent to update the last window frame.
-            /// </summary>
             public static float WindowTime => windowTime;
 
             #region This region interface is used by Renderer

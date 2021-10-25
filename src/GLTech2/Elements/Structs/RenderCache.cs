@@ -6,9 +6,6 @@ using System.Runtime.InteropServices;
 
 namespace GLTech2
 {
-    /// <summary>
-    /// Stores important cache data to the renderer that can be shared with native modes.
-    /// </summary>
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct RenderCache : IDisposable

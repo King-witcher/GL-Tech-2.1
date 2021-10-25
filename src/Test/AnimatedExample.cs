@@ -35,7 +35,7 @@ namespace Test
                         hoffset: 0f,
                         hrepeat: 2f);
 
-                    Element e = new RegularPolygon(
+                    Entity e = new RegularPolygon(
                         position: (-0.5f, 0f),
                         vertices: 4,
                         radius: .354f,
@@ -52,7 +52,7 @@ namespace Test
                         hoffset: 0f,
                         hrepeat: 4f);
 
-                    Element e = new RegularPolygon(
+                    Entity e = new RegularPolygon(
                         position: (0.5f, 0f),
                         vertices: 100,
                         radius: .318f,
@@ -69,7 +69,7 @@ namespace Test
                         hoffset: 0f,
                         hrepeat: 1f);
 
-                    Element e = new RegularPolygon(
+                    Entity e = new RegularPolygon(
                         position: (0f, 0.866f),
                         vertices: 3,
                         radius: .385f,
@@ -89,24 +89,19 @@ namespace Test
                     hoffset: 0f,
                     hrepeat: 32f);
 
-                Element e = new RegularPolygon(
+                Entity e = new RegularPolygon(
                     position: Vector.Zero,
                     vertices: 4,
-                    radius: -2f, 
+                    radius: -2f,
                     texture: tex);
 
                 scene.AddElement(e);
             }
 
-            // Observer
-            Camera pov = new Camera(position: Vector.Backward, rotation: 0f);
+            // Camera
             {
-
-                // pov.AddBehaviour<DebugPosition>();
-                pov.AddBehaviour<DebugPerformanceStats>();
-                pov.AddBehaviour(new MouseRotation(2.2f));
-
-                scene.AddElement(pov);
+                scene.Camera.AddBehaviour<DebugPerformanceStats>();
+                scene.Camera.AddBehaviour(new MouseRotation(2.2f));
             }
 
             // Setup Renderer
@@ -117,7 +112,7 @@ namespace Test
             Renderer.CaptureMouse = true;
 
             // Run!
-            Renderer.Start(pov);
+            Renderer.Start(scene);
         }
     }
 }

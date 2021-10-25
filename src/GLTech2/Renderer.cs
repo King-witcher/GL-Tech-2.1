@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GLTech2
 {
-    /// <summary>
-    /// Provides an interface to render scenes and output the video in a window.
-    /// </summary>
     public static partial class Renderer
     {
         unsafe static RenderCache* cache;
@@ -21,31 +18,11 @@ namespace GLTech2
 
         // public static bool NativeRendering { get; } = false;
 
-        /// <summary>
-        ///     Gets and determines whether the renderer should use every CPU unit or just one.
-        ///     <para>
-        ///         true tells the engine to use every CPU; false tells to use one.
-        ///     </para>
-        /// </summary>
         public static bool ParallelRendering { get; set; } = true;
 
-        /// <summary>
-        /// Gets which scene is being or will be rendered.
-        /// </summary>
         public static Scene ActiveScene => activeScene;
 
         private static float minframetime = 4;
-        /// <summary>
-        ///     Gets and sets the max framerate the engine can reach.
-        /// </summary>
-        /// <remarks>
-        ///     <para>
-        ///         The value will always be clipped between 1 and 250.
-        ///     </para>
-        ///     <para>
-        ///         Limiting framerate is important to avoid Time.DeltaTime from being to low an being extremelly affected by floating point accuracy problems.
-        ///     </para>
-        /// </remarks>
         public static int MaxFps
         {
             get => (int)(1000f / minframetime);
@@ -57,17 +34,6 @@ namespace GLTech2
         }
 
         static bool doubleBuffer = true;
-        /// <summary>
-        ///     Gets and sets whether or not the engine should use different buffers to synthesise and display thet image.
-        /// </summary>
-        /// <remarks>
-        ///     <para>
-        ///         Double buffer incresases input lat, reduces framerate but is important if you use post processing effects on the screen and needs to display each frame only after completely made.
-        ///     </para>
-        ///     <para>
-        ///         This property cannot be changed if the Renderer is running.
-        ///     </para>
-        /// </remarks>
         public static bool DoubleBuffer
         {
             get => doubleBuffer;
@@ -75,14 +41,6 @@ namespace GLTech2
         }
 
         private static int customWidth = 960;
-        /// <summary>
-        ///     Gets and sets the custom width of the screen.
-        /// </summary>
-        /// <remarks>
-        ///     <para>
-        ///         This property cannot be changed if the Renderer is running.
-        ///     </para>
-        /// </remarks>
         public static int CustomWidth
         {
             get => customWidth;
@@ -90,14 +48,6 @@ namespace GLTech2
         }
 
         private static int customHeight = 520;
-        /// <summary>
-        ///     Gets and sets the custom height of the screen.
-        /// </summary>
-        /// <remarks>
-        ///     <para>
-        ///         This property cannot be changed if the Renderer is running.
-        ///     </para>
-        /// </remarks>
         public static int CustomHeight
         {
             get => customHeight;
@@ -105,14 +55,6 @@ namespace GLTech2
         }
 
         static bool fullScreen;
-        /// <summary>
-        ///     Gets and sets whether the renderer should display at fullscreen or windowed mode.
-        /// </summary>
-        /// <remarks>
-        ///     <para>
-        ///         This property cannot be changed if the Renderer is running.
-        ///     </para>
-        /// </remarks>
         public static bool FullScreen
         {
             get => fullScreen;
@@ -128,14 +70,6 @@ namespace GLTech2
         }
 
         static float fieldOfView = 90f;
-        /// <summary>
-        ///     Gets and sets the field of view.
-        /// </summary>
-        /// <remarks>
-        ///     <para>
-        ///         This property cannot be changed if the Renderer is running.
-        ///     </para>
-        /// </remarks>
         public static float FieldOfView
         {
             get => fieldOfView;
@@ -147,26 +81,17 @@ namespace GLTech2
         }
 
         static bool captureMouse = false;
-        /// <summary>
-        ///     Gets and sets whether the engine should or not capture mouse movements.
-        /// </summary>
         public static bool CaptureMouse
         {
             get => captureMouse;
             set => captureMouse = value;    // Revisar
         }
 
-        /// <summary>
-        ///     Gets whether or not the engine is running.
-        /// </summary>
         public static bool IsRunning { get; private set; } = false;
 
 
         public enum Environments { Development, Production }
         private static Environments environment = Environments.Development;
-        /// <summary>
-        /// Determines which environment should the engine be optimized to.
-        /// </summary>
         public static Environments Environment
         {
             get => environment;
@@ -176,10 +101,6 @@ namespace GLTech2
             }
         }
 
-        /// <summary>
-        /// Takes a screenshot of the current frame as PixelBuffer.
-        /// </summary>
-        /// <returns>A screenshot of the current frame.</returns>
         public static PixelBuffer GetScreenshot()
         {
             PixelBuffer pb = new PixelBuffer(CustomWidth, customHeight);
@@ -187,39 +108,26 @@ namespace GLTech2
             return pb;
         }
 
-        /// <summary>
-        ///     Adds a new post processing effect to be applied every frame.
-        /// </summary>
-        /// <param name="postProcessing">Post processing effect to be applied</param>
         public static void AddEffect(PostProcessing postProcessing)
         {
             Renderer.postProcessing.Add(postProcessing);
         }
 
-        /// <summary>
-        ///     Adds a new instance of a given post processing effect to be applied every frame.
-        /// </summary>
-        /// <typeparam name="T">Post processing type</typeparam>
-        /// <remarks>
-        ///     <para>
-        ///         Not every post processing effect can be added via Type because some needs to be setup manually.
-        ///     </para>
-        /// </remarks>
         public static void AddPostProcessing<T>() where T : PostProcessing, new()
         {
             AddEffect(new T());
         }
 
-        public unsafe static void Start(Camera camera)
+        public unsafe static void Start(Scene scene)
         {
             if (IsRunning)
                 return;
             IsRunning = true;
 
-            Scene scene = camera.scene;
+            Camera camera = scene.Camera;
 
             if (scene == null)
-			{
+            {
                 Debug.InternalLog(
                     message: $"Cannot render from Camera \"{camera}\" because it's not bound to any Scene.",
                     debugOption: Debug.Options.Error);
@@ -305,7 +213,7 @@ namespace GLTech2
             Stopwatch controlStopwatch = new Stopwatch();   // Required to cap framerate
             Behaviour.Frame.RestartFrame();
             Behaviour.Frame.BeginScript();
-            activeScene.OnStart?.Invoke();
+            activeScene.Start?.Invoke();
             Behaviour.Frame.EndScript();
 
             // While this variable is set to true, outputBuffer cannot be released by Renderer.Run() thread.
@@ -316,7 +224,7 @@ namespace GLTech2
                 controlStopwatch.Restart();
                 Behaviour.Frame.BeginRender();
 
-                DrawPlanes(backBuffer, activeScene.sScene);
+                DrawPlanes(backBuffer, activeScene.unmanaged);
                 PostProcess(backBuffer);
 
                 if (DoubleBuffer)

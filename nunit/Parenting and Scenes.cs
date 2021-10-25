@@ -1,6 +1,5 @@
-﻿using NUnit.Framework;
-using GLTech2;
-using System;
+﻿using GLTech2;
+using NUnit.Framework;
 
 namespace UnitTests
 {

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31424.327
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31808.319
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GL Tech 2.1", "GL Tech 2.1.csproj", "{6849AE10-449E-46A2-91B2-ACA2D5D94EDC}"
 EndProject
@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests", "..\nunit\Unit Tests.csproj", "{FD5B81F6-C2E8-42A0-AA1B-B5C37F31CDBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unit Tests", "..\nunit\Unit Tests.csproj", "{FD5B81F6-C2E8-42A0-AA1B-B5C37F31CDBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,14 +26,11 @@ Global
 		{6849AE10-449E-46A2-91B2-ACA2D5D94EDC}.Release|.NET 5.0 x64.ActiveCfg = Release|x64
 		{6849AE10-449E-46A2-91B2-ACA2D5D94EDC}.Release|.NET 5.0 x64.Build.0 = Release|x64
 		{6849AE10-449E-46A2-91B2-ACA2D5D94EDC}.Release|Any CPU.ActiveCfg = Release|x64
-		{FD5B81F6-C2E8-42A0-AA1B-B5C37F31CDBC}.Debug|.NET 5.0 x64.ActiveCfg = Debug|Any CPU
-		{FD5B81F6-C2E8-42A0-AA1B-B5C37F31CDBC}.Debug|.NET 5.0 x64.Build.0 = Debug|Any CPU
-		{FD5B81F6-C2E8-42A0-AA1B-B5C37F31CDBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD5B81F6-C2E8-42A0-AA1B-B5C37F31CDBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD5B81F6-C2E8-42A0-AA1B-B5C37F31CDBC}.Release|.NET 5.0 x64.ActiveCfg = Release|Any CPU
-		{FD5B81F6-C2E8-42A0-AA1B-B5C37F31CDBC}.Release|.NET 5.0 x64.Build.0 = Release|Any CPU
-		{FD5B81F6-C2E8-42A0-AA1B-B5C37F31CDBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD5B81F6-C2E8-42A0-AA1B-B5C37F31CDBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD5B81F6-C2E8-42A0-AA1B-B5C37F31CDBC}.Debug|.NET 5.0 x64.ActiveCfg = Debug|x64
+		{FD5B81F6-C2E8-42A0-AA1B-B5C37F31CDBC}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{FD5B81F6-C2E8-42A0-AA1B-B5C37F31CDBC}.Release|.NET 5.0 x64.ActiveCfg = Release|x64
+		{FD5B81F6-C2E8-42A0-AA1B-B5C37F31CDBC}.Release|.NET 5.0 x64.Build.0 = Release|x64
+		{FD5B81F6-C2E8-42A0-AA1B-B5C37F31CDBC}.Release|Any CPU.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

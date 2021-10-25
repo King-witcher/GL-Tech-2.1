@@ -54,10 +54,10 @@ namespace GLTech2.PostProcessings
                         float factor = differenceH > differenceV ? differenceH : differenceV;
                         factor = 0.95f * adjust(factor);
 
-                            temporaryBuffer.uint0[cur] = avg(
-                                previousFrame.uint0[cur],
-                                target.uint0[cur],
-                                factor / 2);
+                        temporaryBuffer.uint0[cur] = avg(
+                            previousFrame.uint0[cur],
+                            target.uint0[cur],
+                            factor / 2);
 
                         //copy.buffer[cur] = (uint)(factor * 255) * 0x00010101 + 0xff000000;
                     }

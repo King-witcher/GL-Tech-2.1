@@ -1,5 +1,5 @@
-﻿using NUnit.Framework;
-using GLTech2;
+﻿using GLTech2;
+using NUnit.Framework;
 using System;
 
 namespace UnitTests
@@ -87,7 +87,7 @@ namespace UnitTests
 
             parent.WorldPosition += move_dir;
 
-            bool assert = (move_dir + child_pos - child.WorldPosition).Module < 0.000001f; 
+            bool assert = (move_dir + child_pos - child.WorldPosition).Module < 0.000001f;
 
             Assert.IsTrue(assert, "Childs should move together with parents.");
         }
@@ -95,8 +95,8 @@ namespace UnitTests
         [Test]
         public void Rotating_Parent()
         {
-            Element parent = new Empty(Vector.Zero);
-            Element child = new Empty((1, 0));
+            Entity parent = new Empty(Vector.Zero);
+            Entity child = new Empty((1, 0));
 
             child.Parent = parent;
             parent.RelativeRotation -= 90f;

@@ -2,14 +2,8 @@
 
 namespace GLTech2.Behaviours
 {
-    /// <summary>
-    /// An initial implementation for KinematicBody that allows an object to respect collision behaviors.
-    /// </summary>
     public class PointCollider : KinematicBody
     {
-        /// <summary>
-        /// Determines whether the object should or not respect collisions.
-        /// </summary>
         public bool HandleCollisions { get; set; } = true;
 
         public override void Accelerate(Vector direction)
@@ -36,7 +30,7 @@ namespace GLTech2.Behaviours
         {
             if (HandleCollisions)
                 ClipCollisions();
-            Element.WorldPosition += Velocity * Frame.DeltaTime;
+            Entity.WorldPosition += Velocity * Frame.DeltaTime;
         }
 
         // Esse método faz exatamente o que você sugeriu, professor =]
@@ -49,7 +43,7 @@ namespace GLTech2.Behaviours
             float deltaS = Speed * Frame.DeltaTime;
 
             Scene.RayCast(
-                new Ray(element.WorldPosition, Velocity),
+                new Ray(Entity.WorldPosition, Velocity),
                 out float cllsn_dist,
                 out Vector cllsn_normal);
 
@@ -64,7 +58,7 @@ namespace GLTech2.Behaviours
                 deltaS = Speed * Frame.DeltaTime;
 
                 Scene.RayCast(
-                    new Ray(element.WorldPosition, Velocity),
+                    new Ray(Entity.WorldPosition, Velocity),
                     out cllsn_dist,
                     out cllsn_normal);
 

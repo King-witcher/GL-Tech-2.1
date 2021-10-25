@@ -1,6 +1,6 @@
 ﻿using GLTech2.Drawing;
 
-namespace GLTech2.Elements
+namespace GLTech2.Entities.StandardEntites
 {
     public sealed class RegularPolygon : Polygon
     {

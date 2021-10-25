@@ -1,4 +1,6 @@
 ﻿
+using GLTech2.Entities;
+
 namespace GLTech2
 {
     partial class Scene

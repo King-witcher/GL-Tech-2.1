@@ -1,6 +1,6 @@
 ﻿using GLTech2.Drawing;
 
-namespace GLTech2
+namespace GLTech2.Entities
 {
     internal unsafe sealed class Sprite : Entity
     {

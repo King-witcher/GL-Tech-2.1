@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 using GLTech2.Drawing;
+using GLTech2.Entities;
 
 namespace GLTech2
 {

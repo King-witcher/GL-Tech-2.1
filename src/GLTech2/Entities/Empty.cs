@@ -1,4 +1,4 @@
-﻿namespace GLTech2
+﻿namespace GLTech2.Entities
 {
     public sealed class Empty : Entity
     {

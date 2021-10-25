@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GLTech2
+namespace GLTech2.Entities
 {
     public abstract partial class Entity : IDisposable
     {

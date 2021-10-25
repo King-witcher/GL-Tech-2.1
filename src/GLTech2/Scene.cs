@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 
 using GLTech2.Drawing;
+using GLTech2.Entities;
 
 namespace GLTech2
 {

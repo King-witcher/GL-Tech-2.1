@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reflection;
 
+using GLTech2.Entities;
+
 namespace GLTech2
 {
     public abstract partial class Behaviour

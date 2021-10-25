@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace GLTech2
+namespace GLTech2.Entities
 {
     public unsafe class Collider : Entity
     {
@@ -21,11 +21,11 @@ namespace GLTech2
         #endregion
 
         public Collider(Vector start, Vector end) =>
-unmanaged = SCollider.Alloc(start, end);
+            unmanaged = SCollider.Alloc(start, end);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Test(Ray ray, out float distance) =>
-unmanaged->Test(ray, out distance);
+            unmanaged->Test(ray, out distance);
 
         public override void Dispose()
         {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 // Velocity deveria ser implementado em Element ou pode ser abstrato e implementado nas classes base?
 // Talvez as World devam atualizar as relativas tambem. Posso criar uma que atualize apenas a interna e usar por quest'oes de performance.
 
-namespace GLTech2
+namespace GLTech2.Entities
 {
     partial class Entity
     {

@@ -2,7 +2,7 @@
 
 using GLTech2.Drawing; 
 
-namespace GLTech2.Elements
+namespace GLTech2.Entities.StandardEntites
 {
     partial class BlockMap
     {

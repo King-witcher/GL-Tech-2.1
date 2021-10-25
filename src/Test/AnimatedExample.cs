@@ -1,7 +1,8 @@
 ﻿using GLTech2;
 using GLTech2.Behaviours;
-using GLTech2.Elements;
 using GLTech2.Drawing;
+using GLTech2.Entities;
+using GLTech2.Entities.StandardEntites;
 
 namespace Test
 {

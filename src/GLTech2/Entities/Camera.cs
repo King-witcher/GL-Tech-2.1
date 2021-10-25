@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GLTech2
+namespace GLTech2.Entities
 {
     public unsafe sealed class Camera : Entity, IDisposable
     {

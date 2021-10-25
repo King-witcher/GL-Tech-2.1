@@ -2,6 +2,8 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
+using GLTech2.Drawing;
+
 namespace GLTech2
 {
     [NativeCppClass]

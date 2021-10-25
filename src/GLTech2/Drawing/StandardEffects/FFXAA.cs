@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace GLTech2.PostProcessings
+namespace GLTech2.Drawing.StandardEffects
 {
     public sealed unsafe class FFXAA : PostProcessing, IDisposable
     {

@@ -1,5 +1,7 @@
 ﻿using System;
 
+using GLTech2.Drawing;
+
 namespace GLTech2.Elements
 {
     public class Polygon : Entity

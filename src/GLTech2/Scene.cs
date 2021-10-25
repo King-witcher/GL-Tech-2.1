@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 
+using GLTech2.Drawing;
+
 namespace GLTech2
 {
     public unsafe sealed partial class Scene : IDisposable

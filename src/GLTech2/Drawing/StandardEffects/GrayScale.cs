@@ -1,4 +1,6 @@
-﻿namespace GLTech2.PostProcessings
+﻿
+
+namespace GLTech2.Drawing.StandardEffects
 {
     public sealed class GrayScale : PostProcessing
     {

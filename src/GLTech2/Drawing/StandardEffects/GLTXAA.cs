@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace GLTech2.PostProcessings
+namespace GLTech2.Drawing.StandardEffects
 {
     //Incomplete
     internal sealed unsafe class GLTXAA : PostProcessing, IDisposable

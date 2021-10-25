@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace GLTech2
+namespace GLTech2.Drawing
 {
     [StructLayout(LayoutKind.Explicit)]
     public struct RGB

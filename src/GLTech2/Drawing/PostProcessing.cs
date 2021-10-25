@@ -1,5 +1,5 @@
 ﻿
-namespace GLTech2
+namespace GLTech2.Drawing
 {
     public abstract class PostProcessing
     {

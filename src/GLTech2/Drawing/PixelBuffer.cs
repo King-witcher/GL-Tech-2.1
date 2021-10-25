@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
-namespace GLTech2
+namespace GLTech2.Drawing
 {
     [StructLayout(LayoutKind.Explicit)]
     public unsafe readonly struct PixelBuffer : IDisposable

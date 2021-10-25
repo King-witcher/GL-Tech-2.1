@@ -1,4 +1,6 @@
-﻿namespace GLTech2.Elements
+﻿using GLTech2.Drawing;
+
+namespace GLTech2.Elements
 {
     public sealed class RegularPolygon : Polygon
     {

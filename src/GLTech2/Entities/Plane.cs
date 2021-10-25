@@ -1,4 +1,6 @@
-﻿namespace GLTech2
+﻿using GLTech2.Drawing;
+
+namespace GLTech2
 {
     public unsafe class Plane : Entity
     {

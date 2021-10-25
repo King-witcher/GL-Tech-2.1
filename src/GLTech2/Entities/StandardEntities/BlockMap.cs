@@ -2,6 +2,8 @@
 
 using System;
 
+using GLTech2.Drawing;
+
 namespace GLTech2.Elements
 {
     public partial class BlockMap : Entity

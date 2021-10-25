@@ -7,6 +7,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using GLTech2.Drawing;
+
 namespace GLTech2
 {
     public static partial class Renderer
@@ -89,18 +91,6 @@ namespace GLTech2
 
         public static bool IsRunning { get; private set; } = false;
 
-
-        public enum Environments { Development, Production }
-        private static Environments environment = Environments.Development;
-        public static Environments Environment
-        {
-            get => environment;
-            set
-            {
-                ChangeIfNotRunning("Environment", ref environment, value);
-            }
-        }
-
         public static PixelBuffer GetScreenshot()
         {
             PixelBuffer pb = new PixelBuffer(CustomWidth, customHeight);
@@ -149,10 +139,6 @@ namespace GLTech2
 
             var display = new Display(FullScreen, CustomWidth, CustomHeight, sourceBitmap);
 
-            // Alloc a new console window if the environment is set to development.
-            if (environment == Environments.Development)
-                Debug.OpenConsole();
-
             // We must define two booleans to communicate with the tread.
             // The first is necessary to send a stop request.
             // The second is necessary to be aware of when the renderer doesn't need our unmanaged resources and
@@ -179,9 +165,6 @@ namespace GLTech2
             frontBuffer.Dispose();
             sourceBitmap.Dispose();
             activeCamera = null;
-
-            if (environment == Environments.Development)
-                Debug.CloseConsole();
 
             IsRunning = false;
         }

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 
+using GLTech2.Drawing; 
+
 namespace GLTech2.Elements
 {
     partial class BlockMap
@@ -10,7 +12,7 @@ namespace GLTech2.Elements
             Dictionary<uint, Texture> mapper;
 
             public TextureMapper() =>
-mapper = new Dictionary<uint, Texture>(32);
+                mapper = new Dictionary<uint, Texture>(32);
 
             public Texture this[RGB color]
             {
@@ -23,10 +25,10 @@ mapper = new Dictionary<uint, Texture>(32);
             }
 
             public void Bind(RGB color, Texture texture) =>
-mapper[color] = texture;
+                mapper[color] = texture;
 
             public bool GetTexture(RGB color, out Texture texture) =>
-mapper.TryGetValue(color, out texture);
+                mapper.TryGetValue(color, out texture);
         }
     }
 }

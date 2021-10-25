@@ -1,6 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
+using GLTech2.Drawing;
+
 namespace GLTech2
 {
     // This is the part really renders.

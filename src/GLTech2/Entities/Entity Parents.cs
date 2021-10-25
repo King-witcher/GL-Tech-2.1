@@ -118,7 +118,7 @@ namespace GLTech2.Entities
                 if (value != null && scene != value.scene)
                 {
                     Debug.InternalLog(
-                        message: $"The element \"{value}\" cannot be set parent of \"{this}\" because they are bound to different scenes.",
+                        message: $"The entity \"{value}\" cannot be set parent of \"{this}\" because they are bound to different scenes.",
                         debugOption: Debug.Options.Error);
                     return;
                 }
@@ -127,10 +127,10 @@ namespace GLTech2.Entities
                 if (parent != null)
                 {
                     parent.onMove -= FollowParent;    // Temos um erro aqui
-                    parent.childs.Remove(this);
+                    parent.childs.Remove(this);       // Spaguetti?
                 }
 
-                // If it must have a new element as reference point, then
+                // If it must have a new entity as parent, then
                 if (value != null)
                 {
                     // Subscribe to its OnChangeComponents so that you can follow the object whenever it changes position.
@@ -146,6 +146,8 @@ namespace GLTech2.Entities
             }
         }
 
+        public int ChildCount => childs.Count;
+
         public Entity RootParent
         {
             get
@@ -156,8 +158,6 @@ namespace GLTech2.Entities
                 return current;
             }
         }
-
-        public int ChildCount => childs.Count;
 
         // Update relative position/normal info based on parent and absolute components.
         // Must be called when which parent element this element takes as reference point changes.
@@ -207,13 +207,10 @@ namespace GLTech2.Entities
             return childs[index];
         }
 
-        public void ReleaseChilds()
+        public void DetachChildren()
         {
             foreach (Entity child in childs)
-            {
                 child.Parent = null;
-                childs.Remove(child);
-            }
         }
     }
 }

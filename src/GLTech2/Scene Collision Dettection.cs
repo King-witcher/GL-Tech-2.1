@@ -1,5 +1,6 @@
 ﻿
 using GLTech2.Entities;
+using GLTech2.Unmanaged;
 
 namespace GLTech2
 {

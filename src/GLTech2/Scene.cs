@@ -4,6 +4,7 @@ using System.Drawing;
 
 using GLTech2.Drawing;
 using GLTech2.Entities;
+using GLTech2.Unmanaged;
 
 namespace GLTech2
 {
@@ -21,7 +22,7 @@ namespace GLTech2
             unmanaged = SScene.Create(background);
 
             var defaultCamera = new Camera();
-            AddElement(defaultCamera);
+            Add(defaultCamera);
             camera = defaultCamera;
         }
 
@@ -31,7 +32,7 @@ namespace GLTech2
 
         public int ColliderCount => colliders.Count;
 
-        public int ElementCount => entities.Count;
+        public int EntityCount => entities.Count;
 
         public int PlaneCount => unmanaged->plane_count;
 
@@ -57,7 +58,7 @@ namespace GLTech2
 
         public Camera Camera => camera;
 
-        public void AddElement(Entity entity)
+        public void Add(Entity entity)
         {
             #region Entry vefifications
             // Obvious thing
@@ -120,14 +121,14 @@ namespace GLTech2
             }
         }
 
-        public void AddElements(IEnumerable<Entity> entities)
+        public void Add(IEnumerable<Entity> entities)
         {
             foreach (Entity item in entities)
-                AddElement(item);
+                Add(item);
         }
 
-        public void AddElements(params Entity[] entities) =>
-            AddElements((IEnumerable<Entity>)entities);
+        public void Add(params Entity[] entities) =>
+            Add((IEnumerable<Entity>)entities);
 
         public void Dispose()
         {

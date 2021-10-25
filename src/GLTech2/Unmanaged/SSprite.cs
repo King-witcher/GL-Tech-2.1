@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using GLTech2.Drawing;
 using GLTech2.Entities;
 
-namespace GLTech2
+namespace GLTech2.Unmanaged
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]

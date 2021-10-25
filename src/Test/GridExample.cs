@@ -42,7 +42,7 @@ namespace Test
                 }
 
                 BlockMap map = new BlockMap(map: grid, textureBindings: mapper);
-                scene.AddElement(map);
+                scene.Add(map);
             }
 
             // Camera
@@ -59,7 +59,7 @@ namespace Test
                 camera.AddBehaviour(movement);
                 camera.AddBehaviour(mouseLook);
 
-                scene.AddElement(camera);
+                scene.Add(camera);
             }
 
             // Renderer customization

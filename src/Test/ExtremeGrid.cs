@@ -25,7 +25,7 @@ namespace Test
                 tb[(0, 0, 0)] = tex;
                 BlockMap gm = new BlockMap(BlockMapbuf, tb);
                 gm.WorldScale = 0.04f;
-                scene.AddElement(gm);
+                scene.Add(gm);
             }
 
             // Camera
@@ -40,7 +40,7 @@ namespace Test
                 camera.AddBehaviour(kinematicBody);
                 camera.AddBehaviour(softMovement);
 
-                scene.AddElement(camera);
+                scene.Add(camera);
             }
 
             Renderer.CaptureMouse = true;

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 using GLTech2.Drawing;
 
-namespace GLTech2
+namespace GLTech2.Unmanaged
 {
 
     [NativeCppClass]

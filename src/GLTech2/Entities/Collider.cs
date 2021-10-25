@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using GLTech2.Unmanaged;
 
 namespace GLTech2.Entities
 {

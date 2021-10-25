@@ -1,4 +1,5 @@
 ﻿using GLTech2.Drawing;
+using GLTech2.Unmanaged;
 
 namespace GLTech2.Entities
 {

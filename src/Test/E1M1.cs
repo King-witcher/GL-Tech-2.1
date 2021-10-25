@@ -157,7 +157,7 @@ namespace Test
                 }
 
                 BlockMap BlockMap = new BlockMap(map: grid, textureBindings: binds);
-                scene.AddElement(BlockMap);
+                scene.Add(BlockMap);
             }
 
             // Camera

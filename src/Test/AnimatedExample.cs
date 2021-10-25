@@ -81,7 +81,7 @@ namespace Test
                     e.Parent = pivot;
                 }
 
-                scene.AddElement(pivot);
+                scene.Add(pivot);
             }
 
             // Big triangle
@@ -97,7 +97,7 @@ namespace Test
                     radius: -2f,
                     texture: tex);
 
-                scene.AddElement(e);
+                scene.Add(e);
             }
 
             // Camera

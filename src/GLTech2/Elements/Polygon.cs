@@ -2,10 +2,7 @@
 
 namespace GLTech2.Elements
 {
-    /// <summary>
-    /// Represents a set of walls that make up a polygon.
-    /// </summary>
-    public class Polygon : Element
+    public class Polygon : Entity
     {
         // The reason behind this is SPAGUETTI. I must change as quick as possible.
         private protected override Vector PositionData { get; set; } = Vector.Zero;
@@ -13,11 +10,6 @@ namespace GLTech2.Elements
 
         private protected Polygon() { }
 
-        /// <summary>
-        /// Gets a new instance of Polygon given its vertices.
-        /// </summary>
-        /// <param name="vertices">The vertices of the polygon</param>
-        /// <param name="texture">The texture that will be stretched on the polygon</param>
         public Polygon(Vector[] vertices, Texture texture)
         {
             if (vertices == null)

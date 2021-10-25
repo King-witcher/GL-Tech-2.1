@@ -36,7 +36,7 @@ namespace Test
             using PixelBuffer dolar_buffer = new PixelBuffer(WE1M1._1dolar);
 
             Texture background = new Texture(background_buffer);
-            using Scene scene = new Scene(background);
+            using Scene scene = new Scene();
 
             // BlockMap
             {
@@ -45,10 +45,10 @@ namespace Test
                 {
                     Texture blueStone1 = new Texture(
                         buffer: textures,
-                        hrepeat: 1/6f,
-                        vrepeat: 1/19f,
-                        hoffset: 2/6f,
-                        voffset: 2/19f);
+                        hrepeat: 1 / 6f,
+                        vrepeat: 1 / 19f,
+                        hoffset: 2 / 6f,
+                        voffset: 2 / 19f);
 
                     Texture blueStone2 = new Texture(
                         buffer: textures,
@@ -159,8 +159,9 @@ namespace Test
             }
 
             // Camera
-            Camera camera = new Camera((57.5f, 29.5f), 0);
             {
+                Camera camera = scene.Camera;
+                camera.WorldPosition = (57.5f, 29.5f);
                 camera.AddBehaviour<DebugPerformanceStats>();
                 camera.AddBehaviour<DebugSceneInfo>();
                 camera.AddBehaviour(new MouseRotation(2.2f));
@@ -170,8 +171,6 @@ namespace Test
                 SoftMovement movement = new SoftMovement(pc);
                 camera.AddBehaviour(movement);
                 //camera.AddBehaviour<Rotate>();
-
-                scene.AddElement(camera);
             }
 
             // Renderer customization
@@ -182,7 +181,7 @@ namespace Test
             Renderer.CaptureMouse = true;
 
             // Run!
-            Renderer.Start(camera);
+            Renderer.Start(scene);
         }
     }
 }

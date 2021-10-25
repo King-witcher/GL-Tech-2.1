@@ -1,8 +1,5 @@
 ﻿namespace GLTech2
 {
-    /// <summary>
-    ///     Represents a keyboard key.
-    /// </summary>
     public enum Key
     {
         //

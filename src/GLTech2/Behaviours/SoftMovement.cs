@@ -1,12 +1,6 @@
 ﻿
 namespace GLTech2.Behaviours
 {
-    /// <summary>
-    /// Allows the user to move the camera around the map using keyboard input in a Quakish way.
-    /// </summary>
-    /// <remarks>
-    /// Beta. May not work as expected.
-    /// </remarks>
     public sealed class SoftMovement : Behaviour
     {
         KinematicBody body;
@@ -76,7 +70,7 @@ namespace GLTech2.Behaviours
             if (Keyboard.IsKeyDown(StepRight))
                 result += Vector.Right;
 
-            result *= Element.RelativeDirection;
+            result *= Entity.RelativeDirection;
 
             if (result.Module == 0)
                 return Vector.Zero;

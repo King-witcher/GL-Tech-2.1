@@ -1,10 +1,6 @@
-﻿
-using System;
-using System.Runtime.InteropServices;
-
-namespace GLTech2
+﻿namespace GLTech2
 {
-    internal unsafe sealed class Sprite : Element
+    internal unsafe sealed class Sprite : Entity
     {
         internal SSprite* unmanaged;
 

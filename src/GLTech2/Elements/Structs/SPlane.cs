@@ -7,7 +7,7 @@ namespace GLTech2
 
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct SPlane : IStructElement
+    internal unsafe struct SPlane
     {
         internal Vector start;
         internal Vector direction;
@@ -33,11 +33,6 @@ namespace GLTech2
             result->start = start;
             result->link_next = null;
             return result;
-        }
-
-        void IStructElement.AddToSScene(SScene s)
-        {
-            throw new NotImplementedException();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

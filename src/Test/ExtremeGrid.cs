@@ -26,25 +26,25 @@ namespace Test
                 scene.AddElement(gm);
             }
 
-            // Observer
-            Camera observer = new Camera((0, 0));
+            // Camera
             {
-                observer.AddBehaviour(new MouseRotation(2.2f));
-                observer.AddBehaviour<DebugPerformanceStats>();
-                observer.AddBehaviour<DebugSceneInfo>();
+                Camera camera = scene.Camera;
+                camera.AddBehaviour(new MouseRotation(2.2f));
+                camera.AddBehaviour<DebugPerformanceStats>();
+                camera.AddBehaviour<DebugSceneInfo>();
 
                 KinematicBody kinematicBody = new PointCollider();
                 SoftMovement softMovement = new SoftMovement(kinematicBody);
-                observer.AddBehaviour(kinematicBody);
-                observer.AddBehaviour(softMovement);
+                camera.AddBehaviour(kinematicBody);
+                camera.AddBehaviour(softMovement);
 
-                scene.AddElement(observer);
+                scene.AddElement(camera);
             }
 
             Renderer.CaptureMouse = true;
             Renderer.FullScreen = true;
             Renderer.DoubleBuffer = true;
-            Renderer.Start(observer);
+            Renderer.Start(scene);
         }
     }
 }

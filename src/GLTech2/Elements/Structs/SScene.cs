@@ -20,7 +20,6 @@ namespace GLTech2
         internal Texture background;
         internal SCamera* camera;  // Talvez eu mude isso
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static SScene* Create(Texture background)
         {
             SScene* result = (SScene*)Marshal.AllocHGlobal(sizeof(SScene));
@@ -46,10 +45,31 @@ namespace GLTech2
             Marshal.FreeHGlobal((IntPtr)item);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void Add(SPlane* plane)
+        public void Add(Entity entity)
         {
-            if (first_plane == null)    // Has no elements
+            if (entity is Camera camera)
+            {
+                if (this.camera != null)    // Must be changed.
+                    return;
+                this.camera = camera.unmanaged;
+            }
+            else if (entity is Plane plane)
+            {
+                Add(plane.unmanaged);
+            }
+            else if (entity is Collider collider)
+            {
+                Add(collider.unmanaged);
+            }
+            else if (entity is Sprite sprite)
+            {
+                Add(sprite.unmanaged);
+            }
+        }
+
+        private void Add(SPlane* plane)
+        {
+            if (first_plane == null)    // Has no entities
                 first_plane = last_plane = plane;
             else
             {
@@ -59,8 +79,7 @@ namespace GLTech2
             plane_count++;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void Add(SSprite* sprite)
+        private void Add(SSprite* sprite)
         {
             if (first_sprite == null)
                 first_sprite = last_sprite = sprite;
@@ -72,8 +91,7 @@ namespace GLTech2
             plane_count++;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void Add(SCollider* collider)
+        private void Add(SCollider* collider)
         {
             if (first_collider == null)    // Has no elements
                 first_collider = last_collider = collider;

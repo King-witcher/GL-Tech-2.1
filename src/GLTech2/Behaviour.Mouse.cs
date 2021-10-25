@@ -5,19 +5,10 @@ namespace GLTech2
 {
     public partial class Behaviour
     {
-        /// <summary>
-        ///     Provides information about mouse inputs for each frame.
-        /// </summary>
         protected internal static class Mouse
         {
-            /// <summary>
-            ///     Gets how much the mouse moved horizontally.
-            /// </summary>
             public static int HShift { get; private set; }
 
-            /// <summary>
-            ///     Gets how much the mouse moved vertically.
-            /// </summary>
             public static int VShift { get; private set; }
 
             static bool enabled = false;
@@ -25,7 +16,7 @@ namespace GLTech2
             static int centerV = Screen.PrimaryScreen.Bounds.Height / 2;
             static Point center = new Point(centerH, centerV);
             static Point previousCursorPosition;
-            
+
             internal static void Enable()
             {
                 if (!enabled)

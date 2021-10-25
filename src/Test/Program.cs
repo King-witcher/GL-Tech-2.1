@@ -6,17 +6,10 @@ namespace Test
     {
         static void Main()
         {
+            Debug.OpenConsole();
+
             E1M1();
-            Debug.Read();
-            ExtremeGrid();
 
-            Debug.Pause();
-
-            Debug.Pause();
-            AnimatedExample();
-
-
-            Debug.Pause();
             Debug.Log("Releasing resources...");
         }
     }

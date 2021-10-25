@@ -1,6 +1,5 @@
-﻿using NUnit.Framework;
-using GLTech2;
-using System;
+﻿using GLTech2;
+using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace UnitTests
@@ -13,18 +12,18 @@ namespace UnitTests
         [TestCase(5, 5)]
         public void Adding_an_element_should_add_its_childs(int childsPerElement, int depth)
         {
-            Queue<Element> queue = new Queue<Element>();
+            Queue<Entity> queue = new Queue<Entity>();
             var scene = new Scene();
-            Element root = recursivelyCreateTree(depth);
+            Entity root = recursivelyCreateTree(depth);
             scene.AddElement(root);
 
-            foreach(Element element in queue)
+            foreach (Entity element in queue)
                 Assert.AreEqual(scene, element.Scene,
                     "The test found one element that was not added to the scene."
                     );
 
 
-            Element recursivelyCreateTree(int remainingDepth)
+            Entity recursivelyCreateTree(int remainingDepth)
             {
                 if (remainingDepth > 0)
                 {

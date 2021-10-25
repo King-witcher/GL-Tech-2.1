@@ -1,6 +1,7 @@
-﻿namespace GLTech2
+﻿
+namespace GLTech2.Scripting
 {
-    public enum Key
+    public enum InputKey
     {
         //
         // Resumo:

@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 
+using GLTech2.Scripting;
+
 namespace GLTech2
 {
     // This is a complete cheat. I use a windows forms window with a PictureBox to render everything =]
@@ -100,10 +102,10 @@ namespace GLTech2
         }
 
         private void Display_KeyDown(object sender, KeyEventArgs e) =>
-            Behaviour.Keyboard.KeyDown((Key)e.KeyCode);
+            Behaviour.Keyboard.KeyDown((InputKey)e.KeyCode);
 
         private void Display_KeyUp(object sender, KeyEventArgs e) =>
-            Behaviour.Keyboard.KeyUp((Key)e.KeyCode);
+            Behaviour.Keyboard.KeyUp((InputKey)e.KeyCode);
 
         private void OnFocus(object sender, EventArgs e)
         {

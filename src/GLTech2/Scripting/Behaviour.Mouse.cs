@@ -1,10 +1,11 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace GLTech2
+namespace GLTech2.Scripting
 {
     public partial class Behaviour
     {
+        // Spaguetti?
         protected internal static class Mouse
         {
             public static int HShift { get; private set; }

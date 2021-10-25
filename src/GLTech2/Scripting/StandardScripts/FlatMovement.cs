@@ -1,4 +1,6 @@
-﻿namespace GLTech2.Behaviours
+﻿using GLTech2.Scripting.Physics;
+
+namespace GLTech2.Scripting.StandardScripts
 {
     public sealed class FlatMovement : Behaviour
     {
@@ -19,19 +21,19 @@
 
         public float TurnSpeed { get; set; } = 90f;
 
-        public Key StepForward { get; set; } = Key.W;
+        public InputKey StepForward { get; set; } = InputKey.W;
 
-        public Key StepBack { get; set; } = Key.S;
+        public InputKey StepBack { get; set; } = InputKey.S;
 
-        public Key StepLeft { get; set; } = Key.A;
+        public InputKey StepLeft { get; set; } = InputKey.A;
 
-        public Key StepRight { get; set; } = Key.D;
+        public InputKey StepRight { get; set; } = InputKey.D;
 
-        public Key TurnRight { get; set; } = Key.Right;
+        public InputKey TurnRight { get; set; } = InputKey.Right;
 
-        public Key TurnLeft { get; set; } = Key.Left;
+        public InputKey TurnLeft { get; set; } = InputKey.Left;
 
-        public Key ChangeRun_Walk { get; set; } = Key.ShiftKey;
+        public InputKey ChangeRun_Walk { get; set; } = InputKey.ShiftKey;
 
         void OnFrame()
         {

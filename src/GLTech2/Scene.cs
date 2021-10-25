@@ -5,6 +5,7 @@ using System.Drawing;
 using GLTech2.Drawing;
 using GLTech2.Entities;
 using GLTech2.Unmanaged;
+using GLTech2.Scripting;
 
 namespace GLTech2
 {

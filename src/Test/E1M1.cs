@@ -1,8 +1,11 @@
 ﻿using GLTech2;
-using GLTech2.Behaviours;
 using GLTech2.Drawing;
 using GLTech2.Entities;
 using GLTech2.Entities.StandardEntites;
+using GLTech2.Scripting;
+using GLTech2.Scripting.Debugging;
+using GLTech2.Scripting.StandardScripts;
+using GLTech2.Scripting.Physics;
 
 namespace Test
 {
@@ -19,9 +22,9 @@ namespace Test
 
             void OnFrame()
             {
-                if (Keyboard.IsKeyDown(Key.F5))
+                if (Keyboard.IsKeyDown(InputKey.F5))
                     fm.HandleCollisions = false;
-                if (Keyboard.IsKeyDown(Key.F6))
+                if (Keyboard.IsKeyDown(InputKey.F6))
                     fm.HandleCollisions = true;
             }
         }

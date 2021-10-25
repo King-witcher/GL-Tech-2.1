@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Reflection;
-
 using GLTech2.Entities;
 
-namespace GLTech2
+namespace GLTech2.Scripting
 {
     public abstract partial class Behaviour
     {

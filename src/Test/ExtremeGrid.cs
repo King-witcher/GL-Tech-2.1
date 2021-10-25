@@ -1,8 +1,10 @@
 ﻿using GLTech2;
-using GLTech2.Behaviours;
 using GLTech2.Drawing;
 using GLTech2.Entities;
 using GLTech2.Entities.StandardEntites;
+using GLTech2.Scripting.Debugging;
+using GLTech2.Scripting.StandardScripts;
+using GLTech2.Scripting.Physics;
 
 namespace Test
 {

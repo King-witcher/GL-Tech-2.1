@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GLTech2.Behaviours
+namespace GLTech2.Scripting.Physics
 {
     public class PointCollider : KinematicBody
     {

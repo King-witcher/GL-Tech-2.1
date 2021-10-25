@@ -1,6 +1,6 @@
 ﻿#pragma warning disable IDE0051
 
-namespace GLTech2.Behaviours
+namespace GLTech2.Scripting.StandardScripts
 {
     public sealed class Move : Behaviour
     {

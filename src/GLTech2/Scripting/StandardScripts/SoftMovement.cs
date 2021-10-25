@@ -1,5 +1,6 @@
-﻿
-namespace GLTech2.Behaviours
+﻿using GLTech2.Scripting.Physics;
+
+namespace GLTech2.Scripting.StandardScripts
 {
     public sealed class SoftMovement : Behaviour
     {
@@ -15,13 +16,13 @@ namespace GLTech2.Behaviours
         public float TurnSpeed { get; set; } = 90f;
         public float Friction { get; set; } = 10f;
         public float Acceleration { get; set; } = 10f;
-        public Key StepForward { get; set; } = Key.W;
-        public Key StepBack { get; set; } = Key.S;
-        public Key StepLeft { get; set; } = Key.A;
-        public Key StepRight { get; set; } = Key.D;
-        public Key TurnRight { get; set; } = Key.Right;
-        public Key TurnLeft { get; set; } = Key.Left;
-        public Key ChangeRun_Walk { get; set; } = Key.ShiftKey;
+        public InputKey StepForward { get; set; } = InputKey.W;
+        public InputKey StepBack { get; set; } = InputKey.S;
+        public InputKey StepLeft { get; set; } = InputKey.A;
+        public InputKey StepRight { get; set; } = InputKey.D;
+        public InputKey TurnRight { get; set; } = InputKey.Right;
+        public InputKey TurnLeft { get; set; } = InputKey.Left;
+        public InputKey ChangeRun_Walk { get; set; } = InputKey.ShiftKey;
 
         void OnFrame()
         {

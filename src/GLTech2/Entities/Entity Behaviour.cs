@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GLTech2.Scripting;
 
 // Colocar simulação física (velocity/collision) dentro de Element?
 // Velocity deveria ser implementado em Element ou pode ser abstrato e implementado nas classes base?

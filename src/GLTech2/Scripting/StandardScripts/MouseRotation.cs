@@ -1,5 +1,5 @@
 ﻿
-namespace GLTech2.Behaviours
+namespace GLTech2.Scripting.StandardScripts
 {
     public sealed class MouseRotation : Behaviour
     {

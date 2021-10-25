@@ -1,4 +1,5 @@
-﻿namespace GLTech2.Behaviours
+﻿
+namespace GLTech2.Scripting.Physics
 {
     public abstract class KinematicBody : Behaviour
     {

@@ -6,9 +6,9 @@ using System.Drawing.Imaging;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 using GLTech2.Drawing;
 using GLTech2.Entities;
+using GLTech2.Scripting;
 using GLTech2.Unmanaged;
 
 namespace GLTech2

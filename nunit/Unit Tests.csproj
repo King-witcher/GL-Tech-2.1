@@ -7,7 +7,7 @@
 
     <ApplicationIcon />
 
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
 
     <StartupObject />
 
@@ -16,6 +16,12 @@
     <Platforms>x64</Platforms>
 
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+
+    <BaseOutputPath></BaseOutputPath>
+
+    <BaseIntermediateOutputPath>$(ProjectDir)..\bin</BaseIntermediateOutputPath>
+
+    <AssemblyName>xunit</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

@@ -34,7 +34,7 @@ namespace GLTech2
             pictureBox.Paint += RePaint;
             OnFocus(null, null);
 
-            versionLabel.Text = VersionData.EngineName + ", Build " + VersionData.Last_Build;
+            versionLabel.Text = Metadata.EngineName + ", Build " + Metadata.Last_Build;
         }
 
         internal void RePaint(object _ = null, EventArgs __ = null)

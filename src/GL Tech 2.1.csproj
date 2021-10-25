@@ -15,18 +15,20 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>GLTech2.1</PackageId>
     <IsPublishable>False</IsPublishable>
-    <BaseIntermediateOutputPath>../obj/</BaseIntermediateOutputPath>
-    <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <MinimumPlatformVersion>10.0.17763.0</MinimumPlatformVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <UseWPF>False</UseWPF>
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <BaseOutputPath>$(SolutionDir)..\bin</BaseOutputPath>
+    <AssemblyName>gltech2</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>..\bin\Debug</OutputPath>
     <DocumentationFile>..\bin\Debug\GL Tech 2.1.xml</DocumentationFile>
     <NoWarn>1701;1702;CS1592</NoWarn>
@@ -37,7 +39,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>..\bin\Release</OutputPath>
     <DocumentationFile>..\bin\Release\GL Tech 2.1.xml</DocumentationFile>
     <NoWarn>1701;1702;CS1592</NoWarn>
@@ -51,10 +53,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DemoTextures.resx</DependentUpon>
     </Compile>
-    <Compile Update="GLTech2\VersionData.Designer.cs">
+    <Compile Update="GLTech2\Metadata.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>VersionData.resx</DependentUpon>
+      <DependentUpon>Metadata.resx</DependentUpon>
     </Compile>
     <Compile Update="Test\WE1M1.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -68,9 +70,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DemoTextures.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="GLTech2\VersionData.resx">
+    <EmbeddedResource Update="GLTech2\Metadata.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>VersionData.Designer.cs</LastGenOutput>
+      <LastGenOutput>Metadata.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Test\WE1M1.resx">
       <Generator>ResXFileCodeGenerator</Generator>

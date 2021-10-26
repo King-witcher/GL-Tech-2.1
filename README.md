@@ -8,6 +8,6 @@ Initially running over .NET Framework 4.7.2 and C# 7.2, was now migrated to .NET
 
 If you already have Visual Studio Community 2019 and .NET 5.0 installed, just open "src/GL Tech 2.1.sln" and press F5.
 
-For full documentation, see https://king-witcher.github.io/GL-Tech-2.1/.
+For full documentation, see https://king-witcher.github.io/GL-Tech-2.1/. (out of date)
 
-For a Wiki in PT-BR, see https://king-witcher.visualstudio.com/GL-Tech-2.1/_wiki.
+For a Wiki in PT-BR, see https://king-witcher.visualstudio.com/GL-Tech-2.1/_wiki. (incomplete)

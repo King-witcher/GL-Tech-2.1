@@ -18,7 +18,7 @@ Você pode acessar a documentação atual da GL Tech 2.1 em https://king-witcher
 
 Ainda há uma página antiga de documentação em https://king-witcher.github.io/GL-Tech-2.1/. No entanto, a maioria das classes estão desatualizadas ou mudaram de nome nessa documentação e a única que ainda se comporta da mesma forma é a struct Vector, que me lembre. Sei que tenho costumo receber visitas no repositório e, por isso, estou dedicando tempo para do cumentar novamente o funcionamento da biblioteca.
 
-Sinta-se à vontade para interagir na aba "Discussões" ou entrar em contato diretamente comigo pelo e-mail giuspepelanna2000@gmail.com.
+Sinta-se à vontade para interagir na aba "Discussões" ou entrar em contato diretamente comigo pelo e-mail giuseppelanna2000@gmail.com.
 
 ## Ao visitante
 

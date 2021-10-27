@@ -12,7 +12,12 @@ Atualmente, pode ser decomposta princiaplmente em sub sistemas responsáveis por
 - Tratamento e detecção de colisões
 - Suporte a código nativo e memória não gerenciada
 
-## Mensagem ao leitor
+## Links de documentação
+
+Você pode acessar a documentação atual da GL Tech 2.1 em https://king-witcher.visualstudio.com/GL-Tech-2.1/_wiki/ (ainda em construção).
+Ainda há uma página antiga de documentação em https://king-witcher.github.io/GL-Tech-2.1/. No entanto, a maioria das classes estão desatualizadas ou mudaram de nome nessa documentação e a única que ainda se comporta da mesma forma é a struct Vector, que me lembre. Sei que tenho costumo receber visitas no repositório e, por isso, estou dedicando tempo para do cumentar novamente o funcionamento da biblioteca.
+
+## Ao visitante
 
 Criei essa biblioteca no início de agosto de 2020, mas sem intenção de fazer dela algo grande ou sequer útil para outras pessoas. Minhas reais motivações por trás dessa engine sempre foram duas: aprender a programar melhor e um desejo quase compulsório por criar algo, independente da utilidade.
 

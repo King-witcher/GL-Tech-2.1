@@ -13,6 +13,9 @@ Atualmente, pode ser separada em módulos responsáveis por:
 - Compatibilidade com módulos nativos
   - Gerenciamento de memória não gerenciada
 
+Veja um breve vídeo mostrando mapas rendeirzaodos pela engine:
+https://youtu.be/_bNiS_YMWdw
+
 ## Links de documentação
 
 Você pode acessar a documentação atual da GL Tech 2.1 em https://king-witcher.visualstudio.com/GL-Tech-2.1/_wiki/ (ainda em construção).

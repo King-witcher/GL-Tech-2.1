@@ -14,7 +14,7 @@ namespace GLTech2.Unmanaged
         internal Vector start;
         internal Vector direction;
         internal Texture texture;               // Yes, by value.
-        internal SPlane* link_next;    // Visual planes are stored in scenes a linked list.
+        internal SPlane* list_next;    // Planes are stored in scenes a linked list.
 
         internal static SPlane* Create(Vector start, Vector end, Texture texture)
         {
@@ -22,7 +22,7 @@ namespace GLTech2.Unmanaged
             result->texture = texture;
             result->direction = end - start;
             result->start = start;
-            result->link_next = null;
+            result->list_next = null;
             return result;
         }
 
@@ -33,7 +33,7 @@ namespace GLTech2.Unmanaged
             result->texture = texture;
             result->direction = dir;
             result->start = start;
-            result->link_next = null;
+            result->list_next = null;
             return result;
         }
 

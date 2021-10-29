@@ -41,7 +41,7 @@ namespace Test
             using PixelBuffer dolar_buffer = new PixelBuffer(WE1M1._1dolar);
 
             Texture background = new Texture(background_buffer);
-            using Scene scene = new Scene();
+            using Scene scene = new Scene(background);
 
             // BlockMap
             {
@@ -170,6 +170,7 @@ namespace Test
                 camera.AddBehaviour<DebugPerformanceStats>();
                 camera.AddBehaviour<DebugSceneInfo>();
                 camera.AddBehaviour(new MouseRotation(2.2f));
+                camera.AddBehaviour<ClickToMakeRotate>();
 
                 PointCollider pc = new PointCollider();
                 camera.AddBehaviour(pc);

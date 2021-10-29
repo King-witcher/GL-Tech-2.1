@@ -10,14 +10,14 @@ namespace GLTech2.Unmanaged
     {
         internal Vector start;
         internal Vector direction;
-        internal SCollider* link_next;
+        internal SCollider* list_next;
 
         internal static SCollider* Alloc(Vector start, Vector end)
         {
             SCollider* result = (SCollider*)Marshal.AllocHGlobal(sizeof(SCollider));
             result->start = start;
             result->direction = end - start;
-            result->link_next = null;
+            result->list_next = null;
             return result;
         }
 

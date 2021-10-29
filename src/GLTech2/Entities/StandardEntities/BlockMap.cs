@@ -90,26 +90,30 @@ namespace GLTech2.Entities.StandardEntites
 
                         if (blockFree(column - 1, line))
                         {
-                            new Plane(vert1, vert2, texture).Parent = this;
-                            new Collider(vert1, vert2).Parent = this;
+                            var plane = new Plane(vert1, vert2, texture);
+                            var collider = new Collider(plane);
+                            plane.Parent = collider.Parent = this;
                             walls++;
                         }
                         if (blockFree(column, line + 1))
                         {
-                            new Plane(vert2, vert3, texture).Parent = this;
-                            new Collider(vert2, vert3).Parent = this;
+                            var plane = new Plane(vert2, vert3, texture);
+                            var collider = new Collider(plane);
+                            plane.Parent = collider.Parent = this;
                             walls++;
                         }
                         if (blockFree(column + 1, line))
                         {
-                            new Plane(vert3, vert4, texture).Parent = this;
-                            new Collider(vert3, vert4).Parent = this;
+                            var plane = new Plane(vert3, vert4, texture);
+                            var collider = new Collider(plane);
+                            plane.Parent = collider.Parent = this;
                             walls++;
                         }
                         if (blockFree(column, line - 1))
                         {
-                            new Plane(vert4, vert1, texture).Parent = this;
-                            new Collider(vert4, vert1).Parent = this;
+                            var plane = new Plane(vert4, vert1, texture);
+                            var collider = new Collider(plane);
+                            plane.Parent = collider.Parent = this;
                             walls++;
                         }
                     }

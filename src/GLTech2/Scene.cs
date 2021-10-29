@@ -27,37 +27,27 @@ namespace GLTech2
             camera = defaultCamera;
         }
 
-        internal Action Start { get; private set; }
-
-        internal Action OnFrame { get; private set; }
-
-        public int ColliderCount => colliders.Count;
-
-        public int EntityCount => entities.Count;
-
-        public int PlaneCount => unmanaged->plane_count;
-
-        internal void CacheScripts()
+        public Scene(Texture background)
         {
-            Start = null;
-            OnFrame = null;
-            foreach (Entity entity in entities)
-            {
-                Start += entity.OnStart;
-                OnFrame += entity.OnFrame;
-            }
+            unmanaged = SScene.Create(background);
+
+            var defaultCamera = new Camera();
+            Add(defaultCamera);
+            camera = defaultCamera;
         }
 
-        public Scene(Texture background) =>
-            unmanaged = SScene.Create(background);
+        internal Action Start { get; private set; }
+        internal Action OnFrame { get; private set; }
+        public int ColliderCount => colliders.Count;
+        public int EntityCount => entities.Count;
+        public int PlaneCount => unmanaged->plane_count;
+        public Camera Camera => camera;
 
         public Texture Background
         {
             get => unmanaged->background;
             set => unmanaged->background = value;
         }
-
-        public Camera Camera => camera;
 
         public void Add(Entity entity)
         {

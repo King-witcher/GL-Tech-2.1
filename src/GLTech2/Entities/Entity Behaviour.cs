@@ -88,11 +88,26 @@ namespace GLTech2.Entities
             AddBehaviours((IEnumerable<Behaviour>)behaviours);
         }
 
-        public bool ContainsBehaviour<BehaviourType>() where BehaviourType : Behaviour
+        public BehaviourClass GetBehaviour<BehaviourClass>() where BehaviourClass : Behaviour
         {
-            if (behaviours.TrueForAll((each) => !(each is BehaviourType)))
-                return false;
-            return true;
+            TryGetBehaviour(out BehaviourClass found);
+            return found;
+        }
+
+        public bool TryGetBehaviour<BehaviourClass>(out BehaviourClass behaviour) where BehaviourClass : Behaviour
+        {
+            behaviour = null;
+
+            foreach (Behaviour current in behaviours)
+            {
+                if (current is BehaviourClass match)
+                {
+                    behaviour = match;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public bool ContainsBehaviour(Behaviour b)

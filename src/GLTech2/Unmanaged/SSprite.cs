@@ -13,7 +13,7 @@ namespace GLTech2.Unmanaged
     {
         internal Vector position;
         internal Texture material;
-        internal SSprite* link_next;
+        internal SSprite* list_next;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static SSprite* Create(Vector position, Texture material)
@@ -21,7 +21,7 @@ namespace GLTech2.Unmanaged
             SSprite* result = (SSprite*)Marshal.AllocHGlobal(sizeof(SSprite));
             result->position = position;
             result->material = material;
-            result->link_next = null;
+            result->list_next = null;
             return result;
         }
 

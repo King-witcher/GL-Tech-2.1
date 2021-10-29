@@ -77,10 +77,28 @@ namespace GLTech2.Unmanaged
                 first_plane = last_plane = plane;
             else
             {
-                last_plane->link_next = plane;
+                last_plane->list_next = plane;
                 last_plane = plane;
             }
             plane_count++;
+        }
+
+        [Obsolete]
+        private void Remove(SPlane* plane)
+        {
+            fixed (SPlane** csharpisbad = &first_plane)
+            {
+                SPlane** pptr = csharpisbad;
+
+                while (*pptr != plane)
+                    pptr = &(*pptr)->list_next;
+
+                *pptr = plane->list_next;
+                plane_count--;
+
+                if (*pptr == null) // Maybe it's wrong
+                    last_plane = null;
+            }
         }
 
         private void Add(SSprite* sprite)
@@ -89,10 +107,28 @@ namespace GLTech2.Unmanaged
                 first_sprite = last_sprite = sprite;
             else
             {
-                last_sprite->link_next = sprite;
+                last_sprite->list_next = sprite;
                 last_sprite = sprite;
             }
             plane_count++;
+        }
+
+        [Obsolete]
+        private void Remove(SSprite* sprite)
+        {
+            fixed (SSprite** csharpisbad = &first_sprite)
+            {
+                SSprite** pptr = csharpisbad;
+
+                while (*pptr != sprite)
+                    pptr = &(*pptr)->list_next;
+
+                *pptr = sprite->list_next;
+                sprite_count--;
+
+                if (*pptr == null)
+                    last_sprite = null;
+            }
         }
 
         private void Add(SCollider* collider)
@@ -101,10 +137,28 @@ namespace GLTech2.Unmanaged
                 first_collider = last_collider = collider;
             else
             {
-                last_collider->link_next = collider;
+                last_collider->list_next = collider;
                 last_collider = collider;
             }
             collider_count++;
+        }
+
+        [Obsolete]
+        private void Remove(SCollider* collider)
+        {
+            fixed (SCollider** csharpisbad = &first_collider)
+            {
+                SCollider** pptr = csharpisbad;
+
+                while (*pptr != collider)
+                    pptr = &(*pptr)->list_next;
+
+                *pptr = collider->list_next;
+                collider_count--;
+
+                if (*pptr == null)
+                    last_collider = null;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -124,7 +178,7 @@ namespace GLTech2.Unmanaged
                     nearest_dist = cur_dist;
                     nearest = cur;
                 }
-                cur = cur->link_next;
+                cur = cur->list_next;
             }
             return nearest;
         }
@@ -186,7 +240,7 @@ namespace GLTech2.Unmanaged
                     distance = cur_dist;
                     nearest = cur;
                 }
-                cur = cur->link_next;
+                cur = cur->list_next;
             }
             return nearest;
         }

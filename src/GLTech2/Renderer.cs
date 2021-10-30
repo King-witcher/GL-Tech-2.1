@@ -139,7 +139,7 @@ namespace GLTech2
                 CustomWidth * sizeof(uint), PixelFormat.Format32bppRgb,
                 (IntPtr)frontBuffer.uint0);
 
-            var display = new Display(FullScreen, CustomWidth, CustomHeight, sourceBitmap);
+            var display = new DisplayForm(FullScreen, CustomWidth, CustomHeight, sourceBitmap);
 
             // We must define two booleans to communicate with the tread.
             // The first is necessary to send a stop request.

@@ -80,4 +80,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="GLImaging\" />
+  </ItemGroup>
+
 </Project>

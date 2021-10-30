@@ -29,7 +29,9 @@ namespace GLTech2.Drawing
 
         public RGB this[int column, int line]
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => rgb0[column + width * line];
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => rgb0[column + width * line] = value;
         }
 
@@ -84,7 +86,7 @@ namespace GLTech2.Drawing
             Buffer.MemoryCopy(source.uint0, this.uint0, 4 * height * width, 4 * height * width);
         }
 
-        [MethodImpl(methodImplOptions: MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Foreach(Func<RGB, RGB> transformation)
         {
             int height = this.height;

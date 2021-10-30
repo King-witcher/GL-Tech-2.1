@@ -24,7 +24,6 @@ namespace GLTech2
             void DrawColumn(int screen_column)
             {
                 // Caching frequently used variables
-                uint* buffer = screen.uint0;
                 float ray_cos = cache->cosines[screen_column];
                 float ray_angle = cache->angles[screen_column] + scene->camera->rotation;
                 Texture background = scene->background;
@@ -64,8 +63,8 @@ namespace GLTech2
                 for (int line = draw_column_start; line < draw_column_end; line++)
                 {
                     float vratio = (line - column_start) / columnHeight;
-                    uint pixel = nearest->texture.MapPixel(nearest_ratio, vratio);
-                    buffer[screen.width * line + screen_column] = pixel;
+                    RGB color = nearest->texture.MapPixel(nearest_ratio, vratio);
+                    screen[screen_column, line] = color;
                 }
 
                 // Draw the other side of the background
@@ -83,7 +82,7 @@ namespace GLTech2
                     float screenVratio = line / screen.height_float;
                     float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
                     uint color = background.MapPixel(background_hratio, background_vratio);
-                    buffer[screen.width * line + screen_column] = color;
+                    screen[screen_column, line] = color;
                 }
             }
         }

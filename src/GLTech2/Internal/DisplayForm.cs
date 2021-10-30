@@ -8,13 +8,13 @@ namespace GLTech2
 {
     // This is a complete cheat. I use a windows forms window with a PictureBox to render everything =]
     // Unfortunately that's the only practical way I know yet.
-    internal sealed class Display : Form, IDisposable
+    internal sealed class DisplayForm : Form, IDisposable
     {
         private Image image;
         private Label versionLabel;
         private PictureBox pictureBox;  // Will only be released by GC
 
-        internal Display(bool fullscreen, int width, int height, Bitmap videoSource)
+        internal DisplayForm(bool fullscreen, int width, int height, Bitmap videoSource)
         {
             InitializeComponent();
             pictureBox.Click += OnFocus;
@@ -46,7 +46,7 @@ namespace GLTech2
 
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Display));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DisplayForm));
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.versionLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();

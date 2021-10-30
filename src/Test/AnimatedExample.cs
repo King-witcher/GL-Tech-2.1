@@ -4,6 +4,7 @@ using GLTech2.Entities;
 using GLTech2.Entities.StandardEntites;
 using GLTech2.Scripting.Debugging;
 using GLTech2.Scripting.StandardScripts;
+using GLTech2.Scripting.Physics;
 
 namespace Test
 {
@@ -75,7 +76,7 @@ namespace Test
                     Entity e = new RegularPolygon(
                         position: (0f, 0.866f),
                         vertices: 3,
-                        radius: .385f,
+                        radius: -.385f,
                         texture: tex);
 
                     e.AddBehaviour(new Rotate { AngularSpeed = 180f });
@@ -104,7 +105,13 @@ namespace Test
             // Camera
             {
                 scene.Camera.AddBehaviour<DebugPerformanceStats>();
-                scene.Camera.AddBehaviour(new MouseRotation(2.2f));
+
+                scene.Camera.AddBehaviour<MouseLook>();
+
+                NoclipMode nm = new NoclipMode();
+                scene.Camera.AddBehaviour(nm);
+                SoftMovement movement = new SoftMovement(nm);
+                scene.Camera.AddBehaviour(movement);
             }
 
             // Setup Renderer

@@ -169,7 +169,7 @@ namespace Test
                 camera.WorldPosition = (57.5f, 29.5f);
                 camera.AddBehaviour<DebugPerformanceStats>();
                 camera.AddBehaviour<DebugSceneInfo>();
-                camera.AddBehaviour(new MouseRotation(2.2f));
+                camera.AddBehaviour(new MouseLook(2.2f));
                 camera.AddBehaviour<ClickToMakeRotate>();
 
                 PointCollider pc = new PointCollider();

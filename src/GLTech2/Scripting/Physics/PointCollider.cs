@@ -18,7 +18,7 @@ namespace GLTech2.Scripting.Physics
 
         public override void AddVelocity(Vector velocity)
         {
-            throw new NotImplementedException();
+            Velocity += velocity;
         }
 
         public override void AngularAccelerate(float acceleration)

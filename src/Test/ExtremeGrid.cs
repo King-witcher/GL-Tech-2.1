@@ -33,7 +33,7 @@ namespace Test
             // Camera
             {
                 Camera camera = scene.Camera;
-                camera.AddBehaviour(new MouseRotation(2.2f));
+                camera.AddBehaviour(new MouseLook(2.2f));
                 camera.AddBehaviour<DebugPerformanceStats>();
                 camera.AddBehaviour<DebugSceneInfo>();
 

@@ -1,15 +1,15 @@
 ﻿
 namespace GLTech2.Scripting.StandardScripts
 {
-    public sealed class MouseRotation : Behaviour
+    public sealed class MouseLook : Behaviour
     {
         public bool Enabled { get; set; } = true;
 
-        public float Sensitivity { get; set; } = 5f;
+        public float Sensitivity { get; set; } = 2.2f;
 
-        public MouseRotation() { }
+        public MouseLook() { }
 
-        public MouseRotation(float sensitivity)
+        public MouseLook(float sensitivity)
         {
             Sensitivity = sensitivity;
         }

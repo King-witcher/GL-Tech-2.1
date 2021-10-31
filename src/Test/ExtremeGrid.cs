@@ -48,7 +48,7 @@ namespace Test
             Engine.CaptureMouse = true;
             Engine.FullScreen = true;
             Engine.DoubleBuffer = true;
-            Engine.Start(scene);
+            Engine.Run(scene);
         }
     }
 }

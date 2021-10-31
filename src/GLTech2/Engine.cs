@@ -112,7 +112,7 @@ namespace GLTech2
             AddEffect(new T());
         }
 
-        public unsafe static void Start(Scene scene)
+        public unsafe static void Run(Scene scene)
         {
             if (IsRunning)
                 return;
@@ -127,8 +127,6 @@ namespace GLTech2
                     debugOption: Debug.Options.Error);
                 return;
             }
-
-            //activeCamera = camera;
 
             activeScene = scene;
 
@@ -147,10 +145,7 @@ namespace GLTech2
                 display.LoseFocus += Behaviour.Mouse.Disable;
             }
 
-            // We must define two booleans to communicate with the tread.
-            // The first is necessary to send a stop request.
-            // The second is necessary to be aware of when the renderer doesn't need our unmanaged resources and
-            // then be able to realease them all.
+            // When set to true, the ControlThread will stop rendering.
             var stopRequest = false;
 
             // And then start the control thread, which is reponsible for distributing the buffer among the threads
@@ -162,12 +157,7 @@ namespace GLTech2
 
             // Theese lines run after the renderer window is closed.
             stopRequest = true;
-
-            // Wait for the control thread to stop using outputBuffer.
             controlThread.Wait();
-
-            //while (controlThreadRunning)
-            //    Thread.Yield();
 
             // Finally, dispose everythihng.
             display.Dispose();
@@ -186,6 +176,7 @@ namespace GLTech2
 
         private unsafe static void ControlTrhead(PixelBuffer frontBuffer, in bool cancellationRequest)
         {
+            // Spaguetti
             ReloadCache();
 
             // Buffer where the image will be rendered

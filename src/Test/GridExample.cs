@@ -74,7 +74,7 @@ namespace Test
             Engine.CaptureMouse = true;
 
             // Run!
-            Engine.Start(scene);
+            Engine.Run(scene);
         }
     }
 }

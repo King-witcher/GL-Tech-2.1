@@ -6,7 +6,6 @@ namespace GLTech2.Scripting
 {
     public partial class Behaviour
     {
-        // Spaguetti?
         protected internal static class Mouse
         {
             static (int x, int y) previousCursorPosition;

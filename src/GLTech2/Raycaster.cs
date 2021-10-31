@@ -7,7 +7,7 @@ using GLTech2.Unmanaged;
 namespace GLTech2
 {
     // This is the part really renders.
-    partial class Facade
+    partial class Engine
     {
         private unsafe static void DrawPlanes(PixelBuffer screen, SScene* scene)
         {

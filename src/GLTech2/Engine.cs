@@ -13,7 +13,7 @@ using GLTech2.Unmanaged;
 
 namespace GLTech2
 {
-    public static partial class Facade
+    public static partial class Engine
     {
         unsafe static RenderCache* cache;
         static PixelBuffer frontBuffer;
@@ -104,7 +104,7 @@ namespace GLTech2
 
         public static void AddEffect(ImageProcessing postProcessing)
         {
-            Facade.postProcessing.Add(postProcessing);
+            Engine.postProcessing.Add(postProcessing);
         }
 
         public static void AddPostProcessing<T>() where T : ImageProcessing, new()
@@ -135,9 +135,10 @@ namespace GLTech2
             // Unmanaged buffer where the video will be put.
             frontBuffer = new PixelBuffer(CustomWidth, customHeight);
 
+            // A window that will continuously display the buffer
             MainWindow display = new MainWindow(frontBuffer) { FullScreen = FullScreen };
 
-            // This is Spaguetti, but I have to unify Keyboard and Mouse in Input class first
+            // Setup input managers
             display.KeyUp += Behaviour.Keyboard.KeyUp;
             display.KeyDown += Behaviour.Keyboard.KeyDown;
             if (CaptureMouse)
@@ -151,11 +152,10 @@ namespace GLTech2
             // The second is necessary to be aware of when the renderer doesn't need our unmanaged resources and
             // then be able to realease them all.
             var stopRequest = false;
-            var controlThreadRunning = true;
 
             // And then start the control thread, which is reponsible for distributing the buffer among the threads
             // and running the scene scripts.
-            var controlThread = Task.Run(() => ControlTrhead(frontBuffer, in stopRequest, ref controlThreadRunning));
+            var controlThread = Task.Run(() => ControlTrhead(frontBuffer, in stopRequest));
 
             // Finally passes control to the rendering screen and displays it.
             display.Start();
@@ -164,8 +164,10 @@ namespace GLTech2
             stopRequest = true;
 
             // Wait for the control thread to stop using outputBuffer.
-            while (controlThreadRunning)
-                Thread.Yield();
+            controlThread.Wait();
+
+            //while (controlThreadRunning)
+            //    Thread.Yield();
 
             // Finally, dispose everythihng.
             display.Dispose();
@@ -182,7 +184,7 @@ namespace GLTech2
             cache = RenderCache.Create(CustomWidth, CustomHeight, FieldOfView);
         }
 
-        private unsafe static void ControlTrhead(PixelBuffer frontBuffer, in bool cancellationRequest, ref bool controlThreadRunning)
+        private unsafe static void ControlTrhead(PixelBuffer frontBuffer, in bool cancellationRequest)
         {
             ReloadCache();
 
@@ -204,9 +206,6 @@ namespace GLTech2
             Behaviour.Frame.BeginScript();
             activeScene.Start?.Invoke();
             Behaviour.Frame.EndScript();
-
-            // While this variable is set to true, outputBuffer cannot be released by Renderer.Run() thread.
-            controlThreadRunning = true;
 
             while (!cancellationRequest)
             {
@@ -231,8 +230,6 @@ namespace GLTech2
             controlStopwatch.Stop();
             Behaviour.Frame.Stop();
 
-            // FrontBuffer is up to be released, if used.
-            controlThreadRunning = false;
             if (DoubleBuffer)
                 backBuffer.Dispose();
             return;

@@ -8,7 +8,7 @@ using GLTech2.Scripting;
 
 namespace GLTech2
 {
-    public partial class MainWindow : IRealTimeDisplay, IInputReceiver, IDisposable
+    public partial class MainWindow : IDisposable
     {
         GLTechWindowForm form;
         Bitmap bitmap;

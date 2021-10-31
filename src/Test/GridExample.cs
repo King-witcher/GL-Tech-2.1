@@ -65,16 +65,16 @@ namespace Test
             }
 
             // Renderer customization
-            Facade.FullScreen = false;
-            Facade.CustomWidth = 1600;
-            Facade.CustomHeight = 900;
-            Facade.FieldOfView = 110f;
-            Facade.ParallelRendering = true;
-            Facade.DoubleBuffer = false;
-            Facade.CaptureMouse = true;
+            Engine.FullScreen = false;
+            Engine.CustomWidth = 1600;
+            Engine.CustomHeight = 900;
+            Engine.FieldOfView = 110f;
+            Engine.ParallelRendering = true;
+            Engine.DoubleBuffer = false;
+            Engine.CaptureMouse = true;
 
             // Run!
-            Facade.Start(scene);
+            Engine.Start(scene);
         }
     }
 }

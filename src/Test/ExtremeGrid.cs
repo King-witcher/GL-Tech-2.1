@@ -45,10 +45,10 @@ namespace Test
                 scene.Add(camera);
             }
 
-            Facade.CaptureMouse = true;
-            Facade.FullScreen = true;
-            Facade.DoubleBuffer = true;
-            Facade.Start(scene);
+            Engine.CaptureMouse = true;
+            Engine.FullScreen = true;
+            Engine.DoubleBuffer = true;
+            Engine.Start(scene);
         }
     }
 }

@@ -180,14 +180,14 @@ namespace Test
             }
 
             // Renderer customization
-            Facade.FullScreen = true;
-            Facade.FieldOfView = 72f;
-            Facade.ParallelRendering = true;
-            Facade.DoubleBuffer = true;
-            Facade.CaptureMouse = true;
+            Engine.FullScreen = true;
+            Engine.FieldOfView = 72f;
+            Engine.ParallelRendering = true;
+            Engine.DoubleBuffer = true;
+            Engine.CaptureMouse = true;
 
             // Run!
-            Facade.Start(scene);
+            Engine.Start(scene);
         }
     }
 }

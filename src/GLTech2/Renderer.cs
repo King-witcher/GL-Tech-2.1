@@ -139,7 +139,19 @@ namespace GLTech2
                 CustomWidth * sizeof(uint), PixelFormat.Format32bppRgb,
                 (IntPtr)frontBuffer.uint0);
 
-            var display = new DisplayForm(FullScreen, CustomWidth, CustomHeight, sourceBitmap);
+            var display = new GLTechWindow(frontBuffer);
+            display.Dimensions = (CustomWidth, CustomHeight);
+            display.FullScreen = FullScreen;
+
+            // This is a bit Spaguetti, but I have to unify Keyboard and Mouse in Input class first
+            display.KeyUp += Behaviour.Keyboard.KeyUp;
+            display.KeyDown += Behaviour.Keyboard.KeyDown;
+            display.KeyDown += Behaviour.Keyboard.KeyDown;
+            if (CaptureMouse)
+            {
+                display.Focus += Behaviour.Mouse.Enable;
+                display.LoseFocus += Behaviour.Mouse.Disable;
+            }
 
             // We must define two booleans to communicate with the tread.
             // The first is necessary to send a stop request.
@@ -153,7 +165,7 @@ namespace GLTech2
             var controlThread = Task.Run(() => ControlTrhead(frontBuffer, in stopRequest, ref controlThreadRunning));
 
             // Finally passes control to the rendering screen and displays it.
-            Application.Run(display);
+            display.Start();
 
             // Theese lines run after the renderer window is closed.
             stopRequest = true;

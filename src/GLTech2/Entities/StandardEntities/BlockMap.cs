@@ -2,7 +2,7 @@
 
 using System;
 
-using GLTech2.Drawing;
+using GLTech2.Imaging;
 
 namespace GLTech2.Entities.StandardEntites
 {
@@ -22,7 +22,7 @@ namespace GLTech2.Entities.StandardEntites
 
 
             // Gets a new texture if exists; otherwise creates it.
-            Texture getTexture(RGB rgb)
+            Texture getTexture(Color rgb)
             {
                 if (textures.GetTexture(rgb, out Texture texture))
                     return texture;
@@ -41,7 +41,7 @@ namespace GLTech2.Entities.StandardEntites
                 for (int line = 0; line < map.Height; line++)
                 {
                     // Checks for transparency.
-                    if (map[column, line] == (RGB)(0, 0, 0))
+                    if (map[column, line] == (Color)(0, 0, 0))
                         continue;
 
                     Texture texture = getTexture(map[column, line]);

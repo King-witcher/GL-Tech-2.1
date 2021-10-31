@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace GLTech2.Drawing.StandardEffects
+namespace GLTech2.Imaging.StandardEffects
 {
-    public sealed unsafe class FFXAA : PostProcessing, IDisposable
+    public sealed unsafe class FFXAA : ImageProcessing, IDisposable
     {
         public bool ShowEdges { get; set; } = false;
 

@@ -1,7 +1,7 @@
 ﻿
-namespace GLTech2.Drawing
+namespace GLTech2.Imaging
 {
-    public abstract class PostProcessing
+    public abstract class ImageProcessing
     {
         public abstract void Process(PixelBuffer target);
     }

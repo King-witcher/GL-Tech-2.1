@@ -1,5 +1,5 @@
 ﻿using GLTech2;
-using GLTech2.Drawing;
+using GLTech2.Imaging;
 using GLTech2.Entities;
 using GLTech2.Entities.StandardEntites;
 using GLTech2.Scripting.Debugging;
@@ -115,14 +115,14 @@ namespace Test
             }
 
             // Setup Renderer
-            Renderer.FullScreen = true;
-            Renderer.FieldOfView = 110f;
-            Renderer.ParallelRendering = true;
-            Renderer.DoubleBuffer = false;
-            Renderer.CaptureMouse = true;
+            Facade.FullScreen = true;
+            Facade.FieldOfView = 110f;
+            Facade.ParallelRendering = true;
+            Facade.DoubleBuffer = false;
+            Facade.CaptureMouse = true;
 
             // Run!
-            Renderer.Start(scene);
+            Facade.Start(scene);
         }
     }
 }

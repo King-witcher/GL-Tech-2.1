@@ -1,5 +1,5 @@
 ﻿using GLTech2;
-using GLTech2.Drawing;
+using GLTech2.Imaging;
 using GLTech2.Entities;
 using GLTech2.Entities.StandardEntites;
 using GLTech2.Scripting.Debugging;
@@ -45,10 +45,10 @@ namespace Test
                 scene.Add(camera);
             }
 
-            Renderer.CaptureMouse = true;
-            Renderer.FullScreen = true;
-            Renderer.DoubleBuffer = true;
-            Renderer.Start(scene);
+            Facade.CaptureMouse = true;
+            Facade.FullScreen = true;
+            Facade.DoubleBuffer = true;
+            Facade.Start(scene);
         }
     }
 }

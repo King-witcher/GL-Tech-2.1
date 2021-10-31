@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using GLTech2.Drawing;
+using GLTech2.Imaging;
 using GLTech2.Scripting;
 
 namespace GLTech2
 {
-    public partial class GLTechWindow : IInputProvider, IDisposable
+    public partial class MainWindow : IRealTimeDisplay, IInputReceiver, IDisposable
     {
         GLTechWindowForm form;
         Bitmap bitmap;
@@ -29,7 +30,7 @@ namespace GLTech2
             set => form.Dimensions = value;
         }
 
-        public unsafe GLTechWindow(PixelBuffer output)
+        public unsafe MainWindow(PixelBuffer output)
         {
             // Setup a bitmap instance that points to the given output buffer
             bitmap = new Bitmap(
@@ -44,7 +45,7 @@ namespace GLTech2
                 KeyDown?.Invoke((InputKey)args.KeyCode);
             form.KeyUp += (_, args) =>
                 KeyUp?.Invoke((InputKey)args.KeyCode);
-            form.Click += (_, _) =>   // Must be tested
+            form.Click += (_, _) =>   // Bug
                 Focus?.Invoke();
             form.LostFocus += (_, _) =>
                 LoseFocus?.Invoke();

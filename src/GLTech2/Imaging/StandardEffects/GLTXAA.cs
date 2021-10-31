@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace GLTech2.Drawing.StandardEffects
+namespace GLTech2.Imaging.StandardEffects
 {
     //Incomplete
-    internal sealed unsafe class GLTXAA : PostProcessing, IDisposable
+    internal sealed unsafe class GLTXAA : ImageProcessing, IDisposable
     {
         public GLTXAA(int width, int height, int threshold = 70)
         {

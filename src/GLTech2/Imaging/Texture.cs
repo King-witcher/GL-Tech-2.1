@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace GLTech2.Drawing
+namespace GLTech2.Imaging
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]

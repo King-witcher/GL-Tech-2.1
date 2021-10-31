@@ -10,7 +10,6 @@ namespace GLTech2
     class GLTechWindowForm : Form, IDisposable
     {
         Image source;
-        Label versionLabel;
         PictureBox outputBox;  // Will only be released by GC
 
         public event Action<TimeSpan> Render;
@@ -51,7 +50,6 @@ namespace GLTech2
         {
             InitializeComponent();
             this.source = source;
-            versionLabel.Text = Metadata.EngineName + ", Build " + Metadata.Last_Build; // Spaguetti, acoplamento
             outputBox.Paint += RePaint; // Refactor
         }
 
@@ -67,47 +65,34 @@ namespace GLTech2
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GLTechWindowForm));
             this.outputBox = new System.Windows.Forms.PictureBox();
-            this.versionLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.outputBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBox
+            // outputBox
             // 
             this.outputBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.outputBox.Location = new System.Drawing.Point(0, 0);
-            this.outputBox.Name = "pictureBox";
+            this.outputBox.Name = "outputBox";
             this.outputBox.Size = new System.Drawing.Size(640, 360);
             this.outputBox.TabIndex = 0;
             this.outputBox.TabStop = false;
             // 
-            // versionLabel
-            // 
-            this.versionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.versionLabel.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.versionLabel.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.versionLabel.Location = new System.Drawing.Point(371, 9);
-            this.versionLabel.Name = "versionLabel";
-            this.versionLabel.Size = new System.Drawing.Size(257, 19);
-            this.versionLabel.TabIndex = 2;
-            this.versionLabel.Text = "Version";
-            this.versionLabel.TextAlign = System.Drawing.ContentAlignment.BottomRight;
-            // 
-            // Display
+            // GLTechWindowForm
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.WhiteSpace;
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(640, 360);
-            this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.outputBox);
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "Display";
+            this.Name = "GLTechWindowForm";
             this.Text = "GL Tech 2.1";
             ((System.ComponentModel.ISupportInitialize)(this.outputBox)).EndInit();
             this.ResumeLayout(false);
+
         }
     }
 }

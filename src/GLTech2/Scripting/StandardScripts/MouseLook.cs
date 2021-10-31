@@ -14,10 +14,17 @@ namespace GLTech2.Scripting.StandardScripts
             Sensitivity = sensitivity;
         }
 
+        void Start()
+        {
+
+        }
+
         void OnFrame()
         {
             if (Enabled)
-                Entity.Rotate(Mouse.HShift * 0.022f * Sensitivity);
+            {
+                Entity.Rotate(Mouse.HookMouse().dx * 0.022f * Sensitivity);
+            }
         }
     }
 }

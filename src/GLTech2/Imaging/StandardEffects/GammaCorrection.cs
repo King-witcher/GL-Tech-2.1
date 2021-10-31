@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace GLTech2.Drawing.StandardEffects
+namespace GLTech2.Imaging.StandardEffects
 {
-    public unsafe sealed class GammaCorrection : PostProcessing
+    public unsafe sealed class GammaCorrection : ImageProcessing
     {
         float gamma;
         public float Gamma
@@ -30,7 +30,7 @@ namespace GLTech2.Drawing.StandardEffects
                 {
                     int cur = target.width * y + x;
 
-                    RGB color = target.uint0[cur];
+                    Color color = target.uint0[cur];
                     target.RGB0[cur] = (
                         (byte)(255f * Math.Pow(color.R / 255f, gamma)),
                         (byte)(255f * Math.Pow(color.G / 255f, gamma)),

@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
-namespace GLTech2.Drawing
+namespace GLTech2.Imaging
 {
     [StructLayout(LayoutKind.Explicit)]
     public unsafe readonly struct PixelBuffer : IDisposable
@@ -25,9 +25,9 @@ namespace GLTech2.Drawing
         [FieldOffset(16)]
         internal readonly uint* uint0;
         [FieldOffset(16)]
-        internal readonly RGB* rgb0;
+        internal readonly Color* rgb0;
 
-        public RGB this[int column, int line]
+        public Color this[int column, int line]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => rgb0[column + width * line];
@@ -41,7 +41,7 @@ namespace GLTech2.Drawing
 
         public IntPtr Scan0 => (IntPtr)uint0;
 
-        public RGB* RGB0 => rgb0;
+        public Color* RGB0 => rgb0;
 
         public uint* Uint0 => uint0;
 
@@ -87,7 +87,7 @@ namespace GLTech2.Drawing
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Foreach(Func<RGB, RGB> transformation)
+        public void Foreach(Func<Color, Color> transformation)
         {
             int height = this.height;
             int width = this.width;

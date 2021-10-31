@@ -1,267 +1,159 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Threading;
+﻿using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using GLTech2.Drawing;
-using GLTech2.Entities;
-using GLTech2.Scripting;
+
+using GLTech2.Imaging;
 using GLTech2.Unmanaged;
 
 namespace GLTech2
 {
-    public static partial class Renderer
+    // This is the part really renders.
+    partial class Facade
     {
-        unsafe static RenderCache* cache;
-        static PixelBuffer frontBuffer;
-        static Scene activeScene = null;
-        static Camera activeCamera = null;
-
-        // public static bool NativeRendering { get; } = false;
-
-        public static bool ParallelRendering { get; set; } = true;
-
-        public static Scene ActiveScene => activeScene;
-
-        private static float minframetime = 4;
-        public static int MaxFps
+        private unsafe static void DrawPlanes(PixelBuffer screen, SScene* scene)
         {
-            get => (int)(1000f / minframetime);
-            set
+            // Checks if the code should be run in all cores or just one.
+            if (ParallelRendering)
+                Parallel.For(0, screen.width, DrawColumn);
+            else
+                for (int i = 0; i < screen.width; i++)
+                    DrawColumn(i);
+            return;
+
+            // Render a vertical column of the screen.
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            void DrawColumn(int screen_column)
             {
-                Utilities.Clip(ref value, 1, 250);
-                minframetime = 1000f / value;
-            }
-        }
+                // Caching frequently used variables
+                float ray_cos = cache->cosines[screen_column];
+                float ray_angle = cache->angles[screen_column] + scene->camera->rotation;
+                Texture background = scene->background;
+                Ray ray = new Ray(scene->camera->position, ray_angle);
 
-        static bool doubleBuffer = true;
-        public static bool DoubleBuffer
-        {
-            get => doubleBuffer;
-            set => ChangeIfNotRunning("DoubleBuffer", ref doubleBuffer, value);
-        }
+                // Cast the ray towards every plane.
+                SPlane* nearest = scene->NearestPlane(ray, out float nearest_dist, out float nearest_ratio);
 
-        private static int customWidth = 960;
-        public static int CustomWidth
-        {
-            get => customWidth;
-            set => ChangeIfNotRunning("CustomWidth", ref customWidth, value);
-        }
+                // Found out that optimizing this part by separing the case when it hits and not a wall is unecessary.
+                #region Render the plane
 
-        private static int customHeight = 520;
-        public static int CustomHeight
-        {
-            get => customHeight;
-            set => ChangeIfNotRunning("CustomHeight", ref customHeight, value);
-        }
+                // Height that the current column should have on the screen.
+                float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); // Wall column size in pixels
 
-        static bool fullScreen;
-        public static bool FullScreen
-        {
-            get => fullScreen;
-            set
-            {
-                ChangeIfNotRunning("FullScreen", ref fullScreen, value);
-                if (fullScreen == true)
+                // Where the column starts and ends relative to the screen.
+                float column_start = (screen.height_float - columnHeight) / 2f;
+                float column_end = (screen.height_float + columnHeight) / 2f;
+
+                // Wall rendering bounds on the screen...
+                int draw_column_start = screen.height - (int)(screen.height - column_start);    // Inclusive
+                int draw_column_end = screen.height - (int)(screen.height - column_end);        // Exclusive
+
+                // Which cannot exceed the full screen bounds.
+                if (draw_column_start < 0)
+                    draw_column_start = 0;
+                if (draw_column_end > screen.height)
+                    draw_column_end = screen.height;
+
+                // Draws the background before the wall.
+                // Critical performance impact.
+                if (scene->background.buffer.uint0 != null)
+                    for (int line = 0; line < draw_column_start; line++)
+                        drawBackground(line);
+
+                // Draw the wall
+                // Critical performance impact.
+                for (int line = draw_column_start; line < draw_column_end; line++)
                 {
-                    CustomWidth = Screen.PrimaryScreen.Bounds.Width;
-                    customHeight = Screen.PrimaryScreen.Bounds.Height;
+                    float vratio = (line - column_start) / columnHeight;
+                    Color color = nearest->texture.MapPixel(nearest_ratio, vratio);
+                    screen[screen_column, line] = color;
+                }
+
+                // Draw the other side of the background
+                // Critical performance impact.
+                if (scene->background.buffer.uint0 != null)
+                    for (int line = draw_column_end; line < screen.height; line++)
+                        drawBackground(line);
+                #endregion
+
+                // Draws background
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                void drawBackground(int line)
+                {
+                    float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
+                    float screenVratio = line / screen.height_float;
+                    float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
+                    uint color = background.MapPixel(background_hratio, background_vratio);
+                    screen[screen_column, line] = color;
                 }
             }
         }
 
-        static float fieldOfView = 90f;
-        public static float FieldOfView
+        // This method is not used anymore.
+        private unsafe static void DrawPlanesLegacy(PixelBuffer target, SScene* scene)        // Must be changed
         {
-            get => fieldOfView;
-            set
+            // Caching frequently used values.
+            uint* buffer = target.uint0;
+            int width = target.width;
+            int height = target.height;
+            Texture background = scene->background;
+
+            // 
+            if (ParallelRendering)
             {
-                Utilities.Clip(ref value, 1f, 179f);
-                ChangeIfNotRunning("FieldOfView", ref fieldOfView, value);
+                Parallel.For(0, width, Loop);
             }
-        }
-
-        static bool captureMouse = false;
-        public static bool CaptureMouse
-        {
-            get => captureMouse;
-            set => captureMouse = value;    // Revisar
-        }
-
-        public static bool IsRunning { get; private set; } = false;
-
-        public static PixelBuffer GetScreenshot()
-        {
-            PixelBuffer pb = new PixelBuffer(CustomWidth, customHeight);
-            pb.Clone(frontBuffer);
-            return pb;
-        }
-
-        public static void AddEffect(PostProcessing postProcessing)
-        {
-            Renderer.postProcessing.Add(postProcessing);
-        }
-
-        public static void AddPostProcessing<T>() where T : PostProcessing, new()
-        {
-            AddEffect(new T());
-        }
-
-        public unsafe static void Start(Scene scene)
-        {
-            if (IsRunning)
-                return;
-            IsRunning = true;
-
-            Camera camera = scene.Camera;
-
-            if (scene == null)
-            {
-                Debug.InternalLog(
-                    message: $"Cannot render from Camera \"{camera}\" because it's not bound to any Scene.",
-                    debugOption: Debug.Options.Error);
-                return;
-            }
-
-            activeCamera = camera;
-
-            activeScene = scene;
-
-            // Unmanaged buffer where the video will be put.
-            frontBuffer = new PixelBuffer(CustomWidth, customHeight);
-
-            // Create a wrapper "Bitmap" that uses the same buffer.
-            var sourceBitmap = new Bitmap(
-                CustomWidth, CustomHeight,
-                CustomWidth * sizeof(uint), PixelFormat.Format32bppRgb,
-                (IntPtr)frontBuffer.uint0);
-
-            var display = new GLTechWindow(frontBuffer);
-            display.Dimensions = (CustomWidth, CustomHeight);
-            display.FullScreen = FullScreen;
-
-            // This is a bit Spaguetti, but I have to unify Keyboard and Mouse in Input class first
-            display.KeyUp += Behaviour.Keyboard.KeyUp;
-            display.KeyDown += Behaviour.Keyboard.KeyDown;
-            display.KeyDown += Behaviour.Keyboard.KeyDown;
-            if (CaptureMouse)
-            {
-                display.Focus += Behaviour.Mouse.Enable;
-                display.LoseFocus += Behaviour.Mouse.Disable;
-            }
-
-            // We must define two booleans to communicate with the tread.
-            // The first is necessary to send a stop request.
-            // The second is necessary to be aware of when the renderer doesn't need our unmanaged resources and
-            // then be able to realease them all.
-            var stopRequest = false;
-            var controlThreadRunning = true;
-
-            // And then start the control thread, which is reponsible for distributing the buffer among the threads
-            // and running the scene scripts.
-            var controlThread = Task.Run(() => ControlTrhead(frontBuffer, in stopRequest, ref controlThreadRunning));
-
-            // Finally passes control to the rendering screen and displays it.
-            display.Start();
-
-            // Theese lines run after the renderer window is closed.
-            stopRequest = true;
-
-            // Wait for the control thread to stop using outputBuffer.
-            while (controlThreadRunning)
-                Thread.Yield();
-
-            // Finally, dispose everythihng.
-            display.Dispose();
-            frontBuffer.Dispose();
-            sourceBitmap.Dispose();
-            activeCamera = null;
-
-            IsRunning = false;
-        }
-
-        private static unsafe void ReloadCache()
-        {
-            if (cache != null)
-                RenderCache.Delete(cache);
-            cache = RenderCache.Create(CustomWidth, CustomHeight, FieldOfView);
-        }
-
-        private unsafe static void ControlTrhead(PixelBuffer frontBuffer, in bool cancellationRequest, ref bool controlThreadRunning)
-        {
-            ReloadCache();
-
-            // Buffer where the image will be rendered
-            PixelBuffer backBuffer = DoubleBuffer ?
-                new PixelBuffer(frontBuffer.width, frontBuffer.height) :
-                frontBuffer;
-
-            #region Warnings
-            if (!DoubleBuffer && postProcessing.Count > 0)
-                Debug.InternalLog(
-                    message: "The renderer has post processing effects set but DoubleBuffering is disabled. " +
-                        "Post processing effects may not work properly.",
-                    debugOption: Debug.Options.Warning);
-            #endregion
-
-            Stopwatch controlStopwatch = new Stopwatch();   // Required to cap framerate
-            Behaviour.Frame.RestartFrame();
-            Behaviour.Frame.BeginScript();
-            activeScene.Start?.Invoke();
-            Behaviour.Frame.EndScript();
-
-            // While this variable is set to true, outputBuffer cannot be released by Renderer.Run() thread.
-            controlThreadRunning = true;
-
-            while (!cancellationRequest)
-            {
-                controlStopwatch.Restart();
-                Behaviour.Frame.BeginRender();
-
-                DrawPlanes(backBuffer, activeScene.unmanaged);
-                PostProcess(backBuffer);
-
-                if (DoubleBuffer)
-                    frontBuffer.FastClone(backBuffer);
-                Behaviour.Frame.EndRender();
-
-                while (controlStopwatch.ElapsedMilliseconds < minframetime)
-                    Thread.Yield();
-
-                Behaviour.Mouse.Measure();
-                Behaviour.Frame.RestartFrame();
-                Behaviour.Frame.BeginScript();
-                activeScene.OnFrame?.Invoke();
-                Behaviour.Frame.EndScript();
-            }
-            controlStopwatch.Stop();
-            Behaviour.Frame.Stop();
-
-            // FrontBuffer is up to be released, if used.
-            controlThreadRunning = false;
-            if (DoubleBuffer)
-                backBuffer.Dispose();
-            return;
-        }
-
-        private static List<PostProcessing> postProcessing = new List<PostProcessing>();
-        private static void PostProcess(PixelBuffer target)
-        {
-            foreach (var effect in postProcessing)
-                effect.Process(target);
-        }
-
-        static void ChangeIfNotRunning<T>(string name, ref T obj, T value)
-        {
-            if (IsRunning)
-                Debug.InternalLog(
-                    message: $"The value of \"{name}\" cannot be modified while running. Value will keep \"{obj}\".",
-                    debugOption: Debug.Options.Warning);
             else
-                obj = value;
+                for (int i = 0; i < width; i++)
+                    Loop(i);
+
+            void Loop(int ray_id)
+            //for (int ray_id = 0; ray_id < rendererData->bitmap_width; ray_id++)
+            {
+                // Caching
+                float ray_cos = cache->cosines[ray_id];
+                float ray_angle = cache->angles[ray_id] + scene->camera->rotation;
+                Ray ray = new Ray(scene->camera->position, ray_angle);
+
+                // Cast the ray towards every wall.
+                SPlane* nearest = scene->NearestPlane(ray, out float nearest_dist, out float nearest_ratio);
+                if (nearest_ratio != 2f)
+                {
+                    float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); //Wall column size in pixels
+                    float fullColumnRatio = height / columnHeight;
+                    float topIndex = -(fullColumnRatio - 1f) / 2f;
+                    for (int line = 0; line < height; line++)
+                    {
+                        // Critical performance impact.
+                        float vratio = topIndex + fullColumnRatio * line / height;
+                        if (vratio < 0f || vratio >= 1f)
+                        {
+                            //PURPOSELY REPEATED CODE!
+                            float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
+                            float screenVratio = (float)line / height;
+                            float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
+                            uint color = background.MapPixel(background_hratio, background_vratio);
+                            buffer[width * line + ray_id] = color;
+                        }
+                        else
+                        {
+                            uint pixel = nearest->texture.MapPixel(nearest_ratio, vratio);
+                            buffer[width * line + ray_id] = pixel;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int line = 0; line < height; line++)
+                    {
+                        //Critical performance impact.
+                        //PURPOSELY REPEATED CODE!
+                        float background_hratio = ray_angle / 360 + 1;
+                        float screenVratio = (float)line / height;
+                        float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
+                        uint color = background.MapPixel(background_hratio, background_vratio);
+                        buffer[width * line + ray_id] = color;
+                    }
+                }
+            }
         }
     }
 }

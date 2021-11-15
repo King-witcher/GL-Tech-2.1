@@ -42,26 +42,22 @@ namespace GLTech2.Imaging
         public ImageData(int width, int height)
         {
             if (width <= 0 || height <= 0)
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException("negative dimensions");
 
-            this.width = width;
-            this.height = height;
-            this.flt_width = width;
-            this.flt_height = height;
-            this.pixel_buffer = null; // Assigned by union
+            this.flt_width = this.width = width;
+            this.flt_height = this.height = height;
+            this.pixel_buffer = null;
             this.uint_buffer = (uint*)Marshal.AllocHGlobal(width * height * DEFAULT_BPP);
         }
 
         public ImageData(int width, int height, Pixel color)
         {
             if (width <= 0 || height <= 0)
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException("negative dimensions");
 
-            this.width = width;
-            this.height = height;
-            this.flt_width = width;
-            this.flt_height = height;
-            this.pixel_buffer = null; // Assigned by union
+            this.flt_width = this.width = width;
+            this.flt_height = this.height = height;
+            this.pixel_buffer = null;
             this.uint_buffer = (uint*)Marshal.AllocHGlobal(width * height * DEFAULT_BPP);
 
             FillWith(color);
@@ -69,25 +65,20 @@ namespace GLTech2.Imaging
 
         private ImageData(int width, int height, IntPtr buffer)
         {
-            this.width = width;
-            this.height = height;
-            this.flt_width = width;
-            this.flt_height = height;
+            this.flt_width = this.width = width;
+            this.flt_height = this.height = height;
             this.pixel_buffer = default;
             this.uint_buffer = (uint*)buffer;
         }
 
         public static ImageData Clone(Bitmap source)
         {
-            // Allocates the clone
             ImageData clone = new(source.Width, source.Height);
 
-            // Clones the source if it's format is different from the expected and releases at the end.
             using var src32 = source.PixelFormat == DEFAULT_PIXEL_FORMAT ?
                 source: source.Clone(DEFAULT_PIXEL_FORMAT) ??
                 throw new ArgumentNullException("source");
 
-            // Copies each byte from the bitmap to the clone.
             BitmapData lockdata = src32.LockBits();
             System.Buffer.MemoryCopy(
                 source:                 (void*)lockdata.Scan0,
@@ -101,9 +92,13 @@ namespace GLTech2.Imaging
 
         public static void BufferCopy(ImageData source, ImageData destination)
         {
-            if (source.Width * source.Height > destination.Width * destination.Height)
+            if (source.Size > destination.Size)
                 throw new ArgumentOutOfRangeException("source");
-            System.Buffer.MemoryCopy(source.UintBuffer, destination.UintBuffer, DEFAULT_BPP * destination.Height * destination.Width, DEFAULT_BPP * source.Height * source.Width);
+            System.Buffer.MemoryCopy(
+                source:                 source.UintBuffer,
+                destination:            destination.UintBuffer,
+                destinationSizeInBytes: destination.Size,
+                sourceBytesToCopy:      source.Size);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -163,7 +158,12 @@ namespace GLTech2.Imaging
 
         public static explicit operator Bitmap(ImageData data)
         {
-            return new Bitmap(data.width, data.height, DEFAULT_BPP * data.width, DEFAULT_PIXEL_FORMAT, data.Buffer);
+            return new Bitmap(
+                data.width,
+                data.height,
+                DEFAULT_BPP * data.width,
+                DEFAULT_PIXEL_FORMAT,
+                data.Buffer);
         }
     }
 }

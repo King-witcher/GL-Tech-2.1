@@ -64,48 +64,30 @@ namespace GLTech2.Imaging
             this.flt_width = width;
             this.flt_height = height;
             pixel_buffer = null; // Assigned by union
-            uint_buffer = (uint*)Marshal.AllocHGlobal(width * height * sizeof(uint));
-        }
-
-        private ImageData(int width, int height, int size)
-        {
-            this.width = width;
-            this.height = height;
-            this.flt_width = width;
-            this.flt_height = height;
-
-            this.pixel_buffer = null;
-            this.uint_buffer = (uint*)Marshal.AllocHGlobal(size);
+            uint_buffer = (uint*)Marshal.AllocHGlobal(width * height * DEFAULT_BPP);
         }
 
         // Em fase de testes
         public static ImageData Clone(Bitmap source)
         {
-            int buffer_size = DEFAULT_BPP * source.Width * source.Height;
-
             // Allocates the clone
-            ImageData result = new(
-                width: source.Width,
-                height: source.Height,
-                size: buffer_size
-            );
+            ImageData clone = new(source.Width, source.Height);
 
             // Clones the source if it's format is different from the expected and releases at the end.
             using var src32 = source.PixelFormat == DEFAULT_PIXEL_FORMAT ?
                 source: source.Clone(DEFAULT_PIXEL_FORMAT) ??
                 throw new ArgumentNullException("source");
 
-            BitmapData lockdata = src32.LockBits();
             // Copies each byte from the bitmap to the clone.
+            BitmapData lockdata = src32.LockBits();
             System.Buffer.MemoryCopy(
                 source:                 (void*)lockdata.Scan0,
-                destination:            result.uint_buffer,
-                sourceBytesToCopy:      buffer_size,
-                destinationSizeInBytes: buffer_size
-            );
+                destination:            clone.uint_buffer,
+                sourceBytesToCopy:      clone.Size,
+                destinationSizeInBytes: clone.Size);
 
             src32.UnlockBits(lockdata);
-            return result;
+            return clone;
         }
 
         public static void BufferCopy(ImageData source, ImageData destination)

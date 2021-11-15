@@ -37,21 +37,7 @@ namespace GLTech2.Imaging
         [Obsolete]
         public ImageData(Bitmap source)
         {
-            Rectangle rect = new Rectangle(0, 0, source.Width, source.Height);
-            using (var clone = source.Clone(rect, PixelFormat.Format32bppArgb) ??
-                throw new ArgumentException("Bitmap parameter cannot be null."))
-            {
-                var bmpdata = clone.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
-                int bmpsize = bmpdata.Stride * bmpdata.Height;
-                pixel_buffer = null;
-                uint_buffer = (uint*)Marshal.AllocHGlobal(bmpsize);
-                System.Buffer.MemoryCopy((void*)bmpdata.Scan0, uint_buffer, bmpsize, bmpsize);
-                clone.UnlockBits(bmpdata);
-            }
-            width = source.Width;
-            height = source.Height;
-            flt_width = source.Width;
-            flt_height = source.Height;
+            this = Clone(source);
         }
 
         public ImageData(int width, int height)
@@ -63,8 +49,8 @@ namespace GLTech2.Imaging
             this.height = height;
             this.flt_width = width;
             this.flt_height = height;
-            pixel_buffer = null; // Assigned by union
-            uint_buffer = (uint*)Marshal.AllocHGlobal(width * height * DEFAULT_BPP);
+            this.pixel_buffer = null; // Assigned by union
+            this.uint_buffer = (uint*)Marshal.AllocHGlobal(width * height * DEFAULT_BPP);
         }
 
         // Em fase de testes

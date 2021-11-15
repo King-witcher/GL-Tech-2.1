@@ -38,8 +38,8 @@ namespace GLTech2
                 float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); // Wall column size in pixels
 
                 // Where the column starts and ends relative to the screen.
-                float column_start = (screen.flt_h - columnHeight) / 2f;
-                float column_end = (screen.flt_h + columnHeight) / 2f;
+                float column_start = (screen.flt_height - columnHeight) / 2f;
+                float column_end = (screen.flt_height + columnHeight) / 2f;
 
                 // Wall rendering bounds on the screen...
                 int draw_column_start = screen.Height - (int)(screen.Height - column_start);    // Inclusive
@@ -78,7 +78,7 @@ namespace GLTech2
                 void drawBackground(int line)
                 {
                     float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
-                    float screenVratio = line / screen.flt_h;
+                    float screenVratio = line / screen.flt_height;
                     float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
                     uint color = background.MapPixel(background_hratio, background_vratio);
                     screen[screen_column, line] = color;

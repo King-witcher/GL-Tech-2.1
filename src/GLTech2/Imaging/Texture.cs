@@ -26,8 +26,8 @@ namespace GLTech2.Imaging
         internal unsafe uint MapPixel(float hratio, float vratio)
         {
             // This is the most performance critical segment of code int the entire engine
-            int x = (int)(buffer.flt_w * (hrepeat * hratio + hoffset)) % buffer.Width;
-            int y = (int)(buffer.flt_h * (vrepeat * vratio + voffset)) % buffer.Height;
+            int x = (int)(buffer.flt_width * (hrepeat * hratio + hoffset)) % buffer.Width;
+            int y = (int)(buffer.flt_height * (vrepeat * vratio + voffset)) % buffer.Height;
             return buffer.UintBuffer[buffer.Width * y + x];
         }
     }

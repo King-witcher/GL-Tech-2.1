@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace GLTech2.Imaging
 {
     [StructLayout(LayoutKind.Explicit)]
-    public unsafe struct ImageData : IDisposable
+    public unsafe readonly struct ImageData : IDisposable
     {
         static ImageData()
         {
@@ -16,22 +16,23 @@ namespace GLTech2.Imaging
                 throw new Exception("GL Tech 2.1 must run as x86-64.");
         }
 
-        public const int BYTES_PER_PIXEL = 4;
-        public const PixelFormat PIXEL_FORMAT = PixelFormat.Format32bppArgb;
+        public const int DEFAULT_BPP = 4;
+        public const PixelFormat DEFAULT_PIXEL_FORMAT = PixelFormat.Format32bppArgb;
 
-        [FieldOffset(0)] int width;
-        [FieldOffset(4)] int height;
-        [FieldOffset(8)] uint* uintbuf;
-        [FieldOffset(8)] Pixel* pixelbuf;
+        [FieldOffset(0)] readonly int width;
+        [FieldOffset(4)] readonly int height;
+        [FieldOffset(8)] readonly uint* uint_buffer;
+        [FieldOffset(8)] readonly Pixel* pixel_buffer;
 
-        [FieldOffset(16)] internal float flt_w;
-        [FieldOffset(20)] internal float flt_h;
+        [FieldOffset(16)] readonly internal float flt_width;
+        [FieldOffset(20)] readonly internal float flt_height;
 
         public int Height => height;
         public int Width => width;
-        public IntPtr Buffer => (IntPtr)uintbuf;
-        public Pixel* PixelBuffer => pixelbuf;
-        public uint* UintBuffer => uintbuf;
+        public IntPtr Buffer => (IntPtr)uint_buffer;
+        public Pixel* PixelBuffer => pixel_buffer;
+        public uint* UintBuffer => uint_buffer;
+        public long Size => DEFAULT_BPP * width * height;
 
         [Obsolete]
         public ImageData(Bitmap source)
@@ -42,15 +43,15 @@ namespace GLTech2.Imaging
             {
                 var bmpdata = clone.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
                 int bmpsize = bmpdata.Stride * bmpdata.Height;
-                pixelbuf = null;
-                uintbuf = (uint*)Marshal.AllocHGlobal(bmpsize);
-                System.Buffer.MemoryCopy((void*)bmpdata.Scan0, uintbuf, bmpsize, bmpsize);
+                pixel_buffer = null;
+                uint_buffer = (uint*)Marshal.AllocHGlobal(bmpsize);
+                System.Buffer.MemoryCopy((void*)bmpdata.Scan0, uint_buffer, bmpsize, bmpsize);
                 clone.UnlockBits(bmpdata);
             }
             width = source.Width;
             height = source.Height;
-            flt_w = source.Width;
-            flt_h = source.Height;
+            flt_width = source.Width;
+            flt_height = source.Height;
         }
 
         public ImageData(int width, int height)
@@ -60,28 +61,50 @@ namespace GLTech2.Imaging
 
             this.width = width;
             this.height = height;
-            this.flt_w = width;
-            this.flt_h = height;
-            pixelbuf = null; // Assigned by union
-            uintbuf = (uint*)Marshal.AllocHGlobal(width * height * sizeof(uint));
+            this.flt_width = width;
+            this.flt_height = height;
+            pixel_buffer = null; // Assigned by union
+            uint_buffer = (uint*)Marshal.AllocHGlobal(width * height * sizeof(uint));
+        }
+
+        private ImageData(int width, int height, int size)
+        {
+            this.width = width;
+            this.height = height;
+            this.flt_width = width;
+            this.flt_height = height;
+
+            this.pixel_buffer = null;
+            this.uint_buffer = (uint*)Marshal.AllocHGlobal(size);
         }
 
         // Em fase de testes
         public static ImageData Clone(Bitmap source)
         {
-            ImageData result = default;
-            Rectangle rect = new Rectangle(0, 0, source.Width, source.Height);
+            int buffer_size = DEFAULT_BPP * source.Width * source.Height;
 
-            using Bitmap src32 = source.PixelFormat == PixelFormat.Format32bppArgb ?
-                source : source.Clone(rect, PixelFormat.Format32bppArgb);
+            // Allocates the clone
+            ImageData result = new(
+                width: source.Width,
+                height: source.Height,
+                size: buffer_size
+            );
 
-            var bmpdata = src32.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
-            int bmpsize = bmpdata.Stride * bmpdata.Height;
-            result.pixelbuf = default;
-            result.uintbuf = (UInt32*)Marshal.AllocHGlobal(bmpsize);
-            System.Buffer.MemoryCopy((void*)bmpdata.Scan0, result.uintbuf, bmpsize, bmpsize);
-            src32.UnlockBits(bmpdata);
+            // Clones the source if it's format is different from the expected and releases at the end.
+            using var src32 = source.PixelFormat == DEFAULT_PIXEL_FORMAT ?
+                source: source.Clone(DEFAULT_PIXEL_FORMAT) ??
+                throw new ArgumentNullException("source");
 
+            BitmapData lockdata = src32.LockBits();
+            // Copies each byte from the bitmap to the clone.
+            System.Buffer.MemoryCopy(
+                source:                 (void*)lockdata.Scan0,
+                destination:            result.uint_buffer,
+                sourceBytesToCopy:      buffer_size,
+                destinationSizeInBytes: buffer_size
+            );
+
+            src32.UnlockBits(lockdata);
             return result;
         }
 
@@ -89,8 +112,7 @@ namespace GLTech2.Imaging
         {
             if (source.Width * source.Height > destination.Width * destination.Height)
                 throw new ArgumentOutOfRangeException("source");
-
-            System.Buffer.MemoryCopy(source.UintBuffer, destination.UintBuffer, BYTES_PER_PIXEL * destination.Height * destination.Width, BYTES_PER_PIXEL * source.Height * source.Width);
+            System.Buffer.MemoryCopy(source.UintBuffer, destination.UintBuffer, DEFAULT_BPP * destination.Height * destination.Width, DEFAULT_BPP * source.Height * source.Width);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -130,7 +152,7 @@ namespace GLTech2.Imaging
 
         public static explicit operator Bitmap(ImageData data)
         {
-            return new Bitmap(data.width, data.height, BYTES_PER_PIXEL * data.width, PIXEL_FORMAT, data.Buffer);
+            return new Bitmap(data.width, data.height, DEFAULT_BPP * data.width, DEFAULT_PIXEL_FORMAT, data.Buffer);
         }
     }
 }

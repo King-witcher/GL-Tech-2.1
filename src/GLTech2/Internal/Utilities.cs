@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace GLTech2
 {
@@ -13,6 +15,21 @@ namespace GLTech2
                 value = max;
             else if (value.CompareTo(min) < 0)
                 value = min;
+        }
+
+        public static Rectangle GetRectangle(this Bitmap bitmap)
+        {
+            return new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+        }
+
+        public static BitmapData LockBits(this Bitmap bitmap)
+        {
+            return bitmap.LockBits(bitmap.GetRectangle(), ImageLockMode.ReadWrite, bitmap.PixelFormat);
+        }
+
+        public static Bitmap Clone(this Bitmap bitmap, PixelFormat format)
+        {
+            return bitmap.Clone(bitmap.GetRectangle(), format);
         }
     }
 }

@@ -13,11 +13,10 @@ namespace GLTech2
         {
             // Checks if the code should be run in all cores or just one.
             if (ParallelRendering)
-                Parallel.For(0, screen.width, DrawColumn);
+                Parallel.For(fromInclusive: 0, toExclusive: screen.width, body: DrawColumn);
             else
                 for (int i = 0; i < screen.width; i++)
                     DrawColumn(i);
-            return;
 
             // Render a vertical column of the screen.
             [MethodImpl(MethodImplOptions.AggressiveInlining)]

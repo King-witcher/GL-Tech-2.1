@@ -97,9 +97,9 @@ namespace GLTech2
 
         public static PixelBuffer GetScreenshot()
         {
-            PixelBuffer pb = new PixelBuffer(CustomWidth, customHeight);
-            pb.Clone(frontBuffer);
-            return pb;
+            PixelBuffer screenshot = new PixelBuffer(CustomWidth, CustomHeight);
+            PixelBuffer.BufferCopy(frontBuffer, screenshot);
+            return screenshot;
         }
 
         public static void AddEffect(ImageProcessing postProcessing)
@@ -207,7 +207,7 @@ namespace GLTech2
                 PostProcess(backBuffer);
 
                 if (DoubleBuffer)
-                    frontBuffer.FastClone(backBuffer);
+                    PixelBuffer.BufferCopy(backBuffer, frontBuffer);
                 Behaviour.Frame.EndRender();
 
                 while (controlStopwatch.ElapsedMilliseconds < minframetime)

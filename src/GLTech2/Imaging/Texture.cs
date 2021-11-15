@@ -3,8 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace GLTech2.Imaging
 {
-    [NativeCppClass]
-    [StructLayout(LayoutKind.Sequential)]
+    [NativeCppClass] [StructLayout(LayoutKind.Sequential)]
     public unsafe struct Texture
     {
         internal PixelBuffer buffer; //Propositalmente salvo por valor
@@ -26,10 +25,10 @@ namespace GLTech2.Imaging
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal unsafe uint MapPixel(float hratio, float vratio)
         {
-            // Critical performance impact
-            int x = (int)(buffer.width_float * (hrepeat * hratio + hoffset)) % buffer.width;
-            int y = (int)(buffer.height_float * (vrepeat * vratio + voffset)) % buffer.height;
-            return buffer.uint0[buffer.width * y + x];
+            // This is the most performance critical segment of code int the entire engine
+            int x = (int)(buffer.width_float * (hrepeat * hratio + hoffset)) % buffer.Width;
+            int y = (int)(buffer.height_float * (vrepeat * vratio + voffset)) % buffer.Height;
+            return buffer.Uint0[buffer.Width * y + x];
         }
     }
 }

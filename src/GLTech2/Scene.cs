@@ -84,7 +84,7 @@ namespace GLTech2
             {
                 Entity current = queue.Dequeue();
                 addSingle(current);
-                current.childs.ForEach((child) => queue.Enqueue(child));
+                current.childs.ForEach(child => queue.Enqueue(child));
             }
 
             void addSingle(Entity entity)
@@ -103,7 +103,7 @@ namespace GLTech2
                     Start += b.StartAction;
                     OnFrame += b.OnFrameAction;
                 }
-                entity.OnAddBehaviour += (behaviour) =>
+                entity.OnAddBehaviour += behaviour =>
                 {
                     Start += behaviour.StartAction;
                     OnFrame += behaviour.OnFrameAction;

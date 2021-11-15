@@ -24,7 +24,7 @@ namespace GLTech2.Imaging.StandardEffects
 
         public override void Process(PixelBuffer target)
         {
-            Parallel.For(0, target.width, (x) =>
+            Parallel.For(0, target.width, x =>
             {
                 for (int y = 0; y < target.height; y++)
                 {

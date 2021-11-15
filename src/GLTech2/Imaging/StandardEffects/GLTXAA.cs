@@ -29,11 +29,11 @@ namespace GLTech2.Imaging.StandardEffects
             if (target.width != previousFrame.width || target.height != previousFrame.height)
                 return;
 
-            temporaryBuffer.FastClone(target);
+            PixelBuffer.BufferCopy(temporaryBuffer, target);
 
             if (!EdgeDettection)
             {
-                Parallel.For(1, target.height - 1, (y) =>
+                Parallel.For(1, target.height - 1, y =>
                 {
                     for (int x = 1; x < target.width - 1; x++)
                     {
@@ -63,12 +63,12 @@ namespace GLTech2.Imaging.StandardEffects
                     }
                 });
 
-                target.FastClone(temporaryBuffer);
-                previousFrame.FastClone(target);
+                PixelBuffer.BufferCopy(temporaryBuffer, target);
+                PixelBuffer.BufferCopy(target, previousFrame);
             }
             else
             {
-                Parallel.For(1, target.height - 1, (y) =>
+                Parallel.For(1, target.height - 1, y =>
                 {
                     for (int x = 1; x < target.width - 1; x++)
                     {
@@ -92,12 +92,12 @@ namespace GLTech2.Imaging.StandardEffects
                         temporaryBuffer.uint0[cur] = (uint)(factor * 255) * 0x10101u;
                     }
                 });
-                previousFrame.FastClone(target);
-                target.FastClone(temporaryBuffer);
+                PixelBuffer.BufferCopy(target, previousFrame);
+                PixelBuffer.BufferCopy(temporaryBuffer, target);
             }
 
-            target.FastClone(temporaryBuffer);
-            previousFrame.FastClone(target);
+            PixelBuffer.BufferCopy(temporaryBuffer, target);
+            PixelBuffer.BufferCopy(target, previousFrame);
             return;
 
             float adjust(float x) => -x * x + 2 * x;

@@ -7,10 +7,41 @@ using GLTech2.Scripting.Debugging;
 using GLTech2.Scripting.StandardScripts;
 using GLTech2.Scripting.Physics;
 
+using System.Threading.Tasks;
+
 namespace Test
 {
     partial class Program
     {
+        static PixelBuffer Resize(PixelBuffer pb, int scale)
+        {
+            PixelBuffer resized = new PixelBuffer(pb.width * scale, pb.height * scale);
+
+            Parallel.For(0, resized.height, line =>
+            {
+                float float_match_line = (float)line / scale;
+
+                int matchline = (int)float_match_line;
+                float rest_line = float_match_line - matchline;
+
+                for (int column = 0; column < resized.width ; column++)
+                {
+                    float float_match_col = (float)column / scale;
+
+                    int matchcol = (int)float_match_col;
+                    float rest_col = float_match_col - matchcol;
+
+                    Color top = pb[matchcol, matchline].Mix(pb[matchcol + 1, matchline], rest_col);
+                    Color bot = pb[matchcol, matchline + 1].Mix(pb[matchcol + 1, matchline + 1], rest_col);
+
+                    Color center = top.Mix(bot, rest_line);
+                    resized[column, line] = center;
+                }
+            });
+
+            return resized;
+        }
+
         class EnableNoclip : Behaviour
         {
             FlatMovement fm;
@@ -34,6 +65,7 @@ namespace Test
         {
             // Buffers used
             using PixelBuffer textures = new PixelBuffer(WE1M1.WolfTextures);
+            //using PixelBuffer textures_ = Resize(textures_, 20);
             using PixelBuffer background_buffer = new PixelBuffer(WE1M1.Background);
             using PixelBuffer lula_buffer = new PixelBuffer(WE1M1.lula);
             using PixelBuffer pt_buffer = new PixelBuffer(WE1M1.pt);

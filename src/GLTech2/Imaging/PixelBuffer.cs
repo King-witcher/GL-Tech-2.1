@@ -8,24 +8,14 @@ using System.Threading.Tasks;
 namespace GLTech2.Imaging
 {
     [StructLayout(LayoutKind.Explicit)]
-    public unsafe readonly struct PixelBuffer : IDisposable
+    public unsafe struct PixelBuffer : IDisposable
     {
-        [FieldOffset(0)]
-        internal readonly int width;
-        [FieldOffset(4)]
-        internal readonly int height;
-
-        // Theese are stored as float due to small optimizations.
-        [FieldOffset(8)]
-        internal readonly float width_float;
-        [FieldOffset(12)]
-        internal readonly float height_float;
-
-        // Union
-        [FieldOffset(16)]
-        internal readonly uint* uint0;
-        [FieldOffset(16)]
-        internal readonly Color* rgb0;
+        [FieldOffset(0)] internal int width;
+        [FieldOffset(4)] internal int height;
+        [FieldOffset(8)] internal float width_float;
+        [FieldOffset(12)] internal float height_float;
+        [FieldOffset(16)] internal uint* uint0;
+        [FieldOffset(16)] internal Color* rgb0;  // Union
 
         public Color this[int column, int line]
         {
@@ -34,6 +24,8 @@ namespace GLTech2.Imaging
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => rgb0[column + width * line] = value;
         }
+
+        public const int BYTES_PER_PIXEL = 4;
 
         public int Height => height;
 
@@ -79,11 +71,12 @@ namespace GLTech2.Imaging
             uint0 = (uint*)Marshal.AllocHGlobal(width * height * sizeof(uint));
         }
 
-        public void Clone(PixelBuffer source)
+        public static void BufferCopy(PixelBuffer source, PixelBuffer destination)
         {
-            if (width != source.width || height != source.height)
-                throw new ArgumentException("Buffers must have the same size.");
-            Buffer.MemoryCopy(source.uint0, this.uint0, 4 * height * width, 4 * height * width);
+            if (source.width * source.height > destination.width * destination.height)
+                throw new ArgumentOutOfRangeException("source");
+
+            Buffer.MemoryCopy(source.uint0, destination.uint0, BYTES_PER_PIXEL * destination.height * destination.width, BYTES_PER_PIXEL * source.height * source.width);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -93,7 +86,7 @@ namespace GLTech2.Imaging
             int width = this.width;
             uint* buffer = this.uint0;
 
-            Parallel.For(0, width, (x) =>
+            Parallel.For(0, width, x =>
             {
                 for (int y = 0; y < height; y++)
                 {
@@ -108,20 +101,14 @@ namespace GLTech2.Imaging
             Marshal.FreeHGlobal(Scan0);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void FastClone(PixelBuffer buffer)
-        {
-            Buffer.MemoryCopy(buffer.uint0, this.uint0, 4 * height * width, 4 * height * width);
-        }
-
         public static explicit operator PixelBuffer(Bitmap bitmap)
         {
             return new PixelBuffer(bitmap);
         }
 
-        public static implicit operator Bitmap(PixelBuffer texture)
+        public static explicit operator Bitmap(PixelBuffer texture)
         {
-            return new Bitmap(texture.Width, texture.Height, 4 * texture.Width, texture.PixelFormat, texture.Scan0);
+            return new Bitmap(texture.Width, texture.Height, BYTES_PER_PIXEL * texture.Width, texture.PixelFormat, texture.Scan0);
         }
     }
 }

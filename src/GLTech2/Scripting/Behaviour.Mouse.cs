@@ -1,54 +1,67 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace GLTech2.Scripting
 {
     public partial class Behaviour
     {
-        // Spaguetti?
         protected internal static class Mouse
         {
-            public static int HShift { get; private set; }
+            static (int x, int y) previousCursorPosition;
 
-            public static int VShift { get; private set; }
+            static Mouse()
+            {
+                int x = Screen.PrimaryScreen.Bounds.Width / 2;
+                int y = Screen.PrimaryScreen.Bounds.Height / 2;
+                MouseFixedPoint = (x, y);
+            }
 
-            static bool enabled = false;
-            static int centerH = Screen.PrimaryScreen.Bounds.Width / 2;
-            static int centerV = Screen.PrimaryScreen.Bounds.Height / 2;
-            static Point center = new Point(centerH, centerV);
-            static Point previousCursorPosition;
+            public static (int x, int y) MousePosition
+            {
+                get => (Cursor.Position.X, Cursor.Position.Y);
+                set => Cursor.Position = new Point(value.x, value.y);
+            }
+
+            static bool captureMouse = false;
+
+            public static (int x, int y) MouseFixedPoint { get; set; }
+
+            public static (int dx, int dy) HookMouse()
+            {
+                if (captureMouse)
+                {
+                    int delta_x = MousePosition.x - MouseFixedPoint.x;
+                    int delta_y = MousePosition.y - MouseFixedPoint.y;
+
+                    MousePosition = MouseFixedPoint;
+
+                    return (delta_x, delta_y);
+                }
+                else
+                {
+                    return (0, 0);
+                }
+            }
 
             internal static void Enable()
             {
-                if (!enabled)
+                if (!captureMouse)
                 {
                     Cursor.Hide();
-                    previousCursorPosition = Cursor.Position;
-                    Cursor.Position = center;
-                    enabled = true;
+                    previousCursorPosition = (Cursor.Position.X, Cursor.Position.Y);
+                    Cursor.Position = new Point(MouseFixedPoint.x, MouseFixedPoint.y);
+                    captureMouse = true;
                 }
             }
 
             internal static void Disable()
             {
-                if (enabled)
+                if (captureMouse)
                 {
-                    Cursor.Position = previousCursorPosition;
+                    MousePosition = previousCursorPosition;
                     Cursor.Show();
-                    enabled = false;
-                    HShift = 0;
-                    VShift = 0;
-                }
-            }
-
-            internal static void Measure()
-            {
-                if (enabled)
-                {
-                    HShift = Cursor.Position.X - centerH;
-                    VShift = Cursor.Position.Y - centerV;
-
-                    Cursor.Position = center;
+                    captureMouse = false;
                 }
             }
         }

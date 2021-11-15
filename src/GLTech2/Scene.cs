@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-using GLTech2.Drawing;
+using GLTech2.Imaging;
 using GLTech2.Entities;
 using GLTech2.Unmanaged;
 using GLTech2.Scripting;
@@ -19,7 +19,7 @@ namespace GLTech2
 
         public Scene()
         {
-            Texture background = new Texture((PixelBuffer)new Bitmap(1, 1));
+            Texture background = new Texture((ImageData)new Bitmap(1, 1));
             unmanaged = SScene.Create(background);
 
             var defaultCamera = new Camera();
@@ -84,7 +84,7 @@ namespace GLTech2
             {
                 Entity current = queue.Dequeue();
                 addSingle(current);
-                current.childs.ForEach((child) => queue.Enqueue(child));
+                current.childs.ForEach(child => queue.Enqueue(child));
             }
 
             void addSingle(Entity entity)
@@ -103,7 +103,7 @@ namespace GLTech2
                     Start += b.StartAction;
                     OnFrame += b.OnFrameAction;
                 }
-                entity.OnAddBehaviour += (behaviour) =>
+                entity.OnAddBehaviour += behaviour =>
                 {
                     Start += behaviour.StartAction;
                     OnFrame += behaviour.OnFrameAction;

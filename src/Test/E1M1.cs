@@ -1,5 +1,5 @@
 ﻿using GLTech2;
-using GLTech2.Drawing;
+using GLTech2.Imaging;
 using GLTech2.Entities;
 using GLTech2.Entities.StandardEntites;
 using GLTech2.Scripting;
@@ -7,10 +7,41 @@ using GLTech2.Scripting.Debugging;
 using GLTech2.Scripting.StandardScripts;
 using GLTech2.Scripting.Physics;
 
+using System.Threading.Tasks;
+
 namespace Test
 {
     partial class Program
     {
+        static ImageData Resize(ImageData pb, int scale)
+        {
+            ImageData resized = new ImageData(pb.Width * scale, pb.Height * scale);
+
+            Parallel.For(0, resized.Height, line =>
+            {
+                float float_match_line = (float)line / scale;
+
+                int matchline = (int)float_match_line;
+                float rest_line = float_match_line - matchline;
+
+                for (int column = 0; column < resized.Width ; column++)
+                {
+                    float float_match_col = (float)column / scale;
+
+                    int matchcol = (int)float_match_col;
+                    float rest_col = float_match_col - matchcol;
+
+                    Pixel top = pb[matchcol, matchline].Mix(pb[matchcol + 1, matchline], rest_col);
+                    Pixel bot = pb[matchcol, matchline + 1].Mix(pb[matchcol + 1, matchline + 1], rest_col);
+
+                    Pixel center = top.Mix(bot, rest_line);
+                    resized[column, line] = center;
+                }
+            });
+
+            return resized;
+        }
+
         class EnableNoclip : Behaviour
         {
             FlatMovement fm;
@@ -33,19 +64,20 @@ namespace Test
         static void E1M1()
         {
             // Buffers used
-            using PixelBuffer textures = new PixelBuffer(WE1M1.WolfTextures);
-            using PixelBuffer background_buffer = new PixelBuffer(WE1M1.Background);
-            using PixelBuffer lula_buffer = new PixelBuffer(WE1M1.lula);
-            using PixelBuffer pt_buffer = new PixelBuffer(WE1M1.pt);
-            using PixelBuffer bolsonaro_buffer = new PixelBuffer(WE1M1.bolsonaro);
-            using PixelBuffer dolar_buffer = new PixelBuffer(WE1M1._1dolar);
+            using ImageData textures = new ImageData(WE1M1.WolfTextures);
+            //using PixelBuffer textures_ = Resize(textures_, 20);
+            using ImageData background_buffer = new ImageData(WE1M1.Background);
+            using ImageData lula_buffer = new ImageData(WE1M1.lula);
+            using ImageData pt_buffer = new ImageData(WE1M1.pt);
+            using ImageData bolsonaro_buffer = new ImageData(WE1M1.bolsonaro);
+            using ImageData dolar_buffer = new ImageData(WE1M1._1dolar);
 
             Texture background = new Texture(background_buffer);
             using Scene scene = new Scene(background);
 
             // BlockMap
             {
-                using PixelBuffer grid = new PixelBuffer(WE1M1.MapGrid);
+                using ImageData grid = new ImageData(WE1M1.MapGrid);
                 BlockMap.TextureMapper binds = new BlockMap.TextureMapper();
                 {
                     Texture blueStone1 = new Texture(
@@ -180,14 +212,14 @@ namespace Test
             }
 
             // Renderer customization
-            Renderer.FullScreen = true;
-            Renderer.FieldOfView = 72f;
-            Renderer.ParallelRendering = true;
-            Renderer.DoubleBuffer = true;
-            Renderer.CaptureMouse = true;
+            Engine.FullScreen = true;
+            Engine.FieldOfView = 72f;
+            Engine.ParallelRendering = true;
+            Engine.DoubleBuffer = true;
+            Engine.CaptureMouse = true;
 
             // Run!
-            Renderer.Start(scene);
+            Engine.Run(scene);
         }
     }
 }

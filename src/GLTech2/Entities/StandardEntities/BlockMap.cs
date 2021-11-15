@@ -2,7 +2,7 @@
 
 using System;
 
-using GLTech2.Drawing;
+using GLTech2.Imaging;
 
 namespace GLTech2.Entities.StandardEntites
 {
@@ -16,19 +16,19 @@ namespace GLTech2.Entities.StandardEntites
         public int Walls => walls;
 
         [Obsolete]
-        public BlockMap(PixelBuffer map)
+        public BlockMap(ImageData map)
         {
             TextureMapper textures = new TextureMapper();
 
 
             // Gets a new texture if exists; otherwise creates it.
-            Texture getTexture(RGB rgb)
+            Texture getTexture(Pixel rgb)
             {
                 if (textures.GetTexture(rgb, out Texture texture))
                     return texture;
                 else
                 {
-                    PixelBuffer buffer = new PixelBuffer(1, 1);     // Must be added to disposables
+                    ImageData buffer = new ImageData(1, 1);     // Must be added to disposables
                     buffer[0, 0] = rgb;
                     Texture tex = new Texture(buffer);
                     textures[rgb] = tex;
@@ -41,7 +41,7 @@ namespace GLTech2.Entities.StandardEntites
                 for (int line = 0; line < map.Height; line++)
                 {
                     // Checks for transparency.
-                    if (map[column, line] == (RGB)(0, 0, 0))
+                    if (map[column, line] == (Pixel)(0, 0, 0))
                         continue;
 
                     Texture texture = getTexture(map[column, line]);
@@ -61,13 +61,13 @@ namespace GLTech2.Entities.StandardEntites
             }
         }
 
-        public BlockMap(PixelBuffer map, TextureMapper textureBindings)
+        public BlockMap(ImageData map, TextureMapper textureBindings)
         {
             // Cada bloco, em tese, geraria quatro paredes e quatro colisores ao seu redor.
             // Esse método foi otimizado considerando-se que, se duas paredes forem desenhadas sobre o mesmo lugar, isso significa que não existe superfície visível por ali e, portanto, nenhuma das duas deverá ser realmente renderizada.
             bool blockFree(int column, int line)
             {
-                if (column < 0 || column >= map.height || line < 0 || line >= map.width)
+                if (column < 0 || column >= map.Height || line < 0 || line >= map.Width)
                     return true;
                 if (textureBindings.GetTexture(map[column, line], out _))
                     return false;

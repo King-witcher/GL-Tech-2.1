@@ -112,7 +112,7 @@ namespace GLTech2.Entities
 
         public bool ContainsBehaviour(Behaviour b)
         {
-            if (behaviours.TrueForAll((each) => each != b))
+            if (behaviours.TrueForAll(each => each != b))
                 return false;
             return true;
         }

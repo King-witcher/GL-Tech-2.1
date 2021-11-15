@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace GLTech2.Drawing.StandardEffects
+namespace GLTech2.Imaging.StandardEffects
 {
-    public unsafe sealed class GammaCorrection : PostProcessing
+    public unsafe sealed class GammaCorrection : ImageProcessing
     {
         float gamma;
         public float Gamma
@@ -22,16 +22,16 @@ namespace GLTech2.Drawing.StandardEffects
             this.gamma = factor;
         }
 
-        public override void Process(PixelBuffer target)
+        public override void Process(ImageData target)
         {
-            Parallel.For(0, target.width, (x) =>
+            Parallel.For(0, target.Width, x =>
             {
-                for (int y = 0; y < target.height; y++)
+                for (int y = 0; y < target.Height; y++)
                 {
-                    int cur = target.width * y + x;
+                    int cur = target.Width * y + x;
 
-                    RGB color = target.uint0[cur];
-                    target.RGB0[cur] = (
+                    Pixel color = target.UintBuffer[cur];
+                    target.PixelBuffer[cur] = (
                         (byte)(255f * Math.Pow(color.R / 255f, gamma)),
                         (byte)(255f * Math.Pow(color.G / 255f, gamma)),
                         (byte)(255f * Math.Pow(color.B / 255f, gamma)));

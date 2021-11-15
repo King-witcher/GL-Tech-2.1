@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace GLTech2.Drawing.StandardEffects
+namespace GLTech2.Imaging.StandardEffects
 {
     //Incomplete
-    internal sealed unsafe class GLTXAA : PostProcessing, IDisposable
+    internal sealed unsafe class GLTXAA : ImageProcessing, IDisposable
     {
         public GLTXAA(int width, int height, int threshold = 70)
         {
-            previousFrame = new PixelBuffer(width, height);
-            temporaryBuffer = new PixelBuffer(width, height);
+            previousFrame = new ImageData(width, height);
+            temporaryBuffer = new ImageData(width, height);
             if (threshold > 255)
                 this.sqrThreshold = 255 * 255 * 3;
             else if (threshold < 0)
@@ -18,86 +18,86 @@ namespace GLTech2.Drawing.StandardEffects
                 this.sqrThreshold = threshold * threshold * 3;
         }
 
-        private PixelBuffer previousFrame;
-        private PixelBuffer temporaryBuffer;
+        private ImageData previousFrame;
+        private ImageData temporaryBuffer;
         private int sqrThreshold;
 
         public bool EdgeDettection { get; set; } = false;
 
-        public override void Process(PixelBuffer target)
+        public override void Process(ImageData target)
         {
-            if (target.width != previousFrame.width || target.height != previousFrame.height)
+            if (target.Width != previousFrame.Width || target.Height != previousFrame.Height)
                 return;
 
-            temporaryBuffer.FastClone(target);
+            ImageData.BufferCopy(temporaryBuffer, target);
 
             if (!EdgeDettection)
             {
-                Parallel.For(1, target.height - 1, (y) =>
+                Parallel.For(1, target.Height - 1, y =>
                 {
-                    for (int x = 1; x < target.width - 1; x++)
+                    for (int x = 1; x < target.Width - 1; x++)
                     {
-                        int cur = target.width * y + x;
-                        int up = target.width * (y - 1) + x;
-                        int left = target.width * y + x - 1;
-                        int down = target.width * (y + 1) + x;
-                        int right = target.width * y + x + 1;
+                        int cur = target.Width * y + x;
+                        int up = target.Width * (y - 1) + x;
+                        int left = target.Width * y + x - 1;
+                        int down = target.Width * (y + 1) + x;
+                        int right = target.Width * y + x + 1;
 
                         float differenceV = dist(
-                            target.uint0[up],
-                            target.uint0[down]);
+                            target.UintBuffer[up],
+                            target.UintBuffer[down]);
 
                         float differenceH = dist(
-                            target.uint0[right],
-                            target.uint0[left]);
+                            target.UintBuffer[right],
+                            target.UintBuffer[left]);
 
                         float factor = differenceH > differenceV ? differenceH : differenceV;
                         factor = 0.95f * adjust(factor);
 
-                        temporaryBuffer.uint0[cur] = avg(
-                            previousFrame.uint0[cur],
-                            target.uint0[cur],
+                        temporaryBuffer.UintBuffer[cur] = avg(
+                            previousFrame.UintBuffer[cur],
+                            target.UintBuffer[cur],
                             factor / 2);
 
                         //copy.buffer[cur] = (uint)(factor * 255) * 0x00010101 + 0xff000000;
                     }
                 });
 
-                target.FastClone(temporaryBuffer);
-                previousFrame.FastClone(target);
+                ImageData.BufferCopy(temporaryBuffer, target);
+                ImageData.BufferCopy(target, previousFrame);
             }
             else
             {
-                Parallel.For(1, target.height - 1, (y) =>
+                Parallel.For(1, target.Height - 1, y =>
                 {
-                    for (int x = 1; x < target.width - 1; x++)
+                    for (int x = 1; x < target.Width - 1; x++)
                     {
-                        int cur = target.width * y + x;
-                        int up = target.width * (y - 1) + x;
-                        int left = target.width * y + x - 1;
-                        int down = target.width * (y + 1) + x;
-                        int right = target.width * y + x + 1;
+                        int cur = target.Width * y + x;
+                        int up = target.Width * (y - 1) + x;
+                        int left = target.Width * y + x - 1;
+                        int down = target.Width * (y + 1) + x;
+                        int right = target.Width * y + x + 1;
 
                         float differenceV = dist(
-                            target.uint0[up],
-                            target.uint0[down]);
+                            target.UintBuffer[up],
+                            target.UintBuffer[down]);
 
                         float differenceH = dist(
-                            target.uint0[right],
-                            target.uint0[left]);
+                            target.UintBuffer[right],
+                            target.UintBuffer[left]);
 
                         float factor = differenceH > differenceV ? differenceH : differenceV;
                         factor = 0.95f * adjust(factor);
 
-                        temporaryBuffer.uint0[cur] = (uint)(factor * 255) * 0x10101u;
+                        temporaryBuffer.UintBuffer[cur] = (uint)(factor * 255) * 0x10101u;
                     }
                 });
-                previousFrame.FastClone(target);
-                target.FastClone(temporaryBuffer);
+                ImageData.BufferCopy(target, previousFrame);
+                ImageData.BufferCopy(temporaryBuffer, target);
             }
 
-            target.FastClone(temporaryBuffer);
-            previousFrame.FastClone(target);
+            ImageData.BufferCopy(temporaryBuffer, target);
+            ImageData.BufferCopy(target, previousFrame);
             return;
 
             float adjust(float x) => -x * x + 2 * x;

@@ -1,30 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using GLTech2.Drawing;
+using GLTech2.Imaging;
 using GLTech2.Entities;
 using GLTech2.Scripting;
 using GLTech2.Unmanaged;
 
 namespace GLTech2
 {
-    public static partial class Renderer
+    public static partial class Engine
     {
         unsafe static RenderCache* cache;
-        static PixelBuffer frontBuffer;
+        static ImageData frontBuffer;
         static Scene activeScene = null;
-        static Camera activeCamera = null;
 
         // public static bool NativeRendering { get; } = false;
 
         public static bool ParallelRendering { get; set; } = true;
 
         public static Scene ActiveScene => activeScene;
+
+        public static event Action OnStart;
+        public static event Action OnFrame;
 
         private static float minframetime = 4;
         public static int MaxFps
@@ -67,8 +66,8 @@ namespace GLTech2
                 ChangeIfNotRunning("FullScreen", ref fullScreen, value);
                 if (fullScreen == true)
                 {
-                    CustomWidth = Screen.PrimaryScreen.Bounds.Width;
-                    customHeight = Screen.PrimaryScreen.Bounds.Height;
+                    CustomWidth = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
+                    customHeight = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
                 }
             }
         }
@@ -93,24 +92,24 @@ namespace GLTech2
 
         public static bool IsRunning { get; private set; } = false;
 
-        public static PixelBuffer GetScreenshot()
+        public static ImageData GetScreenshot()
         {
-            PixelBuffer pb = new PixelBuffer(CustomWidth, customHeight);
-            pb.Clone(frontBuffer);
-            return pb;
+            ImageData screenshot = new ImageData(CustomWidth, CustomHeight);
+            ImageData.BufferCopy(frontBuffer, screenshot);
+            return screenshot;
         }
 
-        public static void AddEffect(PostProcessing postProcessing)
+        public static void AddEffect(ImageProcessing postProcessing)
         {
-            Renderer.postProcessing.Add(postProcessing);
+            Engine.postProcessing.Add(postProcessing);
         }
 
-        public static void AddPostProcessing<T>() where T : PostProcessing, new()
+        public static void AddPostProcessing<T>() where T : ImageProcessing, new()
         {
             AddEffect(new T());
         }
 
-        public unsafe static void Start(Scene scene)
+        public unsafe static void Run(Scene scene)
         {
             if (IsRunning)
                 return;
@@ -121,52 +120,46 @@ namespace GLTech2
             if (scene == null)
             {
                 Debug.InternalLog(
-                    message: $"Cannot render from Camera \"{camera}\" because it's not bound to any Scene.",
+                    message: $"Cannot render a null Scene.",
                     debugOption: Debug.Options.Error);
                 return;
             }
 
-            activeCamera = camera;
-
             activeScene = scene;
 
             // Unmanaged buffer where the video will be put.
-            frontBuffer = new PixelBuffer(CustomWidth, customHeight);
+            frontBuffer = new ImageData(CustomWidth, customHeight);
 
-            // Create a wrapper "Bitmap" that uses the same buffer.
-            var sourceBitmap = new Bitmap(
-                CustomWidth, CustomHeight,
-                CustomWidth * sizeof(uint), PixelFormat.Format32bppRgb,
-                (IntPtr)frontBuffer.uint0);
+            // A window that will continuously display the buffer
+            MainWindow display = new MainWindow(frontBuffer) { FullScreen = FullScreen };
 
-            var display = new DisplayForm(FullScreen, CustomWidth, CustomHeight, sourceBitmap);
+            // Setup input managers
+            display.KeyUp += Behaviour.Keyboard.KeyUp;
+            display.KeyDown += Behaviour.Keyboard.KeyDown;
+            if (CaptureMouse)
+            {
+                display.Focus += Behaviour.Mouse.Enable;
+                display.LoseFocus += Behaviour.Mouse.Disable;
+            }
 
-            // We must define two booleans to communicate with the tread.
-            // The first is necessary to send a stop request.
-            // The second is necessary to be aware of when the renderer doesn't need our unmanaged resources and
-            // then be able to realease them all.
+            // When set to true, the ControlThread will stop rendering.
             var stopRequest = false;
-            var controlThreadRunning = true;
 
             // And then start the control thread, which is reponsible for distributing the buffer among the threads
             // and running the scene scripts.
-            var controlThread = Task.Run(() => ControlTrhead(frontBuffer, in stopRequest, ref controlThreadRunning));
+            var controlThread = Task.Run(() => ControlTrhead(frontBuffer, in stopRequest));
 
             // Finally passes control to the rendering screen and displays it.
-            Application.Run(display);
+            display.Start();
 
             // Theese lines run after the renderer window is closed.
             stopRequest = true;
-
-            // Wait for the control thread to stop using outputBuffer.
-            while (controlThreadRunning)
-                Thread.Yield();
+            controlThread.Wait();
 
             // Finally, dispose everythihng.
             display.Dispose();
             frontBuffer.Dispose();
-            sourceBitmap.Dispose();
-            activeCamera = null;
+            //activeCamera = null;
 
             IsRunning = false;
         }
@@ -178,13 +171,14 @@ namespace GLTech2
             cache = RenderCache.Create(CustomWidth, CustomHeight, FieldOfView);
         }
 
-        private unsafe static void ControlTrhead(PixelBuffer frontBuffer, in bool cancellationRequest, ref bool controlThreadRunning)
+        private unsafe static void ControlTrhead(ImageData frontBuffer, in bool cancellationRequest)
         {
+            // Spaguetti
             ReloadCache();
 
             // Buffer where the image will be rendered
-            PixelBuffer backBuffer = DoubleBuffer ?
-                new PixelBuffer(frontBuffer.width, frontBuffer.height) :
+            ImageData backBuffer = DoubleBuffer ?
+                new ImageData(frontBuffer.Width, frontBuffer.Height) :
                 frontBuffer;
 
             #region Warnings
@@ -201,9 +195,6 @@ namespace GLTech2
             activeScene.Start?.Invoke();
             Behaviour.Frame.EndScript();
 
-            // While this variable is set to true, outputBuffer cannot be released by Renderer.Run() thread.
-            controlThreadRunning = true;
-
             while (!cancellationRequest)
             {
                 controlStopwatch.Restart();
@@ -213,13 +204,12 @@ namespace GLTech2
                 PostProcess(backBuffer);
 
                 if (DoubleBuffer)
-                    frontBuffer.FastClone(backBuffer);
+                    ImageData.BufferCopy(backBuffer, frontBuffer);
                 Behaviour.Frame.EndRender();
 
                 while (controlStopwatch.ElapsedMilliseconds < minframetime)
                     Thread.Yield();
 
-                Behaviour.Mouse.Measure();
                 Behaviour.Frame.RestartFrame();
                 Behaviour.Frame.BeginScript();
                 activeScene.OnFrame?.Invoke();
@@ -228,15 +218,13 @@ namespace GLTech2
             controlStopwatch.Stop();
             Behaviour.Frame.Stop();
 
-            // FrontBuffer is up to be released, if used.
-            controlThreadRunning = false;
             if (DoubleBuffer)
                 backBuffer.Dispose();
             return;
         }
 
-        private static List<PostProcessing> postProcessing = new List<PostProcessing>();
-        private static void PostProcess(PixelBuffer target)
+        private static List<ImageProcessing> postProcessing = new List<ImageProcessing>();
+        private static void PostProcess(ImageData target)
         {
             foreach (var effect in postProcessing)
                 effect.Process(target);

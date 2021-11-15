@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-using GLTech2.Drawing; 
+using GLTech2.Imaging; 
 
 namespace GLTech2.Entities.StandardEntites
 {
@@ -14,7 +14,7 @@ namespace GLTech2.Entities.StandardEntites
             public TextureMapper() =>
                 mapper = new Dictionary<uint, Texture>(32);
 
-            public Texture this[RGB color]
+            public Texture this[Pixel color]
             {
                 get
                 {
@@ -24,10 +24,10 @@ namespace GLTech2.Entities.StandardEntites
                 set => mapper[color] = value;
             }
 
-            public void Bind(RGB color, Texture texture) =>
+            public void Bind(Pixel color, Texture texture) =>
                 mapper[color] = texture;
 
-            public bool GetTexture(RGB color, out Texture texture) =>
+            public bool GetTexture(Pixel color, out Texture texture) =>
                 mapper.TryGetValue(color, out texture);
         }
     }

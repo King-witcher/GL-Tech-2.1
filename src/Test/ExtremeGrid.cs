@@ -1,5 +1,5 @@
 ﻿using GLTech2;
-using GLTech2.Drawing;
+using GLTech2.Imaging;
 using GLTech2.Entities;
 using GLTech2.Entities.StandardEntites;
 using GLTech2.Scripting.Debugging;
@@ -13,9 +13,9 @@ namespace Test
         // Esse é um mapa com uma quantidade extrema de planos para testes de gargalo.
         static void ExtremeGrid()
         {
-            using PixelBuffer BlockMapbuf = new PixelBuffer(DemoTextures.Plant);
-            using PixelBuffer texturebuf = new PixelBuffer(DemoTextures.GrayHexagons);
-            using PixelBuffer backgroundbuf = new PixelBuffer(DemoTextures.HellSky);
+            using ImageData BlockMapbuf = new ImageData(DemoTextures.Plant);
+            using ImageData texturebuf = new ImageData(DemoTextures.GrayHexagons);
+            using ImageData backgroundbuf = new ImageData(DemoTextures.HellSky);
 
             Texture background = new Texture(backgroundbuf);
             Scene scene = new Scene(background);
@@ -45,10 +45,10 @@ namespace Test
                 scene.Add(camera);
             }
 
-            Renderer.CaptureMouse = true;
-            Renderer.FullScreen = true;
-            Renderer.DoubleBuffer = true;
-            Renderer.Start(scene);
+            Engine.CaptureMouse = true;
+            Engine.FullScreen = true;
+            Engine.DoubleBuffer = true;
+            Engine.Run(scene);
         }
     }
 }

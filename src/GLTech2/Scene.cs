@@ -19,7 +19,7 @@ namespace GLTech2
 
         public Scene()
         {
-            Texture background = new Texture((PixelBuffer)new Bitmap(1, 1));
+            Texture background = new Texture((ImageData)new Bitmap(1, 1));
             unmanaged = SScene.Create(background);
 
             var defaultCamera = new Camera();

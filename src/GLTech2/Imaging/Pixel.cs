@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 namespace GLTech2.Imaging
 {
     [StructLayout(LayoutKind.Explicit)]
-    public struct Color
+    public struct Pixel
     {
         //Union
         [FieldOffset(0)]
@@ -23,7 +23,7 @@ namespace GLTech2.Imaging
         [FieldOffset(3)]
         private byte a;
 
-        public Color(byte red, byte green, byte blue)
+        public Pixel(byte red, byte green, byte blue)
         {
             rgb = 0;
             a = 255;
@@ -45,7 +45,7 @@ namespace GLTech2.Imaging
         public byte B => b;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Color Average(Color rgb)
+        public Pixel Average(Pixel rgb)
         {
             rgb.r = (byte)((r + rgb.r) >> 1);
             rgb.g = (byte)((g + rgb.g) >> 1);
@@ -55,7 +55,7 @@ namespace GLTech2.Imaging
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Color Mix(Color rgb, float factor)
+        public Pixel Mix(Pixel rgb, float factor)
         {
             ushort parcel1, parcel2;
 
@@ -76,7 +76,7 @@ namespace GLTech2.Imaging
 
         [Obsolete]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Color operator *(Color rgb, float factor)
+        public static Pixel operator *(Pixel rgb, float factor)
         {
             ulong red = (ulong)(rgb.r * factor);
             if (red > 255)
@@ -96,27 +96,15 @@ namespace GLTech2.Imaging
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator uint(Color rgb) => rgb.rgb;
+        public static implicit operator uint(Pixel rgb) => rgb.rgb;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Color(uint rgb) => new Color { rgb = rgb };
+        public static implicit operator Pixel(uint rgb) => new Pixel { rgb = rgb };
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Color((byte r, byte g, byte b) components)
+        public static implicit operator Pixel((byte r, byte g, byte b) components)
         {
-            return new Color(components.r, components.g, components.b);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator Color(System.Drawing.Color color)
-        {
-            return new Color(color.R, color.G, color.B);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator System.Drawing.Color(Color rgb)
-        {
-            return System.Drawing.Color.FromArgb(255, rgb.r, rgb.g, rgb.b);
+            return new Pixel(components.r, components.g, components.b);
         }
     }
 }

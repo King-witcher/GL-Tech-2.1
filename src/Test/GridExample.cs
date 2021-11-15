@@ -14,10 +14,10 @@ namespace Test
         static void GridExample()
         {
             // Buffers used
-            using PixelBuffer bricks_buffer = new PixelBuffer(DemoTextures.Bricks);
-            using PixelBuffer wood_buffer = new PixelBuffer(DemoTextures.Wood);
-            using PixelBuffer hexagons_buffer = new PixelBuffer(DemoTextures.GrayHexagons);
-            using PixelBuffer background_buffer = new PixelBuffer(DemoTextures.HellSky);
+            using ImageData bricks_buffer = new ImageData(DemoTextures.Bricks);
+            using ImageData wood_buffer = new ImageData(DemoTextures.Wood);
+            using ImageData hexagons_buffer = new ImageData(DemoTextures.GrayHexagons);
+            using ImageData background_buffer = new ImageData(DemoTextures.HellSky);
 
             Texture background = new Texture(background_buffer);
 
@@ -25,7 +25,7 @@ namespace Test
 
             // BlockMap
             {
-                using PixelBuffer grid = new PixelBuffer(DemoTextures.MapGrid);
+                using ImageData grid = new ImageData(DemoTextures.MapGrid);
                 BlockMap.TextureMapper mapper = new BlockMap.TextureMapper();
                 {
                     Texture bricks = new Texture(

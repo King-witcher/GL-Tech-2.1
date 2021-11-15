@@ -14,7 +14,7 @@ namespace GLTech2.Entities.StandardEntites
             public TextureMapper() =>
                 mapper = new Dictionary<uint, Texture>(32);
 
-            public Texture this[Color color]
+            public Texture this[Pixel color]
             {
                 get
                 {
@@ -24,10 +24,10 @@ namespace GLTech2.Entities.StandardEntites
                 set => mapper[color] = value;
             }
 
-            public void Bind(Color color, Texture texture) =>
+            public void Bind(Pixel color, Texture texture) =>
                 mapper[color] = texture;
 
-            public bool GetTexture(Color color, out Texture texture) =>
+            public bool GetTexture(Pixel color, out Texture texture) =>
                 mapper.TryGetValue(color, out texture);
         }
     }

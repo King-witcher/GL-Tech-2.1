@@ -9,7 +9,7 @@ namespace GLTech2
     // This is the part really renders.
     partial class Engine
     {
-        private unsafe static void DrawPlanes(PixelBuffer screen, SScene* scene)
+        private unsafe static void DrawPlanes(ImageData screen, SScene* scene)
         {
             // Checks if the code should be run in all cores or just one.
             if (ParallelRendering)
@@ -38,8 +38,8 @@ namespace GLTech2
                 float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); // Wall column size in pixels
 
                 // Where the column starts and ends relative to the screen.
-                float column_start = (screen.height_float - columnHeight) / 2f;
-                float column_end = (screen.height_float + columnHeight) / 2f;
+                float column_start = (screen.flt_h - columnHeight) / 2f;
+                float column_end = (screen.flt_h + columnHeight) / 2f;
 
                 // Wall rendering bounds on the screen...
                 int draw_column_start = screen.Height - (int)(screen.Height - column_start);    // Inclusive
@@ -53,7 +53,7 @@ namespace GLTech2
 
                 // Draws the background before the wall.
                 // Critical performance impact.
-                if (scene->background.buffer.Uint0 != null)
+                if (scene->background.buffer.UintBuffer != null)
                     for (int line = 0; line < draw_column_start; line++)
                         drawBackground(line);
 
@@ -62,13 +62,13 @@ namespace GLTech2
                 for (int line = draw_column_start; line < draw_column_end; line++)
                 {
                     float vratio = (line - column_start) / columnHeight;
-                    Color color = nearest->texture.MapPixel(nearest_ratio, vratio);
+                    Pixel color = nearest->texture.MapPixel(nearest_ratio, vratio);
                     screen[screen_column, line] = color;
                 }
 
                 // Draw the other side of the background
                 // Critical performance impact.
-                if (scene->background.buffer.Uint0 != null)
+                if (scene->background.buffer.UintBuffer != null)
                     for (int line = draw_column_end; line < screen.Height; line++)
                         drawBackground(line);
                 #endregion
@@ -78,7 +78,7 @@ namespace GLTech2
                 void drawBackground(int line)
                 {
                     float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
-                    float screenVratio = line / screen.height_float;
+                    float screenVratio = line / screen.flt_h;
                     float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
                     uint color = background.MapPixel(background_hratio, background_vratio);
                     screen[screen_column, line] = color;
@@ -87,10 +87,10 @@ namespace GLTech2
         }
 
         // This method is not used anymore.
-        private unsafe static void DrawPlanesLegacy(PixelBuffer target, SScene* scene)        // Must be changed
+        private unsafe static void DrawPlanesLegacy(ImageData target, SScene* scene)        // Must be changed
         {
             // Caching frequently used values.
-            uint* buffer = target.Uint0;
+            uint* buffer = target.UintBuffer;
             int width = target.Width;
             int height = target.Height;
             Texture background = scene->background;

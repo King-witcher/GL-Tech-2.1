@@ -13,9 +13,9 @@ namespace Test
 {
     partial class Program
     {
-        static PixelBuffer Resize(PixelBuffer pb, int scale)
+        static ImageData Resize(ImageData pb, int scale)
         {
-            PixelBuffer resized = new PixelBuffer(pb.Width * scale, pb.Height * scale);
+            ImageData resized = new ImageData(pb.Width * scale, pb.Height * scale);
 
             Parallel.For(0, resized.Height, line =>
             {
@@ -31,10 +31,10 @@ namespace Test
                     int matchcol = (int)float_match_col;
                     float rest_col = float_match_col - matchcol;
 
-                    Color top = pb[matchcol, matchline].Mix(pb[matchcol + 1, matchline], rest_col);
-                    Color bot = pb[matchcol, matchline + 1].Mix(pb[matchcol + 1, matchline + 1], rest_col);
+                    Pixel top = pb[matchcol, matchline].Mix(pb[matchcol + 1, matchline], rest_col);
+                    Pixel bot = pb[matchcol, matchline + 1].Mix(pb[matchcol + 1, matchline + 1], rest_col);
 
-                    Color center = top.Mix(bot, rest_line);
+                    Pixel center = top.Mix(bot, rest_line);
                     resized[column, line] = center;
                 }
             });
@@ -64,20 +64,20 @@ namespace Test
         static void E1M1()
         {
             // Buffers used
-            using PixelBuffer textures = new PixelBuffer(WE1M1.WolfTextures);
+            using ImageData textures = new ImageData(WE1M1.WolfTextures);
             //using PixelBuffer textures_ = Resize(textures_, 20);
-            using PixelBuffer background_buffer = new PixelBuffer(WE1M1.Background);
-            using PixelBuffer lula_buffer = new PixelBuffer(WE1M1.lula);
-            using PixelBuffer pt_buffer = new PixelBuffer(WE1M1.pt);
-            using PixelBuffer bolsonaro_buffer = new PixelBuffer(WE1M1.bolsonaro);
-            using PixelBuffer dolar_buffer = new PixelBuffer(WE1M1._1dolar);
+            using ImageData background_buffer = new ImageData(WE1M1.Background);
+            using ImageData lula_buffer = new ImageData(WE1M1.lula);
+            using ImageData pt_buffer = new ImageData(WE1M1.pt);
+            using ImageData bolsonaro_buffer = new ImageData(WE1M1.bolsonaro);
+            using ImageData dolar_buffer = new ImageData(WE1M1._1dolar);
 
             Texture background = new Texture(background_buffer);
             using Scene scene = new Scene(background);
 
             // BlockMap
             {
-                using PixelBuffer grid = new PixelBuffer(WE1M1.MapGrid);
+                using ImageData grid = new ImageData(WE1M1.MapGrid);
                 BlockMap.TextureMapper binds = new BlockMap.TextureMapper();
                 {
                     Texture blueStone1 = new Texture(

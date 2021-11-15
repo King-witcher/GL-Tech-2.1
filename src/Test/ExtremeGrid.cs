@@ -13,9 +13,9 @@ namespace Test
         // Esse é um mapa com uma quantidade extrema de planos para testes de gargalo.
         static void ExtremeGrid()
         {
-            using PixelBuffer BlockMapbuf = new PixelBuffer(DemoTextures.Plant);
-            using PixelBuffer texturebuf = new PixelBuffer(DemoTextures.GrayHexagons);
-            using PixelBuffer backgroundbuf = new PixelBuffer(DemoTextures.HellSky);
+            using ImageData BlockMapbuf = new ImageData(DemoTextures.Plant);
+            using ImageData texturebuf = new ImageData(DemoTextures.GrayHexagons);
+            using ImageData backgroundbuf = new ImageData(DemoTextures.HellSky);
 
             Texture background = new Texture(backgroundbuf);
             Scene scene = new Scene(background);

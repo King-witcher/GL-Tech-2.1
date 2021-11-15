@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using GLTech2.Imaging;
 using GLTech2.Entities;
 using GLTech2.Scripting;
@@ -16,7 +13,7 @@ namespace GLTech2
     public static partial class Engine
     {
         unsafe static RenderCache* cache;
-        static PixelBuffer frontBuffer;
+        static ImageData frontBuffer;
         static Scene activeScene = null;
 
         // public static bool NativeRendering { get; } = false;
@@ -69,8 +66,8 @@ namespace GLTech2
                 ChangeIfNotRunning("FullScreen", ref fullScreen, value);
                 if (fullScreen == true)
                 {
-                    CustomWidth = Screen.PrimaryScreen.Bounds.Width;
-                    customHeight = Screen.PrimaryScreen.Bounds.Height;
+                    CustomWidth = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
+                    customHeight = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
                 }
             }
         }
@@ -95,10 +92,10 @@ namespace GLTech2
 
         public static bool IsRunning { get; private set; } = false;
 
-        public static PixelBuffer GetScreenshot()
+        public static ImageData GetScreenshot()
         {
-            PixelBuffer screenshot = new PixelBuffer(CustomWidth, CustomHeight);
-            PixelBuffer.BufferCopy(frontBuffer, screenshot);
+            ImageData screenshot = new ImageData(CustomWidth, CustomHeight);
+            ImageData.BufferCopy(frontBuffer, screenshot);
             return screenshot;
         }
 
@@ -131,7 +128,7 @@ namespace GLTech2
             activeScene = scene;
 
             // Unmanaged buffer where the video will be put.
-            frontBuffer = new PixelBuffer(CustomWidth, customHeight);
+            frontBuffer = new ImageData(CustomWidth, customHeight);
 
             // A window that will continuously display the buffer
             MainWindow display = new MainWindow(frontBuffer) { FullScreen = FullScreen };
@@ -174,14 +171,14 @@ namespace GLTech2
             cache = RenderCache.Create(CustomWidth, CustomHeight, FieldOfView);
         }
 
-        private unsafe static void ControlTrhead(PixelBuffer frontBuffer, in bool cancellationRequest)
+        private unsafe static void ControlTrhead(ImageData frontBuffer, in bool cancellationRequest)
         {
             // Spaguetti
             ReloadCache();
 
             // Buffer where the image will be rendered
-            PixelBuffer backBuffer = DoubleBuffer ?
-                new PixelBuffer(frontBuffer.Width, frontBuffer.Height) :
+            ImageData backBuffer = DoubleBuffer ?
+                new ImageData(frontBuffer.Width, frontBuffer.Height) :
                 frontBuffer;
 
             #region Warnings
@@ -207,7 +204,7 @@ namespace GLTech2
                 PostProcess(backBuffer);
 
                 if (DoubleBuffer)
-                    PixelBuffer.BufferCopy(backBuffer, frontBuffer);
+                    ImageData.BufferCopy(backBuffer, frontBuffer);
                 Behaviour.Frame.EndRender();
 
                 while (controlStopwatch.ElapsedMilliseconds < minframetime)
@@ -227,7 +224,7 @@ namespace GLTech2
         }
 
         private static List<ImageProcessing> postProcessing = new List<ImageProcessing>();
-        private static void PostProcess(PixelBuffer target)
+        private static void PostProcess(ImageData target)
         {
             foreach (var effect in postProcessing)
                 effect.Process(target);

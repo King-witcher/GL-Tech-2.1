@@ -13,11 +13,11 @@ namespace Test
         static void AnimatedExample()
         {
             // Firstly, load buffers
-            using PixelBuffer background_buffer = (PixelBuffer)DemoTextures.HellSky;
-            using PixelBuffer carvedWall_buffer = (PixelBuffer)DemoTextures.CarvedWall;
-            using PixelBuffer bricks_buffer = (PixelBuffer)DemoTextures.Bricks;
-            using PixelBuffer wood_buffer = (PixelBuffer)DemoTextures.Wood;
-            using PixelBuffer grayHexagons_buffer = (PixelBuffer)DemoTextures.GrayHexagons;
+            using ImageData background_buffer = (ImageData)DemoTextures.HellSky;
+            using ImageData carvedWall_buffer = (ImageData)DemoTextures.CarvedWall;
+            using ImageData bricks_buffer = (ImageData)DemoTextures.Bricks;
+            using ImageData wood_buffer = (ImageData)DemoTextures.Wood;
+            using ImageData grayHexagons_buffer = (ImageData)DemoTextures.GrayHexagons;
 
             // Scene
             Texture background = new Texture(

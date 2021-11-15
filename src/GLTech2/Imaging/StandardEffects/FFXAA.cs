@@ -9,7 +9,7 @@ namespace GLTech2.Imaging.StandardEffects
 
         public FFXAA(int width, int height, int threshold = 128)
         {
-            tempbuffer = new PixelBuffer(width, height);
+            tempbuffer = new ImageData(width, height);
             if (threshold > 255)
                 this.sqrThreshold = 255 * 255 * 3;
             else if (threshold < 0)
@@ -18,17 +18,17 @@ namespace GLTech2.Imaging.StandardEffects
                 this.sqrThreshold = threshold * threshold * 3;
         }
 
-        private PixelBuffer tempbuffer;
+        private ImageData tempbuffer;
         private int sqrThreshold;
 
-        public override void Process(PixelBuffer target)
+        public override void Process(ImageData target)
         {
             if (target.Width != tempbuffer.Width || target.Height != tempbuffer.Height)
                 return;
 
             if (!ShowEdges)
             {
-                PixelBuffer.BufferCopy(target, tempbuffer);
+                ImageData.BufferCopy(target, tempbuffer);
                 Parallel.For(1, target.Height, i =>
                 {
                     for (int j = 1; j < target.Width; j++)
@@ -38,17 +38,17 @@ namespace GLTech2.Imaging.StandardEffects
                         int left = target.Width * i + j - 1;
 
                         int differenceV = dist(
-                            target.Uint0[cur],
-                            target.Uint0[up]);
+                            target.UintBuffer[cur],
+                            target.UintBuffer[up]);
 
                         int differenceH = dist(
-                            target.Uint0[cur],
-                            target.Uint0[left]);
+                            target.UintBuffer[cur],
+                            target.UintBuffer[left]);
 
                         if (differenceV >= sqrThreshold)
-                            tempbuffer.Uint0[target.Width * i + j] = avg(target.Uint0[up], target.Uint0[cur]);
+                            tempbuffer.UintBuffer[target.Width * i + j] = avg(target.UintBuffer[up], target.UintBuffer[cur]);
                         else if (differenceH >= sqrThreshold)
-                            tempbuffer.Uint0[target.Width * i + j] = avg(target.Uint0[left], target.Uint0[cur]);
+                            tempbuffer.UintBuffer[target.Width * i + j] = avg(target.UintBuffer[left], target.UintBuffer[cur]);
                     }
                 });
             }
@@ -63,24 +63,24 @@ namespace GLTech2.Imaging.StandardEffects
                         int left = target.Width * i + j - 1;
 
                         int differenceV = dist(
-                            target.Uint0[cur],
-                            target.Uint0[up]);
+                            target.UintBuffer[cur],
+                            target.UintBuffer[up]);
 
                         int differenceH = dist(
-                            target.Uint0[cur],
-                            target.Uint0[left]);
+                            target.UintBuffer[cur],
+                            target.UintBuffer[left]);
 
                         if (differenceV >= sqrThreshold)
-                            tempbuffer.Uint0[target.Width * i + j] = 0xff0000;
+                            tempbuffer.UintBuffer[target.Width * i + j] = 0xff0000;
                         else if (differenceH >= sqrThreshold)
-                            tempbuffer.Uint0[target.Width * i + j] = 0x0000ff;
+                            tempbuffer.UintBuffer[target.Width * i + j] = 0x0000ff;
                         else
-                            tempbuffer.Uint0[target.Width * i + j] = 0;
+                            tempbuffer.UintBuffer[target.Width * i + j] = 0;
                     }
                 });
             }
 
-            PixelBuffer.BufferCopy(tempbuffer, target);
+            ImageData.BufferCopy(tempbuffer, target);
             return;
 
 

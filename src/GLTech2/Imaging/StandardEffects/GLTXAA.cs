@@ -8,8 +8,8 @@ namespace GLTech2.Imaging.StandardEffects
     {
         public GLTXAA(int width, int height, int threshold = 70)
         {
-            previousFrame = new PixelBuffer(width, height);
-            temporaryBuffer = new PixelBuffer(width, height);
+            previousFrame = new ImageData(width, height);
+            temporaryBuffer = new ImageData(width, height);
             if (threshold > 255)
                 this.sqrThreshold = 255 * 255 * 3;
             else if (threshold < 0)
@@ -18,18 +18,18 @@ namespace GLTech2.Imaging.StandardEffects
                 this.sqrThreshold = threshold * threshold * 3;
         }
 
-        private PixelBuffer previousFrame;
-        private PixelBuffer temporaryBuffer;
+        private ImageData previousFrame;
+        private ImageData temporaryBuffer;
         private int sqrThreshold;
 
         public bool EdgeDettection { get; set; } = false;
 
-        public override void Process(PixelBuffer target)
+        public override void Process(ImageData target)
         {
             if (target.Width != previousFrame.Width || target.Height != previousFrame.Height)
                 return;
 
-            PixelBuffer.BufferCopy(temporaryBuffer, target);
+            ImageData.BufferCopy(temporaryBuffer, target);
 
             if (!EdgeDettection)
             {
@@ -44,27 +44,27 @@ namespace GLTech2.Imaging.StandardEffects
                         int right = target.Width * y + x + 1;
 
                         float differenceV = dist(
-                            target.Uint0[up],
-                            target.Uint0[down]);
+                            target.UintBuffer[up],
+                            target.UintBuffer[down]);
 
                         float differenceH = dist(
-                            target.Uint0[right],
-                            target.Uint0[left]);
+                            target.UintBuffer[right],
+                            target.UintBuffer[left]);
 
                         float factor = differenceH > differenceV ? differenceH : differenceV;
                         factor = 0.95f * adjust(factor);
 
-                        temporaryBuffer.Uint0[cur] = avg(
-                            previousFrame.Uint0[cur],
-                            target.Uint0[cur],
+                        temporaryBuffer.UintBuffer[cur] = avg(
+                            previousFrame.UintBuffer[cur],
+                            target.UintBuffer[cur],
                             factor / 2);
 
                         //copy.buffer[cur] = (uint)(factor * 255) * 0x00010101 + 0xff000000;
                     }
                 });
 
-                PixelBuffer.BufferCopy(temporaryBuffer, target);
-                PixelBuffer.BufferCopy(target, previousFrame);
+                ImageData.BufferCopy(temporaryBuffer, target);
+                ImageData.BufferCopy(target, previousFrame);
             }
             else
             {
@@ -79,25 +79,25 @@ namespace GLTech2.Imaging.StandardEffects
                         int right = target.Width * y + x + 1;
 
                         float differenceV = dist(
-                            target.Uint0[up],
-                            target.Uint0[down]);
+                            target.UintBuffer[up],
+                            target.UintBuffer[down]);
 
                         float differenceH = dist(
-                            target.Uint0[right],
-                            target.Uint0[left]);
+                            target.UintBuffer[right],
+                            target.UintBuffer[left]);
 
                         float factor = differenceH > differenceV ? differenceH : differenceV;
                         factor = 0.95f * adjust(factor);
 
-                        temporaryBuffer.Uint0[cur] = (uint)(factor * 255) * 0x10101u;
+                        temporaryBuffer.UintBuffer[cur] = (uint)(factor * 255) * 0x10101u;
                     }
                 });
-                PixelBuffer.BufferCopy(target, previousFrame);
-                PixelBuffer.BufferCopy(temporaryBuffer, target);
+                ImageData.BufferCopy(target, previousFrame);
+                ImageData.BufferCopy(temporaryBuffer, target);
             }
 
-            PixelBuffer.BufferCopy(temporaryBuffer, target);
-            PixelBuffer.BufferCopy(target, previousFrame);
+            ImageData.BufferCopy(temporaryBuffer, target);
+            ImageData.BufferCopy(target, previousFrame);
             return;
 
             float adjust(float x) => -x * x + 2 * x;

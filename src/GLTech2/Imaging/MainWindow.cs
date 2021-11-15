@@ -30,13 +30,13 @@ namespace GLTech2
             set => form.Dimensions = value;
         }
 
-        public unsafe MainWindow(PixelBuffer output)
+        public unsafe MainWindow(ImageData output)
         {
             // Setup a bitmap instance that points to the given output buffer
             bitmap = new Bitmap(
                 output.Width, output.Height,
                 output.Width * sizeof(uint), PixelFormat.Format32bppRgb,
-                (IntPtr)output.Uint0);
+                (IntPtr)output.UintBuffer);
 
             form = new GLTechWindowForm(bitmap);
 

@@ -22,7 +22,7 @@ namespace GLTech2.Imaging.StandardEffects
             this.gamma = factor;
         }
 
-        public override void Process(PixelBuffer target)
+        public override void Process(ImageData target)
         {
             Parallel.For(0, target.Width, x =>
             {
@@ -30,8 +30,8 @@ namespace GLTech2.Imaging.StandardEffects
                 {
                     int cur = target.Width * y + x;
 
-                    Color color = target.Uint0[cur];
-                    target.RGB0[cur] = (
+                    Pixel color = target.UintBuffer[cur];
+                    target.PixelBuffer[cur] = (
                         (byte)(255f * Math.Pow(color.R / 255f, gamma)),
                         (byte)(255f * Math.Pow(color.G / 255f, gamma)),
                         (byte)(255f * Math.Pow(color.B / 255f, gamma)));

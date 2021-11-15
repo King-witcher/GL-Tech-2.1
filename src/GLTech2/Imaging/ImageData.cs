@@ -124,7 +124,10 @@ namespace GLTech2.Imaging
 
         public static explicit operator ImageData(Bitmap bitmap)
         {
-            return new ImageData(bitmap);
+            var lockdata = bitmap.LockBits();
+            ImageData result = new(bitmap.Width, bitmap.Height, lockdata.Scan0);
+            bitmap.UnlockBits(lockdata);
+            return result;
         }
 
         public static explicit operator Bitmap(ImageData data)

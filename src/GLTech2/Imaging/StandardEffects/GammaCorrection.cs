@@ -30,7 +30,7 @@ namespace GLTech2.Imaging.StandardEffects
                 {
                     int cur = target.Width * y + x;
 
-                    Color color = target.uint0[cur];
+                    Color color = target.Uint0[cur];
                     target.RGB0[cur] = (
                         (byte)(255f * Math.Pow(color.R / 255f, gamma)),
                         (byte)(255f * Math.Pow(color.G / 255f, gamma)),

@@ -38,17 +38,17 @@ namespace GLTech2.Imaging.StandardEffects
                         int left = target.Width * i + j - 1;
 
                         int differenceV = dist(
-                            target.uint0[cur],
-                            target.uint0[up]);
+                            target.Uint0[cur],
+                            target.Uint0[up]);
 
                         int differenceH = dist(
-                            target.uint0[cur],
-                            target.uint0[left]);
+                            target.Uint0[cur],
+                            target.Uint0[left]);
 
                         if (differenceV >= sqrThreshold)
-                            tempbuffer.uint0[target.Width * i + j] = avg(target.uint0[up], target.uint0[cur]);
+                            tempbuffer.Uint0[target.Width * i + j] = avg(target.Uint0[up], target.Uint0[cur]);
                         else if (differenceH >= sqrThreshold)
-                            tempbuffer.uint0[target.Width * i + j] = avg(target.uint0[left], target.uint0[cur]);
+                            tempbuffer.Uint0[target.Width * i + j] = avg(target.Uint0[left], target.Uint0[cur]);
                     }
                 });
             }
@@ -63,19 +63,19 @@ namespace GLTech2.Imaging.StandardEffects
                         int left = target.Width * i + j - 1;
 
                         int differenceV = dist(
-                            target.uint0[cur],
-                            target.uint0[up]);
+                            target.Uint0[cur],
+                            target.Uint0[up]);
 
                         int differenceH = dist(
-                            target.uint0[cur],
-                            target.uint0[left]);
+                            target.Uint0[cur],
+                            target.Uint0[left]);
 
                         if (differenceV >= sqrThreshold)
-                            tempbuffer.uint0[target.Width * i + j] = 0xff0000;
+                            tempbuffer.Uint0[target.Width * i + j] = 0xff0000;
                         else if (differenceH >= sqrThreshold)
-                            tempbuffer.uint0[target.Width * i + j] = 0x0000ff;
+                            tempbuffer.Uint0[target.Width * i + j] = 0x0000ff;
                         else
-                            tempbuffer.uint0[target.Width * i + j] = 0;
+                            tempbuffer.Uint0[target.Width * i + j] = 0;
                     }
                 });
             }

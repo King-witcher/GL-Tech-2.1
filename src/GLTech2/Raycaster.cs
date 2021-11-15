@@ -53,7 +53,7 @@ namespace GLTech2
 
                 // Draws the background before the wall.
                 // Critical performance impact.
-                if (scene->background.buffer.uint0 != null)
+                if (scene->background.buffer.Uint0 != null)
                     for (int line = 0; line < draw_column_start; line++)
                         drawBackground(line);
 
@@ -68,7 +68,7 @@ namespace GLTech2
 
                 // Draw the other side of the background
                 // Critical performance impact.
-                if (scene->background.buffer.uint0 != null)
+                if (scene->background.buffer.Uint0 != null)
                     for (int line = draw_column_end; line < screen.Height; line++)
                         drawBackground(line);
                 #endregion
@@ -90,7 +90,7 @@ namespace GLTech2
         private unsafe static void DrawPlanesLegacy(PixelBuffer target, SScene* scene)        // Must be changed
         {
             // Caching frequently used values.
-            uint* buffer = target.uint0;
+            uint* buffer = target.Uint0;
             int width = target.Width;
             int height = target.Height;
             Texture background = scene->background;

@@ -44,19 +44,19 @@ namespace GLTech2.Imaging.StandardEffects
                         int right = target.Width * y + x + 1;
 
                         float differenceV = dist(
-                            target.uint0[up],
-                            target.uint0[down]);
+                            target.Uint0[up],
+                            target.Uint0[down]);
 
                         float differenceH = dist(
-                            target.uint0[right],
-                            target.uint0[left]);
+                            target.Uint0[right],
+                            target.Uint0[left]);
 
                         float factor = differenceH > differenceV ? differenceH : differenceV;
                         factor = 0.95f * adjust(factor);
 
-                        temporaryBuffer.uint0[cur] = avg(
-                            previousFrame.uint0[cur],
-                            target.uint0[cur],
+                        temporaryBuffer.Uint0[cur] = avg(
+                            previousFrame.Uint0[cur],
+                            target.Uint0[cur],
                             factor / 2);
 
                         //copy.buffer[cur] = (uint)(factor * 255) * 0x00010101 + 0xff000000;
@@ -79,17 +79,17 @@ namespace GLTech2.Imaging.StandardEffects
                         int right = target.Width * y + x + 1;
 
                         float differenceV = dist(
-                            target.uint0[up],
-                            target.uint0[down]);
+                            target.Uint0[up],
+                            target.Uint0[down]);
 
                         float differenceH = dist(
-                            target.uint0[right],
-                            target.uint0[left]);
+                            target.Uint0[right],
+                            target.Uint0[left]);
 
                         float factor = differenceH > differenceV ? differenceH : differenceV;
                         factor = 0.95f * adjust(factor);
 
-                        temporaryBuffer.uint0[cur] = (uint)(factor * 255) * 0x10101u;
+                        temporaryBuffer.Uint0[cur] = (uint)(factor * 255) * 0x10101u;
                     }
                 });
                 PixelBuffer.BufferCopy(target, previousFrame);

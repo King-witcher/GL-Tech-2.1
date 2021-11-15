@@ -14,15 +14,15 @@ namespace GLTech2.Imaging
         [FieldOffset(4)] int height;
         [FieldOffset(8)] internal float width_float;
         [FieldOffset(12)] internal float height_float;
-        [FieldOffset(16)] internal uint* uint0;
-        [FieldOffset(16)] internal Color* rgb0;  // Union
+        [FieldOffset(16)] uint* uint0;
+        [FieldOffset(16)] Color* rgb0;  // Union
 
         public Color this[int column, int line]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => rgb0[column + Width * line];
+            get => RGB0[column + Width * line];
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => rgb0[column + Width * line] = value;
+            set => RGB0[column + Width * line] = value;
         }
 
         public const int BYTES_PER_PIXEL = 4;
@@ -76,7 +76,7 @@ namespace GLTech2.Imaging
             if (source.Width * source.Height > destination.Width * destination.Height)
                 throw new ArgumentOutOfRangeException("source");
 
-            Buffer.MemoryCopy(source.uint0, destination.uint0, BYTES_PER_PIXEL * destination.Height * destination.Width, BYTES_PER_PIXEL * source.Height * source.Width);
+            Buffer.MemoryCopy(source.Uint0, destination.Uint0, BYTES_PER_PIXEL * destination.Height * destination.Width, BYTES_PER_PIXEL * source.Height * source.Width);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -84,7 +84,7 @@ namespace GLTech2.Imaging
         {
             int height = this.Height;
             int width = this.Width;
-            uint* buffer = this.uint0;
+            uint* buffer = this.Uint0;
 
             Parallel.For(0, width, x =>
             {

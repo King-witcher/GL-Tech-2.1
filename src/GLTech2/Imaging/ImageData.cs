@@ -34,7 +34,6 @@ namespace GLTech2.Imaging
         public uint* UintBuffer => uint_buffer;
         public long Size => DEFAULT_BPP * width * height;
 
-        [Obsolete]
         public ImageData(Bitmap source)
         {
             this = Clone(source);
@@ -51,6 +50,16 @@ namespace GLTech2.Imaging
             this.flt_height = height;
             this.pixel_buffer = null; // Assigned by union
             this.uint_buffer = (uint*)Marshal.AllocHGlobal(width * height * DEFAULT_BPP);
+        }
+
+        private ImageData(int width, int height, IntPtr buffer)
+        {
+            this.width = width;
+            this.height = height;
+            this.flt_width = width;
+            this.flt_height = height;
+            this.pixel_buffer = default;
+            this.uint_buffer = (uint*)buffer;
         }
 
         // Em fase de testes

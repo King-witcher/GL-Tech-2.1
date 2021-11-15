@@ -52,6 +52,21 @@ namespace GLTech2.Imaging
             this.uint_buffer = (uint*)Marshal.AllocHGlobal(width * height * DEFAULT_BPP);
         }
 
+        public ImageData(int width, int height, Pixel color)
+        {
+            if (width <= 0 || height <= 0)
+                throw new ArgumentOutOfRangeException();
+
+            this.width = width;
+            this.height = height;
+            this.flt_width = width;
+            this.flt_height = height;
+            this.pixel_buffer = null; // Assigned by union
+            this.uint_buffer = (uint*)Marshal.AllocHGlobal(width * height * DEFAULT_BPP);
+
+            FillWith(color);
+        }
+
         private ImageData(int width, int height, IntPtr buffer)
         {
             this.width = width;
@@ -62,7 +77,6 @@ namespace GLTech2.Imaging
             this.uint_buffer = (uint*)buffer;
         }
 
-        // Em fase de testes
         public static ImageData Clone(Bitmap source)
         {
             // Allocates the clone
@@ -95,9 +109,9 @@ namespace GLTech2.Imaging
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Foreach(Func<Pixel, Pixel> transformation)
         {
-            int height = this.Height;
-            int width = this.Width;
-            uint* buffer = this.UintBuffer;
+            int height = Height;
+            int width = Width;
+            uint* buffer = UintBuffer;
 
             Parallel.For(0, width, x =>
             {
@@ -105,6 +119,22 @@ namespace GLTech2.Imaging
                 {
                     int cur = width * y + x;
                     buffer[cur] = transformation(buffer[cur]);
+                }
+            });
+        }
+
+        public void FillWith(Pixel color)
+        {
+            int height = Height;
+            int width = Width;
+            uint* buffer = UintBuffer;
+
+            Parallel.For(0, width, x =>
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    int cur = width * y + x;
+                    buffer[cur] = color;
                 }
             });
         }
@@ -122,6 +152,7 @@ namespace GLTech2.Imaging
             Marshal.FreeHGlobal(Buffer);
         }
 
+        // Perigoso
         public static explicit operator ImageData(Bitmap bitmap)
         {
             var lockdata = bitmap.LockBits();

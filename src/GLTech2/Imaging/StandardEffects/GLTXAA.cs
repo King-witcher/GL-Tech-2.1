@@ -26,22 +26,22 @@ namespace GLTech2.Imaging.StandardEffects
 
         public override void Process(PixelBuffer target)
         {
-            if (target.width != previousFrame.width || target.height != previousFrame.height)
+            if (target.Width != previousFrame.Width || target.Height != previousFrame.Height)
                 return;
 
             PixelBuffer.BufferCopy(temporaryBuffer, target);
 
             if (!EdgeDettection)
             {
-                Parallel.For(1, target.height - 1, y =>
+                Parallel.For(1, target.Height - 1, y =>
                 {
-                    for (int x = 1; x < target.width - 1; x++)
+                    for (int x = 1; x < target.Width - 1; x++)
                     {
-                        int cur = target.width * y + x;
-                        int up = target.width * (y - 1) + x;
-                        int left = target.width * y + x - 1;
-                        int down = target.width * (y + 1) + x;
-                        int right = target.width * y + x + 1;
+                        int cur = target.Width * y + x;
+                        int up = target.Width * (y - 1) + x;
+                        int left = target.Width * y + x - 1;
+                        int down = target.Width * (y + 1) + x;
+                        int right = target.Width * y + x + 1;
 
                         float differenceV = dist(
                             target.uint0[up],
@@ -68,15 +68,15 @@ namespace GLTech2.Imaging.StandardEffects
             }
             else
             {
-                Parallel.For(1, target.height - 1, y =>
+                Parallel.For(1, target.Height - 1, y =>
                 {
-                    for (int x = 1; x < target.width - 1; x++)
+                    for (int x = 1; x < target.Width - 1; x++)
                     {
-                        int cur = target.width * y + x;
-                        int up = target.width * (y - 1) + x;
-                        int left = target.width * y + x - 1;
-                        int down = target.width * (y + 1) + x;
-                        int right = target.width * y + x + 1;
+                        int cur = target.Width * y + x;
+                        int up = target.Width * (y - 1) + x;
+                        int left = target.Width * y + x - 1;
+                        int down = target.Width * (y + 1) + x;
+                        int right = target.Width * y + x + 1;
 
                         float differenceV = dist(
                             target.uint0[up],

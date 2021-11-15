@@ -34,8 +34,8 @@ namespace GLTech2
         {
             // Setup a bitmap instance that points to the given output buffer
             bitmap = new Bitmap(
-                output.width, output.height,
-                output.width * sizeof(uint), PixelFormat.Format32bppRgb,
+                output.Width, output.Height,
+                output.Width * sizeof(uint), PixelFormat.Format32bppRgb,
                 (IntPtr)output.Uint0);
 
             form = new GLTechWindowForm(bitmap);

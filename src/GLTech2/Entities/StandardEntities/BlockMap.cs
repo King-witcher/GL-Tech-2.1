@@ -67,7 +67,7 @@ namespace GLTech2.Entities.StandardEntites
             // Esse método foi otimizado considerando-se que, se duas paredes forem desenhadas sobre o mesmo lugar, isso significa que não existe superfície visível por ali e, portanto, nenhuma das duas deverá ser realmente renderizada.
             bool blockFree(int column, int line)
             {
-                if (column < 0 || column >= map.height || line < 0 || line >= map.width)
+                if (column < 0 || column >= map.Height || line < 0 || line >= map.Width)
                     return true;
                 if (textureBindings.GetTexture(map[column, line], out _))
                     return false;

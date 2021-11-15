@@ -10,8 +10,8 @@ namespace GLTech2.Imaging
     [StructLayout(LayoutKind.Explicit)]
     public unsafe struct PixelBuffer : IDisposable
     {
-        [FieldOffset(0)] internal int width;
-        [FieldOffset(4)] internal int height;
+        [FieldOffset(0)] int width;
+        [FieldOffset(4)] int height;
         [FieldOffset(8)] internal float width_float;
         [FieldOffset(12)] internal float height_float;
         [FieldOffset(16)] internal uint* uint0;
@@ -20,9 +20,9 @@ namespace GLTech2.Imaging
         public Color this[int column, int line]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => rgb0[column + width * line];
+            get => rgb0[column + Width * line];
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => rgb0[column + width * line] = value;
+            set => rgb0[column + Width * line] = value;
         }
 
         public const int BYTES_PER_PIXEL = 4;
@@ -73,17 +73,17 @@ namespace GLTech2.Imaging
 
         public static void BufferCopy(PixelBuffer source, PixelBuffer destination)
         {
-            if (source.width * source.height > destination.width * destination.height)
+            if (source.Width * source.Height > destination.Width * destination.Height)
                 throw new ArgumentOutOfRangeException("source");
 
-            Buffer.MemoryCopy(source.uint0, destination.uint0, BYTES_PER_PIXEL * destination.height * destination.width, BYTES_PER_PIXEL * source.height * source.width);
+            Buffer.MemoryCopy(source.uint0, destination.uint0, BYTES_PER_PIXEL * destination.Height * destination.Width, BYTES_PER_PIXEL * source.Height * source.Width);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Foreach(Func<Color, Color> transformation)
         {
-            int height = this.height;
-            int width = this.width;
+            int height = this.Height;
+            int width = this.Width;
             uint* buffer = this.uint0;
 
             Parallel.For(0, width, x =>
@@ -108,7 +108,7 @@ namespace GLTech2.Imaging
 
         public static explicit operator Bitmap(PixelBuffer texture)
         {
-            return new Bitmap(texture.Width, texture.Height, BYTES_PER_PIXEL * texture.Width, texture.PixelFormat, texture.Scan0);
+            return new Bitmap(texture.width, texture.height, BYTES_PER_PIXEL * texture.width, texture.PixelFormat, texture.Scan0);
         }
     }
 }

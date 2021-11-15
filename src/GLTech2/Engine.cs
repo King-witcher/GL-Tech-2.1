@@ -181,7 +181,7 @@ namespace GLTech2
 
             // Buffer where the image will be rendered
             PixelBuffer backBuffer = DoubleBuffer ?
-                new PixelBuffer(frontBuffer.width, frontBuffer.height) :
+                new PixelBuffer(frontBuffer.Width, frontBuffer.Height) :
                 frontBuffer;
 
             #region Warnings

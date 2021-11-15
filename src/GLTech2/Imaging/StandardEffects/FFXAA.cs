@@ -23,19 +23,19 @@ namespace GLTech2.Imaging.StandardEffects
 
         public override void Process(PixelBuffer target)
         {
-            if (target.width != tempbuffer.width || target.height != tempbuffer.height)
+            if (target.Width != tempbuffer.Width || target.Height != tempbuffer.Height)
                 return;
 
             if (!ShowEdges)
             {
                 PixelBuffer.BufferCopy(target, tempbuffer);
-                Parallel.For(1, target.height, i =>
+                Parallel.For(1, target.Height, i =>
                 {
-                    for (int j = 1; j < target.width; j++)
+                    for (int j = 1; j < target.Width; j++)
                     {
-                        int cur = target.width * i + j;
-                        int up = target.width * (i - 1) + j;
-                        int left = target.width * i + j - 1;
+                        int cur = target.Width * i + j;
+                        int up = target.Width * (i - 1) + j;
+                        int left = target.Width * i + j - 1;
 
                         int differenceV = dist(
                             target.uint0[cur],
@@ -46,21 +46,21 @@ namespace GLTech2.Imaging.StandardEffects
                             target.uint0[left]);
 
                         if (differenceV >= sqrThreshold)
-                            tempbuffer.uint0[target.width * i + j] = avg(target.uint0[up], target.uint0[cur]);
+                            tempbuffer.uint0[target.Width * i + j] = avg(target.uint0[up], target.uint0[cur]);
                         else if (differenceH >= sqrThreshold)
-                            tempbuffer.uint0[target.width * i + j] = avg(target.uint0[left], target.uint0[cur]);
+                            tempbuffer.uint0[target.Width * i + j] = avg(target.uint0[left], target.uint0[cur]);
                     }
                 });
             }
             else
             {
-                Parallel.For(1, target.height, i =>
+                Parallel.For(1, target.Height, i =>
                 {
-                    for (int j = 1; j < target.width; j++)
+                    for (int j = 1; j < target.Width; j++)
                     {
-                        int cur = target.width * i + j;
-                        int up = target.width * (i - 1) + j;
-                        int left = target.width * i + j - 1;
+                        int cur = target.Width * i + j;
+                        int up = target.Width * (i - 1) + j;
+                        int left = target.Width * i + j - 1;
 
                         int differenceV = dist(
                             target.uint0[cur],
@@ -71,11 +71,11 @@ namespace GLTech2.Imaging.StandardEffects
                             target.uint0[left]);
 
                         if (differenceV >= sqrThreshold)
-                            tempbuffer.uint0[target.width * i + j] = 0xff0000;
+                            tempbuffer.uint0[target.Width * i + j] = 0xff0000;
                         else if (differenceH >= sqrThreshold)
-                            tempbuffer.uint0[target.width * i + j] = 0x0000ff;
+                            tempbuffer.uint0[target.Width * i + j] = 0x0000ff;
                         else
-                            tempbuffer.uint0[target.width * i + j] = 0;
+                            tempbuffer.uint0[target.Width * i + j] = 0;
                     }
                 });
             }

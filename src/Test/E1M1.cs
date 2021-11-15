@@ -15,16 +15,16 @@ namespace Test
     {
         static PixelBuffer Resize(PixelBuffer pb, int scale)
         {
-            PixelBuffer resized = new PixelBuffer(pb.width * scale, pb.height * scale);
+            PixelBuffer resized = new PixelBuffer(pb.Width * scale, pb.Height * scale);
 
-            Parallel.For(0, resized.height, line =>
+            Parallel.For(0, resized.Height, line =>
             {
                 float float_match_line = (float)line / scale;
 
                 int matchline = (int)float_match_line;
                 float rest_line = float_match_line - matchline;
 
-                for (int column = 0; column < resized.width ; column++)
+                for (int column = 0; column < resized.Width ; column++)
                 {
                     float float_match_col = (float)column / scale;
 

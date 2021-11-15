@@ -24,11 +24,11 @@ namespace GLTech2.Imaging.StandardEffects
 
         public override void Process(PixelBuffer target)
         {
-            Parallel.For(0, target.width, x =>
+            Parallel.For(0, target.Width, x =>
             {
-                for (int y = 0; y < target.height; y++)
+                for (int y = 0; y < target.Height; y++)
                 {
-                    int cur = target.width * y + x;
+                    int cur = target.Width * y + x;
 
                     Color color = target.uint0[cur];
                     target.RGB0[cur] = (

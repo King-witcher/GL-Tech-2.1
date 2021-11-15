@@ -13,9 +13,9 @@ namespace GLTech2
         {
             // Checks if the code should be run in all cores or just one.
             if (ParallelRendering)
-                Parallel.For(fromInclusive: 0, toExclusive: screen.width, body: DrawColumn);
+                Parallel.For(fromInclusive: 0, toExclusive: screen.Width, body: DrawColumn);
             else
-                for (int i = 0; i < screen.width; i++)
+                for (int i = 0; i < screen.Width; i++)
                     DrawColumn(i);
 
             // Render a vertical column of the screen.
@@ -42,14 +42,14 @@ namespace GLTech2
                 float column_end = (screen.height_float + columnHeight) / 2f;
 
                 // Wall rendering bounds on the screen...
-                int draw_column_start = screen.height - (int)(screen.height - column_start);    // Inclusive
-                int draw_column_end = screen.height - (int)(screen.height - column_end);        // Exclusive
+                int draw_column_start = screen.Height - (int)(screen.Height - column_start);    // Inclusive
+                int draw_column_end = screen.Height - (int)(screen.Height - column_end);        // Exclusive
 
                 // Which cannot exceed the full screen bounds.
                 if (draw_column_start < 0)
                     draw_column_start = 0;
-                if (draw_column_end > screen.height)
-                    draw_column_end = screen.height;
+                if (draw_column_end > screen.Height)
+                    draw_column_end = screen.Height;
 
                 // Draws the background before the wall.
                 // Critical performance impact.
@@ -69,7 +69,7 @@ namespace GLTech2
                 // Draw the other side of the background
                 // Critical performance impact.
                 if (scene->background.buffer.uint0 != null)
-                    for (int line = draw_column_end; line < screen.height; line++)
+                    for (int line = draw_column_end; line < screen.Height; line++)
                         drawBackground(line);
                 #endregion
 
@@ -91,8 +91,8 @@ namespace GLTech2
         {
             // Caching frequently used values.
             uint* buffer = target.uint0;
-            int width = target.width;
-            int height = target.height;
+            int width = target.Width;
+            int height = target.Height;
             Texture background = scene->background;
 
             // 

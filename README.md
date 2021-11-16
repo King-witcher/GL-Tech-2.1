@@ -1,6 +1,6 @@
 # GL Tech 2.1
 
-A GL Tech 2.1 é um motor gráfico 3D (ou 2.5D) baseado em ray-casting criado em Agosto de 2020, mas cujo projeto ainda se encontra sendo lentamente desenvolvido. Projetada para a estrutura do .NET 5 e escrita integralmente em C#, a biblioteca funciona exclusivamente sobre poder de processamento de CPU e sem emprego de implementações gráficas preexistentes tais como OpenGL.
+A GL Tech 2.1 é um motor gráfico 3D (ou 2.5D) baseado em ray-casting criado em Agosto de 2020, mas cujo projeto ainda se encontra sendo lentamente desenvolvido. Projetada para a estrutura do .NET 6 e escrita integralmente em C#, a biblioteca funciona exclusivamente sobre poder de processamento de CPU e sem emprego de implementações gráficas preexistentes tais como OpenGL.
 
 Atualmente, pode ser separada em módulos responsáveis por:
 

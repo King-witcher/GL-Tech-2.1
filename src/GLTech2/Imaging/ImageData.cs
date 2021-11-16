@@ -142,6 +142,11 @@ namespace GLTech2.Imaging
             set => PixelBuffer[column + Width * line] = value;
         }
 
+        public override string ToString()
+        {
+            return $"{width}x{height} {this.GetType().Name} -> {Buffer}";
+        }
+
         public void Dispose()
         {
             Marshal.FreeHGlobal(Buffer);

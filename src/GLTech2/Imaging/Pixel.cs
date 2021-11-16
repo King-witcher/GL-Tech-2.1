@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace GLTech2.Imaging
 {
     [StructLayout(LayoutKind.Explicit)]
-    public struct Pixel
+    public struct Pixel : IEquatable<Pixel>
     {
         // Union
         [FieldOffset(0)] uint uint_value;
@@ -22,16 +23,11 @@ namespace GLTech2.Imaging
         public Pixel(byte red, byte green, byte blue)
         {
             uint_value = default;
-            a = 0xff;
-            r = red;
-            g = green;
-            b = blue;
+            a = 0xff; r = red; g = green; b = blue;
         }
 
         public float Luma => (0.2126f * R * R + 0.7152f * G * G + 0.0722f * B * B) / (255f * 255f);
-
         public float FastLuma => (0.2126f * R + 0.7152f * G + 0.0722f * B) / (255f);
-
         public byte Brightness => (byte)((R + G + B) / 3);
 
         [Obsolete]
@@ -86,7 +82,42 @@ namespace GLTech2.Imaging
 
         public override string ToString()
         {
-            return $"RGB<{r}, {g}, {b}>";
+            return $"{GetType().Name}<{r}, {g}, {b}>";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Pixel pixel)
+                return this == pixel;
+            return false;
+        }
+
+        public bool Equals(Pixel other)
+        {
+            return r == other.r &&
+                   g == other.g &&
+                   b == other.b;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(r, g, b);
+        }
+
+        public static bool operator ==(Pixel left, Pixel right)
+        {
+            return 
+                (left.r == right.r) &&
+                (left.g == right.g) &&
+                (left.b == right.b);
+        }
+
+        public static bool operator !=(Pixel left, Pixel right)
+        {
+            return
+                (left.r != right.r) |
+                (left.g != right.g) |
+                (left.b != right.b);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

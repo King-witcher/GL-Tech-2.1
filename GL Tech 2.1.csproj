@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>GLTech2</RootNamespace>
     <UseWindowsForms>True</UseWindowsForms>
     <StartupObject>Test.Program</StartupObject>
@@ -15,21 +15,21 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>GLTech2.1</PackageId>
     <IsPublishable>False</IsPublishable>
-    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>$(SolutionDir)obj</BaseIntermediateOutputPath>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <MinimumPlatformVersion>10.0.17763.0</MinimumPlatformVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <UseWPF>False</UseWPF>
-    <BaseOutputPath>$(SolutionDir)..\bin</BaseOutputPath>
+    <BaseOutputPath>$(SolutionDir)bin</BaseOutputPath>
     <AssemblyName>gltech2</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <OutputPath>..\bin\Debug</OutputPath>
-    <DocumentationFile>..\bin\Debug\GL Tech 2.1.xml</DocumentationFile>
+    <OutputPath>bin\Debug</OutputPath>
+    <DocumentationFile>bin\Debug\GL Tech 2.1.xml</DocumentationFile>
     <NoWarn>1701;1702;CS1592</NoWarn>
     <WarningsAsErrors>;NU1605</WarningsAsErrors>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -39,8 +39,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <OutputPath>..\bin\Release</OutputPath>
-    <DocumentationFile>..\bin\Release\GL Tech 2.1.xml</DocumentationFile>
+    <OutputPath>bin\Release</OutputPath>
+    <DocumentationFile>bin\Release\GL Tech 2.1.xml</DocumentationFile>
     <NoWarn>1701;1702;CS1592</NoWarn>
     <WarningsAsErrors>;NU1605</WarningsAsErrors>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>

@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Unit Tests", "Unit Tests\Unit Tests.vbproj", "{7EDD0094-415D-493A-A3A0-CBB29961E724}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,14 +26,6 @@ Global
 		{6849AE10-449E-46A2-91B2-ACA2D5D94EDC}.Release|Any CPU.Build.0 = Release|x64
 		{6849AE10-449E-46A2-91B2-ACA2D5D94EDC}.Release|x86-64.ActiveCfg = Release|x64
 		{6849AE10-449E-46A2-91B2-ACA2D5D94EDC}.Release|x86-64.Build.0 = Release|x64
-		{7EDD0094-415D-493A-A3A0-CBB29961E724}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7EDD0094-415D-493A-A3A0-CBB29961E724}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7EDD0094-415D-493A-A3A0-CBB29961E724}.Debug|x86-64.ActiveCfg = Debug|Any CPU
-		{7EDD0094-415D-493A-A3A0-CBB29961E724}.Debug|x86-64.Build.0 = Debug|Any CPU
-		{7EDD0094-415D-493A-A3A0-CBB29961E724}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7EDD0094-415D-493A-A3A0-CBB29961E724}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7EDD0094-415D-493A-A3A0-CBB29961E724}.Release|x86-64.ActiveCfg = Release|Any CPU
-		{7EDD0094-415D-493A-A3A0-CBB29961E724}.Release|x86-64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

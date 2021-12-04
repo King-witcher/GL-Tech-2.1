@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
-    <RootNamespace>GLTech2</RootNamespace>
+    <RootNamespace>Engine</RootNamespace>
     <UseWindowsForms>True</UseWindowsForms>
     <StartupObject>Test.Program</StartupObject>
     <Nullable>disable</Nullable>

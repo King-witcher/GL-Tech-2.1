@@ -2,7 +2,7 @@
 
 namespace Engine.Scripting.Debugging
 {
-    public class DebugPerformanceStats : Behaviour
+    public class DebugPerformanceStats : Script
     {
         float totalFrameTime;
         double totalRenderTime;

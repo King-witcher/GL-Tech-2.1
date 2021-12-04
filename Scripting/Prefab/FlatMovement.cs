@@ -3,7 +3,7 @@ using Engine.World;
 
 namespace Engine.Scripting.Prefab
 {
-    public sealed class FlatMovement : Behaviour
+    public sealed class FlatMovement : Script
     {
         KinematicBody body;
 

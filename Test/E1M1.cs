@@ -42,7 +42,7 @@ namespace Test
             return resized;
         }
 
-        class EnableNoclip : Behaviour
+        class EnableNoclip : Script
         {
             FlatMovement fm;
 
@@ -199,15 +199,15 @@ namespace Test
             {
                 Camera camera = scene.Camera;
                 camera.WorldPosition = (57.5f, 29.5f);
-                camera.AddBehaviour<DebugPerformanceStats>();
-                camera.AddBehaviour<DebugSceneInfo>();
-                camera.AddBehaviour(new MouseLook(2.2f));
-                camera.AddBehaviour<ClickToMakeRotate>();
+                camera.AddScript<DebugPerformanceStats>();
+                camera.AddScript<DebugSceneInfo>();
+                camera.AddScript(new MouseLook(2.2f));
+                camera.AddScript<ClickToMakeRotate>();
 
                 PointCollider pc = new PointCollider();
-                camera.AddBehaviour(pc);
+                camera.AddScript(pc);
                 SoftMovement movement = new SoftMovement(pc);
-                camera.AddBehaviour(movement);
+                camera.AddScript(movement);
                 //camera.AddBehaviour<Rotate>();
             }
 

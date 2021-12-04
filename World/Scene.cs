@@ -96,16 +96,16 @@ namespace Engine.World
                 entity.AssignScene(this);
                 unmanaged->Add(entity);
 
-                #region Caches every behaviour and subscribe to see when new behaviours are added.
-                foreach (Behaviour b in entity.Behaviours)
+                #region Caches every script and subscribe to see when new scripts are added.
+                foreach (Script s in entity.Scripts)
                 {
-                    Start += b.StartAction;
-                    OnFrame += b.OnFrameAction;
+                    Start += s.StartAction;
+                    OnFrame += s.OnFrameAction;
                 }
-                entity.OnAddBehaviour += behaviour =>
+                entity.OnAddScript += script =>
                 {
-                    Start += behaviour.StartAction;
-                    OnFrame += behaviour.OnFrameAction;
+                    Start += script.StartAction;
+                    OnFrame += script.OnFrameAction;
                 };
                 #endregion
             }

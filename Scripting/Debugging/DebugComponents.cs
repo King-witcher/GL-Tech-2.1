@@ -1,7 +1,7 @@
 ﻿
 namespace Engine.Scripting.Debugging
 {
-    public class DebugComponents : Behaviour
+    public class DebugComponents : Script
     {
         public float Interval { get; set; } = 1f;
 

@@ -4,7 +4,7 @@ using Engine.World;
 
 namespace Engine.Scripting
 {
-    public abstract partial class Behaviour
+    public abstract partial class Script
     {
         private Entity entity;
 
@@ -13,7 +13,7 @@ namespace Engine.Scripting
             entity = e;
         }
 
-        protected internal Behaviour() { }
+        protected internal Script() { }
 
         protected internal Entity Entity => entity;
 

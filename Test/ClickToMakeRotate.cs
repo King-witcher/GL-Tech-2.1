@@ -5,7 +5,7 @@ using Engine.Scripting.Prefab;
 
 namespace Test
 {
-    class ClickToMakeRotate : Behaviour
+    class ClickToMakeRotate : Script
     {
         const float accel = 5f;
 
@@ -25,12 +25,12 @@ namespace Test
                 else if (collider != null && !collider.TryGetBehaviour<Move>(out _))
                 {
                     Entity visible = collider.VisibleBody;
-                    visible?.AddBehaviour(new Move()
+                    visible?.AddScript(new Move()
                     {
                         Direction = Scene.Camera.WorldDirection,
                         Speed = Frame.DeltaTime * accel / distance
                     });
-                    collider.AddBehaviour(new Move()
+                    collider.AddScript(new Move()
                     {
                         Direction = Scene.Camera.WorldDirection,
                         Speed = Frame.DeltaTime * accel / distance

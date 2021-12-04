@@ -2,7 +2,7 @@
 
 namespace Engine.Scripting.Prefab
 {
-    public sealed class Rotate : Behaviour
+    public sealed class Rotate : Script
     {
         public float AngularSpeed { get; set; } = 30f;
 

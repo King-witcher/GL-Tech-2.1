@@ -1,7 +1,7 @@
 ﻿
 namespace Engine.Scripting.Physics
 {
-    public abstract class KinematicBody : Behaviour
+    public abstract class KinematicBody : Script
     {
         internal KinematicBody() { }
 

@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Engine.Scripting
 {
-    public partial class Behaviour
+    public partial class Script
     {
         protected internal static class Cursor
         {

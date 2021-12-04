@@ -136,12 +136,12 @@ namespace Engine
             Window display = new Window(frontBuffer, FullScreen);
 
             // Setup input managers
-            display.KeyUp += Behaviour.Keyboard.KeyUp;
-            display.KeyDown += Behaviour.Keyboard.KeyDown;
+            display.KeyUp += Script.Keyboard.KeyUp;
+            display.KeyDown += Script.Keyboard.KeyDown;
             if (CaptureMouse)
             {
-                display.Focus += Behaviour.Cursor.Enable;
-                display.Unfocus += Behaviour.Cursor.Disable;
+                display.Focus += Script.Cursor.Enable;
+                display.Unfocus += Script.Cursor.Disable;
             }
 
             // When set to true, the ControlThread will stop rendering.
@@ -192,33 +192,33 @@ namespace Engine
             #endregion
 
             Stopwatch controlStopwatch = new Stopwatch();   // Required to cap framerate
-            Behaviour.Frame.RestartFrame();
-            Behaviour.Frame.BeginScript();
+            Script.Frame.RestartFrame();
+            Script.Frame.BeginScript();
             activeScene.Start?.Invoke();
-            Behaviour.Frame.EndScript();
+            Script.Frame.EndScript();
 
             while (!cancellationRequest)
             {
                 controlStopwatch.Restart();
-                Behaviour.Frame.BeginRender();
+                Script.Frame.BeginRender();
 
                 DrawPlanes(backBuffer, activeScene.unmanaged);
                 PostProcess(backBuffer);
 
                 if (DoubleBuffer)
                     Image.BufferCopy(backBuffer, frontBuffer);
-                Behaviour.Frame.EndRender();
+                Script.Frame.EndRender();
 
                 while (controlStopwatch.ElapsedMilliseconds < minframetime)
                     Thread.Yield();
 
-                Behaviour.Frame.RestartFrame();
-                Behaviour.Frame.BeginScript();
+                Script.Frame.RestartFrame();
+                Script.Frame.BeginScript();
                 activeScene.OnFrame?.Invoke();
-                Behaviour.Frame.EndScript();
+                Script.Frame.EndScript();
             }
             controlStopwatch.Stop();
-            Behaviour.Frame.Stop();
+            Script.Frame.Stop();
 
             if (DoubleBuffer)
                 backBuffer.Dispose();

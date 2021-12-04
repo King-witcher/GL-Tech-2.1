@@ -50,16 +50,16 @@ namespace Test
             // Camera
             {
                 Camera camera = scene.Camera;
-                camera.AddBehaviour<DebugPerformanceStats>();
-                camera.AddBehaviour<DebugSceneInfo>();
+                camera.AddScript<DebugPerformanceStats>();
+                camera.AddScript<DebugSceneInfo>();
 
                 PointCollider collider = new PointCollider();
                 SoftMovement movement = new SoftMovement(collider);
                 MouseLook mouseLook = new MouseLook(2.2f);
 
-                camera.AddBehaviour(collider);
-                camera.AddBehaviour(movement);
-                camera.AddBehaviour(mouseLook);
+                camera.AddScript(collider);
+                camera.AddScript(movement);
+                camera.AddScript(mouseLook);
 
                 scene.Add(camera);
             }

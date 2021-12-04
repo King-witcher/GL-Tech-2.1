@@ -2,7 +2,7 @@
 
 namespace Engine.Scripting.Prefab
 {
-    public sealed class Move : Behaviour
+    public sealed class Move : Script
     {
         public Vector Direction { get; set; } = Vector.Forward;
 

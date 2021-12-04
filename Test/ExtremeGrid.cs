@@ -33,14 +33,14 @@ namespace Test
             // Camera
             {
                 Camera camera = scene.Camera;
-                camera.AddBehaviour(new MouseLook(2.2f));
-                camera.AddBehaviour<DebugPerformanceStats>();
-                camera.AddBehaviour<DebugSceneInfo>();
+                camera.AddScript(new MouseLook(2.2f));
+                camera.AddScript<DebugPerformanceStats>();
+                camera.AddScript<DebugSceneInfo>();
 
                 KinematicBody kinematicBody = new PointCollider();
                 SoftMovement softMovement = new SoftMovement(kinematicBody);
-                camera.AddBehaviour(kinematicBody);
-                camera.AddBehaviour(softMovement);
+                camera.AddScript(kinematicBody);
+                camera.AddScript(softMovement);
 
                 scene.Add(camera);
             }

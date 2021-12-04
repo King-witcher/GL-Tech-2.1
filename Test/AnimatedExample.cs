@@ -30,7 +30,7 @@ namespace Test
             // Pivot
             {
                 Empty pivot = new Empty(x: 0, y: 0.2868f);
-                pivot.AddBehaviour(new Rotate { AngularSpeed = -20f });
+                pivot.AddScript(new Rotate { AngularSpeed = -20f });
 
                 // Square
                 {
@@ -45,7 +45,7 @@ namespace Test
                         radius: .354f,
                         texture: tex);
 
-                    e.AddBehaviour(new Rotate { AngularSpeed = 180f });
+                    e.AddScript(new Rotate { AngularSpeed = 180f });
                     e.Parent = pivot;
                 }
 
@@ -62,7 +62,7 @@ namespace Test
                         radius: .318f,
                         texture: tex);
 
-                    e.AddBehaviour(new Rotate { AngularSpeed = 180f });
+                    e.AddScript(new Rotate { AngularSpeed = 180f });
                     e.Parent = pivot;
                 }
 
@@ -79,7 +79,7 @@ namespace Test
                         radius: -.385f,
                         texture: tex);
 
-                    e.AddBehaviour(new Rotate { AngularSpeed = 180f });
+                    e.AddScript(new Rotate { AngularSpeed = 180f });
                     e.Parent = pivot;
                 }
 
@@ -104,14 +104,14 @@ namespace Test
 
             // Camera
             {
-                scene.Camera.AddBehaviour<DebugPerformanceStats>();
+                scene.Camera.AddScript<DebugPerformanceStats>();
 
-                scene.Camera.AddBehaviour<MouseLook>();
+                scene.Camera.AddScript<MouseLook>();
 
                 NoclipMode nm = new NoclipMode();
-                scene.Camera.AddBehaviour(nm);
+                scene.Camera.AddScript(nm);
                 SoftMovement movement = new SoftMovement(nm);
-                scene.Camera.AddBehaviour(movement);
+                scene.Camera.AddScript(movement);
             }
 
             // Setup Renderer

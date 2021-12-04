@@ -2,7 +2,7 @@
 
 namespace Engine.Scripting.Prefab
 {
-    public sealed class SoftMovement : Behaviour
+    public sealed class SoftMovement : Script
     {
         KinematicBody body;
 

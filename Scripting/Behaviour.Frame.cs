@@ -2,7 +2,7 @@
 
 namespace Engine.Scripting
 {
-    partial class Behaviour
+    partial class Script
     {
         protected internal static class Frame
         {

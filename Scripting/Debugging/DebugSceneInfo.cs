@@ -1,7 +1,7 @@
 ﻿
 namespace Engine.Scripting.Debugging
 {
-    public class DebugSceneInfo : Behaviour
+    public class DebugSceneInfo : Script
     {
         void Start()
         {

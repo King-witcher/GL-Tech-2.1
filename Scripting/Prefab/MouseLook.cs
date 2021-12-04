@@ -1,7 +1,7 @@
 ﻿
 namespace Engine.Scripting.Prefab
 {
-    public sealed class MouseLook : Behaviour
+    public sealed class MouseLook : Script
     {
         public bool Enabled { get; set; } = true;
 

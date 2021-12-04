@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Engine.Scripting
 {
-    public partial class Behaviour
+    public partial class Script
     {
         protected internal static class Keyboard
         {

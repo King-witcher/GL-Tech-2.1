@@ -9,7 +9,6 @@ namespace Engine
     // Unfortunately that's the only practical way I know yet.
     class ConcreteWindow : Form, IDisposable
     {
-        Image source;
         PictureBox outputBox;  // Will only be released by GC
 
         public event Action<TimeSpan> Render;
@@ -19,7 +18,6 @@ namespace Engine
             Stopwatch rePaintStopwatch = new Stopwatch();
 
             InitializeComponent();
-            this.source = source;
             this.Dimensions = (source.Width, source.Height);
             if (fullscreen)
             {

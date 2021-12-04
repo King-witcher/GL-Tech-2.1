@@ -33,7 +33,7 @@ namespace Engine
             get => (int)(1000f / minframetime);
             set
             {
-                Utilities.Clip(ref value, 1, 250);
+                Util.Clip(ref value, 1, 250);
                 minframetime = 1000f / value;
             }
         }
@@ -80,7 +80,7 @@ namespace Engine
             get => fieldOfView;
             set
             {
-                Utilities.Clip(ref value, 1f, 179f);
+                Util.Clip(ref value, 1f, 179f);
                 ChangeIfNotRunning("FieldOfView", ref fieldOfView, value);
             }
         }

@@ -4,7 +4,7 @@ using System.Drawing.Imaging;
 
 namespace Engine
 {
-    internal static unsafe class Utilities
+    internal static unsafe class Util
     {
         internal const float ToRad = (float)Math.PI / 180f;
         internal const float ToDegree = 180f / (float)Math.PI;

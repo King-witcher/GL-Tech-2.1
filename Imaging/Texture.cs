@@ -1,18 +1,18 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace GLTech2.Imaging
+namespace Engine.Imaging
 {
     [NativeCppClass] [StructLayout(LayoutKind.Sequential)]
     public unsafe struct Texture
     {
-        internal ImageData buffer; //Propositalmente salvo por valor
+        internal Image buffer; //Propositalmente salvo por valor
         internal float hoffset;
         internal float hrepeat;
         internal float voffset;
         internal float vrepeat;
 
-        public Texture(ImageData buffer, float hoffset = 0f, float hrepeat = 1f, float voffset = 0f, float vrepeat = 1f)
+        public Texture(Image buffer, float hoffset = 0f, float hrepeat = 1f, float voffset = 0f, float vrepeat = 1f)
         {
             this.buffer = buffer;
             this.hoffset = hoffset;

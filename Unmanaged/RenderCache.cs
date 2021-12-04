@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 // Mesclar isso de volta com Camera
 
-namespace GLTech2.Unmanaged
+namespace Engine.Unmanaged
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]

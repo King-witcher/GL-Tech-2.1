@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GLTech2.Scripting.Physics
+namespace Engine.Scripting.Physics
 {
     public class NoclipMode : KinematicBody
     {

@@ -1,10 +1,10 @@
-﻿using GLTech2;
-using GLTech2.Imaging;
-using GLTech2.Entities;
-using GLTech2.Entities.StandardEntites;
-using GLTech2.Scripting.Debugging;
-using GLTech2.Scripting.StandardScripts;
-using GLTech2.Scripting.Physics;
+﻿using Engine;
+using Engine.Imaging;
+using Engine.World;
+using Engine.World.Prefab;
+using Engine.Scripting.Debugging;
+using Engine.Scripting.Prefab;
+using Engine.Scripting.Physics;
 
 namespace Test
 {
@@ -14,10 +14,10 @@ namespace Test
         static void GridExample()
         {
             // Buffers used
-            using ImageData bricks_buffer = new ImageData(DemoTextures.Bricks);
-            using ImageData wood_buffer = new ImageData(DemoTextures.Wood);
-            using ImageData hexagons_buffer = new ImageData(DemoTextures.GrayHexagons);
-            using ImageData background_buffer = new ImageData(DemoTextures.HellSky);
+            using Image bricks_buffer = new Image(DemoTextures.Bricks);
+            using Image wood_buffer = new Image(DemoTextures.Wood);
+            using Image hexagons_buffer = new Image(DemoTextures.GrayHexagons);
+            using Image background_buffer = new Image(DemoTextures.HellSky);
 
             Texture background = new Texture(background_buffer);
 
@@ -25,7 +25,7 @@ namespace Test
 
             // BlockMap
             {
-                using ImageData grid = new ImageData(DemoTextures.MapGrid);
+                using Image grid = new Image(DemoTextures.MapGrid);
                 BlockMap.TextureMapper mapper = new BlockMap.TextureMapper();
                 {
                     Texture bricks = new Texture(
@@ -65,16 +65,16 @@ namespace Test
             }
 
             // Renderer customization
-            Engine.FullScreen = false;
-            Engine.CustomWidth = 1600;
-            Engine.CustomHeight = 900;
-            Engine.FieldOfView = 110f;
-            Engine.ParallelRendering = true;
-            Engine.DoubleBuffer = false;
-            Engine.CaptureMouse = true;
+            Engine.Renderer.FullScreen = false;
+            Engine.Renderer.CustomWidth = 1600;
+            Engine.Renderer.CustomHeight = 900;
+            Engine.Renderer.FieldOfView = 110f;
+            Engine.Renderer.ParallelRendering = true;
+            Engine.Renderer.DoubleBuffer = false;
+            Engine.Renderer.CaptureMouse = true;
 
             // Run!
-            Engine.Run(scene);
+            Engine.Renderer.Run(scene);
         }
     }
 }

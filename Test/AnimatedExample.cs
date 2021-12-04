@@ -1,10 +1,10 @@
-﻿using GLTech2;
-using GLTech2.Imaging;
-using GLTech2.Entities;
-using GLTech2.Entities.StandardEntites;
-using GLTech2.Scripting.Debugging;
-using GLTech2.Scripting.StandardScripts;
-using GLTech2.Scripting.Physics;
+﻿using Engine;
+using Engine.Imaging;
+using Engine.World;
+using Engine.World.Prefab;
+using Engine.Scripting.Debugging;
+using Engine.Scripting.Prefab;
+using Engine.Scripting.Physics;
 
 namespace Test
 {
@@ -13,11 +13,11 @@ namespace Test
         static void AnimatedExample()
         {
             // Firstly, load buffers
-            using ImageData background_buffer = (ImageData)DemoTextures.HellSky;
-            using ImageData carvedWall_buffer = (ImageData)DemoTextures.CarvedWall;
-            using ImageData bricks_buffer = (ImageData)DemoTextures.Bricks;
-            using ImageData wood_buffer = (ImageData)DemoTextures.Wood;
-            using ImageData grayHexagons_buffer = (ImageData)DemoTextures.GrayHexagons;
+            using Image background_buffer = (Image)DemoTextures.HellSky;
+            using Image carvedWall_buffer = (Image)DemoTextures.CarvedWall;
+            using Image bricks_buffer = (Image)DemoTextures.Bricks;
+            using Image wood_buffer = (Image)DemoTextures.Wood;
+            using Image grayHexagons_buffer = (Image)DemoTextures.GrayHexagons;
 
             // Scene
             Texture background = new Texture(
@@ -115,14 +115,14 @@ namespace Test
             }
 
             // Setup Renderer
-            Engine.FullScreen = true;
-            Engine.FieldOfView = 110f;
-            Engine.ParallelRendering = true;
-            Engine.DoubleBuffer = false;
-            Engine.CaptureMouse = true;
+            Engine.Renderer.FullScreen = true;
+            Engine.Renderer.FieldOfView = 110f;
+            Engine.Renderer.ParallelRendering = true;
+            Engine.Renderer.DoubleBuffer = false;
+            Engine.Renderer.CaptureMouse = true;
 
             // Run!
-            Engine.Run(scene);
+            Engine.Renderer.Run(scene);
         }
     }
 }

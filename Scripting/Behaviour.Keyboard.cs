@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GLTech2.Scripting
+namespace Engine.Scripting
 {
     public partial class Behaviour
     {

@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-namespace GLTech2
+namespace Engine
 {
     // This is a complete cheat. I use a windows forms window with a PictureBox to render everything =]
     // Unfortunately that's the only practical way I know yet.

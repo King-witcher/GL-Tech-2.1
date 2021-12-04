@@ -1,6 +1,8 @@
 ﻿using System;
 
-namespace GLTech2.Scripting.Physics
+using Engine.World;
+
+namespace Engine.Scripting.Physics
 {
     public class PointCollider : KinematicBody
     {

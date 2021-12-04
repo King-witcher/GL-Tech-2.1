@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GLTech2.Scripting.Debugging
+namespace Engine.Scripting.Debugging
 {
     public class DebugPerformanceStats : Behaviour
     {

@@ -1,5 +1,5 @@
 ﻿
-namespace GLTech2.Scripting
+namespace Engine.Scripting
 {
     public enum InputKey
     {

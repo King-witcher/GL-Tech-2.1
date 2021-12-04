@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace GLTech2.Scripting
+namespace Engine.Scripting
 {
     public partial class Behaviour
     {

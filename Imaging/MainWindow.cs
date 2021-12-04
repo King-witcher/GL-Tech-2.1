@@ -3,10 +3,10 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GLTech2.Imaging;
-using GLTech2.Scripting;
+using Engine.Imaging;
+using Engine.Scripting;
 
-namespace GLTech2
+namespace Engine
 {
     public partial class MainWindow : IDisposable
     {
@@ -30,7 +30,7 @@ namespace GLTech2
             set => form.Dimensions = value;
         }
 
-        public unsafe MainWindow(ImageData output)
+        public unsafe MainWindow(Imaging.Image output)
         {
             // Setup a bitmap instance that points to the given output buffer
             bitmap = new Bitmap(

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace GLTech2.Unmanaged
+namespace Engine.Unmanaged
 {
     [NativeCppClass]
     internal struct SFloor

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace GLTech2.Scripting
+namespace Engine.Scripting
 {
     partial class Behaviour
     {

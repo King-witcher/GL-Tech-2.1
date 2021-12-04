@@ -1,11 +1,11 @@
-﻿using GLTech2;
-using GLTech2.Imaging;
-using GLTech2.Entities;
-using GLTech2.Entities.StandardEntites;
-using GLTech2.Scripting;
-using GLTech2.Scripting.Debugging;
-using GLTech2.Scripting.StandardScripts;
-using GLTech2.Scripting.Physics;
+﻿using Engine;
+using Engine.Imaging;
+using Engine.World;
+using Engine.World.Prefab;
+using Engine.Scripting;
+using Engine.Scripting.Debugging;
+using Engine.Scripting.Prefab;
+using Engine.Scripting.Physics;
 
 using System.Threading.Tasks;
 
@@ -13,9 +13,9 @@ namespace Test
 {
     partial class Program
     {
-        static ImageData Resize(ImageData pb, int scale)
+        static Image Resize(Image pb, int scale)
         {
-            ImageData resized = new ImageData(pb.Width * scale, pb.Height * scale);
+            Image resized = new Image(pb.Width * scale, pb.Height * scale);
 
             Parallel.For(0, resized.Height, line =>
             {
@@ -31,10 +31,10 @@ namespace Test
                     int matchcol = (int)float_match_col;
                     float rest_col = float_match_col - matchcol;
 
-                    Pixel top = pb[matchcol, matchline].Mix(pb[matchcol + 1, matchline], rest_col);
-                    Pixel bot = pb[matchcol, matchline + 1].Mix(pb[matchcol + 1, matchline + 1], rest_col);
+                    Color top = pb[matchcol, matchline].Mix(pb[matchcol + 1, matchline], rest_col);
+                    Color bot = pb[matchcol, matchline + 1].Mix(pb[matchcol + 1, matchline + 1], rest_col);
 
-                    Pixel center = top.Mix(bot, rest_line);
+                    Color center = top.Mix(bot, rest_line);
                     resized[column, line] = center;
                 }
             });
@@ -64,20 +64,20 @@ namespace Test
         static void E1M1()
         {
             // Buffers used
-            using ImageData textures = new ImageData(WE1M1.WolfTextures);
+            using Image textures = new Image(WE1M1.WolfTextures);
             //using PixelBuffer textures_ = Resize(textures_, 20);
-            using ImageData background_buffer = new ImageData(WE1M1.Background);
-            using ImageData lula_buffer = new ImageData(WE1M1.lula);
-            using ImageData pt_buffer = new ImageData(WE1M1.pt);
-            using ImageData bolsonaro_buffer = new ImageData(WE1M1.bolsonaro);
-            using ImageData dolar_buffer = new ImageData(WE1M1._1dolar);
+            using Image background_buffer = new Image(WE1M1.Background);
+            using Image lula_buffer = new Image(WE1M1.lula);
+            using Image pt_buffer = new Image(WE1M1.pt);
+            using Image bolsonaro_buffer = new Image(WE1M1.bolsonaro);
+            using Image dolar_buffer = new Image(WE1M1._1dolar);
 
             Texture background = new Texture(background_buffer);
             using Scene scene = new Scene(background);
 
             // BlockMap
             {
-                using ImageData grid = new ImageData(WE1M1.MapGrid);
+                using Image grid = new Image(WE1M1.MapGrid);
                 BlockMap.TextureMapper binds = new BlockMap.TextureMapper();
                 {
                     Texture blueStone1 = new Texture(
@@ -212,14 +212,14 @@ namespace Test
             }
 
             // Renderer customization
-            Engine.FullScreen = true;
-            Engine.FieldOfView = 72f;
-            Engine.ParallelRendering = true;
-            Engine.DoubleBuffer = true;
-            Engine.CaptureMouse = true;
+            Engine.Renderer.FullScreen = true;
+            Engine.Renderer.FieldOfView = 72f;
+            Engine.Renderer.ParallelRendering = true;
+            Engine.Renderer.DoubleBuffer = true;
+            Engine.Renderer.CaptureMouse = true;
 
             // Run!
-            Engine.Run(scene);
+            Engine.Renderer.Run(scene);
         }
     }
 }

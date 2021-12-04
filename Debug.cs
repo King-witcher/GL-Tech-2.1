@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace GLTech2
+namespace Engine
 {
     public static class Debug
     {

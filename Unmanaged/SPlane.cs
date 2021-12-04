@@ -2,9 +2,10 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-using GLTech2.Imaging;
+using Engine.Imaging;
+using Engine.World;
 
-namespace GLTech2.Unmanaged
+namespace Engine.Unmanaged
 {
 
     [NativeCppClass]

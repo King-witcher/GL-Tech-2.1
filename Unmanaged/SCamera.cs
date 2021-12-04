@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace GLTech2.Unmanaged
+namespace Engine.Unmanaged
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using Engine.Imaging;
 using Engine.World;
 
-namespace Engine.Unmanaged
+namespace Engine.Data
 {
 
     [NativeCppClass]

@@ -4,9 +4,9 @@ using System.Runtime.InteropServices;
 
 using Engine.Imaging;
 using Engine.World;
-using Engine.Unmanaged;
+using Engine.Data;
 
-namespace Engine.Unmanaged
+namespace Engine.Data
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]

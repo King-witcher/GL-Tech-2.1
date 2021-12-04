@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Engine.Unmanaged
+namespace Engine.Data
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]

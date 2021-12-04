@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Engine.Unmanaged
+namespace Engine.Data
 {
     [NativeCppClass]
     internal struct SFloor

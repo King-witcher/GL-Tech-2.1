@@ -2,9 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// Mesclar isso de volta com Camera
-
-namespace Engine.Unmanaged
+namespace Engine.Data
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]

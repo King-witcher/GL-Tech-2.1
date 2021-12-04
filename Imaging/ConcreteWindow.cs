@@ -45,7 +45,7 @@ namespace Engine
             }
         }
 
-        public bool FullScreen { get => WindowState == FormWindowState.Maximized; }
+        public bool Maximized { get => WindowState == FormWindowState.Maximized; }
 
         private void InitializeComponent()
         {
@@ -74,11 +74,10 @@ namespace Engine
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "GLTechWindowForm";
+            this.Name = "ConcreteWindow";
             this.Text = "GL Tech 2.1";
             ((System.ComponentModel.ISupportInitialize)(this.outputBox)).EndInit();
             this.ResumeLayout(false);
-
         }
     }
 }

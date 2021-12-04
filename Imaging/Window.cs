@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Engine.Imaging;
 using Engine.Scripting;
 
 namespace Engine
@@ -27,7 +24,7 @@ namespace Engine
         public event Action<InputKey> KeyDown;
         public event Action<InputKey> KeyUp;
 
-        public bool FullScreen => concrete.FullScreen;
+        public bool Maximized => concrete.Maximized;
         public (int width, int height) Dimensions => concrete.Dimensions;
 
         public void Open()

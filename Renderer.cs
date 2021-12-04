@@ -141,7 +141,7 @@ namespace Engine
             if (CaptureMouse)
             {
                 display.Focus += Behaviour.Cursor.Enable;
-                display.LoseFocus += Behaviour.Cursor.Disable;
+                display.Unfocus += Behaviour.Cursor.Disable;
             }
 
             // When set to true, the ControlThread will stop rendering.

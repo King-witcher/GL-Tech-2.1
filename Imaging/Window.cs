@@ -8,9 +8,9 @@ using Engine.Scripting;
 
 namespace Engine
 {
-    public partial class MainWindow : IDisposable
+    public partial class Window : IDisposable
     {
-        GLTechWindowForm form;
+        ConcreteWindow concrete;
         Bitmap bitmap;
 
         public event Action Focus;
@@ -18,19 +18,7 @@ namespace Engine
         public event Action<InputKey> KeyDown;
         public event Action<InputKey> KeyUp;
 
-        public bool FullScreen
-        {
-            get => form.Maximize;
-            set => form.Maximize = value;
-        }
-
-        public (int width, int height) Dimensions
-        {
-            get => form.Dimensions;
-            set => form.Dimensions = value;
-        }
-
-        public unsafe MainWindow(Imaging.Image output)
+        public unsafe Window(Imaging.Image output, bool fullscreen = false)
         {
             // Setup a bitmap instance that points to the given output buffer
             bitmap = new Bitmap(
@@ -38,28 +26,31 @@ namespace Engine
                 output.Width * sizeof(uint), PixelFormat.Format32bppRgb,
                 (IntPtr)output.UintBuffer);
 
-            form = new GLTechWindowForm(bitmap);
+            concrete = new ConcreteWindow(bitmap, fullscreen);
 
             // Setup events
-            form.KeyDown += (_, args) =>
+            concrete.KeyDown += (_, args) =>
                 KeyDown?.Invoke((InputKey)args.KeyCode);
-            form.KeyUp += (_, args) =>
+            concrete.KeyUp += (_, args) =>
                 KeyUp?.Invoke((InputKey)args.KeyCode);
-            form.Click += (_, _) =>   // Bug
+            concrete.Click += (_, _) =>   // Bug
                 Focus?.Invoke();
-            form.LostFocus += (_, _) =>
+            concrete.LostFocus += (_, _) =>
                 LoseFocus?.Invoke();
         }
 
-        public void Start()
+        public bool FullScreen => concrete.FullScreen;
+        public (int width, int height) Dimensions => concrete.Dimensions;
+
+        public void Open()
         {
             Focus?.Invoke();
-            Application.Run(form);
+            Application.Run(concrete);
         }
 
         public void Dispose()
         {
-            form.Dispose();
+            concrete.Dispose();
             bitmap.Dispose();
         }
     }

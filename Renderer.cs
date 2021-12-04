@@ -133,7 +133,7 @@ namespace Engine
             frontBuffer = new Image(CustomWidth, customHeight);
 
             // A window that will continuously display the buffer
-            MainWindow display = new MainWindow(frontBuffer) { FullScreen = FullScreen };
+            Window display = new Window(frontBuffer, FullScreen);
 
             // Setup input managers
             display.KeyUp += Behaviour.Keyboard.KeyUp;
@@ -152,7 +152,7 @@ namespace Engine
             var controlThread = Task.Run(() => ControlTrhead(frontBuffer, in stopRequest));
 
             // Finally passes control to the rendering screen and displays it.
-            display.Start();
+            display.Open();
 
             // Theese lines run after the renderer window is closed.
             stopRequest = true;

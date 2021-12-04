@@ -7,63 +7,51 @@ namespace Engine
 {
     // This is a complete cheat. I use a windows forms window with a PictureBox to render everything =]
     // Unfortunately that's the only practical way I know yet.
-    class GLTechWindowForm : Form, IDisposable
+    class ConcreteWindow : Form, IDisposable
     {
         Image source;
         PictureBox outputBox;  // Will only be released by GC
 
         public event Action<TimeSpan> Render;
 
-        bool maximize = false;
-        public bool Maximize
+        public ConcreteWindow(Image source, bool fullscreen)
         {
-            get => maximize;
-            set
-            {
-                maximize = value;
+            Stopwatch rePaintStopwatch = new Stopwatch();
 
-                if (value)
-                {
-                    FormBorderStyle = FormBorderStyle.None;
-                    WindowState = FormWindowState.Maximized;
-                }
-                else
-                {
-                    FormBorderStyle = FormBorderStyle.FixedSingle;
-                    WindowState = FormWindowState.Normal;
-                    Dimensions = (Width, Height);
-                }
+            InitializeComponent();
+            this.source = source;
+            this.Dimensions = (source.Width, source.Height);
+            if (fullscreen)
+            {
+                FormBorderStyle = FormBorderStyle.None;
+                WindowState = FormWindowState.Maximized;
+            }
+
+
+            outputBox.Paint += RePaint; // Refactor
+            void RePaint(object _ = null, EventArgs __ = null)
+            {
+                rePaintStopwatch.Restart();
+                Render?.Invoke(rePaintStopwatch.Elapsed);
+                outputBox.Image = source;
             }
         }
 
         public (int width, int height) Dimensions
         {
             get => (ClientSize.Width, ClientSize.Height);
-            set
+            init
             {
                 Size size = new Size(value.width, value.height);
                 ClientSize = Size;
             }
         }
 
-        public GLTechWindowForm(Image source)
-        {
-            InitializeComponent();
-            this.source = source;
-            outputBox.Paint += RePaint; // Refactor
-        }
-
-        Stopwatch rePaintStopwatch = new Stopwatch();
-        internal void RePaint(object _ = null, EventArgs __ = null)
-        {
-            rePaintStopwatch.Restart();
-            Render?.Invoke(rePaintStopwatch.Elapsed);
-            outputBox.Image = source;
-        }
+        public bool FullScreen { get => WindowState == FormWindowState.Maximized; }
 
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GLTechWindowForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConcreteWindow));
             this.outputBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.outputBox)).BeginInit();
             this.SuspendLayout();

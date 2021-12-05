@@ -25,8 +25,8 @@ namespace Engine
 
         public static Scene ActiveScene => activeScene;
 
-        public static event Action OnStart;
-        public static event Action OnFrame;
+        // public static event Action OnStart;
+        // public static event Action OnFrame;
 
         private static float minframetime = 4;
         public static int MaxFps

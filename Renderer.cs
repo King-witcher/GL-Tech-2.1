@@ -139,8 +139,8 @@ namespace Engine
             // Setup input managers
             if (CaptureMouse)
             {
-                display.Focus += Script.Cursor.Enable;
-                display.Unfocus += Script.Cursor.Disable;
+                display.Focus += Input.Mouse.Enable;
+                display.Unfocus += Input.Mouse.Disable;
             }
             Input.Keyboard.Assign(display);
 

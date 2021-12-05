@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
@@ -130,19 +131,18 @@ namespace Engine
             activeScene = scene;
 
             // Unmanaged buffer where the video will be put.
-            frontBuffer = new Image(CustomWidth, customHeight);
+            frontBuffer = new (CustomWidth, customHeight);
 
             // A window that will continuously display the buffer
-            Window display = new Window(frontBuffer, FullScreen);
+            Window display = new (frontBuffer, FullScreen);
 
             // Setup input managers
-            display.KeyUp += Script.Keyboard.KeyUp;
-            display.KeyDown += Script.Keyboard.KeyDown;
             if (CaptureMouse)
             {
                 display.Focus += Script.Cursor.Enable;
                 display.Unfocus += Script.Cursor.Disable;
             }
+            Input.Keyboard.Assign(display);
 
             // When set to true, the ControlThread will stop rendering.
             var stopRequest = false;
@@ -180,7 +180,7 @@ namespace Engine
 
             // Buffer where the image will be rendered
             Image backBuffer = DoubleBuffer ?
-                new Image(frontBuffer.Width, frontBuffer.Height) :
+                new (frontBuffer.Width, frontBuffer.Height) :
                 frontBuffer;
 
             #region Warnings

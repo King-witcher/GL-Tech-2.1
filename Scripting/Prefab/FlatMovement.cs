@@ -1,5 +1,6 @@
 ﻿using Engine.Scripting.Physics;
 using Engine.World;
+using Engine.Input;
 
 namespace Engine.Scripting.Prefab
 {

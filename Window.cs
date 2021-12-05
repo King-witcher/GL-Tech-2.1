@@ -2,10 +2,11 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Engine.Scripting;
+using Engine.Input;
 
 namespace Engine
 {
-    public partial class Window : IDisposable
+    public partial class Window : IDisposable, IKeyboardEventTrigger
     {
         ConcreteWindow concrete;
 

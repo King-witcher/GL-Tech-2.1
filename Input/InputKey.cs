@@ -1,5 +1,5 @@
 ﻿
-namespace Engine.Scripting
+namespace Engine.Input
 {
     public enum InputKey
     {

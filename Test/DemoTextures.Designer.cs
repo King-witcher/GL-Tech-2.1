@@ -39,7 +39,7 @@ namespace Test {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GLTech2.Test.DemoTextures", typeof(DemoTextures).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Engine.Test.DemoTextures", typeof(DemoTextures).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

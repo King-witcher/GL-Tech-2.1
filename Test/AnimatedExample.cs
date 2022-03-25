@@ -14,11 +14,11 @@ namespace Test
         static void AnimatedExample()
         {
             // Firstly, load buffers
-            using Image background_buffer = (Image)DemoTextures.CarvedWall;
-            using Image carvedWall_buffer = (Image)DemoTextures.CarvedWall;
-            using Image bricks_buffer = (Image)DemoTextures.BlackBug;
-            using Image wood_buffer = (Image)DemoTextures.Wood;
-            using Image grayHexagons_buffer = (Image)DemoTextures.GrayHexagons;
+            using Image background_buffer = Image.FromBitmap(DemoTextures.HellSky);
+            using Image carvedWall_buffer = Image.FromBitmap(DemoTextures.CarvedWall);
+            using Image bricks_buffer = Image.FromBitmap(DemoTextures.Bricks);
+            using Image wood_buffer = Image.FromBitmap(DemoTextures.Wood);
+            using Image grayHexagons_buffer = Image.FromBitmap(DemoTextures.GrayHexagons);
 
             // Scene
             Texture background = new Texture(
@@ -118,8 +118,8 @@ namespace Test
             // Setup Renderer
             Engine.Renderer.FullScreen = true;
             Engine.Renderer.FieldOfView = 110f;
-            Engine.Renderer.ParallelRendering = false;
-            Engine.Renderer.DoubleBuffer = false;
+            Engine.Renderer.ParallelRendering = true;
+            Engine.Renderer.SynchronizeThreads = true;
             Engine.Renderer.CaptureMouse = true;
 
             // Run!

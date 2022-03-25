@@ -152,15 +152,6 @@ namespace Engine.Imaging
             Marshal.FreeHGlobal(Buffer);
         }
 
-        // Perigoso
-        public static explicit operator Image(Bitmap bitmap)
-        {
-            var lockdata = bitmap.LockBits();
-            Image result = new(bitmap.Width, bitmap.Height, lockdata.Scan0);
-            bitmap.UnlockBits(lockdata);
-            return result;
-        }
-
         public static explicit operator Bitmap(Image data)
         {
             return new Bitmap(

@@ -28,13 +28,8 @@ namespace Engine.Imaging
             // This is the most performance critical segment of code in the entire engine
             int x = (int)(source.flt_width * (hrepeat * hratio + hoffset)) % source.Width;
             int y = (int)(source.flt_height * (vrepeat * vratio + voffset)) % source.Height;
-            //if (source.Width == 1024)
-            //    col2 = source.UintBuffer[262144];
 
             uint color = source.UintBuffer[source.Width * y + x];
-
-            //if (source.Width == 1024)
-            //    System.Console.WriteLine(x + " " + y + " ok");
 
             return color;
         }

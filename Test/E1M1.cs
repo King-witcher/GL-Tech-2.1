@@ -216,7 +216,7 @@ namespace Test
             Engine.Renderer.FullScreen = true;
             Engine.Renderer.FieldOfView = 72f;
             Engine.Renderer.ParallelRendering = true;
-            Engine.Renderer.DoubleBuffer = true;
+            Engine.Renderer.SynchronizeThreads = true;
             Engine.Renderer.CaptureMouse = true;
 
             // Run!

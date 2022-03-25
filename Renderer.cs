@@ -40,7 +40,7 @@ namespace Engine
         }
 
         static bool doubleBuffer = true;
-        public static bool DoubleBuffer
+        public static bool SynchronizeThreads
         {
             get => doubleBuffer;
             set => ChangeIfNotRunning("DoubleBuffer", ref doubleBuffer, value);
@@ -179,12 +179,12 @@ namespace Engine
             ReloadCache();
 
             // Buffer where the image will be rendered
-            Image backBuffer = DoubleBuffer ?
+            Image backBuffer = SynchronizeThreads ?
                 new (frontBuffer.Width, frontBuffer.Height) :
                 frontBuffer;
 
             #region Warnings
-            if (!DoubleBuffer && postProcessing.Count > 0)
+            if (!SynchronizeThreads && postProcessing.Count > 0)
                 Debug.InternalLog(
                     message: "The renderer has post processing effects set but DoubleBuffering is disabled. " +
                         "Post processing effects may not work properly.",
@@ -205,7 +205,7 @@ namespace Engine
                 DrawPlanes(backBuffer, activeScene.unmanaged);
                 PostProcess(backBuffer);
 
-                if (DoubleBuffer)
+                if (SynchronizeThreads)
                     Image.BufferCopy(backBuffer, frontBuffer);
                 Script.Frame.EndRender();
 
@@ -220,7 +220,7 @@ namespace Engine
             controlStopwatch.Stop();
             Script.Frame.Stop();
 
-            if (DoubleBuffer)
+            if (SynchronizeThreads)
                 backBuffer.Dispose();
             return;
         }

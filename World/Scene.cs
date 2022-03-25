@@ -18,7 +18,7 @@ namespace Engine.World
 
         public Scene()
         {
-            Texture background = new Texture((Imaging.Image)new Bitmap(1, 1));
+            Texture background = new Texture(Imaging.Image.FromBitmap(new Bitmap(1, 1)));
             unmanaged = SScene.Create(background);
 
             var defaultCamera = new Camera();

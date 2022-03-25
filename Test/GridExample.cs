@@ -71,7 +71,7 @@ namespace Test
             Engine.Renderer.CustomHeight = 900;
             Engine.Renderer.FieldOfView = 110f;
             Engine.Renderer.ParallelRendering = true;
-            Engine.Renderer.DoubleBuffer = false;
+            Engine.Renderer.SynchronizeThreads = false;
             Engine.Renderer.CaptureMouse = true;
 
             // Run!

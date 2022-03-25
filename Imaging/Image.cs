@@ -76,8 +76,7 @@ namespace Engine.Imaging
             Image image = new(source.Width, source.Height);
 
             // Converts the source into a standarized bits-per-pixel bitmap.
-            using Bitmap src32 = source.PixelFormat == DefaultPixelFormat ?
-                source : source.Clone(DefaultPixelFormat) ??
+            using Bitmap src32 = source.Clone(DefaultPixelFormat) ??
                 throw new ArgumentNullException("source");
 
             BitmapData lockdata = src32.LockBits();

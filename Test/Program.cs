@@ -8,7 +8,7 @@ namespace Test
         {
             Debug.OpenConsole();
 
-            E1M1();
+            AnimatedExample();
 
             Debug.Log("Releasing resources...");
         }

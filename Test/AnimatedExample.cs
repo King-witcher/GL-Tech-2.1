@@ -5,6 +5,7 @@ using Engine.World.Prefab;
 using Engine.Scripting.Debugging;
 using Engine.Scripting.Prefab;
 using Engine.Scripting.Physics;
+using Engine.Test; // Fiz isso na pura preguiça de ficar renomeando o DemoTextures bugado do VS
 
 namespace Test
 {
@@ -13,9 +14,9 @@ namespace Test
         static void AnimatedExample()
         {
             // Firstly, load buffers
-            using Image background_buffer = (Image)DemoTextures.HellSky;
+            using Image background_buffer = (Image)DemoTextures.CarvedWall;
             using Image carvedWall_buffer = (Image)DemoTextures.CarvedWall;
-            using Image bricks_buffer = (Image)DemoTextures.Bricks;
+            using Image bricks_buffer = (Image)DemoTextures.BlackBug;
             using Image wood_buffer = (Image)DemoTextures.Wood;
             using Image grayHexagons_buffer = (Image)DemoTextures.GrayHexagons;
 
@@ -117,7 +118,7 @@ namespace Test
             // Setup Renderer
             Engine.Renderer.FullScreen = true;
             Engine.Renderer.FieldOfView = 110f;
-            Engine.Renderer.ParallelRendering = true;
+            Engine.Renderer.ParallelRendering = false;
             Engine.Renderer.DoubleBuffer = false;
             Engine.Renderer.CaptureMouse = true;
 

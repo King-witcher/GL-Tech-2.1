@@ -268,7 +268,7 @@ namespace Engine
 
                 // Draws the background before the wall.
                 // Critical performance impact.
-                if (scene->background.buffer.UintBuffer != null)
+                if (scene->background.source.UintBuffer != null)
                     for (int line = 0; line < draw_column_start; line++)
                         drawBackground(line);
 
@@ -283,7 +283,7 @@ namespace Engine
 
                 // Draw the other side of the background
                 // Critical performance impact.
-                if (scene->background.buffer.UintBuffer != null)
+                if (scene->background.source.UintBuffer != null)
                     for (int line = draw_column_end; line < screen.Height; line++)
                         drawBackground(line);
                 #endregion

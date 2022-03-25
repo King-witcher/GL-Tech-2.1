@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Test {
+namespace Engine.Test {
     using System;
     
     
@@ -57,6 +57,26 @@ namespace Test {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BlackBug {
+            get {
+                object obj = ResourceManager.GetObject("BlackBug", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BlackNotBug {
+            get {
+                object obj = ResourceManager.GetObject("BlackNotBug", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

@@ -5,6 +5,7 @@ using Engine.World.Prefab;
 using Engine.Scripting.Debugging;
 using Engine.Scripting.Prefab;
 using Engine.Scripting.Physics;
+using Engine.Test;
 
 namespace Test
 {

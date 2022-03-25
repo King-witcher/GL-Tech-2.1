@@ -6,7 +6,7 @@ namespace Engine.Imaging
     [NativeCppClass] [StructLayout(LayoutKind.Sequential)]
     public unsafe struct Texture
     {
-        internal Image buffer; //Propositalmente salvo por valor
+        internal Image source; //Propositalmente salvo por valor
         internal float hoffset;
         internal float hrepeat;
         internal float voffset;
@@ -14,7 +14,7 @@ namespace Engine.Imaging
 
         public Texture(Image buffer, float hoffset = 0f, float hrepeat = 1f, float voffset = 0f, float vrepeat = 1f)
         {
-            this.buffer = buffer;
+            this.source = buffer;
             this.hoffset = hoffset;
             this.hrepeat = hrepeat;
             this.voffset = voffset;
@@ -25,10 +25,18 @@ namespace Engine.Imaging
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal unsafe uint MapPixel(float hratio, float vratio)
         {
-            // This is the most performance critical segment of code int the entire engine
-            int x = (int)(buffer.flt_width * (hrepeat * hratio + hoffset)) % buffer.Width;
-            int y = (int)(buffer.flt_height * (vrepeat * vratio + voffset)) % buffer.Height;
-            return buffer.UintBuffer[buffer.Width * y + x];
+            // This is the most performance critical segment of code in the entire engine
+            int x = (int)(source.flt_width * (hrepeat * hratio + hoffset)) % source.Width;
+            int y = (int)(source.flt_height * (vrepeat * vratio + voffset)) % source.Height;
+            //if (source.Width == 1024)
+            //    col2 = source.UintBuffer[262144];
+
+            uint color = source.UintBuffer[source.Width * y + x];
+
+            //if (source.Width == 1024)
+            //    System.Console.WriteLine(x + " " + y + " ok");
+
+            return color;
         }
     }
 }

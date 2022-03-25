@@ -16,8 +16,8 @@ namespace Engine.Imaging
                 throw new Exception("GL Tech 2.1 must run as x86-64.");
         }
 
-        public const int DEFAULT_BPP = 4;
-        public const PixelFormat DEFAULT_PIXEL_FORMAT = PixelFormat.Format32bppArgb;
+        public const int DefaultBytesPerPixel = 4;
+        public const PixelFormat DefaultPixelFormat = PixelFormat.Format32bppArgb;
 
         [FieldOffset(0)] readonly int width;
         [FieldOffset(4)] readonly int height;
@@ -32,11 +32,11 @@ namespace Engine.Imaging
         public IntPtr Buffer => (IntPtr)uint_buffer;
         public Color* PixelBuffer => pixel_buffer;
         public uint* UintBuffer => uint_buffer;
-        public long Size => DEFAULT_BPP * width * height;
+        public long MemorySize => DefaultBytesPerPixel * width * height;
 
         public Image(Bitmap source)
         {
-            this = Clone(source);
+            this = FromBitmap(source);
         }
 
         public Image(int width, int height)
@@ -47,7 +47,7 @@ namespace Engine.Imaging
             this.flt_width = this.width = width;
             this.flt_height = this.height = height;
             this.pixel_buffer = null;
-            this.uint_buffer = (uint*)Marshal.AllocHGlobal(width * height * DEFAULT_BPP);
+            this.uint_buffer = (uint*)Marshal.AllocHGlobal(width * height * DefaultBytesPerPixel);
         }
 
         public Image(int width, int height, Color color)
@@ -58,7 +58,7 @@ namespace Engine.Imaging
             this.flt_width = this.width = width;
             this.flt_height = this.height = height;
             this.pixel_buffer = null;
-            this.uint_buffer = (uint*)Marshal.AllocHGlobal(width * height * DEFAULT_BPP);
+            this.uint_buffer = (uint*)Marshal.AllocHGlobal(width * height * DefaultBytesPerPixel);
 
             FillWith(color);
         }
@@ -71,34 +71,35 @@ namespace Engine.Imaging
             this.uint_buffer = (uint*)buffer;
         }
 
-        public static Image Clone(Bitmap source)
+        public static Image FromBitmap(Bitmap source)
         {
-            Image clone = new(source.Width, source.Height);
+            Image image = new(source.Width, source.Height);
 
-            using var src32 = source.PixelFormat == DEFAULT_PIXEL_FORMAT ?
-                source: source.Clone(DEFAULT_PIXEL_FORMAT) ??
+            // Converts the source into a standarized bits-per-pixel bitmap.
+            using Bitmap src32 = source.PixelFormat == DefaultPixelFormat ?
+                source : source.Clone(DefaultPixelFormat) ??
                 throw new ArgumentNullException("source");
 
             BitmapData lockdata = src32.LockBits();
             System.Buffer.MemoryCopy(
                 source:                 (void*)lockdata.Scan0,
-                destination:            clone.uint_buffer,
-                sourceBytesToCopy:      clone.Size,
-                destinationSizeInBytes: clone.Size);
+                destination:            image.uint_buffer,
+                sourceBytesToCopy:      image.MemorySize,
+                destinationSizeInBytes: image.MemorySize);
 
             src32.UnlockBits(lockdata);
-            return clone;
+            return image;
         }
 
         public static void BufferCopy(Image source, Image destination)
         {
-            if (source.Size > destination.Size)
+            if (source.MemorySize > destination.MemorySize)
                 throw new ArgumentOutOfRangeException("source");
             System.Buffer.MemoryCopy(
                 source:                 source.UintBuffer,
                 destination:            destination.UintBuffer,
-                destinationSizeInBytes: destination.Size,
-                sourceBytesToCopy:      source.Size);
+                destinationSizeInBytes: destination.MemorySize,
+                sourceBytesToCopy:      source.MemorySize);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -166,8 +167,8 @@ namespace Engine.Imaging
             return new Bitmap(
                 data.width,
                 data.height,
-                DEFAULT_BPP * data.width,
-                DEFAULT_PIXEL_FORMAT,
+                DefaultBytesPerPixel * data.width,
+                DefaultPixelFormat,
                 data.Buffer);
         }
     }

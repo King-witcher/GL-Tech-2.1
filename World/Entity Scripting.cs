@@ -61,7 +61,7 @@ namespace Engine.World
             if (script.Entity != null)
             {
                 Debug.InternalLog(
-                    message: $"Cannot behaviour \"{script}\" to \"{this}\" becuase it's already bound to \"{script.Entity}\".",
+                    message: $"Cannot add script \"{script}\" to \"{this}\" becuase it's already bound to \"{script.Entity}\".",
                     debugOption: Debug.Options.Error);
                 return;
             }
@@ -72,35 +72,35 @@ namespace Engine.World
             OnAddScript?.Invoke(script);
         }
 
-        public void AddScript<BehaviourType>() where BehaviourType : Script, new()
+        public void AddScript<ScriptClass>() where ScriptClass : Script, new()
         {
-            AddScript(new BehaviourType());
+            AddScript(new ScriptClass());
         }
 
-        public void AddBehaviours(IEnumerable<Script> scripts)
+        public void AddScripts(IEnumerable<Script> scripts)
         {
             foreach (Script item in scripts)
                 AddScript(item);
         }
 
-        public void AddBehaviours(params Script[] scripts)
+        public void AddScripts(params Script[] scripts)
         {
-            AddBehaviours((IEnumerable<Script>)scripts);
+            AddScripts((IEnumerable<Script>)scripts);
         }
 
-        public ScriptType GetBehaviour<ScriptType>() where ScriptType : Script
+        public ScriptClass GetScript<ScriptClass>() where ScriptClass : Script
         {
-            TryGetBehaviour(out ScriptType found);
+            TryGetScript(out ScriptClass found);
             return found;
         }
 
-        public bool TryGetBehaviour<ScriptType>(out ScriptType script) where ScriptType : Script
+        public bool TryGetScript<ScriptClass>(out ScriptClass script) where ScriptClass : Script
         {
             script = null;
 
             foreach (Script current in scripts)
             {
-                if (current is ScriptType match)
+                if (current is ScriptClass match)
                 {
                     script = match;
                     return true;
@@ -110,9 +110,9 @@ namespace Engine.World
             return false;
         }
 
-        public bool ContainsScript(Script b)
+        public bool ContainsScript(Script script)
         {
-            if (scripts.TrueForAll(each => each != b))
+            if (scripts.TrueForAll(each => each != script))
                 return false;
             return true;
         }

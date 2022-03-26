@@ -30,18 +30,18 @@ namespace Test
 
             // Pivot
             {
-                Empty pivot = new Empty(x: 0, y: 0.2868f);
+                Empty pivot = new(x: 0, y: 0.2868f);
                 pivot.AddScript(new Rotate { AngularSpeed = -20f });
 
                 // Square
                 {
-                    Texture tex = new Texture(
+                    Texture tex = new(
                         buffer: wood_buffer,
                         hoffset: 0f,
                         hrepeat: 2f);
 
                     Entity e = new RegularPolygon(
-                        position: (-0.5f, 0f),
+                        position: (-1f, 0f),
                         vertices: 4,
                         radius: .354f,
                         texture: tex);
@@ -58,7 +58,7 @@ namespace Test
                         hrepeat: 4f);
 
                     Entity e = new RegularPolygon(
-                        position: (0.5f, 0f),
+                        position: (1f, 0f),
                         vertices: 100,
                         radius: .318f,
                         texture: tex);
@@ -75,7 +75,7 @@ namespace Test
                         hrepeat: 1f);
 
                     Entity e = new RegularPolygon(
-                        position: (0f, 0.866f),
+                        position: (0f, 1.732f),
                         vertices: 3,
                         radius: -.385f,
                         texture: tex);
@@ -87,20 +87,36 @@ namespace Test
                 scene.Add(pivot);
             }
 
-            // Big triangle
+            // Pillars
             {
+                Empty pillars = new(Vector.Zero);
+
                 Texture tex = new Texture(
-                    buffer: grayHexagons_buffer,
+                    buffer: wood_buffer,
                     hoffset: 0f,
-                    hrepeat: 32f);
+                    hrepeat: 1f);
 
-                Entity e = new RegularPolygon(
-                    position: Vector.Zero,
-                    vertices: 4,
-                    radius: -2f,
-                    texture: tex);
+                System.Random rand = new();
 
-                scene.Add(e);
+                for (int i = -20; i < 20; i++)
+                {
+                    for (int j = -20; j < 20; j++)
+                    {
+                        Entity pillar = new RegularPolygon(
+                            position: (i, j),
+                            vertices: 4,
+                            radius: 0.2f,
+                            texture: tex);
+
+                        Rotate rotate = new();
+                        rotate.AngularSpeed = (float) rand.NextDouble() * 180f - 90f;
+
+                        pillar.Parent = pillars;
+                        pillar.AddScript(rotate);
+                    }
+                }
+
+                scene.Add(pillars);
             }
 
             // Camera

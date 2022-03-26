@@ -209,7 +209,7 @@ namespace Test
                 camera.AddScript(pc);
                 SoftMovement movement = new SoftMovement(pc);
                 camera.AddScript(movement);
-                //camera.AddBehaviour<Rotate>();
+                //camera.AddScript<Rotate>();
             }
 
             // Renderer customization

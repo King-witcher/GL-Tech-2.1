@@ -7,6 +7,7 @@ using Engine.Scripting.Debugging;
 using Engine.Scripting.Prefab;
 using Engine.Scripting.Physics;
 using Engine.Test; // Fiz isso na pura preguiça de ficar renomeando o DemoTextures bugado do VS
+using Engine.Input;
 
 namespace Test
 {
@@ -27,7 +28,7 @@ namespace Test
                 hoffset: 0f,
                 hrepeat: 1f);
 
-            using Scene scene = new Scene();
+            using Scene scene = new Scene(background);
 
             // Pivot
             {
@@ -120,6 +121,7 @@ namespace Test
 
             // Camera
             {
+                scene.Camera.AddScript<SwitchBackgroundScript>();
                 scene.Camera.AddScript<DebugPerformanceStats>();
                 scene.Camera.AddScript<MouseLook>();
                 NoclipMode nm = new NoclipMode();
@@ -137,6 +139,32 @@ namespace Test
 
             // Run!
             Engine.Renderer.Run(scene);
+        }
+    }
+
+    class SwitchBackgroundScript : Script
+    {
+        Texture background;
+
+        void Start()
+        {
+            background = Scene.Background;
+        }
+
+        void OnFrame()
+        {
+            if (Keyboard.IsKeyDown(InputKey.Q))
+            {
+                if (Scene.Background.source.Buffer == System.IntPtr.Zero)
+                    Debug.Log("Scene background enabled.");
+                Scene.Background = background;
+            }
+            if (Keyboard.IsKeyDown(InputKey.E))
+            {
+                if (Scene.Background.source.Buffer != System.IntPtr.Zero)
+                    Debug.Log("Scene background disabled.");
+                Scene.Background = Texture.NullTexture;
+            }
         }
     }
 }

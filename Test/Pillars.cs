@@ -2,6 +2,7 @@
 using Engine.Imaging;
 using Engine.World;
 using Engine.World.Prefab;
+using Engine.Scripting;
 using Engine.Scripting.Debugging;
 using Engine.Scripting.Prefab;
 using Engine.Scripting.Physics;
@@ -96,8 +97,6 @@ namespace Test
                     hoffset: 0f,
                     hrepeat: 1f);
 
-                System.Random rand = new();
-
                 for (int i = -20; i < 20; i++)
                 {
                     for (int j = -20; j < 20; j++)
@@ -109,7 +108,7 @@ namespace Test
                             texture: tex);
 
                         Rotate rotate = new();
-                        rotate.AngularSpeed = (float) rand.NextDouble() * 180f - 90f;
+                        rotate.AngularSpeed = Random.GetFloat(-90f, 90f);
 
                         pillar.Parent = pillars;
                         pillar.AddScript(rotate);

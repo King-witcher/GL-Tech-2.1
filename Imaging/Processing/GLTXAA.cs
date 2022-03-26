@@ -44,19 +44,19 @@ namespace Engine.Imaging.Processing
                         int right = target.Width * y + x + 1;
 
                         float differenceV = dist(
-                            target.UintBuffer[up],
-                            target.UintBuffer[down]);
+                            ((uint*)target.Buffer)[up],
+                            ((uint*)target.Buffer)[down]);
 
                         float differenceH = dist(
-                            target.UintBuffer[right],
-                            target.UintBuffer[left]);
+                            ((uint*)target.Buffer)[right],
+                            ((uint*)target.Buffer)[left]);
 
                         float factor = differenceH > differenceV ? differenceH : differenceV;
                         factor = 0.95f * adjust(factor);
 
-                        temporaryBuffer.UintBuffer[cur] = avg(
-                            previousFrame.UintBuffer[cur],
-                            target.UintBuffer[cur],
+                        ((uint*)temporaryBuffer.Buffer)[cur] = avg(
+                            ((uint*)previousFrame.Buffer)[cur],
+                            ((uint*)target.Buffer)[cur],
                             factor / 2);
 
                         //copy.buffer[cur] = (uint)(factor * 255) * 0x00010101 + 0xff000000;
@@ -79,17 +79,17 @@ namespace Engine.Imaging.Processing
                         int right = target.Width * y + x + 1;
 
                         float differenceV = dist(
-                            target.UintBuffer[up],
-                            target.UintBuffer[down]);
+                            ((uint*)target.Buffer)[up],
+                            ((uint*)target.Buffer)[down]);
 
                         float differenceH = dist(
-                            target.UintBuffer[right],
-                            target.UintBuffer[left]);
+                            ((uint*)target.Buffer)[right],
+                            ((uint*)target.Buffer)[left]);
 
                         float factor = differenceH > differenceV ? differenceH : differenceV;
                         factor = 0.95f * adjust(factor);
 
-                        temporaryBuffer.UintBuffer[cur] = (uint)(factor * 255) * 0x10101u;
+                        ((uint*)temporaryBuffer.Buffer)[cur] = (uint)(factor * 255) * 0x10101u;
                     }
                 });
                 Image.BufferCopy(target, previousFrame);

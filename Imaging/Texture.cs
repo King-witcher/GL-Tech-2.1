@@ -29,7 +29,7 @@ namespace Engine.Imaging
             int x = (int)(source.flt_width * (hrepeat * hratio + hoffset)) % source.Width;
             int y = (int)(source.flt_height * (vrepeat * vratio + voffset)) % source.Height;
 
-            uint color = source.UintBuffer[source.Width * y + x];
+            uint color = ((uint*)source.Buffer)[source.Width * y + x];
 
             return color;
         }

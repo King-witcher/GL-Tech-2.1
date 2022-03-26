@@ -30,13 +30,13 @@ namespace Test
                 BlockMap.TextureMapper mapper = new BlockMap.TextureMapper();
                 {
                     Texture bricks = new Texture(
-                        buffer: bricks_buffer,
+                        source: bricks_buffer,
                         hrepeat: 2f);
                     Texture wood = new Texture(
-                        buffer: wood_buffer,
+                        source: wood_buffer,
                         hrepeat: 1f);
                     Texture hexagons = new Texture(
-                        buffer: hexagons_buffer,
+                        source: hexagons_buffer,
                         hrepeat: 2f);
 
                     mapper[(255, 255, 255)] = bricks;

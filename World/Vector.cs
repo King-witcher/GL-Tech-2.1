@@ -14,9 +14,7 @@ namespace Engine
         internal readonly float y;
 
         public float X { get => x; }
-
         public float Y { get => y; }
-
         public Vector(float x, float y)
         {
             this.x = x;
@@ -76,13 +74,9 @@ namespace Engine
         }
 
         public static Vector Zero { get => new Vector(0, 0); }
-
         public static Vector Forward { get => new Vector(0, 1); }
-
         public static Vector Right { get => new Vector(1, 0); }
-
         public static Vector Backward { get => new Vector(0, -1); }
-
         public static Vector Left { get => new Vector(-1, 0); }
 
         public static Vector[] GetRegularPolygon(Vector center, float radius, int edges)

@@ -12,13 +12,20 @@ namespace Engine.Imaging
         internal float voffset;
         internal float vrepeat;
 
-        public Texture(Image buffer, float hoffset = 0f, float hrepeat = 1f, float voffset = 0f, float vrepeat = 1f)
+        public Texture(Image source, float hoffset = 0f, float hrepeat = 1f, float voffset = 0f, float vrepeat = 1f)
         {
-            this.source = buffer;
+            this.source = source;
             this.hoffset = hoffset;
             this.hrepeat = hrepeat;
             this.voffset = voffset;
             this.vrepeat = vrepeat;
+        }
+
+        public static Texture FromColor(Color color, out Image source)
+        {
+            source = new(1, 1);
+            source[0, 0] = color;
+            return new(source);
         }
 
         // Mapeia um pixel da textura baseado em uma proporção x e uma y que vai de 0 a 1

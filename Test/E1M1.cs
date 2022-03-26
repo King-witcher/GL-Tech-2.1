@@ -82,91 +82,91 @@ namespace Test
                 BlockMap.TextureMapper binds = new BlockMap.TextureMapper();
                 {
                     Texture blueStone1 = new Texture(
-                        buffer: textures,
+                        source: textures,
                         hrepeat: 1 / 6f,
                         vrepeat: 1 / 19f,
                         hoffset: 2 / 6f,
                         voffset: 2 / 19f);
 
                     Texture blueStone2 = new Texture(
-                        buffer: textures,
+                        source: textures,
                         hrepeat: 1 / 6f,
                         vrepeat: 1 / 19f,
                         hoffset: 4 / 6f,
                         voffset: 2 / 19f);
 
                     Texture bluestoneCell = new Texture(
-                        buffer: textures,
+                        source: textures,
                         hrepeat: 1 / 6f,
                         vrepeat: 1 / 19f,
                         hoffset: 2 / 6f,
                         voffset: 1 / 19f);
 
                     Texture bluestoneCellSkeleton = new Texture(
-                        buffer: textures,
+                        source: textures,
                         hrepeat: 1 / 6f,
                         vrepeat: 1 / 19f,
                         hoffset: 0 / 6f,
                         voffset: 2 / 19f);
 
                     Texture grayStone1 = new Texture(
-                        buffer: textures,
+                        source: textures,
                         hrepeat: 1 / 6f,
                         vrepeat: 1 / 19f,
                         hoffset: 0 / 6f,
                         voffset: 0 / 19f);
 
                     Texture grayStone2 = new Texture(
-                        buffer: textures,
+                        source: textures,
                         hrepeat: 1 / 6f,
                         vrepeat: 1 / 19f,
                         hoffset: 2 / 6f,
                         voffset: 0 / 19f);
 
                     Texture gs_naziFlag = new Texture(
-                        buffer: textures,
+                        source: textures,
                         hrepeat: 1 / 6f,
                         vrepeat: 1 / 19f,
                         hoffset: 4 / 6f,
                         voffset: 0 / 19f);
 
                     Texture gs_hitler = new Texture(
-                        buffer: textures,
+                        source: textures,
                         hrepeat: 1 / 6f,
                         vrepeat: 1 / 19f,
                         hoffset: 0 / 6f,
                         voffset: 1 / 19f);
 
                     Texture gs_goldEagle = new Texture(
-                        buffer: textures,
+                        source: textures,
                         hrepeat: 1 / 6f,
                         vrepeat: 1 / 19f,
                         hoffset: 4 / 6f,
                         voffset: 1 / 19f);
 
                     Texture woodPanelling = new Texture(
-                        buffer: textures,
+                        source: textures,
                         hrepeat: 1 / 6f,
                         vrepeat: 1 / 19f,
                         hoffset: 4 / 6f,
                         voffset: 3 / 19f);
 
                     Texture wp_whiteEagle = new Texture(
-                        buffer: textures,
+                        source: textures,
                         hrepeat: 1 / 6f,
                         vrepeat: 1 / 19f,
                         hoffset: 0 / 6f,
                         voffset: 3 / 19f);
 
                     Texture wp_hitler = new Texture(
-                        buffer: textures,
+                        source: textures,
                         hrepeat: 1 / 6f,
                         vrepeat: 1 / 19f,
                         hoffset: 2 / 6f,
                         voffset: 3 / 19f);
 
                     Texture elevator = new Texture(
-                        buffer: textures,
+                        source: textures,
                         hrepeat: 1 / 6f,
                         vrepeat: 1 / 19f,
                         hoffset: 0 / 6f,

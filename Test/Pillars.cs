@@ -11,7 +11,7 @@ namespace Test
 {
     partial class Program
     {
-        static void AnimatedExample()
+        static void PillarsMap()
         {
             // Firstly, load buffers
             using Image background_buffer = new(DemoTextures.HellSky);
@@ -22,7 +22,7 @@ namespace Test
 
             // Scene
             Texture background = new Texture(
-                buffer: background_buffer,
+                source: background_buffer,
                 hoffset: 0f,
                 hrepeat: 1f);
 
@@ -36,7 +36,7 @@ namespace Test
                 // Square
                 {
                     Texture tex = new(
-                        buffer: wood_buffer,
+                        source: wood_buffer,
                         hoffset: 0f,
                         hrepeat: 2f);
 
@@ -53,7 +53,7 @@ namespace Test
                 // Cylinder
                 {
                     Texture tex = new Texture(
-                        buffer: bricks_buffer,
+                        source: bricks_buffer,
                         hoffset: 0f,
                         hrepeat: 4f);
 
@@ -70,7 +70,7 @@ namespace Test
                 // Triangle
                 {
                     Texture tex = new Texture(
-                        buffer: carvedWall_buffer,
+                        source: carvedWall_buffer,
                         hoffset: 0f,
                         hrepeat: 1f);
 
@@ -92,7 +92,7 @@ namespace Test
                 Empty pillars = new(Vector.Zero);
 
                 Texture tex = new Texture(
-                    buffer: wood_buffer,
+                    source: wood_buffer,
                     hoffset: 0f,
                     hrepeat: 1f);
 
@@ -122,9 +122,7 @@ namespace Test
             // Camera
             {
                 scene.Camera.AddScript<DebugPerformanceStats>();
-
                 scene.Camera.AddScript<MouseLook>();
-
                 NoclipMode nm = new NoclipMode();
                 scene.Camera.AddScript(nm);
                 SoftMovement movement = new SoftMovement(nm);

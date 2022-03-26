@@ -8,7 +8,7 @@ namespace Test
         {
             Debug.OpenConsole();
 
-            AnimatedExample();
+            PillarsMap();
 
             Debug.Log("Releasing resources...");
         }

@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 namespace Engine.Imaging
 {
     [StructLayout(LayoutKind.Explicit)]
-    public struct Color : IEquatable<Color>
+    public partial struct Color : IEquatable<Color>
     {
         // Union
         [FieldOffset(0)] uint uint_value;
@@ -124,6 +124,7 @@ namespace Engine.Imaging
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator uint(Color rgb) => rgb.uint_value;
 
+        // This allows collors to be represented in hexadecimal like 0xff8000
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Color(uint rgb) => new Color { uint_value = rgb };
 

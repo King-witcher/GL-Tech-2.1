@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-
 using Engine.Imaging;
 using Engine.Data;
 using Engine.Scripting;
@@ -18,7 +17,7 @@ namespace Engine.World
 
         public Scene()
         {
-            Texture background = new Texture(Imaging.Image.FromBitmap(new Bitmap(1, 1)));
+            Texture background = new Texture(new(new(1, 1)));
             unmanaged = SScene.Create(background);
 
             var defaultCamera = new Camera();

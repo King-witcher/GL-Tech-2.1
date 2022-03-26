@@ -38,17 +38,17 @@ namespace Engine.Imaging.Processing
                         int left = target.Width * i + j - 1;
 
                         int differenceV = dist(
-                            target.UintBuffer[cur],
-                            target.UintBuffer[up]);
+                            ((uint*)target.Buffer)[cur],
+                            ((uint*)target.Buffer)[up]);
 
                         int differenceH = dist(
-                            target.UintBuffer[cur],
-                            target.UintBuffer[left]);
+                            ((uint*)target.Buffer)[cur],
+                            ((uint*)target.Buffer)[left]);
 
                         if (differenceV >= sqrThreshold)
-                            tempbuffer.UintBuffer[target.Width * i + j] = avg(target.UintBuffer[up], target.UintBuffer[cur]);
+                            ((uint*)tempbuffer.Buffer)[target.Width * i + j] = avg(((uint*)target.Buffer)[up], ((uint*)target.Buffer)[cur]);
                         else if (differenceH >= sqrThreshold)
-                            tempbuffer.UintBuffer[target.Width * i + j] = avg(target.UintBuffer[left], target.UintBuffer[cur]);
+                            ((uint*)tempbuffer.Buffer)[target.Width * i + j] = avg(((uint*)target.Buffer)[left], ((uint*)target.Buffer)[cur]);
                     }
                 });
             }
@@ -63,19 +63,19 @@ namespace Engine.Imaging.Processing
                         int left = target.Width * i + j - 1;
 
                         int differenceV = dist(
-                            target.UintBuffer[cur],
-                            target.UintBuffer[up]);
+                            ((uint*)target.Buffer)[cur],
+                            ((uint*)target.Buffer)[up]);
 
                         int differenceH = dist(
-                            target.UintBuffer[cur],
-                            target.UintBuffer[left]);
+                            ((uint*)target.Buffer)[cur],
+                            ((uint*)target.Buffer)[left]);
 
                         if (differenceV >= sqrThreshold)
-                            tempbuffer.UintBuffer[target.Width * i + j] = 0xff0000;
+                            ((uint*)tempbuffer.Buffer)[target.Width * i + j] = 0xff0000;
                         else if (differenceH >= sqrThreshold)
-                            tempbuffer.UintBuffer[target.Width * i + j] = 0x0000ff;
+                            ((uint*)tempbuffer.Buffer)[target.Width * i + j] = 0x0000ff;
                         else
-                            tempbuffer.UintBuffer[target.Width * i + j] = 0;
+                            ((uint*)tempbuffer.Buffer)[target.Width * i + j] = 0;
                     }
                 });
             }

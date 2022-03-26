@@ -30,8 +30,8 @@ namespace Engine.Imaging.Processing
                 {
                     int cur = target.Width * y + x;
 
-                    Color color = target.UintBuffer[cur];
-                    target.PixelBuffer[cur] = (
+                    Color color = ((Color*)target.Buffer)[cur];
+                    ((Color*)target.Buffer)[cur] = (
                         (byte)(255f * Math.Pow(color.R / 255f, gamma)),
                         (byte)(255f * Math.Pow(color.G / 255f, gamma)),
                         (byte)(255f * Math.Pow(color.B / 255f, gamma)));

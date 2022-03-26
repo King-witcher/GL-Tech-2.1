@@ -27,7 +27,7 @@ namespace Test
                 hoffset: 0f,
                 hrepeat: 1f);
 
-            using Scene scene = new Scene(background);
+            using Scene scene = new Scene();
 
             // Pivot
             {

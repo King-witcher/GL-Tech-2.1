@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
@@ -18,15 +17,9 @@ namespace Engine
         unsafe static RenderCache* cache;
         static Image frontBuffer;
         static Scene activeScene = null;
-
-        // public static bool NativeRendering { get; } = false;
-
         public static bool ParallelRendering { get; set; } = true;
 
         public static Scene ActiveScene => activeScene;
-
-        // public static event Action OnStart;
-        // public static event Action OnFrame;
 
         private static float minframetime = 4;
         public static int MaxFps
@@ -102,14 +95,14 @@ namespace Engine
             return screenshot;
         }
 
-        public static void AddEffect(Effect postProcessing)
+        public static void AddEffect(Effect effect)
         {
-            Renderer.postProcessing.Add(postProcessing);
+            Renderer.postProcessing.Add(effect);
         }
 
-        public static void AddPostProcessing<T>() where T : Effect, new()
+        public static void AddEffect<EffectClass>() where EffectClass : Effect, new()
         {
-            AddEffect(new T());
+            AddEffect(new EffectClass());
         }
 
         public unsafe static void Run(Scene scene)

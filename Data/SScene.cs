@@ -24,7 +24,7 @@ namespace Engine.Data
         internal Texture background;
         internal SCamera* camera;  // Talvez eu mude isso
 
-        internal static SScene* Create(Texture background)
+        internal static SScene* Create()
         {
             SScene* result = (SScene*)Marshal.AllocHGlobal(sizeof(SScene));
             result->first_sprite = null;
@@ -36,7 +36,7 @@ namespace Engine.Data
             result->sprite_count = 0;
             result->plane_count = 0;
             result->collider_count = 0;
-            result->background = background;
+            result->background = default;
             result->camera = null;
             return result;
         }

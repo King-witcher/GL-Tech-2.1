@@ -14,7 +14,7 @@ namespace Engine.Data
         internal Vector direction;
         internal SCollider* list_next;
 
-        internal static SCollider* Alloc(Vector start, Vector end)
+        internal static SCollider* Create(Vector start, Vector end)
         {
             SCollider* result = (SCollider*)Marshal.AllocHGlobal(sizeof(SCollider));
             result->start = start;

@@ -26,18 +26,18 @@ namespace Engine.World
 
         public Collider(Vector start, Vector end)
         {
-            unmanaged = SCollider.Alloc(start, end);
+            unmanaged = SCollider.Create(start, end);
         }
 
         public Collider(Plane visiblePlane)
         {
-            unmanaged = SCollider.Alloc(visiblePlane.Start, visiblePlane.End);
+            unmanaged = SCollider.Create(visiblePlane.Start, visiblePlane.End);
             visibleBody = visiblePlane;
         }
 
         public Collider(Vector start, Vector end, Entity visibleBody)
         {
-            unmanaged = SCollider.Alloc(start, end);
+            unmanaged = SCollider.Create(start, end);
             this.visibleBody = visibleBody;
         }
 

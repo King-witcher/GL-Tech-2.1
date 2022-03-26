@@ -17,21 +17,16 @@ namespace Engine.World
 
         public Scene()
         {
-            Texture background = Texture.FromColor(Imaging.Color.Black, out _);
-            unmanaged = SScene.Create(background);
+            unmanaged = SScene.Create();
 
-            Camera camera = new();
-            Add(camera);
-            this.camera = camera;
+            Camera defaultCamera = new();
+            Add(new Camera());
+            this.camera = defaultCamera;
         }
 
-        public Scene(Texture background)
+        public Scene(Texture background) : this()
         {
-            unmanaged = SScene.Create(background);
-
-            var defaultCamera = new Camera();
-            Add(defaultCamera);
-            camera = defaultCamera;
+            unmanaged->background = background;
         }
 
         internal Action Start { get; private set; }

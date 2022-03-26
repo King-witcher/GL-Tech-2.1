@@ -121,13 +121,18 @@ namespace Engine
                 return;
             }
 
+            if (scene.Background.source.Buffer == IntPtr.Zero)
+                Debug.InternalLog(
+                    message: $"The Scene being rendered does not have a background texture. Add it by using Scene.Background property.",
+                    debugOption: Debug.Options.Warning);
+
             activeScene = scene;
 
             // Unmanaged buffer where the video will be put.
-            frontBuffer = new (CustomWidth, customHeight);
+            frontBuffer = new(CustomWidth, customHeight);
 
             // A window that will continuously display the buffer
-            Window display = new (frontBuffer, FullScreen);
+            Window display = new(frontBuffer, FullScreen);
 
             // Setup input managers
             if (CaptureMouse)

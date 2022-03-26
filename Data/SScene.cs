@@ -36,7 +36,7 @@ namespace Engine.Data
             result->sprite_count = 0;
             result->plane_count = 0;
             result->collider_count = 0;
-            result->background = default;
+            result->background = Texture.NullTexture;
             result->camera = null;
             return result;
         }

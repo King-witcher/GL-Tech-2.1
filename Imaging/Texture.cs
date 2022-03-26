@@ -21,6 +21,8 @@ namespace Engine.Imaging
             this.vrepeat = vrepeat;
         }
 
+        public static Texture NullTexture => default;
+
         public static Texture FromColor(Color color, out Image source)
         {
             source = new(1, 1);

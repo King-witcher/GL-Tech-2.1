@@ -20,7 +20,7 @@ namespace Engine.World
             unmanaged = SScene.Create();
 
             Camera defaultCamera = new();
-            Add(new Camera());
+            Add(defaultCamera);
             this.camera = defaultCamera;
         }
 

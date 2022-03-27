@@ -15,7 +15,7 @@ namespace Test
             if (Keyboard.IsKeyDown(InputKey.X))
             {
                 Ray ray = new Ray(Scene.Camera.WorldPosition, Scene.Camera.WorldDirection);
-                Collider collider = Scene.RayCast(ray, out float distance);
+                Collider collider = Scene.CastRay(ray, out float distance);
 
                 if (collider != null && collider.TryGetScript(out Move move))
                 {

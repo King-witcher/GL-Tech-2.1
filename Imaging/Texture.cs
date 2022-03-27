@@ -23,6 +23,8 @@ namespace Engine.Imaging
 
         public static Texture NullTexture => default;
 
+        public bool IsNull => source.Buffer == System.IntPtr.Zero;
+
         public static Texture FromColor(Color color, out Image source)
         {
             source = new(1, 1);
@@ -41,6 +43,28 @@ namespace Engine.Imaging
             uint color = ((uint*)source.Buffer)[source.Width * y + x];
 
             return color;
+        }
+
+        public static bool operator ==(Texture left, Texture right)
+        {
+            if (left.source != right.source ||
+                left.hrepeat != right.hrepeat ||
+                left.hoffset != right.hoffset ||
+                left.voffset != right.voffset ||
+                left.vrepeat != right.vrepeat)
+                return false;
+            return true;
+        }
+
+        public static bool operator !=(Texture left, Texture right)
+        {
+            if (left.source != right.source ||
+                left.hoffset != right.hoffset ||
+                left.hrepeat != right.hrepeat ||
+                left.voffset != right.voffset ||
+                left.vrepeat != right.vrepeat)
+                return true;
+            return false;
         }
     }
 }

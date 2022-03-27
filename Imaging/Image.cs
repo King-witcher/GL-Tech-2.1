@@ -130,5 +130,19 @@ namespace Engine.Imaging
                 DefaultPixelFormat,
                 data.Buffer);
         }
+
+        public static bool operator ==(Image left, Image right)
+        {
+            if (left.buffer != right.buffer || left.width != right.width || left.height != right.height)
+                return false;
+            return true;
+        }
+        
+        public static bool operator !=(Image left, Image right)
+        {
+            if (left.buffer != right.buffer || left.width != right.width || left.height != right.height)
+                return true;
+            return false;
+        }
     }
 }

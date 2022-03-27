@@ -127,7 +127,7 @@ namespace Engine
         }
 
         public static float DotProduct(Vector left, Vector right) =>
-left.x * right.x + left.y * right.y;
+            left.x * right.x + left.y * right.y;
 
         public bool Equals(Vector other)
         {
@@ -144,24 +144,24 @@ left.x * right.x + left.y * right.y;
         }
 
         public static Vector operator -(Vector vector) =>
-new Vector(
--vector.x,
--vector.y);
+            new Vector(
+                -vector.x,
+                -vector.y);
 
         public static Vector operator +(Vector left, Vector right) =>
-new Vector(
-left.x + right.x,
-left.y + right.y);
+            new Vector(
+                left.x + right.x,
+                left.y + right.y);
 
         public static Vector operator -(Vector left, Vector right) =>
-new Vector(
-left.x - right.x,
-left.y - right.y);
+            new Vector(
+                left.x - right.x,
+                left.y - right.y);
 
         public static Vector operator *(Vector left, Vector right) =>
-new Vector(
-left.y * right.x + left.x * right.y,
-left.y * right.y - left.x * right.x);
+            new Vector(
+                left.y * right.x + left.x * right.y,
+                left.y * right.y - left.x * right.x);
 
         public static Vector operator /(Vector dividend, Vector divider)
         {
@@ -175,17 +175,17 @@ left.y * right.y - left.x * right.x);
         }
 
         public static Vector operator *(float scalar, Vector vector) =>
-new Vector(
-vector.x * scalar,
-vector.y * scalar);
+            new Vector(
+                vector.x * scalar,
+                vector.y * scalar);
 
         public static Vector operator *(Vector vector, float scalar) =>
-scalar * vector;
+            scalar * vector;
 
         public static Vector operator /(Vector vector, float scalar) =>
-new Vector(
-vector.x / scalar,
-vector.y / scalar);
+            new Vector(
+                vector.x / scalar,
+                vector.y / scalar);
 
         public static bool operator ==(Vector left, Vector right)
         {

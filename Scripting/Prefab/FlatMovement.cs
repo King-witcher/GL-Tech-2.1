@@ -84,7 +84,7 @@ namespace Engine.Scripting.Prefab
 
             if (HandleCollisions)
             {
-                Scene.RayCast(
+                Scene.CastRay(
                     new Ray(Entity.WorldPosition, translation),
                     out float distance,
                     out Vector normal);
@@ -97,7 +97,7 @@ namespace Engine.Scripting.Prefab
                     Vector compensation = normal * (Vector.DotProduct(excess, normal) - 0.01f);
                     translation -= compensation;
 
-                    Scene.RayCast(new Ray(Entity.WorldPosition, translation), out float newDist, out Vector _);
+                    Scene.CastRay(new Ray(Entity.WorldPosition, translation), out float newDist, out Vector _);
 
                     if (newDist < translation.Module)
                     {

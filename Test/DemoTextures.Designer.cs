@@ -143,6 +143,16 @@ namespace Engine.Test {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Universe {
+            get {
+                object obj = ResourceManager.GetObject("Universe", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Wood {
             get {
                 object obj = ResourceManager.GetObject("Wood", resourceCulture);

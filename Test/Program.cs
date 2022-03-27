@@ -8,7 +8,7 @@ namespace Test
         {
             Debug.OpenConsole();
 
-            PillarsMap();
+            GridExample();
 
             Debug.Log("Releasing resources...");
         }

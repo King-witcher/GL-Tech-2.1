@@ -129,7 +129,7 @@ namespace Engine
             activeScene = scene;
 
             // Unmanaged buffer where the video will be put.
-            frontBuffer = new(CustomWidth, customHeight);
+            frontBuffer = new(CustomWidth, CustomHeight);
 
             // A window that will continuously display the buffer
             Window display = new(frontBuffer, FullScreen);

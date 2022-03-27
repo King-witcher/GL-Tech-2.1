@@ -41,7 +41,7 @@ namespace Engine
             init
             {
                 Size size = new Size(value.width, value.height);
-                ClientSize = Size;
+                ClientSize = size;
             }
         }
 

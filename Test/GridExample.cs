@@ -18,7 +18,7 @@ namespace Test
             using Image bricks_buffer = new Image(DemoTextures.Bricks);
             using Image wood_buffer = new Image(DemoTextures.Wood);
             using Image hexagons_buffer = new Image(DemoTextures.GrayHexagons);
-            using Image background_buffer = new Image(DemoTextures.HellSky);
+            using Image background_buffer = new Image(DemoTextures.Universe);
 
             Texture background = new Texture(background_buffer);
 
@@ -66,13 +66,13 @@ namespace Test
             }
 
             // Renderer customization
-            Engine.Renderer.FullScreen = false;
-            Engine.Renderer.CustomWidth = 1600;
-            Engine.Renderer.CustomHeight = 900;
-            Engine.Renderer.FieldOfView = 110f;
-            Engine.Renderer.ParallelRendering = true;
-            Engine.Renderer.SynchronizeThreads = false;
-            Engine.Renderer.CaptureMouse = true;
+            Renderer.FullScreen = false;
+            Renderer.CustomHeight = 600;
+            Renderer.CustomWidth = 800;
+            Renderer.FieldOfView = 110f;
+            Renderer.ParallelRendering = true;
+            Renderer.SynchronizeThreads = false;
+            Renderer.CaptureMouse = true;
 
             // Run!
             Engine.Renderer.Run(scene);

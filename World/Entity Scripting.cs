@@ -12,10 +12,6 @@ namespace Engine.World
 
         internal IEnumerable<Script> Scripts => scripts;
 
-        // Scene should be told when a new event enters an entity so that it can update it's script caches.
-        internal event Action<Script> OnAddScript;
-        internal event Action<Script> OnRemoveScript;
-
         // Just a sintax sugar
         internal Action OnStart
         {
@@ -41,7 +37,7 @@ namespace Engine.World
 
         public void AddScript(Script script)
         {
-            #region Ensures that the entry is not null and was not already added to any entity.
+            #region Ensures that the entry is not null and the script was not added to any entity.
             if (script is null)
             {
                 Debug.InternalLog(
@@ -68,8 +64,12 @@ namespace Engine.World
             #endregion
 
             script.Assign(this);
-            this.scripts.Add(script);
-            OnAddScript?.Invoke(script);
+            scripts.Add(script);
+
+            // Guarantees that the script will still work even if added after the element was added to a scene.
+            // This is because the renderer runs scripts directly from the Scene's Script cache for performance reasons.
+            if (Scene != null)
+                Scene.SubscribeScript(script);
         }
 
         public void AddScript<ScriptClass>() where ScriptClass : Script, new()

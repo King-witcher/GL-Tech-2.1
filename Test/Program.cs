@@ -9,12 +9,15 @@ namespace Test
             Debug.OpenConsole();
 
             PillarsMap();
-            GridExample();
-            E1M1();
-            ExtremeGrid eg = new();
-            Renderer.Run(eg);
 
-            Debug.Log("Releasing resources...");
+            GridExample();
+
+            E1M1();
+
+            // Teste de estresse com um blockmap composto por muitas paredes com tratamento de colisão
+            SuperBlockMap superBlockMap = new();
+            Renderer.Run(superBlockMap);
+            superBlockMap.Dispose();
         }
     }
 }

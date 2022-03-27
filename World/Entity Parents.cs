@@ -6,11 +6,11 @@ namespace Engine.World
 {
     partial class Entity
     {
-        internal Action onMove;
-        internal List<Entity> childs = new List<Entity>();
-        private Entity parent;
         private Vector relativePosition;
         private Vector relativeDirection;
+        private List<Entity> children = new();
+        private Entity parent;
+        private Action onMove;
 
         public Vector WorldPosition
         {
@@ -127,7 +127,7 @@ namespace Engine.World
                 if (parent != null)
                 {
                     parent.onMove -= FollowParent;    // Temos um erro aqui
-                    parent.childs.Remove(this);       // Spaguetti?
+                    parent.children.Remove(this);       // Spaguetti?
                 }
 
                 // If it must have a new entity as parent, then
@@ -137,7 +137,7 @@ namespace Engine.World
                     value.onMove += FollowParent;
 
                     // Add itself to the parent's child list.
-                    value.childs.Add(this);
+                    value.children.Add(this);
                 }
                 this.parent = value;
 
@@ -146,7 +146,10 @@ namespace Engine.World
             }
         }
 
-        public int ChildCount => childs.Count;
+        // Internal because i'm angry that the user can just use Children as List<Entity> and mess up everything.
+        internal IEnumerable<Entity> Children => children;
+
+        public int ChildCount => children.Count;
 
         public Entity RootParent
         {
@@ -204,12 +207,12 @@ namespace Engine.World
 
         public Entity GetChild(int index)
         {
-            return childs[index];
+            return children[index];
         }
 
         public void DetachChildren()
         {
-            foreach (Entity child in childs)
+            foreach (Entity child in children)
                 child.Parent = null;
         }
     }

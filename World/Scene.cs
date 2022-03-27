@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Engine.Imaging;
 using Engine.Data;
 using Engine.Scripting;
@@ -43,9 +44,21 @@ namespace Engine.World
             set => unmanaged->background = value;
         }
 
+        internal void SubscribeScript(Script script)
+        {
+            Start += script.StartAction;
+            OnFrame += script.OnFrameAction;
+        }
+
+        internal void UnubscribeScript(Script script)
+        {
+            Start -= script.StartAction;
+            OnFrame -= script.OnFrameAction;
+        }
+
         public void Add(Entity entity)
         {
-            #region Entry vefifications
+            #region Deffensive programming part
             // Obvious thing
             if (entity == null)
                 // Not sure if it's a good idea to make the application.
@@ -71,38 +84,30 @@ namespace Engine.World
             }
             #endregion
 
-            Queue<Entity> queue = new Queue<Entity>();
+            Queue<Entity> queue = new();
             queue.Enqueue(entity);
 
-            while (queue.Count > 0)
+            while (queue.TryDequeue(out Entity current))
             {
-                Entity current = queue.Dequeue();
                 addSingle(current);
-                current.childs.ForEach(child => queue.Enqueue(child));
+                foreach (Entity child in current.Children)
+                    queue.Enqueue(child);
             }
 
             void addSingle(Entity entity)
             {
                 entities.Add(entity);
-
                 if (entity is Collider collider)
                     colliders.Add(collider);
 
                 entity.AssignScene(this);
+
                 unmanaged->Add(entity);
 
-                #region Caches every script and subscribe to see when new scripts are added.
-                foreach (Script s in entity.Scripts)
-                {
-                    Start += s.StartAction;
-                    OnFrame += s.OnFrameAction;
-                }
-                entity.OnAddScript += script =>
-                {
-                    Start += script.StartAction;
-                    OnFrame += script.OnFrameAction;
-                };
-                #endregion
+                // Scene caches every script for performance reasons.
+                // When a new script is added to an Entity, the scene should be told.
+                foreach (Script script in entity.Scripts)
+                    SubscribeScript(script);
             }
         }
 

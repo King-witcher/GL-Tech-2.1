@@ -14,19 +14,19 @@ namespace Test
         // Esse é um mapa com uma quantidade extrema de planos para testes de gargalo.
         static void ExtremeGrid()
         {
-            using Image BlockMapbuf = new Image(DemoTextures.Plant);
-            using Image texturebuf = new Image(DemoTextures.GrayHexagons);
-            using Image backgroundbuf = new Image(DemoTextures.HellSky);
+            using Image BlockMapbuf = new(DemoTextures.Plant);
+            using Image Test = new(DemoTextures.Test);
+            using Image backgroundbuf = new(DemoTextures.CrazyBackground);
 
-            Texture background = new Texture(backgroundbuf);
+            Texture background = new Texture(backgroundbuf, 0, 3);
             Scene scene = new Scene(background);
 
             // BlockMap
             {
-                Texture tex = new Texture(BlockMapbuf, 0f, 1f);
-                BlockMap.TextureMapper tb = new BlockMap.TextureMapper();
+                Texture tex = new(Test, 0f, 1f, 0f, 25f);
+                BlockMap.TextureMapper tb = new();
                 tb[(0, 0, 0)] = tex;
-                BlockMap gm = new BlockMap(BlockMapbuf, tb);
+                BlockMap gm = new(BlockMapbuf, tb);
                 gm.WorldScale = 0.04f;
                 scene.Add(gm);
             }

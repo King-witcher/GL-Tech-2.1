@@ -8,7 +8,10 @@ namespace Test
         {
             Debug.OpenConsole();
 
+            PillarsMap();
             GridExample();
+            E1M1();
+            ExtremeGrid();
 
             Debug.Log("Releasing resources...");
         }

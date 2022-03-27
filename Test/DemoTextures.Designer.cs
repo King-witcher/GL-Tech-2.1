@@ -103,6 +103,16 @@ namespace Engine.Test {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CrazyBackground {
+            get {
+                object obj = ResourceManager.GetObject("CrazyBackground", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Diamond {
             get {
                 object obj = ResourceManager.GetObject("Diamond", resourceCulture);
@@ -163,9 +173,9 @@ namespace Engine.Test {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Nasa {
+        internal static System.Drawing.Bitmap Plant {
             get {
-                object obj = ResourceManager.GetObject("Nasa", resourceCulture);
+                object obj = ResourceManager.GetObject("Plant", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +183,9 @@ namespace Engine.Test {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Plant {
+        internal static System.Drawing.Bitmap Test {
             get {
-                object obj = ResourceManager.GetObject("Plant", resourceCulture);
+                object obj = ResourceManager.GetObject("Test", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -196,6 +206,16 @@ namespace Engine.Test {
         internal static System.Drawing.Bitmap V {
             get {
                 object obj = ResourceManager.GetObject("V", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap V2 {
+            get {
+                object obj = ResourceManager.GetObject("V2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

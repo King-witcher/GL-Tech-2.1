@@ -17,7 +17,7 @@ namespace Test
             // Buffers used
             using Image floors_buffer = new Image(DemoTextures.Floors);
             using Image golden_buffer = new Image(DemoTextures.Golden);
-            using Image v_buffer = new Image(DemoTextures.V);
+            using Image v_buffer = new Image(DemoTextures.V2);
             using Image background_buffer = new Image(DemoTextures.Universe);
 
             Texture background = new Texture(background_buffer);

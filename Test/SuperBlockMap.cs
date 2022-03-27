@@ -18,6 +18,13 @@ namespace Test
             Image blockmap_buffer = new(DemoTextures.Plant);
             Image test_buffer = new(DemoTextures.Test);
 
+            protected override void Delete()
+            {
+                blockmap_buffer.Dispose();
+                test_buffer.Dispose();
+                crazyBackground_buffer.Dispose();
+            }
+
             public SuperBlockMap()
             {
                 Texture background = new Texture(crazyBackground_buffer, 0, 3);
@@ -53,13 +60,6 @@ namespace Test
                 Engine.Renderer.FullScreen = true;
                 Engine.Renderer.SynchronizeThreads = true;
                 // Engine.Renderer.Run(this);
-            }
-
-            protected override void Delete()
-            {
-                blockmap_buffer.Dispose();
-                test_buffer.Dispose();
-                crazyBackground_buffer.Dispose();
             }
         }
     }

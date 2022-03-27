@@ -13,132 +13,136 @@ namespace Test
 {
     partial class Program
     {
-        static void PillarsMap()
+        public class PillarsMap : Scene
         {
             // Firstly, load buffers
-            using Image background_buffer = new(DemoTextures.HellSky);
-            using Image carvedWall_buffer = new(DemoTextures.CarvedWall);
-            using Image bricks_buffer = new(DemoTextures.Bricks);
-            using Image wood_buffer = new(DemoTextures.Wood);
-            using Image grayHexagons_buffer = new(DemoTextures.GrayHexagons);
+            Image background_buffer = new(DemoTextures.HellSky);
+            Image carvedWall_buffer = new(DemoTextures.CarvedWall);
+            Image bricks_buffer = new(DemoTextures.Bricks);
+            Image wood_buffer = new(DemoTextures.Wood);
+            Image grayHexagons_buffer = new(DemoTextures.GrayHexagons);
+
+            protected override void Delete()
+            {
+                background_buffer.Dispose();
+                carvedWall_buffer.Dispose();
+                bricks_buffer.Dispose();
+                wood_buffer.Dispose();
+                grayHexagons_buffer.Dispose();
+            }
 
             // Scene
-            Texture background = new Texture(
-                source: background_buffer,
-                hoffset: 0f,
-                hrepeat: 1f);
-
-            using Scene scene = new Scene(background);
-
-            // Pivot
+            public PillarsMap()
             {
-                Empty pivot = new(x: 0, y: 0.2868f);
-                pivot.AddScript(new Rotate { AngularSpeed = -20f });
+                Background = new Texture(background_buffer);
 
-                // Square
+                // Pivot
                 {
-                    Texture tex = new(
+                    Empty pivot = new(x: 0, y: 0.2868f);
+                    pivot.AddScript(new Rotate { AngularSpeed = -20f });
+
+                    // Square
+                    {
+                        Texture tex = new(
+                            source: wood_buffer,
+                            hoffset: 0f,
+                            hrepeat: 2f);
+
+                        Entity e = new RegularPolygon(
+                            position: (-1f, 0f),
+                            vertices: 4,
+                            radius: .354f,
+                            texture: tex);
+
+                        e.AddScript(new Rotate { AngularSpeed = 180f });
+                        e.Parent = pivot;
+                    }
+
+                    // Cylinder
+                    {
+                        Texture tex = new Texture(
+                            source: bricks_buffer,
+                            hoffset: 0f,
+                            hrepeat: 4f);
+
+                        Entity e = new RegularPolygon(
+                            position: (1f, 0f),
+                            vertices: 100,
+                            radius: .318f,
+                            texture: tex);
+
+                        e.AddScript(new Rotate { AngularSpeed = 180f });
+                        e.Parent = pivot;
+                    }
+
+                    // Triangle
+                    {
+                        Texture tex = new Texture(
+                            source: carvedWall_buffer,
+                            hoffset: 0f,
+                            hrepeat: 1f);
+
+                        Entity e = new RegularPolygon(
+                            position: (0f, 1.732f),
+                            vertices: 3,
+                            radius: -.385f,
+                            texture: tex);
+
+                        e.AddScript(new Rotate { AngularSpeed = 180f });
+                        e.Parent = pivot;
+                    }
+
+                    Add(pivot);
+                }
+
+                // Pillars
+                {
+                    Empty pillars = new(Vector.Zero);
+
+                    Texture tex = new Texture(
                         source: wood_buffer,
-                        hoffset: 0f,
-                        hrepeat: 2f);
-
-                    Entity e = new RegularPolygon(
-                        position: (-1f, 0f),
-                        vertices: 4,
-                        radius: .354f,
-                        texture: tex);
-
-                    e.AddScript(new Rotate { AngularSpeed = 180f });
-                    e.Parent = pivot;
-                }
-
-                // Cylinder
-                {
-                    Texture tex = new Texture(
-                        source: bricks_buffer,
-                        hoffset: 0f,
-                        hrepeat: 4f);
-
-                    Entity e = new RegularPolygon(
-                        position: (1f, 0f),
-                        vertices: 100,
-                        radius: .318f,
-                        texture: tex);
-
-                    e.AddScript(new Rotate { AngularSpeed = 180f });
-                    e.Parent = pivot;
-                }
-
-                // Triangle
-                {
-                    Texture tex = new Texture(
-                        source: carvedWall_buffer,
                         hoffset: 0f,
                         hrepeat: 1f);
 
-                    Entity e = new RegularPolygon(
-                        position: (0f, 1.732f),
-                        vertices: 3,
-                        radius: -.385f,
-                        texture: tex);
-
-                    e.AddScript(new Rotate { AngularSpeed = 180f });
-                    e.Parent = pivot;
-                }
-
-                scene.Add(pivot);
-            }
-
-            // Pillars
-            {
-                Empty pillars = new(Vector.Zero);
-
-                Texture tex = new Texture(
-                    source: wood_buffer,
-                    hoffset: 0f,
-                    hrepeat: 1f);
-
-                for (int i = -20; i < 20; i++)
-                {
-                    for (int j = -20; j < 20; j++)
+                    for (int i = -20; i < 20; i++)
                     {
-                        Entity pillar = new RegularPolygon(
-                            position: (i, j),
-                            vertices: 4,
-                            radius: 0.2f,
-                            texture: tex);
+                        for (int j = -20; j < 20; j++)
+                        {
+                            Entity pillar = new RegularPolygon(
+                                position: (i, j),
+                                vertices: 4,
+                                radius: 0.2f,
+                                texture: tex);
 
-                        Rotate rotate = new();
-                        rotate.AngularSpeed = Random.GetFloat(-90f, 90f);
+                            Rotate rotate = new();
+                            rotate.AngularSpeed = Random.GetFloat(-90f, 90f);
 
-                        pillar.Parent = pillars;
-                        pillar.AddScript(rotate);
+                            pillar.Parent = pillars;
+                            pillar.AddScript(rotate);
+                        }
                     }
+
+                    Add(pillars);
                 }
 
-                scene.Add(pillars);
+                // Camera
+                {
+                    Camera.AddScript<SwitchBackgroundScript>();
+                    Camera.AddScript<DebugPerformanceStats>();
+                    Camera.AddScript<MouseLook>();
+                    NoclipMode nm = new NoclipMode();
+                    Camera.AddScript(nm);
+                    SoftMovement movement = new SoftMovement(nm);
+                    Camera.AddScript(movement);
+                }
+
+                // Setup Renderer
+                Engine.Renderer.FullScreen = true;
+                Engine.Renderer.FieldOfView = 110f;
+                Engine.Renderer.ParallelRendering = true;
+                Engine.Renderer.SynchronizeThreads = true;
+                Engine.Renderer.CaptureMouse = true;
             }
-
-            // Camera
-            {
-                scene.Camera.AddScript<SwitchBackgroundScript>();
-                scene.Camera.AddScript<DebugPerformanceStats>();
-                scene.Camera.AddScript<MouseLook>();
-                NoclipMode nm = new NoclipMode();
-                scene.Camera.AddScript(nm);
-                SoftMovement movement = new SoftMovement(nm);
-                scene.Camera.AddScript(movement);
-            }
-
-            // Setup Renderer
-            Engine.Renderer.FullScreen = true;
-            Engine.Renderer.FieldOfView = 110f;
-            Engine.Renderer.ParallelRendering = true;
-            Engine.Renderer.SynchronizeThreads = true;
-            Engine.Renderer.CaptureMouse = true;
-
-            // Run!
-            Engine.Renderer.Run(scene);
         }
     }
 

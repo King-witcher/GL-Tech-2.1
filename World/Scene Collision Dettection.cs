@@ -5,7 +5,7 @@ namespace Engine.World
 {
     partial class Scene
     {
-        public Collider RayCast(Ray ray, out float distance)
+        public Collider CastRay(Ray ray, out float distance)
         {
             Collider nearest = null;
             distance = float.PositiveInfinity;
@@ -23,7 +23,7 @@ namespace Engine.World
             return nearest;
         }
 
-        public unsafe void RayCast(Ray ray, out float distance, out Vector normal)
+        public unsafe void CastRay(Ray ray, out float distance, out Vector normal)
         {
             ray.direction /= ray.direction.Module;
 

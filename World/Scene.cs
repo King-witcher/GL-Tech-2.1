@@ -7,7 +7,7 @@ using Engine.Scripting;
 
 namespace Engine.World
 {
-    public unsafe sealed partial class Scene : IDisposable
+    public unsafe partial class Scene : IDisposable
     {
         internal SScene* unmanaged;
 
@@ -19,9 +19,10 @@ namespace Engine.World
         {
             unmanaged = SScene.Create();
 
+            // Bad smell
             Camera defaultCamera = new();
             Add(defaultCamera);
-            this.camera = defaultCamera;
+            camera = defaultCamera;
         }
 
         public Scene(Texture background) : this()
@@ -122,11 +123,21 @@ namespace Engine.World
             SScene.Delete(unmanaged);
             unmanaged = null;
 
+            Delete();
+
             entities.Clear();
             colliders.Clear();
 
             Start = null;
             OnFrame = null;
+        }
+
+        /// <summary>
+        /// Releases unmanaged resources.
+        /// </summary>
+        protected virtual void Delete()
+        {
+
         }
     }
 }

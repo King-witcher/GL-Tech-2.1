@@ -44,7 +44,7 @@ namespace Engine.Scripting.Physics
             // Step relative to current frame
             float deltaS = Speed * Frame.DeltaTime;
 
-            Scene.RayCast(
+            Scene.CastRay(
                 new Ray(Entity.WorldPosition, Velocity),
                 out float cllsn_dist,
                 out Vector cllsn_normal);
@@ -59,7 +59,7 @@ namespace Engine.Scripting.Physics
                 // Test against a second collision. If so, stop.
                 deltaS = Speed * Frame.DeltaTime;
 
-                Scene.RayCast(
+                Scene.CastRay(
                     new Ray(Entity.WorldPosition, Velocity),
                     out cllsn_dist,
                     out cllsn_normal);

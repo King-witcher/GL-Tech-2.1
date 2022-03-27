@@ -103,6 +103,36 @@ namespace Engine.Test {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Diamond {
+            get {
+                object obj = ResourceManager.GetObject("Diamond", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Floors {
+            get {
+                object obj = ResourceManager.GetObject("Floors", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Golden {
+            get {
+                object obj = ResourceManager.GetObject("Golden", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap GrayHexagons {
             get {
                 object obj = ResourceManager.GetObject("GrayHexagons", resourceCulture);
@@ -133,6 +163,16 @@ namespace Engine.Test {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Nasa {
+            get {
+                object obj = ResourceManager.GetObject("Nasa", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Plant {
             get {
                 object obj = ResourceManager.GetObject("Plant", resourceCulture);
@@ -146,6 +186,16 @@ namespace Engine.Test {
         internal static System.Drawing.Bitmap Universe {
             get {
                 object obj = ResourceManager.GetObject("Universe", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap V {
+            get {
+                object obj = ResourceManager.GetObject("V", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

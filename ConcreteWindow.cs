@@ -19,6 +19,7 @@ namespace Engine
 
             InitializeComponent();
             this.Dimensions = (source.Width, source.Height);
+            CenterToScreen();
             if (fullscreen)
             {
                 FormBorderStyle = FormBorderStyle.None;

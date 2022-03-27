@@ -15,9 +15,9 @@ namespace Test
         static void GridExample()
         {
             // Buffers used
-            using Image bricks_buffer = new Image(DemoTextures.Bricks);
-            using Image wood_buffer = new Image(DemoTextures.Wood);
-            using Image hexagons_buffer = new Image(DemoTextures.GrayHexagons);
+            using Image floors_buffer = new Image(DemoTextures.Floors);
+            using Image golden_buffer = new Image(DemoTextures.Golden);
+            using Image v_buffer = new Image(DemoTextures.V);
             using Image background_buffer = new Image(DemoTextures.Universe);
 
             Texture background = new Texture(background_buffer);
@@ -29,19 +29,20 @@ namespace Test
                 using Image grid = new Image(DemoTextures.MapGrid);
                 BlockMap.TextureMapper mapper = new BlockMap.TextureMapper();
                 {
-                    Texture bricks = new Texture(
-                        source: bricks_buffer,
-                        hrepeat: 2f);
-                    Texture wood = new Texture(
-                        source: wood_buffer,
+                    Texture floors = new Texture(
+                        source: floors_buffer,
+                        hrepeat: 0.25f,
+                        vrepeat: 0.25f);
+                    Texture golden = new Texture(
+                        source: golden_buffer,
                         hrepeat: 1f);
-                    Texture hexagons = new Texture(
-                        source: hexagons_buffer,
-                        hrepeat: 2f);
+                    Texture v = new Texture(
+                        source: v_buffer,
+                        hrepeat: 1f);
 
-                    mapper[(255, 255, 255)] = bricks;
-                    mapper[(0, 192, 0)] = wood;
-                    mapper[(128, 0, 255)] = hexagons;
+                    mapper[(255, 255, 255)] = floors;
+                    mapper[(0, 192, 0)] = golden;
+                    mapper[(128, 0, 255)] = v;
                 }
 
                 BlockMap map = new BlockMap(map: grid, textureBindings: mapper);

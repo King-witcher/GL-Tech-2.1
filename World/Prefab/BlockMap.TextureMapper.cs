@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 
 using Engine.Imaging; 
 
 namespace Engine.World.Prefab
 {
+
     partial class BlockMap
     {
+
         public class TextureMapper
         {
             // Fiz isso pra que o usuário seja capaz de programar utilizando somente a minha biblioteca, mas ainda posso otimizar o funcionamento disso futuramente, implementando na mão.

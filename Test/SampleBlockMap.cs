@@ -38,21 +38,28 @@ namespace Test
                     {
                         Texture floors = new Texture(
                             source: floors_buffer,
-                            hrepeat: 0.25f,
+                            hrepeat: 1f,
                             vrepeat: 0.25f);
                         Texture golden = new Texture(
                             source: golden_buffer,
-                            hrepeat: 1f);
+                            hrepeat: 4f);
                         Texture v = new Texture(
                             source: v_buffer,
-                            hrepeat: 1f);
+                            hrepeat: 4f);
 
                         mapper[(255, 255, 255)] = floors;
                         mapper[(0, 192, 0)] = golden;
                         mapper[(128, 0, 255)] = v;
                     }
 
-                    BlockMap map = new BlockMap(map: grid, textureBindings: mapper);
+                    // BlockMap map = new BlockMap(map: grid, textureBindings: mapper);
+                    BlockMap map = new(
+                        map: grid,
+                        mapTexture: color => mapper[color],
+                        textureFilling: BlockMap.TextureFilling.Block,
+                        colliders: false,
+                        optimization: BlockMap.Optimization.Medium);
+
                     Add(map);
                 }
 

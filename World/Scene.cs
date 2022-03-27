@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using Engine.Imaging;
 using Engine.Data;
+using Engine.Imaging;
 using Engine.Scripting;
 
 namespace Engine.World

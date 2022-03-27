@@ -11,7 +11,8 @@ namespace Test
             PillarsMap();
             GridExample();
             E1M1();
-            ExtremeGrid();
+            ExtremeGrid eg = new();
+            Renderer.Run(eg);
 
             Debug.Log("Releasing resources...");
         }

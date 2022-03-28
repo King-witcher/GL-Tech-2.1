@@ -36,6 +36,11 @@ namespace Engine.Scripting.Prefab
         void OnFrame()
         {
             UpdateVelocity(GetMaxSpeed());
+
+            if (Keyboard.IsKeyDown(InputKey.Left))
+                Entity.RelativeRotation -= Frame.DeltaTime * TurnSpeed;
+            if (Keyboard.IsKeyDown(InputKey.Right))
+                Entity.RelativeRotation += Frame.DeltaTime * TurnSpeed;
         }
 
         float GetMaxSpeed()

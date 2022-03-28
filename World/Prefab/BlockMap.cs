@@ -17,8 +17,7 @@ namespace Engine.World.Prefab
         public enum Optimization
         {
             Low,
-            Medium,
-            High
+            Medium
         }
 
         public enum TextureFilling
@@ -37,10 +36,22 @@ namespace Engine.World.Prefab
         }
 
         internal BlockMap(Image map, Func<Color, Texture> mapTexture, TextureFilling textureFilling,
-            Optimization optimization = Optimization.Medium, bool colliders = true)
+            bool optimize = true, bool colliders = true)
         {
-            if (optimization == Optimization.Low) make_O1();
-            else if (optimization == Optimization.Medium) make_O2();
+            if (optimize) optmizedMode();
+            else suboptimalMode();
+            
+            // Cada bloco, em tese, geraria quatro paredes e quatro colisores ao seu redor.
+            // Esse método foi otimizado considerando-se que, se duas paredes forem desenhadas sobre o mesmo lugar, isso significa que não existe superfície visível por ali e, portanto, nenhuma das duas deverá ser realmente renderizada.
+            bool isEmpty(int column, int line)
+            {
+                if (column < 0 || column >= map.Height || line < 0 || line >= map.Width)
+                    return true;
+                if (mapTexture(map[column, line]).IsNull)
+                    return true;
+                return false;
+            }
+
 
             Texture decideSideTexture(int line, int column, Texture texture, Side side)
                 => textureFilling switch
@@ -106,7 +117,7 @@ namespace Engine.World.Prefab
                 walls++;
             }
 
-            void make_O1()
+            void suboptimalMode()
             {
                 // Parallel.For causou problemas de concorrência.
                 for (int column = 0; column < map.Width; column++)
@@ -130,17 +141,42 @@ namespace Engine.World.Prefab
                 }
             }
 
-            void make_O2()
+            void optmizedMode()
             {
-                // Cada bloco, em tese, geraria quatro paredes e quatro colisores ao seu redor.
-                // Esse método foi otimizado considerando-se que, se duas paredes forem desenhadas sobre o mesmo lugar, isso significa que não existe superfície visível por ali e, portanto, nenhuma das duas deverá ser realmente renderizada.
-                bool blockFree(int column, int line)
+                #region Make Planes
+                void makePlaneOnly(int column, int line, Texture block_texture, Side side)
                 {
-                    if (column < 0 || column >= map.Height || line < 0 || line >= map.Width)
-                        return true;
-                    if (mapTexture(map[column, line]).IsNull)
-                        return true;
-                    return false;
+                    Vector start, end;
+
+                    switch (side)
+                    {
+                        case Side.left:
+                            start = (line, column);
+                            end = (line + 1, column);
+                            break;
+
+                        case Side.bottom:
+                            start = (line + 1, column);
+                            end = (line + 1, column + 1);
+                            break;
+
+                        case Side.right:
+                            start = (line + 1, column + 1);
+                            end = (line, column + 1);
+                            break;
+
+                        case Side.top:
+                            start = (line, column + 1);
+                            end = (line, column);
+                            break;
+
+                        default:
+                            throw new ArgumentException("side");
+                    }
+
+                    Texture side_texture = decideSideTexture(line, column, block_texture, side);
+                    Plane plane = new(start, end, side_texture);
+                    plane.Parent = this;
                 }
 
                 for (int column = 0; column < map.Width; column++)
@@ -150,19 +186,138 @@ namespace Engine.World.Prefab
                         Texture block_texture = mapTexture(map[column, line]);
                         if (block_texture.IsNull) continue;
 
-                        if (blockFree(column - 1, line))
-                            makeSide(column, line, block_texture, Side.left);
+                        if (isEmpty(column - 1, line))
+                            makePlaneOnly(column, line, block_texture, Side.left);
 
-                        if (blockFree(column, line + 1))
-                            makeSide(column, line, block_texture, Side.bottom);
+                        if (isEmpty(column, line + 1))
+                            makePlaneOnly(column, line, block_texture, Side.bottom);
 
-                        if (blockFree(column + 1, line))
-                            makeSide(column, line, block_texture, Side.right);
+                        if (isEmpty(column + 1, line))
+                            makePlaneOnly(column, line, block_texture, Side.right);
 
-                        if (blockFree(column, line - 1))
-                            makeSide(column, line, block_texture, Side.top);
+                        if (isEmpty(column, line - 1))
+                            makePlaneOnly(column, line, block_texture, Side.top);
                     }
                 }
+                #endregion
+
+                #region Make Colliders
+                // Suboptimal
+                ushort[,,] joining_table = new ushort[map.Width, map.Height, 4];
+
+                for (int column = 0; column < map.Width; column++)
+                {
+                    for (int line = 0; line < map.Height; line++)
+                    {
+                        if (isEmpty(column, line))
+                            continue;
+
+                        // Left
+                        if (isEmpty(column - 1, line))
+                        {
+                            if (line == 0 || joining_table[column, line - 1, 0] == 0)
+                            {
+                                joining_table[column, line, 0] = 1;
+                            }
+                            else
+                            {
+                                joining_table[column, line, 0] = (ushort)(joining_table[column, line - 1, 0] + 1);
+                                joining_table[column, line - 1, 0] = 0;
+                            }
+                        }
+
+                        // Bottom
+                        if (isEmpty(column, line + 1))
+                        {
+                            if (column == 0 || joining_table[column - 1, line, 1] == 0)
+                            {
+                                joining_table[column, line, 1] = 1;
+                            }
+                            else
+                            {
+                                joining_table[column, line, 1] = (ushort)(joining_table[column - 1, line, 1] + 1);
+                                joining_table[column - 1, line, 1] = 0;
+                            }
+                        }
+
+                        // Right
+                        if (isEmpty(column + 1, line))
+                        {
+                            if (line == 0 || joining_table[column, line - 1, 2] == 0)
+                            {
+                                joining_table[column, line, 2] = 1;
+                            }
+                            else
+                            {
+                                joining_table[column, line, 2] = (ushort)(joining_table[column, line - 1, 2] + 1);
+                                joining_table[column, line - 1, 2] = 0;
+                            }
+                        }
+
+                        // Top
+                        if (isEmpty(column, line - 1))
+                        {
+                            if (column == 0 || joining_table[column - 1, line, 3] == 0)
+                            {
+                                joining_table[column, line, 3] = 1;
+                            }
+                            else
+                            {
+                                joining_table[column, line, 3] = (ushort)(joining_table[column - 1, line, 3] + 1);
+                                joining_table[column - 1, line, 3] = 0;
+                            }
+                        }
+                    }
+                }
+
+                for (int column = 0; column < map.Width; column++)
+                {
+                    for (int line = 0; line < map.Height; line++)
+                    {
+                        // Left
+                        int left_stack = joining_table[column, line, 0];
+                        int bottom_stack = joining_table[column, line, 1];
+                        int right_stack = joining_table[column, line, 2];
+                        int top_stack = joining_table[column, line, 3];
+
+                        if (left_stack != 0)
+                        {
+                            Vector start = (line - left_stack + 1, column);
+                            Vector end = (line + 1, column);
+
+                            Collider collider = new(start, end);
+                            collider.Parent = this;
+                        }
+
+                        if (bottom_stack != 0)
+                        {
+                            Vector start = (line + 1, column + 1 - bottom_stack);
+                            Vector end = (line + 1, column + 1);
+
+                            Collider collider = new(start, end);
+                            collider.Parent = this;
+                        }
+
+                        if (right_stack != 0)
+                        {
+                            Vector start = (line + 1, column + 1);
+                            Vector end = (line - right_stack + 1, column + 1);
+
+                            Collider collider = new(start, end);
+                            collider.Parent = this;
+                        }
+
+                        if (top_stack != 0)
+                        {
+                            Vector start = (line, column + 1);
+                            Vector end = (line, column - top_stack + 1);
+
+                            Collider collider = new(start, end);
+                            collider.Parent = this;
+                        }
+                    }
+                }
+                #endregion
             }
         }
     }

@@ -64,7 +64,7 @@ namespace Test
                             else return Texture.NullTexture;
                         },
                         textureFilling: BlockMap.TextureFilling.Block,
-                        optimization: BlockMap.Optimization.Medium,
+                        optimize: true,
                         colliders: true);
 
                     Add(blockMap);

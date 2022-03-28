@@ -213,7 +213,7 @@ namespace Test
                             else return Texture.NullTexture;
                         },
                         textureFilling: BlockMap.TextureFilling.Side,
-                        optimization: BlockMap.Optimization.Medium,
+                        optimize: true,
                         colliders: true);
                     Add(blockMap);
                 }

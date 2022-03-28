@@ -48,7 +48,7 @@ namespace Test
                             else return Texture.NullTexture;
                         },
                         textureFilling: BlockMap.TextureFilling.Side,
-                        optimization: BlockMap.Optimization.Medium,
+                        optimize: true,
                         colliders: false);
 
                     blockMap.WorldScale = 0.04f;

@@ -55,7 +55,6 @@ namespace Engine.World
             unmanaged = SPlane.Create(start, end, texture);
         }
 
-
         public override void Dispose()
         {
             SPlane.Delete(unmanaged);

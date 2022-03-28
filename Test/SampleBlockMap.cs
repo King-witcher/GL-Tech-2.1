@@ -7,6 +7,8 @@ using Engine.Scripting.Prefab;
 using Engine.Scripting.Physics;
 using Engine.Test;
 
+using System.Collections.Generic;
+
 namespace Test
 {
     partial class Program
@@ -33,8 +35,8 @@ namespace Test
 
                 // BlockMap
                 {
-                    using Image grid = new Image(DemoTextures.MapGrid);
-                    BlockMap.TextureMapper mapper = new BlockMap.TextureMapper();
+                    using Image blockmap_buffer = new Image(DemoTextures.MapGrid);
+                    Dictionary<Color, Texture> dict = new();
                     {
                         Texture floors = new Texture(
                             source: floors_buffer,
@@ -47,20 +49,25 @@ namespace Test
                             source: v_buffer,
                             hrepeat: 4f);
 
-                        mapper[(255, 255, 255)] = floors;
-                        mapper[(0, 192, 0)] = golden;
-                        mapper[(128, 0, 255)] = v;
+                        dict[(255, 255, 255)] = floors;
+                        dict[(0, 192, 0)] = golden;
+                        dict[(128, 0, 255)] = v;
                     }
 
                     // BlockMap map = new BlockMap(map: grid, textureBindings: mapper);
-                    BlockMap map = new(
-                        map: grid,
-                        mapTexture: color => mapper[color],
+                    BlockMap blockMap = new(
+                        map: blockmap_buffer,
+                        mapTexture: color =>
+                        {
+                            if (dict.TryGetValue(color, out Texture texture))
+                                return texture;
+                            else return Texture.NullTexture;
+                        },
                         textureFilling: BlockMap.TextureFilling.Block,
-                        colliders: false,
-                        optimization: BlockMap.Optimization.Medium);
+                        optimization: BlockMap.Optimization.Medium,
+                        colliders: true);
 
-                    Add(map);
+                    Add(blockMap);
                 }
 
                 // Camera

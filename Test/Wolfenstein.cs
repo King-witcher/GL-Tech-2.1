@@ -9,6 +9,7 @@ using Engine.Scripting.Prefab;
 using Engine.Scripting.Physics;
 
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Test
 {
@@ -87,8 +88,8 @@ namespace Test
 
                 // BlockMap
                 {
-                    using Image grid = new Image(WE1M1.MapGrid);
-                    BlockMap.TextureMapper binds = new BlockMap.TextureMapper();
+                    using Image blockmap_buffer = new Image(WE1M1.MapGrid);
+                    Dictionary<Color, Texture> dict = new();
                     {
                         Texture blueStone1 = new Texture(
                             source: textures,
@@ -186,23 +187,35 @@ namespace Test
                         Texture bolsonaro = new Texture(bolsonaro_buffer);
                         Texture dolar = new Texture(dolar_buffer);
 
-                        binds[(0, 0, 255)] = blueStone1;
-                        binds[(0, 0, 128)] = blueStone2;
-                        binds[(0, 0, 64)] = bluestoneCell;
-                        binds[(0, 128, 0)] = bluestoneCellSkeleton;
-                        binds[(128, 128, 128)] = grayStone1;
-                        binds[(64, 64, 64)] = grayStone2;
-                        binds[(255, 0, 0)] = gs_naziFlag;
-                        binds[(128, 64, 0)] = gs_hitler;
-                        binds[(255, 255, 0)] = gs_goldEagle;
-                        binds[(255, 128, 0)] = woodPanelling;
-                        binds[(255, 192, 128)] = wp_whiteEagle;
-                        binds[(80, 40, 0)] = wp_hitler;
-                        binds[(128, 255, 128)] = elevator;
+                        dict[(0, 0, 255)] = blueStone1;
+                        dict[(0, 0, 128)] = blueStone2;
+                        dict[(0, 0, 64)] = bluestoneCell;
+                        dict[(0, 128, 0)] = bluestoneCellSkeleton;
+                        dict[(128, 128, 128)] = grayStone1;
+                        dict[(64, 64, 64)] = grayStone2;
+                        dict[(255, 0, 0)] = gs_naziFlag;
+                        dict[(128, 64, 0)] = gs_hitler;
+                        dict[(255, 255, 0)] = gs_goldEagle;
+                        dict[(255, 128, 0)] = woodPanelling;
+                        dict[(255, 192, 128)] = wp_whiteEagle;
+                        dict[(80, 40, 0)] = wp_hitler;
+                        dict[(128, 255, 128)] = elevator;
                     }
 
-                    BlockMap BlockMap = new BlockMap(map: grid, textureBindings: binds);
-                    Add(BlockMap);
+                    // BlockMap BlockMap = new BlockMap(map: grid, textureBindings: binds);
+
+                    BlockMap blockMap = new(
+                        map: blockmap_buffer,
+                        mapTexture: color =>
+                        {
+                            if (dict.TryGetValue(color, out Texture texture))
+                                return texture;
+                            else return Texture.NullTexture;
+                        },
+                        textureFilling: BlockMap.TextureFilling.Side,
+                        optimization: BlockMap.Optimization.Medium,
+                        colliders: true);
+                    Add(blockMap);
                 }
 
                 // Camera

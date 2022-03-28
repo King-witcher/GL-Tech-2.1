@@ -7,6 +7,8 @@ using Engine.Scripting.Prefab;
 using Engine.Scripting.Physics;
 using Engine.Test;
 
+using System.Collections.Generic;
+
 namespace Test
 {
     partial class Program
@@ -33,11 +35,24 @@ namespace Test
                 // BlockMap
                 {
                     Texture tex = new(test_buffer, 0f, 1f, 0f, 25f);
-                    BlockMap.TextureMapper tb = new();
-                    tb[(0, 0, 0)] = tex;
-                    BlockMap gm = new(blockmap_buffer, tb);
-                    gm.WorldScale = 0.04f;
-                    Add(gm);
+
+                    Dictionary<Color, Texture> dict = new();
+                    dict[(0, 0, 0)] = tex;
+
+                    BlockMap blockMap = new(
+                        map: blockmap_buffer,
+                        mapTexture: color =>
+                        {
+                            if (dict.TryGetValue(color, out Texture texture))
+                                return texture;
+                            else return Texture.NullTexture;
+                        },
+                        textureFilling: BlockMap.TextureFilling.Side,
+                        optimization: BlockMap.Optimization.Medium,
+                        colliders: false);
+
+                    blockMap.WorldScale = 0.04f;
+                    Add(blockMap);
                 }
 
                 // Camera

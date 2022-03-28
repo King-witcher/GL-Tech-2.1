@@ -46,44 +46,27 @@ namespace Engine.World.Prefab
                 => textureFilling switch
                 {
                     TextureFilling.Side => texture,
-                    TextureFilling.Space => texture, // TODO essa preguiça
-                    TextureFilling.Block => side switch // TODO vai inverter
-                    {
-                        Side.left => new Texture(
+                    TextureFilling.Space => texture,
+                    TextureFilling.Block => new Texture(
                             source: texture.source,
-                            hoffset: 0f,
+                            hoffset: texture.hrepeat * side switch
+                            {
+                                Side.left => 0f,
+                                Side.bottom => 0.25f,
+                                Side.right => 0.5f,
+                                Side.top => 0.75f,
+                                _ => throw new ArgumentException("side")
+                            },
                             hrepeat: texture.hrepeat * 0.25f,
                             voffset: texture.voffset,
                             vrepeat: texture.vrepeat),
-
-                        Side.bottom => new Texture(
-                            source: texture.source,
-                            hoffset: texture.hrepeat * 0.25f,
-                            hrepeat: texture.hrepeat * 0.25f,
-                            voffset: texture.voffset,
-                            vrepeat: texture.vrepeat),
-
-                        Side.right => new Texture(
-                            source: texture.source,
-                            hoffset: texture.hrepeat * 0.5f,
-                            hrepeat: texture.hrepeat * 0.25f,
-                            voffset: texture.voffset,
-                            vrepeat: texture.vrepeat),
-
-                        Side.top => new Texture(
-                            source: texture.source,
-                            hoffset: texture.hrepeat * 0.75f,
-                            hrepeat: texture.hrepeat * 0.25f,
-                            voffset: texture.voffset,
-                            vrepeat: texture.vrepeat),
-                        _ => throw new ArgumentException("side")
-                    },
                     _ => throw new ArgumentException("textureFilling")
                 };
 
             void makeSide(int column, int line, Texture block_texture, Side side)
             {
                 Vector start, end;
+
                 switch (side)
                 {
                     case Side.left:
@@ -110,7 +93,7 @@ namespace Engine.World.Prefab
                         throw new ArgumentException("side");
                 }
 
-                Texture side_texture = decideSideTexture(line, column, block_texture, Side.left);
+                Texture side_texture = decideSideTexture(line, column, block_texture, side);
                 Plane plane = new(start, end, side_texture);
                 plane.Parent = this;
 

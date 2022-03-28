@@ -73,8 +73,12 @@ namespace Test
                 // Camera
                 {
                     Camera camera = Camera;
+                    camera.WorldPosition = (5f, 5f);
+                    camera.RelativeRotation = -90f;
+
                     camera.AddScript<DebugPerformanceStats>();
                     camera.AddScript<DebugSceneInfo>();
+                    camera.AddScript<DebugComponents>();
 
                     PointCollider collider = new PointCollider();
                     SoftMovement movement = new SoftMovement(collider);

@@ -14,12 +14,6 @@ namespace Engine.World.Prefab
 
         public int Walls => walls;
 
-        public enum Optimization
-        {
-            Low,
-            Medium
-        }
-
         public enum TextureFilling
         {
             Side,
@@ -27,12 +21,12 @@ namespace Engine.World.Prefab
             Space
         }
 
-        private enum Side : byte
+        private enum Side
         {
-            top = 0b0001,
-            right = 0b0010,
-            bottom = 0b0100,
-            left = 0b1000
+            top,
+            right,
+            bottom,
+            left
         }
 
         internal BlockMap(Image map, Func<Color, Texture> mapTexture, TextureFilling textureFilling,

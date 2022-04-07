@@ -132,7 +132,7 @@ namespace Engine
             frontBuffer = new(CustomWidth, CustomHeight);
 
             // A window that will continuously display the buffer
-            Window display = new(frontBuffer, FullScreen);
+            WindowAdapter display = new(frontBuffer, FullScreen);
 
             // Setup input managers
             if (CaptureMouse)

@@ -5,7 +5,7 @@ using Engine.Input;
 
 namespace Engine
 {
-    public partial class WindowAdapter : IDisposable, IKeyboardEventTrigger
+    public partial class WindowAdapter : IDisposable, IKeyboard
     {
         ConcreteWindow concrete;
 

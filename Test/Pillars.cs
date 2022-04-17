@@ -155,20 +155,37 @@ namespace Test
             background = Scene.Background;
         }
 
-        void OnFrame()
+        // PAREI AQUI, TAVA DANDO ALGUM ERRO MUITO ESTRANHO
+        void OnKeyDown(InputKey key)
         {
-            if (Keyboard.IsKeyDown(InputKey.Q))
+            if (key == InputKey.E)
             {
                 if (Scene.Background.source.Buffer == System.IntPtr.Zero)
                     Debug.Log("Scene background enabled.");
                 Scene.Background = background;
             }
-            if (Keyboard.IsKeyDown(InputKey.E))
+            else if (key == InputKey.Q)
             {
                 if (Scene.Background.source.Buffer != System.IntPtr.Zero)
                     Debug.Log("Scene background disabled.");
                 Scene.Background = Texture.NullTexture;
             }
         }
+
+        /*void OnFrame()
+        {
+            if (Keyboard.IsKeyDown(InputKey.Q))
+            {
+                if (Scene.Background == Texture.NullTexture)
+                    Debug.Log("Scene background enabled.");
+                Scene.Background = background;
+            }
+            if (Keyboard.IsKeyDown(InputKey.E))
+            {
+                if (Scene.Background != Texture.NullTexture)
+                    Debug.Log("Scene background disabled.");
+                Scene.Background = Texture.NullTexture;
+            }
+        }*/
     }
 }

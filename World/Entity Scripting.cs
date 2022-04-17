@@ -35,6 +35,28 @@ namespace Engine.World
             }
         }
 
+        internal Action<Input.InputKey> OnKeyDown
+        {
+            get
+            {
+                Action<Input.InputKey> action = null;
+                foreach (Script script in scripts)
+                    action += script.OnKeyDownAction;
+                return action;
+            }
+        }
+
+        internal Action<Input.InputKey> OnKeyUp
+        {
+            get
+            {
+                Action<Input.InputKey> action = null;
+                foreach (Script script in scripts)
+                    action += script.OnKeyUpAction;
+                return action;
+            }
+        }
+
         public void AddScript(Script script)
         {
             #region Ensures that the entry is not null and the script was not added to any entity.

@@ -1,12 +1,26 @@
 ﻿using System;
 using System.Reflection;
 using Engine.World;
+using Engine.Input;
 
 namespace Engine.Scripting
 {
     public abstract partial class Script
     {
         private Entity entity;
+
+        private static Action Scheduled;
+
+        internal static void Schedule(Action action)
+        {
+
+        }
+
+        internal static void RunScheduled()
+        {
+            Scheduled?.Invoke();
+            Scheduled = null;
+        }
 
         internal void Assign(Entity e)
         {
@@ -25,16 +39,11 @@ namespace Engine.Scripting
         {
             get
             {
-                if (start is null)
+                if (start == null)
                 {
-                    MethodInfo startInfo = GetType().GetMethod("Start",
-                        BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
-                        null,
-                        new Type[0],
-                        null);
-
-                    if (startInfo != null)
-                        start = () => startInfo?.Invoke(this, null);
+                    var method = GetMethod("Start");
+                    if (method != null)
+                        start = () => method.Invoke(this, null);
                 }
 
                 return start;
@@ -49,18 +58,75 @@ namespace Engine.Scripting
             {
                 if (onFrame is null)
                 {
-                    MethodInfo updateInfo = GetType().GetMethod("OnFrame",
-                        BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
-                        null,
-                        new Type[0],
-                        null);
-
-                    if (updateInfo != null)
-                        onFrame = () => updateInfo?.Invoke(this, null);
+                    var method = GetMethod("OnFrame");
+                    if (method != null)
+                        onFrame = () => method.Invoke(this, null);
                 }
 
                 return onFrame;
             }
+        }
+
+        private Action<InputKey> onKeyDown = null;
+        internal Action<InputKey> OnKeyDownAction
+        {
+            get
+            {
+                if (onKeyDown == null)
+                {
+                    var method = GetMethod("OnKeyDown", typeof(InputKey));
+                    if (method != null)
+                    {
+                        onKeyDown = inputKey =>
+                        {
+                            var param = new object[] { inputKey };
+                            method.Invoke(this, param);
+                        };
+                    }
+                }
+
+                return onKeyDown;
+            }
+        }
+
+        private Action<InputKey> onKeyUp = null;
+        internal Action<InputKey> OnKeyUpAction
+        {
+            get
+            {
+                if (onKeyUp == null)
+                {
+                    var method = GetMethod("OnKeyUp", typeof(InputKey));
+                    if (method != null)
+                    {
+                        onKeyUp = inputKey =>
+                        {
+                            var param = new object[] { inputKey };
+                            method.Invoke(this, param);
+                        };
+                    }
+                }
+
+                return onKeyUp;
+            }
+        }
+
+        private MethodInfo GetMethod(string methodName)
+        {
+            return GetType().GetMethod(methodName,
+                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
+                null,
+                new Type[0],
+                null);
+        }
+
+        private MethodInfo GetMethod(string methodName, params Type[] parameterTypes)
+        {
+            return GetType().GetMethod(methodName,
+                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
+                null,
+                parameterTypes,
+                null);
         }
     }
 }

@@ -31,6 +31,8 @@ namespace Engine.World
 
         internal Action Start { get; private set; }
         internal Action OnFrame { get; private set; }
+        internal Action<Input.InputKey> OnKeyDown { get; private set; }
+        internal Action<Input.InputKey> OnKeyUp { get; private set; }
         public int ColliderCount => colliders.Count;
         public int EntityCount => entities.Count;
         public int PlaneCount => unmanaged->plane_count;
@@ -46,12 +48,16 @@ namespace Engine.World
         {
             Start += script.StartAction;
             OnFrame += script.OnFrameAction;
+            OnKeyDown += script.OnKeyDownAction;
+            OnKeyUp += script.OnKeyUpAction;
         }
 
         internal void UnubscribeScript(Script script)
         {
             Start -= script.StartAction;
             OnFrame -= script.OnFrameAction;
+            OnKeyDown -= script.OnKeyDownAction;
+            OnKeyUp -= script.OnKeyUpAction;
         }
 
         public void Add(Entity entity)
@@ -87,12 +93,12 @@ namespace Engine.World
 
             while (queue.TryDequeue(out Entity current))
             {
-                addSingle(current);
+                add(current);
                 foreach (Entity child in current.Children)
                     queue.Enqueue(child);
             }
 
-            void addSingle(Entity entity)
+            void add(Entity entity)
             {
                 entities.Add(entity);
                 if (entity is Collider collider)

@@ -7,15 +7,20 @@ namespace Engine
 {
     public static class Debug
     {
-        private static bool consoleEnabled = false;
-
-        public static bool Enabled => consoleEnabled;
+        private static bool enabled = false;
+        public static bool Enabled => enabled;
 
         public enum Options { Normal, Success, Warning, Error }
 
-        public static void Log(string message = "", Options debugOption = Options.Normal)
+        public static void Log()
         {
-            if (consoleEnabled)
+            if (Enabled)
+                Console.WriteLine();
+        }
+
+        public static void Log(object message, Options debugOption = Options.Normal)
+        {
+            if (Enabled)
             {
                 ConsoleColor prev = Console.ForegroundColor;
 
@@ -37,7 +42,7 @@ namespace Engine
                     _ => "",
                 };
 
-                Console.WriteLine(pre + message);
+                Console.WriteLine(pre + message.ToString());
 
                 Console.ForegroundColor = prev;
             }
@@ -45,7 +50,7 @@ namespace Engine
 
         public static string Read()
         {
-            if (consoleEnabled)
+            if (enabled)
             {
                 DebuggerMessage("Waiting for input...");
                 string retn = Console.ReadLine();
@@ -58,7 +63,7 @@ namespace Engine
 
         public static void Pause()
         {
-            if (consoleEnabled)
+            if (enabled)
             {
                 DebuggerMessage("Waiting for a key...");
                 Console.ReadKey();
@@ -68,13 +73,13 @@ namespace Engine
 
         public static void Clear()
         {
-            if (consoleEnabled)
+            if (enabled)
                 Console.Clear();
         }
 
         internal static void OpenConsole()
         {
-            if (!consoleEnabled)
+            if (!enabled)
             {
                 kernel32_AllocConsole();
 
@@ -103,7 +108,7 @@ namespace Engine
 
                 Console.Title = "GL Tech 2.1 - Debugger";
 
-                consoleEnabled = true;
+                enabled = true;
             }
             #region kernel32.dll
             [DllImport("kernel32.dll", EntryPoint = "GetStdHandle")]
@@ -116,9 +121,9 @@ namespace Engine
 
         internal static void CloseConsole()
         {
-            if (consoleEnabled)
+            if (enabled)
             {
-                consoleEnabled = false;
+                enabled = false;
 
                 kernel32_FreeConsole();
 
@@ -142,10 +147,10 @@ namespace Engine
             Console.ForegroundColor = prev;
         }
 
-        internal static void InternalLog(string message, Options debugOption = Options.Normal)
+        internal static void InternalLog(object message, Options debugOption = Options.Normal)
         {
             DebuggerMessage("GL Tech 2.1 says:");
-            Log(message + "\n", debugOption);
+            Log(message.ToString() + "\n", debugOption);
         }
     }
 }

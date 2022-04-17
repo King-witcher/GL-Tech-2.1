@@ -17,6 +17,7 @@ namespace Engine
         unsafe static RenderCache* cache;
         static Image frontBuffer;
         static Scene activeScene = null;
+        static Action ScheduledActions = null;
         public static bool ParallelRendering { get; set; } = true;
 
         public static Scene ActiveScene => activeScene;
@@ -140,7 +141,10 @@ namespace Engine
                 display.Focus += Input.Mouse.Enable;
                 display.Unfocus += Input.Mouse.Disable;
             }
+
             Input.Keyboard.Assign(display);
+            Input.Keyboard.OnKeyDown += key => Schedule(() => scene.OnKeyDown?.Invoke(key));
+            Input.Keyboard.OnKeyUp += key => Schedule(() => scene.OnKeyUp?.Invoke(key));
 
             // When set to true, the ControlThread will stop rendering.
             var stopRequest = false;
@@ -149,18 +153,21 @@ namespace Engine
             // and running the scene scripts.
             var controlThread = Task.Run(() => ControlTrhead(frontBuffer, in stopRequest));
 
-            // Finally passes control to the rendering screen and displays it.
+            // Finally, passes control to the rendering screen and displays it.
             display.Open();
 
             // Theese lines run after the renderer window is closed.
             stopRequest = true;
             controlThread.Wait();
 
+            // Turns off every input listener
+            Input.Keyboard.Unassign();
+
             // Finally, dispose everythihng.
             display.Dispose();
             frontBuffer.Dispose();
-            //activeCamera = null;
 
+            activeScene = null;
             IsRunning = false;
         }
 
@@ -169,6 +176,15 @@ namespace Engine
             if (cache != null)
                 RenderCache.Delete(cache);
             cache = RenderCache.Create(CustomWidth, CustomHeight, FieldOfView);
+        }
+
+        private static void Schedule(Action action) => ScheduledActions += action;
+
+        // Executa ações que foram agendadas enquanto a engine renderizava.
+        private static void RunScheduled()
+        {
+            ScheduledActions?.Invoke();
+            ScheduledActions = null;
         }
 
         private unsafe static void ControlTrhead(Image frontBuffer, in bool cancellationRequest)
@@ -210,6 +226,7 @@ namespace Engine
                 while (controlStopwatch.ElapsedMilliseconds < minframetime)
                     Thread.Yield();
 
+                RunScheduled();
                 Script.Frame.RestartFrame();
                 Script.Frame.BeginScript();
                 activeScene.OnFrame?.Invoke();

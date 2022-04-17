@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Test {
+namespace Engine.Demos.SampleBlockMap {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Test {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class WE1M1 {
+    internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal WE1M1() {
+        internal Resources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Test {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Engine.Test.WE1M1", typeof(WE1M1).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Engine.Demos.SampleBlockMap.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,9 +63,9 @@ namespace Test {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1dolar {
+        internal static System.Drawing.Bitmap Floors {
             get {
-                object obj = ResourceManager.GetObject("_1dolar", resourceCulture);
+                object obj = ResourceManager.GetObject("Floors", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,29 +73,9 @@ namespace Test {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Background {
+        internal static System.Drawing.Bitmap Golden {
             get {
-                object obj = ResourceManager.GetObject("Background", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap bolsonaro {
-            get {
-                object obj = ResourceManager.GetObject("bolsonaro", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap lula {
-            get {
-                object obj = ResourceManager.GetObject("lula", resourceCulture);
+                object obj = ResourceManager.GetObject("Golden", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +93,9 @@ namespace Test {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap pt {
+        internal static System.Drawing.Bitmap Universe {
             get {
-                object obj = ResourceManager.GetObject("pt", resourceCulture);
+                object obj = ResourceManager.GetObject("Universe", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +103,9 @@ namespace Test {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap WolfTextures {
+        internal static System.Drawing.Bitmap V2 {
             get {
-                object obj = ResourceManager.GetObject("WolfTextures", resourceCulture);
+                object obj = ResourceManager.GetObject("V2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

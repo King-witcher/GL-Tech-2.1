@@ -16,11 +16,11 @@ namespace Engine
     {
         unsafe static RenderCache* cache;
         static Image frontBuffer;
-        static Scene activeScene = null;
+        static Scene currentScene = null;
         static Action ScheduledActions = null;
         public static bool ParallelRendering { get; set; } = true;
 
-        public static Scene ActiveScene => activeScene;
+        public static Scene ActiveScene => currentScene;
 
         private static float minframetime = 4;
         public static int MaxFps
@@ -108,11 +108,10 @@ namespace Engine
 
         public unsafe static void Run(Scene scene)
         {
+            #region Checks
             if (IsRunning)
                 return;
             IsRunning = true;
-
-            Camera camera = scene.Camera;
 
             if (scene == null)
             {
@@ -126,52 +125,63 @@ namespace Engine
                 Debug.InternalLog(
                     message: $"The Scene being rendered does not have a background texture. Add it by using Scene.Background property.",
                     debugOption: Debug.Options.Warning);
+            #endregion
 
-            activeScene = scene;
+            Camera camera = scene.Camera;
+            currentScene = scene;
 
             // Unmanaged buffer where the video will be put.
             frontBuffer = new(CustomWidth, CustomHeight);
 
             // A window that will continuously display the buffer
-            WindowAdapter display = new(frontBuffer, FullScreen);
+            WindowAdapter window = new(frontBuffer, FullScreen);
 
             // Setup input managers
             if (CaptureMouse)
             {
-                display.Focus += Input.Mouse.Enable;
-                display.Unfocus += Input.Mouse.Disable;
+                window.Focus += Input.Mouse.Enable;
+                window.Unfocus += Input.Mouse.Disable;
             }
 
-            Input.Keyboard.Assign(display);
-            Input.Keyboard.OnKeyDown += key => Schedule(() => scene.OnKeyDown?.Invoke(key));
-            Input.Keyboard.OnKeyUp += key => Schedule(() => scene.OnKeyUp?.Invoke(key));
+            // These parts are scheduled to prevent user scripts from running while the engine  is rendering the scene.
+            window.KeyDown += key => Schedule(() =>
+            {
+                Input.Keyboard.SetKeyDown(key);
+                scene.OnKeyDown?.Invoke(key);
+            });
 
-            // When set to true, the ControlThread will stop rendering.
-            var stopRequest = false;
+            window.KeyUp += key => Schedule(() =>
+            {
+                Input.Keyboard.SetKeyUp(key);
+                scene.OnKeyUp?.Invoke(key);
+            });
+
+            // When set to true, the ControlThread will render for the last time and stop.
+            var stopRequested = false;
 
             // And then start the control thread, which is reponsible for distributing the buffer among the threads
             // and running the scene scripts.
-            var controlThread = Task.Run(() => ControlTrhead(frontBuffer, in stopRequest));
+            var controlThread = Task.Run(() => ControlTrhead(frontBuffer, in stopRequested));
 
             // Finally, passes control to the rendering screen and displays it.
-            display.Open();
+            window.Open();
 
             // Theese lines run after the renderer window is closed.
-            stopRequest = true;
+            stopRequested = true;
             controlThread.Wait();
 
-            // Turns off every input listener
-            Input.Keyboard.Unassign();
+            // Clears the Keyboard
+            Input.Keyboard.Clear();
 
             // Finally, dispose everythihng.
-            display.Dispose();
+            window.Dispose();
             frontBuffer.Dispose();
 
-            activeScene = null;
+            currentScene = null;
             IsRunning = false;
         }
 
-        private static unsafe void ReloadCache()
+        private static unsafe void RefreshCache()
         {
             if (cache != null)
                 RenderCache.Delete(cache);
@@ -187,10 +197,10 @@ namespace Engine
             ScheduledActions = null;
         }
 
-        private unsafe static void ControlTrhead(Image frontBuffer, in bool cancellationRequest)
+        private unsafe static void ControlTrhead(Image frontBuffer, in bool stopRequested)
         {
             // Spaguetti
-            ReloadCache();
+            RefreshCache();
 
             // Buffer where the image will be rendered
             Image backBuffer = SynchronizeThreads ?
@@ -208,15 +218,15 @@ namespace Engine
             Stopwatch controlStopwatch = new Stopwatch();   // Required to cap framerate
             Script.Frame.RestartFrame();
             Script.Frame.BeginScript();
-            activeScene.Start?.Invoke();
+            currentScene.Start?.Invoke();
             Script.Frame.EndScript();
 
-            while (!cancellationRequest)
+            while (!stopRequested)
             {
                 controlStopwatch.Restart();
                 Script.Frame.BeginRender();
 
-                DrawPlanes(backBuffer, activeScene.unmanaged);
+                DrawPlanes(backBuffer, currentScene.unmanaged);
                 PostProcess(backBuffer);
 
                 if (SynchronizeThreads)
@@ -229,7 +239,7 @@ namespace Engine
                 RunScheduled();
                 Script.Frame.RestartFrame();
                 Script.Frame.BeginScript();
-                activeScene.OnFrame?.Invoke();
+                currentScene.OnFrame?.Invoke();
                 Script.Frame.EndScript();
             }
             controlStopwatch.Stop();

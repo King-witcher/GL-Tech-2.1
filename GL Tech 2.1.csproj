@@ -5,7 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>Engine</RootNamespace>
     <UseWindowsForms>True</UseWindowsForms>
-    <StartupObject>Test.Program</StartupObject>
+    <StartupObject>Engine.Test.Program</StartupObject>
     <Nullable>disable</Nullable>
     <AnalysisLevel>5.0</AnalysisLevel>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
@@ -53,35 +53,53 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Test\DemoTextures.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DemoTextures.resx</DependentUpon>
-    </Compile>
     <Compile Update="GLTech2\Metadata.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Metadata.resx</DependentUpon>
     </Compile>
-    <Compile Update="Test\WE1M1.Designer.cs">
+    <Compile Update="Demos\RotatingPillars\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>WE1M1.resx</DependentUpon>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Demos\SampleBlockMap\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Demos\SuperBlockMap\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Demos\Wolfenstein\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Test\DemoTextures.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>DemoTextures.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="GLTech2\Metadata.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Metadata.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Test\WE1M1.resx">
+    <EmbeddedResource Update="Demos\RotatingPillars\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>WE1M1.Designer.cs</LastGenOutput>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Demos\SampleBlockMap\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Demos\SuperBlockMap\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Demos\Wolfenstein\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

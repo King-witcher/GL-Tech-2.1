@@ -290,66 +290,69 @@ namespace Engine
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             void DrawColumn(int screen_column)
             {
-                // Caching frequently used variables
-                float ray_cos = cache->cosines[screen_column];
-                float ray_angle = cache->angles[screen_column] + scene->camera->rotation;
-                Texture background = scene->background;
-                Ray ray = new Ray(scene->camera->position, ray_angle);
-
-                // Cast the ray towards every plane.
-                SPlane* nearest = scene->NearestPlane(ray, out float nearest_dist, out float nearest_ratio);
-
-                // Found out that optimizing this part by separing the case when it hits and not a wall is unecessary.
-                #region Render the plane
-
-                // Height that the current column should have on the screen.
-                float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); // Wall column size in pixels
-
-                // Where the column starts and ends relative to the screen.
-                float column_start = (screen.flt_height - columnHeight) / 2f;
-                float column_end = (screen.flt_height + columnHeight) / 2f;
-
-                // Wall rendering bounds on the screen...
-                int draw_column_start = screen.Height - (int)(screen.Height - column_start);    // Inclusive
-                int draw_column_end = screen.Height - (int)(screen.Height - column_end);        // Exclusive
-
-                // Which cannot exceed the full screen bounds.
-                if (draw_column_start < 0)
-                    draw_column_start = 0;
-                if (draw_column_end > screen.Height)
-                    draw_column_end = screen.Height;
-
-                // Draws the background before the wall.
-                // Critical performance impact.
-                if (scene->background.source.Buffer != IntPtr.Zero)
-                    for (int line = 0; line < draw_column_start; line++)
-                        drawBackground(line);
-
-                // Draw the wall
-                // Critical performance impact.
-                for (int line = draw_column_start; line < draw_column_end; line++)
+                unchecked
                 {
-                    float vratio = (line - column_start) / columnHeight;
-                    Color color = nearest->texture.MapPixel(nearest_ratio, vratio);
-                    screen[screen_column, line] = color;
-                }
+                    // Caching frequently used variables
+                    float ray_cos = cache->cosines[screen_column];
+                    float ray_angle = cache->angles[screen_column] + scene->camera->rotation;
+                    Texture background = scene->background;
+                    Ray ray = new Ray(scene->camera->position, ray_angle);
 
-                // Draw the other side of the background
-                // Critical performance impact.
-                if (scene->background.source.Buffer != IntPtr.Zero)
-                    for (int line = draw_column_end; line < screen.Height; line++)
-                        drawBackground(line);
-                #endregion
+                    // Cast the ray towards every plane.
+                    SPlane* nearest = scene->NearestPlane(ray, out float nearest_dist, out float nearest_ratio);
 
-                // Draws background
-                [MethodImpl(MethodImplOptions.AggressiveInlining)]
-                void drawBackground(int line)
-                {
-                    float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
-                    float screenVratio = line / screen.flt_height;
-                    float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
-                    uint color = background.MapPixel(background_hratio, background_vratio);
-                    screen[screen_column, line] = color;
+                    // Found out that optimizing this part by separing the case when it hits and not a wall is unecessary.
+                    #region Render the plane
+
+                    // Height that the current column should have on the screen.
+                    float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); // Wall column size in pixels
+
+                    // Where the column starts and ends relative to the screen.
+                    float column_start = (screen.flt_height - columnHeight) / 2f;
+                    float column_end = (screen.flt_height + columnHeight) / 2f;
+
+                    // Wall rendering bounds on the screen...
+                    int draw_column_start = screen.Height - (int)(screen.Height - column_start);    // Inclusive
+                    int draw_column_end = screen.Height - (int)(screen.Height - column_end);        // Exclusive
+
+                    // Which cannot exceed the full screen bounds.
+                    if (draw_column_start < 0)
+                        draw_column_start = 0;
+                    if (draw_column_end > screen.Height)
+                        draw_column_end = screen.Height;
+
+                    // Draws the background before the wall.
+                    // Critical performance impact.
+                    if (scene->background.source.Buffer != IntPtr.Zero)
+                        for (int line = 0; line < draw_column_start; line++)
+                            drawBackground(line);
+
+                    // Draw the wall
+                    // Critical performance impact.
+                    for (int line = draw_column_start; line < draw_column_end; line++)
+                    {
+                        float vratio = (line - column_start) / columnHeight;
+                        Color color = nearest->texture.MapPixel(nearest_ratio, vratio);
+                        screen[screen_column, line] = color;
+                    }
+
+                    // Draw the other side of the background
+                    // Critical performance impact.
+                    if (scene->background.source.Buffer != IntPtr.Zero)
+                        for (int line = draw_column_end; line < screen.Height; line++)
+                            drawBackground(line);
+                    #endregion
+
+                    // Draws background
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    void drawBackground(int line)
+                    {
+                        float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
+                        float screenVratio = line / screen.flt_height;
+                        float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
+                        uint color = background.MapPixel(background_hratio, background_vratio);
+                        screen[screen_column, line] = color;
+                    }
                 }
             }
         }

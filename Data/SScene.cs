@@ -165,23 +165,27 @@ namespace Engine.Data
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal SPlane* NearestPlane(Ray ray, out float nearest_dist, out float nearest_ratio)
         {
-            SPlane* nearest = null;
-            nearest_dist = float.PositiveInfinity;
-            nearest_ratio = 2f;
-            SPlane* cur = first_plane;
-
-            while (cur != null)
+            unchecked
             {
-                cur->Test(ray, out float cur_dist, out float cur_ratio);
-                if (cur_dist < nearest_dist)
+                SPlane* nearest = null;
+                nearest_dist = float.PositiveInfinity;
+                nearest_ratio = 2f;
+                SPlane* cur = first_plane;
+
+                while (cur != null)
                 {
-                    nearest_ratio = cur_ratio;
-                    nearest_dist = cur_dist;
-                    nearest = cur;
+                    cur->Test(ray, out float cur_dist, out float cur_ratio);
+                    if (cur_dist < nearest_dist)
+                    {
+                        nearest_ratio = cur_ratio;
+                        nearest_dist = cur_dist;
+                        nearest = cur;
+                    }
+                    cur = cur->list_next;
                 }
-                cur = cur->list_next;
+
+                return nearest;
             }
-            return nearest;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -193,40 +197,43 @@ namespace Engine.Data
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             void GetCollisionData(SCollider* collider, out float cur_dist, out float cur_split)
             {
-                // Culling
-                if (collider->direction.x * ray.direction.y - collider->direction.y * ray.direction.x <= 0)
+                unchecked
                 {
-                    cur_dist = float.PositiveInfinity;
-                    cur_split = 2f;
-                    return;
+                    // Culling
+                    if (collider->direction.x * ray.direction.y - collider->direction.y * ray.direction.x <= 0)
+                    {
+                        cur_dist = float.PositiveInfinity;
+                        cur_split = 2f;
+                        return;
+                    }
+
+                    // Medium performance impact.
+                    float
+                        drx = collider->direction.x,
+                        dry = collider->direction.y;
+
+                    float det = ray.direction.x * dry - ray.direction.y * drx; // Caching can only be used here
+
+                    if (det == 0) // Parallel
+                    {
+                        cur_dist = float.PositiveInfinity;
+                        cur_split = 2f;
+                        return;
+                    }
+
+                    float spldet = ray.direction.x * (ray.start.y - collider->start.y) - ray.direction.y * (ray.start.x - collider->start.x);
+                    float dstdet = drx * (ray.start.y - collider->start.y) - dry * (ray.start.x - collider->start.x);
+                    float spltmp = spldet / det;
+                    float dsttmp = dstdet / det;
+                    if (spltmp < 0 || spltmp >= 1 || dsttmp <= 0) // dsttmp = 0 means column height = x/0.
+                    {
+                        cur_dist = float.PositiveInfinity;
+                        cur_split = 2f;
+                        return;
+                    }
+                    cur_split = spltmp;
+                    cur_dist = dsttmp;
                 }
-
-                // Medium performance impact.
-                float
-                    drx = collider->direction.x,
-                    dry = collider->direction.y;
-
-                float det = ray.direction.x * dry - ray.direction.y * drx; // Caching can only be used here
-
-                if (det == 0) // Parallel
-                {
-                    cur_dist = float.PositiveInfinity;
-                    cur_split = 2f;
-                    return;
-                }
-
-                float spldet = ray.direction.x * (ray.start.y - collider->start.y) - ray.direction.y * (ray.start.x - collider->start.x);
-                float dstdet = drx * (ray.start.y - collider->start.y) - dry * (ray.start.x - collider->start.x);
-                float spltmp = spldet / det;
-                float dsttmp = dstdet / det;
-                if (spltmp < 0 || spltmp >= 1 || dsttmp <= 0) // dsttmp = 0 means column height = x/0.
-                {
-                    cur_dist = float.PositiveInfinity;
-                    cur_split = 2f;
-                    return;
-                }
-                cur_split = spltmp;
-                cur_dist = dsttmp;
             }
 
             SCollider* nearest = null;

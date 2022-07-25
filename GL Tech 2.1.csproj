@@ -5,7 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>Engine</RootNamespace>
     <UseWindowsForms>True</UseWindowsForms>
-    <StartupObject>Engine.Test.Program</StartupObject>
+    <StartupObject>Engine.Demos.Program</StartupObject>
     <Nullable>disable</Nullable>
     <AnalysisLevel>5.0</AnalysisLevel>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
@@ -78,6 +78,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Tutorial\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -101,6 +106,18 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Tutorial\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Tutorial\Scripts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SQLite" Version="1.0.116" />
   </ItemGroup>
 
 </Project>

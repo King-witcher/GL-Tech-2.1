@@ -7,14 +7,6 @@ namespace Engine.Scripting.Prefab
     {
         KinematicBody body;
 
-        public SoftMovement()
-        {
-            // Spaguetti
-            // Sei que isso fere o Princípio da Inversão de Dependência (D do SOLID), mas vou deixar como açúcar sintático.
-            // Ficarei de olho caso o nível de complexidade/acoplamento aumente mais do que isso.
-            this.body = new NoclipMode();
-        }
-
         public SoftMovement(KinematicBody body)
         {
             this.body = body;

@@ -40,9 +40,11 @@ namespace Engine.Demos.SampleBlockMap
                         source: floors_buffer,
                         hrepeat: 1f,
                         vrepeat: 0.25f);
+
                     Texture golden = new Texture(
                         source: golden_buffer,
                         hrepeat: 4f);
+
                     Texture v = new Texture(
                         source: v_buffer,
                         hrepeat: 4f);
@@ -88,15 +90,6 @@ namespace Engine.Demos.SampleBlockMap
 
                 Add(camera);
             }
-
-            // Renderer customization
-            Renderer.FullScreen = false;
-            Renderer.CustomHeight = 600;
-            Renderer.CustomWidth = 800;
-            Renderer.FieldOfView = 110f;
-            Renderer.ParallelRendering = true;
-            Renderer.SynchronizeThreads = false;
-            Renderer.CaptureMouse = true;
         }
     }
 }

@@ -6,7 +6,24 @@ namespace Engine.World
     {
         private Scene scene;
 
-        internal Entity() { }
+        internal Entity()
+        {
+            name = "unnamed";
+        }
+
+        public const int MAX_NAME_LENGTH = 63;
+        private string name;
+        public string Name
+        {
+            get => name;
+            set
+            {
+                if (value.Length > MAX_NAME_LENGTH)
+                    Debug.InternalLog("Maximum recommended name lenght was exceeded. You may have problems" +
+                        "when trying to save this map in a file.", Debug.Options.Warning);
+                name = value;
+            }
+        }
 
         private protected virtual Vector PositionData { get; set; }
 

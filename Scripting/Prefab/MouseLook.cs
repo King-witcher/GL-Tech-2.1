@@ -15,11 +15,6 @@ namespace Engine.Scripting.Prefab
             Sensitivity = sensitivity;
         }
 
-        void Start()
-        {
-
-        }
-
         void OnFrame()
         {
             if (Enabled)

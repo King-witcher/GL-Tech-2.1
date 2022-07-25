@@ -128,18 +128,11 @@ namespace Engine.Demos.RotatingPillars
                 Camera.AddScript<SwitchBackgroundScript>();
                 Camera.AddScript<DebugPerformanceStats>();
                 Camera.AddScript<MouseLook>();
-                NoclipMode nm = new NoclipMode();
+                Noclip nm = new Noclip();
                 Camera.AddScript(nm);
                 SoftMovement movement = new SoftMovement(nm);
                 Camera.AddScript(movement);
             }
-
-            // Setup Renderer
-            Engine.Renderer.FullScreen = true;
-            Engine.Renderer.FieldOfView = 110f;
-            Engine.Renderer.ParallelRendering = true;
-            Engine.Renderer.SynchronizeThreads = true;
-            Engine.Renderer.CaptureMouse = true;
         }
     }
 }

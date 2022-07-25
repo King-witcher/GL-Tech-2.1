@@ -249,6 +249,34 @@ namespace Engine
                 backBuffer.Dispose();
             return;
         }
+
+        // EXTREMELLY suboptimal; spike version
+        private unsafe static void DrawFloors(Image buffer, SScene* scene)
+        {
+            // Checks if the code should be run in all cores or just one.
+            if (ParallelRendering)
+                Parallel.For(fromInclusive: 0, toExclusive: buffer.Width, body: DrawLine);
+            else
+                for (int i = 0; i < buffer.Width; i++)
+                    DrawLine(i);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            void DrawLine(int screen_line)
+            {
+                if(screen_line > buffer.Height >> 1)
+                {
+                    float fall_pixels = screen_line - buffer.flt_height / 2f;
+
+                    float left_point = - buffer.flt_width / 2f;
+
+                    for (int screen_column = 0; screen_column < buffer.Width; screen_column++)
+                    {
+                        float right_ratio = screen_column - buffer.flt_width / 2f;
+                    }
+                }
+            }
+        }
+
         private unsafe static void DrawPlanes(Image screen, SScene* scene)
         {
             // Checks if the code should be run in all cores or just one.

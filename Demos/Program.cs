@@ -1,21 +1,31 @@
 ﻿
 namespace Engine.Demos
 {
-    static internal partial class Program
+    unsafe static internal partial class Program
     {
         static void Main()
         {
-            Debug.OpenConsole();
+            // Renderer customization
+            Renderer.FullScreen = false;
+            Renderer.CustomHeight = 600;
+            Renderer.CustomWidth = 800;
+            Renderer.FieldOfView = 110f;
+            Renderer.ParallelRendering = true;
+            Renderer.SynchronizeThreads = false;
+            Renderer.CaptureMouse = true;
 
-            // Mapa que demonstra o funcionamento do sistema de parenting e do background
-            RotatingPillars.Map pillarsMap = new();
-            Renderer.Run(pillarsMap);
-            pillarsMap.Dispose();
+            Debug.OpenConsole();
 
             // Mapa pequeno para exemplificar o funcionamento do BlockMap
             SampleBlockMap.Map sampleBlockMap = new();
             Renderer.Run(sampleBlockMap);
             sampleBlockMap.Dispose();
+
+            // Mapa que demonstra o funcionamento do sistema de parenting e do background
+            RotatingPillars.Map pillarsMap = new();
+            Engine.Renderer.CaptureMouse = true;
+            Renderer.Run(pillarsMap);
+            pillarsMap.Dispose();
 
             // Primeiro mapa do jogo Wolfenstein 3D - clássico da computação gráfica por usar a técnica de RayCasting
             Wolfenstein.Map wolfenstein = new();

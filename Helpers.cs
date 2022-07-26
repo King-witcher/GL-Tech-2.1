@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 
 namespace Engine
 {
-    internal static unsafe class Util
+    internal static unsafe class Helpers
     {
         internal const float ToRad = (float)Math.PI / 180f;
         internal const float ToDegree = 180f / (float)Math.PI;
@@ -16,6 +17,19 @@ namespace Engine
             else if (value.CompareTo(min) < 0)
                 value = min;
         }
+
+        internal static Struct* Malloc<Struct>(int amount = 1) where Struct : unmanaged
+        {
+            return (Struct*) LocalAlloc(0, amount * sizeof(Struct));
+        }
+
+        internal static IntPtr Malloc(int size)
+        {
+            return LocalAlloc(0, size);
+        }
+
+        [DllImport("kernel32.dll")]
+        extern static IntPtr LocalAlloc(int uFlags, int sizetdwBytes);
 
         public static Rectangle GetRectangle(this Bitmap bitmap)
         {

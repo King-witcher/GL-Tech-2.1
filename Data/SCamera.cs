@@ -13,7 +13,7 @@ namespace Engine.Data
 
         static internal SCamera* Create(Vector position, float rotation) // a little bit optimizable
         {
-            SCamera* result = (SCamera*)Marshal.AllocHGlobal(sizeof(SCamera));
+            SCamera* result = Helpers.Malloc<SCamera>();
             result->position = position;
             result->rotation = rotation;
             return result;

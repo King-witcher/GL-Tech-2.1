@@ -24,7 +24,7 @@ namespace Engine.Data
             colHeight1 = width / (float)(2.0 * tan);
 
             // Allocates both angles and cosines pointers at once.
-            angles = (float*)Marshal.AllocHGlobal(2 * sizeof(float) * width);
+            angles = Helpers.Malloc<float>(2 * width);
             cosines = angles + width;
 
             double step = 2 * tan / (width - 1);
@@ -38,7 +38,7 @@ namespace Engine.Data
 
         internal static RenderCache* Create(int width, int height, float FOV = 90f)
         {
-            RenderCache* result = (RenderCache*)Marshal.AllocHGlobal(sizeof(RenderCache));
+            RenderCache* result = Helpers.Malloc<RenderCache>();
             *result = new RenderCache(width, height, FOV);
             return result;
         }

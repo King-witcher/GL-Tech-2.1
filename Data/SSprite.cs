@@ -18,7 +18,7 @@ namespace Engine.Data
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static SSprite* Create(Vector position, Texture material)
         {
-            SSprite* result = (SSprite*)Marshal.AllocHGlobal(sizeof(SSprite));
+            SSprite* result = Helpers.Malloc<SSprite>();
             result->position = position;
             result->material = material;
             result->list_next = null;

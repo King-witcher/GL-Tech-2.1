@@ -38,7 +38,7 @@ namespace Engine.Imaging
             this.flt_width = this.width = width;
             this.flt_height = this.height = height;
 
-            this.buffer = Marshal.AllocHGlobal(width * height * DefaultBytesPerPixel);
+            this.buffer = Helpers.Malloc(width * height * DefaultBytesPerPixel);
         }
 
         public Image(Bitmap source) : this (source.Width, source.Height)

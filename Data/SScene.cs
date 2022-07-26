@@ -27,7 +27,7 @@ namespace Engine.Data
 
         internal static SScene* Create()
         {
-            SScene* result = (SScene*)Marshal.AllocHGlobal(sizeof(SScene));
+            SScene* result = Helpers.Malloc<SScene>();
             result->first_sprite = null;
             result->first_plane = null;
             result->first_collider = null;

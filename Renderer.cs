@@ -28,7 +28,7 @@ namespace Engine
             get => (int)(1000f / minframetime);
             set
             {
-                Util.Clip(ref value, 1, 250);
+                Helpers.Clip(ref value, 1, 250);
                 minframetime = 1000f / value;
             }
         }
@@ -75,7 +75,7 @@ namespace Engine
             get => fieldOfView;
             set
             {
-                Util.Clip(ref value, 1f, 179f);
+                Helpers.Clip(ref value, 1f, 179f);
                 ChangeIfNotRunning("FieldOfView", ref fieldOfView, value);
             }
         }
@@ -106,6 +106,8 @@ namespace Engine
             AddEffect(new EffectClass());
         }
 
+        static bool WindowBusy = false; // provisorio
+
         public unsafe static void Run(Scene scene)
         {
             #region Checks
@@ -134,7 +136,10 @@ namespace Engine
             frontBuffer = new(CustomWidth, CustomHeight);
 
             // A window that will continuously display the buffer
-            WindowAdapter window = new(frontBuffer, FullScreen);
+            WindowAdapter window = new(frontBuffer,() =>
+            {
+                WindowBusy = false;
+            } , FullScreen);
 
             // Setup input managers
             if (CaptureMouse)
@@ -161,7 +166,7 @@ namespace Engine
 
             // And then start the control thread, which is reponsible for distributing the buffer among the threads
             // and running the scene scripts.
-            var controlThread = Task.Run(() => ControlTrhead(frontBuffer, in stopRequested));
+            var controlThread = Task.Run(() => ControlTrhead(window, frontBuffer, in stopRequested));
 
             // Finally, passes control to the rendering screen and displays it.
             window.Open();
@@ -197,7 +202,7 @@ namespace Engine
             ScheduledActions = null;
         }
 
-        private unsafe static void ControlTrhead(Image frontBuffer, in bool stopRequested)
+        private unsafe static void ControlTrhead(WindowAdapter window, Image frontBuffer, in bool stopRequested)
         {
             // Spaguetti
             RefreshCache();
@@ -224,7 +229,7 @@ namespace Engine
             while (!stopRequested)
             {
                 controlStopwatch.Restart();
-                Script.Frame.BeginRender();
+                Script.Frame.BeginRender(); ;
 
                 DrawPlanes(backBuffer, currentScene.unmanaged);
                 PostProcess(backBuffer);
@@ -233,7 +238,10 @@ namespace Engine
                     Image.BufferCopy(backBuffer, frontBuffer);
                 Script.Frame.EndRender();
 
-                while (controlStopwatch.ElapsedMilliseconds < minframetime)
+                WindowBusy = true;
+                window.Refresh();
+
+                while (!stopRequested && (controlStopwatch.ElapsedMilliseconds < minframetime || WindowBusy))
                     Thread.Yield();
 
                 RunScheduled();

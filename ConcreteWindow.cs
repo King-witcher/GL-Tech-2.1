@@ -13,12 +13,17 @@ namespace Engine
 
         public event Action<TimeSpan> Render;
 
-        public ConcreteWindow(Image source, bool fullscreen)
+        public static bool WindowBusy = false;
+
+        Image source;
+
+        public ConcreteWindow(Image source, Action paintCallback, bool fullscreen)
         {
             Stopwatch rePaintStopwatch = new Stopwatch();
+            this.source = source;
 
             InitializeComponent();
-            this.Dimensions = (source.Width, source.Height);
+            Dimensions = (source.Width, source.Height);
             CenterToScreen();
             if (fullscreen)
             {
@@ -26,14 +31,21 @@ namespace Engine
                 WindowState = FormWindowState.Maximized;
             }
 
-
-            outputBox.Paint += RePaint; // Refactor
+            FormClosed += (_, _) => paintCallback();
+            outputBox.Paint += (_, _) => paintCallback();
+            // outputBox.Paint += RePaint; // Refactor
             void RePaint(object _ = null, EventArgs __ = null)
             {
                 rePaintStopwatch.Restart();
                 Render?.Invoke(rePaintStopwatch.Elapsed);
                 outputBox.Image = source;
             }
+        }
+
+        public void Refresh()
+        {
+            outputBox.Image = source;
+            Render?.Invoke(new TimeSpan()); // TODO
         }
 
         public (int width, int height) Dimensions

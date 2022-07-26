@@ -12,6 +12,7 @@ namespace Engine.Data
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct SPlane
     {
+        private const string KERNEL32 = "kernel32.dll";
         internal Vector start;
         internal Vector direction;
         internal Texture texture;               // Yes, by value.
@@ -19,7 +20,7 @@ namespace Engine.Data
 
         internal static SPlane* Create(Vector start, Vector end, Texture texture)
         {
-            SPlane* result = (SPlane*)Marshal.AllocHGlobal(sizeof(SPlane));
+            SPlane* result = Helpers.Malloc<SPlane>();
             result->texture = texture;
             result->direction = end - start;
             result->start = start;
@@ -29,7 +30,7 @@ namespace Engine.Data
 
         internal static SPlane* Create(Vector start, float angle, float length, Texture texture)
         {
-            SPlane* result = (SPlane*)Marshal.AllocHGlobal(sizeof(SPlane));
+            SPlane* result = Helpers.Malloc<SPlane>();
             Vector dir = new Vector(angle) * length;
             result->texture = texture;
             result->direction = dir;

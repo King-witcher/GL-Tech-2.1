@@ -16,7 +16,7 @@ namespace Engine.Data
 
         internal static SCollider* Create(Vector start, Vector end)
         {
-            SCollider* result = (SCollider*)Marshal.AllocHGlobal(sizeof(SCollider));
+            SCollider* result = Helpers.Malloc<SCollider>();
             result->start = start;
             result->direction = end - start;
             result->list_next = null;

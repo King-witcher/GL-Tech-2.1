@@ -13,11 +13,11 @@ namespace Engine
 
         public event Action<TimeSpan> Render;
 
-        public static bool WindowBusy = false;
+        public bool IsDrawing = false;
 
         Image source;
 
-        public ConcreteWindow(Image source, Action paintCallback, bool fullscreen)
+        public ConcreteWindow(Image source, bool fullscreen)
         {
             Stopwatch rePaintStopwatch = new Stopwatch();
             this.source = source;
@@ -31,21 +31,20 @@ namespace Engine
                 WindowState = FormWindowState.Maximized;
             }
 
-            FormClosed += (_, _) => paintCallback();
-            outputBox.Paint += (_, _) => paintCallback();
+            outputBox.Paint += (_, _) => IsDrawing = false;
             // outputBox.Paint += RePaint; // Refactor
             void RePaint(object _ = null, EventArgs __ = null)
             {
                 rePaintStopwatch.Restart();
                 Render?.Invoke(rePaintStopwatch.Elapsed);
-                outputBox.Image = source;
+                outputBox.Invalidate();
             }
         }
 
         public void Refresh()
         {
+            IsDrawing = true;
             outputBox.Image = source;
-            Render?.Invoke(new TimeSpan()); // TODO
         }
 
         public (int width, int height) Dimensions

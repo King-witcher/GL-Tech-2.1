@@ -136,10 +136,7 @@ namespace Engine
             frontBuffer = new(CustomWidth, CustomHeight);
 
             // A window that will continuously display the buffer
-            WindowAdapter window = new(frontBuffer,() =>
-            {
-                WindowBusy = false;
-            } , FullScreen);
+            WindowAdapter window = new(frontBuffer, FullScreen);
 
             // Setup input managers
             if (CaptureMouse)
@@ -238,10 +235,9 @@ namespace Engine
                     Image.BufferCopy(backBuffer, frontBuffer);
                 Script.Frame.EndRender();
 
-                WindowBusy = true;
                 window.Refresh();
 
-                while (!stopRequested && (controlStopwatch.ElapsedMilliseconds < minframetime || WindowBusy))
+                while (!stopRequested && (controlStopwatch.ElapsedMilliseconds < minframetime || window.IsDrawing))
                     Thread.Yield();
 
                 RunScheduled();

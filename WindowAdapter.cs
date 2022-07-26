@@ -17,9 +17,11 @@ namespace Engine
         public event Action<InputKey> KeyDown;
         public event Action<InputKey> KeyUp;
 
-        public unsafe WindowAdapter(Imaging.Image output, Action callback, bool fullscreen = false)
+        public bool IsDrawing { get => concrete.IsDrawing; }
+
+        public unsafe WindowAdapter(Imaging.Image output, bool fullscreen = false)
         {
-            concrete = new ConcreteWindow((Bitmap)output, callback, fullscreen);
+            concrete = new ConcreteWindow((Bitmap)output, fullscreen);
 
             concrete.KeyDown += TreatKeyDown;
             concrete.KeyUp += TreatKeyUp;

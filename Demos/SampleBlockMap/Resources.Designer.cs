@@ -83,6 +83,16 @@ namespace Engine.Demos.SampleBlockMap {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GOT {
+            get {
+                object obj = ResourceManager.GetObject("GOT", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap MapGrid {
             get {
                 object obj = ResourceManager.GetObject("MapGrid", resourceCulture);
@@ -96,16 +106,6 @@ namespace Engine.Demos.SampleBlockMap {
         internal static System.Drawing.Bitmap Universe {
             get {
                 object obj = ResourceManager.GetObject("Universe", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap V2 {
-            get {
-                object obj = ResourceManager.GetObject("V2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -16,14 +16,14 @@ namespace Engine.Demos.SampleBlockMap
     {
         Image floors_buffer = new(Resources.Floors);
         Image golden_buffer = new(Resources.Golden);
-        Image v_buffer = new(Resources.V2);
+        Image got_buffer = new(Resources.GOT);
         Image background_buffer = new(Resources.Universe);
 
         protected override void Delete()
         {
             floors_buffer.Dispose();
             golden_buffer.Dispose();
-            v_buffer.Dispose();
+            got_buffer.Dispose();
             background_buffer.Dispose();
         }
 
@@ -45,13 +45,14 @@ namespace Engine.Demos.SampleBlockMap
                         source: golden_buffer,
                         hrepeat: 4f);
 
-                    Texture v = new Texture(
-                        source: v_buffer,
-                        hrepeat: 4f);
+                    Texture got = new Texture(
+                        source: got_buffer,
+                        hrepeat: 8f,
+                        vrepeat: 2f);
 
                     dict[(255, 255, 255)] = floors;
                     dict[(0, 192, 0)] = golden;
-                    dict[(128, 0, 255)] = v;
+                    dict[(128, 0, 255)] = got;
                 }
 
                 // BlockMap map = new BlockMap(map: grid, textureBindings: mapper);

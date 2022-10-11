@@ -14,7 +14,7 @@ namespace Engine.Demos.SuperBlockMap
     // Esse é um mapa com uma quantidade extrema de planos para testes de gargalo.
     public class Map : Scene
     {
-        Image crazyBackground_buffer = new(Resources.CrazyBackground);
+        Image crazyBackground_buffer = new(Resources.GOT);
         Image blockmap_buffer = new(Resources.Plant);
         Image test_buffer = new(Resources.Test);
 
@@ -27,7 +27,7 @@ namespace Engine.Demos.SuperBlockMap
 
         public Map()
         {
-            Texture background = new Texture(crazyBackground_buffer, 0, 3);
+            Texture background = new Texture(crazyBackground_buffer, 0, 9, 0, 3);
             this.Background = background;
 
             // BlockMap

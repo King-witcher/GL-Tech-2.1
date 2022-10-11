@@ -121,6 +121,9 @@
   <data name="CrazyBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\crazybackground.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="GOT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>images\got.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Plant" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>images\plant.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

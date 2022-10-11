@@ -73,6 +73,16 @@ namespace Engine.Demos.SuperBlockMap {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GOT {
+            get {
+                object obj = ResourceManager.GetObject("GOT", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Plant {
             get {
                 object obj = ResourceManager.GetObject("Plant", resourceCulture);

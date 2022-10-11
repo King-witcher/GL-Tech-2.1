@@ -31,5 +31,11 @@ namespace Engine
         {
             return bitmap.Clone(bitmap.GetRectangle(), format);
         }
+
+        public static float Random()
+        {
+            Random r = new Random();
+            return (float)r.NextDouble();
+        }
     }
 }

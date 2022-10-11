@@ -1,9 +1,26 @@
-﻿
+﻿using Engine;
+using System.Diagnostics;
+
 namespace Engine.Demos
 {
     unsafe static internal partial class Program
     {
         static void Main()
+        {
+            Debug.OpenConsole();
+            TestFloor();
+        }
+
+        static void TestFloor()
+        {
+            Engine.Data.STriFloor stf = new(Vector.Zero, Vector.Forward, Vector.Right);
+            while (true)
+            {
+                System.Console.ReadKey();
+            }
+        }
+
+        static void RenderDemos()
         {
                 // Renderer customization
                 Renderer.FullScreen = false;
@@ -13,8 +30,6 @@ namespace Engine.Demos
                 Renderer.ParallelRendering = true;
                 Renderer.SynchronizeThreads = false;
                 Renderer.CaptureMouse = true;
-
-                Debug.OpenConsole();
 
                 // Mapa pequeno para exemplificar o funcionamento do BlockMap
                 SampleBlockMap.Map sampleBlockMap = new();

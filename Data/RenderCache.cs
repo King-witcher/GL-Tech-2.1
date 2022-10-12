@@ -27,10 +27,11 @@ namespace Engine.Data
             angles = (float*)Marshal.AllocHGlobal(2 * sizeof(float) * width);
             cosines = angles + width;
 
-            double step = 2 * tan / (width - 1);
+            double step = 2.0 * tan / width;
+            double leftPixel = tan - step / 2.0;
             for (int i = 0; i < width; i++)
             {
-                float angle = (float)(Math.Atan(i * step - tan) / TORAD);
+                float angle = (float)(Math.Atan(i * step - leftPixel) / TORAD);
                 angles[i] = angle;
                 cosines[i] = (float)(Math.Cos(TORAD * angle));
             }

@@ -308,8 +308,8 @@ namespace Engine
                     float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); // Wall column size in pixels
 
                     // Where the column starts and ends relative to the screen.
-                    float column_start = (screen.flt_height - columnHeight) / 2f;
-                    float column_end = (screen.flt_height + columnHeight) / 2f;
+                    float column_start = (screen.flt_height - 1 - columnHeight) / 2f;
+                    float column_end = (screen.flt_height - 1 + columnHeight) / 2f;
 
                     // Wall rendering bounds on the screen...
                     int draw_column_start = screen.Height - (int)(screen.Height - column_start);    // Inclusive

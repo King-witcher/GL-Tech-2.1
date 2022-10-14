@@ -13,6 +13,8 @@ namespace Engine.Data
         internal readonly float FOV;
         internal readonly float* angles;
         internal readonly float* cosines;
+        internal readonly float* fall_dists;
+        internal readonly float* fall_factors;
 
         internal RenderCache(int width, int height, float FOV = 90f)
         {
@@ -35,6 +37,18 @@ namespace Engine.Data
                 angles[i] = angle;
                 cosines[i] = (float)(Math.Cos(TORAD * angle));
             }
+
+            // Fall distances
+            fall_dists = (float*)Marshal.AllocHGlobal(sizeof(float) * height);
+            fall_factors = (float*)Marshal.AllocHGlobal(sizeof(float) * height);
+            for (int line = height / 2; line < height; line++)
+            {
+                float pre_dist = width / (2 * height * (float)Math.Tan(Util.ToRad * FOV / 2f));
+                float post_dist = pre_dist * (height - line - 0.5f) / (line - height / 2 + 0.5f);
+                float fall_dist = pre_dist + post_dist;
+                fall_dists[line] = pre_dist + post_dist;
+                fall_factors[line] = fall_dist / pre_dist;
+            }
         }
 
         internal static RenderCache* Create(int width, int height, float FOV = 90f)
@@ -44,6 +58,7 @@ namespace Engine.Data
             return result;
         }
 
+        // Mem leak porque nao ta deletando todos os buffers alocados
         internal static void Delete(RenderCache* cache)
         {
             cache->Dispose();
@@ -54,6 +69,7 @@ namespace Engine.Data
         {
             // Releases both sines and cosines.
             Marshal.FreeHGlobal((IntPtr)angles);
+            Marshal.FreeHGlobal((IntPtr)fall_dists);
         }
     }
 }

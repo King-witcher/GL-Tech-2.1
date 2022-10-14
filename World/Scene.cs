@@ -121,6 +121,11 @@ namespace Engine.World
                 Add(item);
         }
 
+        public void AddOnFrame(Action action)
+        {
+            this.OnFrame += action;
+        }
+
         public void Add(params Entity[] entities) =>
             Add((IEnumerable<Entity>)entities);
 

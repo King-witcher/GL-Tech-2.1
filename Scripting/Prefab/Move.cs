@@ -19,7 +19,10 @@ namespace Engine.Scripting.Prefab
 
         public float Speed { get; set; } = 0.5f;
 
-        void OnFrame() =>
-            Entity.RelativePosition += Entity.RelativeDirection * Speed * Frame.DeltaTime;
+        void OnFrame()
+        {
+            Entity.RelativePosition += Direction * Speed * Frame.DeltaTime;
+            System.Console.WriteLine(Entity as Engine.World.Plane);
+        }
     }
 }

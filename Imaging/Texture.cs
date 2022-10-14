@@ -36,6 +36,10 @@ namespace Engine.Imaging
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal unsafe uint MapPixel(float hratio, float vratio)
         {
+#if DEBUG
+            if (hratio < 0 || vratio < 0)
+                Debug.InternalLog($"Ratios are ({hratio}, {vratio}) out of range.", Debug.Options.Error);
+#endif
             unchecked
             {
                 // This is the most performance critical segment of code in the entire engine

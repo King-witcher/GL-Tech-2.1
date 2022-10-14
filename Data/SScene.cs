@@ -24,6 +24,9 @@ namespace Engine.Data
         internal int collider_count;
         internal Texture background;
         internal SCamera* camera;  // Talvez eu mude isso
+        internal SFloor* first_floor;
+        internal SFloor* last_floor;
+        internal int floor_count;
 
         internal static SScene* Create()
         {
@@ -39,6 +42,14 @@ namespace Engine.Data
             result->collider_count = 0;
             result->background = Texture.NullTexture;
             result->camera = null;
+            result->first_floor = null;
+            result->last_floor = null;
+            result->floor_count = 0;
+
+            // Teste
+            Texture tex = new(new(Demos.SampleBlockMap.Resources.Golden));
+            result->Add(SFloor.Create((-2, 0), (0, 2 * 1.707f), (2, 0), tex));
+
             return result;
         }
 
@@ -69,6 +80,10 @@ namespace Engine.Data
             else if (entity is Sprite sprite)
             {
                 Add(sprite.unmanaged);
+            }
+            else if (entity is Floor floor)
+            {
+                Add(floor.unmanaged);
             }
         }
 
@@ -186,6 +201,33 @@ namespace Engine.Data
 
                 return nearest;
             }
+        }
+
+        internal SFloor* FloorAt(Vector point)
+        {
+            SFloor* cur = first_floor;
+
+            while (cur != null)
+            {
+                if (cur->Contains(point))
+                {
+                    return cur;
+                }
+                cur = cur->list_next;
+            }
+            return cur;
+        }
+
+        internal void Add(SFloor* floor)
+        {
+            if (first_floor == null)    // Has no elements
+                first_floor = last_floor = floor;
+            else
+            {
+                last_floor->list_next = floor;
+                last_floor = floor;
+            }
+            floor_count++;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

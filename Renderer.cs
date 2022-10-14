@@ -227,7 +227,8 @@ namespace Engine
                 Script.Frame.BeginRender();
 
                 DrawPlanes(backBuffer, currentScene.unmanaged);
-                PostProcess(backBuffer);
+                //DrawFloors(backBuffer, currentScene.unmanaged);
+                //PostProcess(backBuffer);
 
                 if (SynchronizeThreads)
                     Image.BufferCopy(backBuffer, frontBuffer);
@@ -253,25 +254,43 @@ namespace Engine
         // EXTREMELLY suboptimal; spike version
         private unsafe static void DrawFloors(Image buffer, SScene* scene)
         {
-            // Checks if the code should be run in all cores or just one.
+            // Checks if the code should be ran in all cores or just one.
             if (ParallelRendering)
-                Parallel.For(fromInclusive: 0, toExclusive: buffer.Width, body: DrawLine);
+                Parallel.For(fromInclusive: 0, toExclusive: buffer.Height, body: DrawLine);
             else
-                for (int i = 0; i < buffer.Width; i++)
+                for (int i = 0; i < buffer.Height; i++)
                     DrawLine(i);
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             void DrawLine(int screen_line)
             {
-                if(screen_line > buffer.Height >> 1)
+                if (screen_line > buffer.Height >> 1)
                 {
-                    float fall_pixels = screen_line - buffer.flt_height / 2f;
+                    float pre_dist = buffer.flt_width / (2 * buffer.flt_height * (float)Math.Tan(Util.ToRad * fieldOfView / 2f));
+                    float post_dist = pre_dist * (buffer.flt_height - screen_line - 0.5f) / (screen_line - buffer.flt_height / 2 + 0.5f);
+                    float fall_dist = pre_dist + post_dist;
 
-                    float left_point = - buffer.flt_width / 2f;
+                    Vector camera_dir = new(scene->camera->rotation);
+                    Vector center_floor_hit = scene->camera->position + camera_dir * fall_dist;
+
+                    float scratio = buffer.flt_width / buffer.flt_height;
+                    float factor = cache->fall_factors[screen_line];
+
+                    Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
+
+                    Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
+
+                    float step = 1 / buffer.flt_width;
 
                     for (int screen_column = 0; screen_column < buffer.Width; screen_column++)
                     {
-                        float right_ratio = screen_column - buffer.flt_width / 2f;
+                        Vector point = left_floor_hit + screen_column * step * lr_direction;
+
+                        SFloor* strf = scene->FloorAt(point);
+                        if (strf != null)
+                        {
+                            buffer[screen_column, screen_line] = strf->MapTexture(point);
+                        }
                     }
                 }
             }
@@ -340,8 +359,34 @@ namespace Engine
                     // Critical performance impact.
                     if (scene->background.source.Buffer != IntPtr.Zero)
                         for (int line = draw_column_end; line < screen.Height; line++)
-                            drawBackground(line);
+                        {
+                            drawFloorOrBackground(line, screen_column);
+                        }
                     #endregion
+
+                    void drawFloorOrBackground(int line, int column)
+                    {
+                        float fall_dist = cache->fall_dists[line];
+
+                        Vector camera_dir = new(scene->camera->rotation);
+                        Vector center_floor_hit = scene->camera->position + camera_dir * fall_dist;
+                        float scratio = screen.flt_width / screen.flt_height;
+                        float factor = cache->fall_factors[line];
+                        Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
+                        Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
+                        float step = 1 / screen.flt_width;
+                        Vector point = left_floor_hit + column * step * lr_direction;
+
+                        SFloor* strf = scene->FloorAt(point);
+                        if (strf != null)
+                        {
+                            screen[column, line] = strf->MapTexture(point);
+                        }
+                        else
+                        {
+                            drawBackground(line);
+                        }
+                    }
 
                     // Draws background
                     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -352,6 +397,35 @@ namespace Engine
                         float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
                         uint color = background.MapPixel(background_hratio, background_vratio);
                         screen[screen_column, line] = color;
+                    }
+                }
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            void DrawLine(int line, int column)
+            {
+                if (line > screen.Height >> 1)
+                {
+                    float fall_dist = cache->fall_dists[line];
+
+                    Vector camera_dir = new(scene->camera->rotation);
+                    Vector center_floor_hit = scene->camera->position + camera_dir * fall_dist;
+
+                    float scratio = screen.flt_width / screen.flt_height;
+                    float factor = cache->fall_factors[line];
+
+                    Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
+
+                    Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
+
+                    float step = 1 / screen.flt_width;
+
+                    Vector point = left_floor_hit + column * step * lr_direction;
+
+                    SFloor* strf = scene->FloorAt(point);
+                    if (strf != null)
+                    {
+                        screen[column, line] = strf->MapTexture(point);
                     }
                 }
             }

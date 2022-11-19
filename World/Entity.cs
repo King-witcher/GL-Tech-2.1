@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections;
+using Engine.Data;
 
 namespace Engine.World
 {
     public abstract partial class Entity : IDisposable
     {
         private Scene scene;
+        private static int entityCount = 0;
 
         internal Entity()
         {
-            name = "unnamed";
+            name = $"Entity {entityCount}";
         }
 
         public const int MAX_NAME_LENGTH = 63;
@@ -24,6 +28,8 @@ namespace Engine.World
                 name = value;
             }
         }
+
+        internal abstract unsafe IEnumerable<PlaneStruct*> GetPlaneStructs();
 
         private protected virtual Vector PositionData { get; set; }
 

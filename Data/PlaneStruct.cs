@@ -10,16 +10,16 @@ namespace Engine.Data
 
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct SPlane
+    internal unsafe struct PlaneStruct
     {
         internal Vector start;
         internal Vector direction;
         internal Texture texture;               // Yes, by value.
-        internal SPlane* list_next;    // Planes are stored in scenes a linked list.
+        internal PlaneStruct* list_next;    // Planes are stored in scenes a linked list.
 
-        internal static SPlane* Create(Vector start, Vector end, Texture texture)
+        internal static PlaneStruct* Create(Vector start, Vector end, Texture texture)
         {
-            SPlane* result = (SPlane*)Marshal.AllocHGlobal(sizeof(SPlane));
+            PlaneStruct* result = (PlaneStruct*)Marshal.AllocHGlobal(sizeof(PlaneStruct));
             result->texture = texture;
             result->direction = end - start;
             result->start = start;
@@ -27,9 +27,9 @@ namespace Engine.Data
             return result;
         }
 
-        internal static SPlane* Create(Vector start, float angle, float length, Texture texture)
+        internal static PlaneStruct* Create(Vector start, float angle, float length, Texture texture)
         {
-            SPlane* result = (SPlane*)Marshal.AllocHGlobal(sizeof(SPlane));
+            PlaneStruct* result = (PlaneStruct*)Marshal.AllocHGlobal(sizeof(PlaneStruct));
             Vector dir = new Vector(angle) * length;
             result->texture = texture;
             result->direction = dir;
@@ -77,7 +77,7 @@ namespace Engine.Data
             return;
         }
 
-        internal static void Delete(SPlane* item)
+        internal static void Delete(PlaneStruct* item)
         {
             Marshal.FreeHGlobal((IntPtr)item);
         }

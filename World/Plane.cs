@@ -3,29 +3,42 @@ using Engine.Data;
 
 namespace Engine.World
 {
-    public unsafe class Floor : Entity
+    public unsafe class Plane : Entity
     {
         #region What should happen to the unmanaged data if its position/direction changes? Here's where the class answers it.
-        internal SFloor* unmanaged;
+        internal PlaneStruct* unmanaged;
 
         private protected override Vector PositionData
         {
-            get => unmanaged->oa;
-            set => unmanaged->oa = value;
+            get => unmanaged->start;
+            set => unmanaged->start = value;
         }
 
         private protected override Vector DirectionData
         {
-            get => Vector.Zero;
-            set { }
+            get => unmanaged->direction;
+            set => unmanaged->direction = value;
         }
         #endregion
 
-        public Vector Position
+        public Vector Start
         {
             // Just a bit spaguetti
-            get => unmanaged->oa;
-            set => unmanaged->oa = value;
+            get => unmanaged->start;
+            set => unmanaged->start = value;
+        }
+
+        public Vector End
+        {
+            // Spaguetti?
+            get => unmanaged->start + unmanaged->direction;
+            set => unmanaged->direction = value - unmanaged->start;
+        }
+
+        public float Length
+        {
+            get => unmanaged->direction.Module;
+            set => unmanaged->direction *= value / unmanaged->direction.Module;
         }
 
         public Texture Texture
@@ -37,20 +50,20 @@ namespace Engine.World
             }
         }
 
-        public Floor(Vector a, Vector b, Vector c, Texture texture)
+        public Plane(Vector start, Vector end, Texture texture)
         {
-            unmanaged = SFloor.Create(a, b, c, texture);
+            unmanaged = PlaneStruct.Create(start, end, texture);
         }
 
         public override void Dispose()
         {
-            //STriFloor.Delete(unmanaged);
+            PlaneStruct.Delete(unmanaged);
             unmanaged = null;
         }
 
         public override string ToString()
         {
-            return $"<Floor: { Position }> ";
+            return $"|{ Start } -- { End }| ";
         }
     }
 }

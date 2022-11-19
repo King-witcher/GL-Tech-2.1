@@ -226,7 +226,7 @@ namespace Engine
                 controlStopwatch.Restart();
                 Script.Frame.BeginRender();
 
-                DrawPlanes(backBuffer, currentScene.unmanaged);
+                Draw(backBuffer, currentScene.unmanaged);
                 //DrawFloors(backBuffer, currentScene.unmanaged);
                 //PostProcess(backBuffer);
 
@@ -296,7 +296,7 @@ namespace Engine
             }
         }
 
-        private unsafe static void DrawPlanes(Image screen, SScene* scene)
+        private unsafe static void Draw(Image screen, SScene* scene)
         {
             // Checks if the code should be run in all cores or just one.
             if (ParallelRendering)
@@ -318,7 +318,7 @@ namespace Engine
                     Ray ray = new Ray(scene->camera->position, ray_angle);
 
                     // Cast the ray towards every plane.
-                    SPlane* nearest = scene->NearestPlane(ray, out float nearest_dist, out float nearest_ratio);
+                    PlaneStruct* nearest = scene->NearestPlane(ray, out float nearest_dist, out float nearest_ratio);
 
                     // Found out that optimizing this part by separing the case when it hits and not a wall is unecessary.
                     #region Render the plane
@@ -360,11 +360,12 @@ namespace Engine
                     if (scene->background.source.Buffer != IntPtr.Zero)
                         for (int line = draw_column_end; line < screen.Height; line++)
                         {
-                            drawFloorOrBackground(line, screen_column);
+                            drawFloorOrBackground(line);
                         }
                     #endregion
 
-                    void drawFloorOrBackground(int line, int column)
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    void drawFloorOrBackground(int line)
                     {
                         float fall_dist = cache->fall_dists[line];
 
@@ -375,12 +376,12 @@ namespace Engine
                         Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
                         Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
                         float step = 1 / screen.flt_width;
-                        Vector point = left_floor_hit + column * step * lr_direction;
+                        Vector point = left_floor_hit + screen_column * step * lr_direction;
 
                         SFloor* strf = scene->FloorAt(point);
                         if (strf != null)
                         {
-                            screen[column, line] = strf->MapTexture(point);
+                            screen[screen_column, line] = strf->MapTexture(point);
                         }
                         else
                         {
@@ -397,35 +398,6 @@ namespace Engine
                         float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
                         uint color = background.MapPixel(background_hratio, background_vratio);
                         screen[screen_column, line] = color;
-                    }
-                }
-            }
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            void DrawLine(int line, int column)
-            {
-                if (line > screen.Height >> 1)
-                {
-                    float fall_dist = cache->fall_dists[line];
-
-                    Vector camera_dir = new(scene->camera->rotation);
-                    Vector center_floor_hit = scene->camera->position + camera_dir * fall_dist;
-
-                    float scratio = screen.flt_width / screen.flt_height;
-                    float factor = cache->fall_factors[line];
-
-                    Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
-
-                    Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
-
-                    float step = 1 / screen.flt_width;
-
-                    Vector point = left_floor_hit + column * step * lr_direction;
-
-                    SFloor* strf = scene->FloorAt(point);
-                    if (strf != null)
-                    {
-                        screen[column, line] = strf->MapTexture(point);
                     }
                 }
             }

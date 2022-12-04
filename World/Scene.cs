@@ -88,15 +88,8 @@ namespace Engine.World
             }
             #endregion
 
-            Queue<Entity> queue = new();
-            queue.Enqueue(entity);
-
-            while (queue.TryDequeue(out Entity current))
-            {
-                add(current);
-                foreach (Entity child in current.Children)
-                    queue.Enqueue(child);
-            }
+            foreach (Entity node in entity.GetNodes())
+                add(node);
 
             void add(Entity entity)
             {

@@ -16,8 +16,8 @@ namespace Engine.Data
         internal SSprite* first_sprite; //not implemented
         internal SSprite* last_sprite;
         internal int sprite_count;
-        internal SPlane* first_plane;
-        internal SPlane* last_plane;
+        internal PlaneStruct* first_plane;
+        internal PlaneStruct* last_plane;
         internal int plane_count;
         internal SCollider* first_collider;
         internal SCollider* last_collider;
@@ -87,7 +87,7 @@ namespace Engine.Data
             }
         }
 
-        private void Add(SPlane* plane)
+        private void Add(PlaneStruct* plane)
         {
             if (first_plane == null)    // Has no entities
                 first_plane = last_plane = plane;
@@ -100,11 +100,11 @@ namespace Engine.Data
         }
 
         [Obsolete]
-        private void Remove(SPlane* plane)
+        private void Remove(PlaneStruct* plane)
         {
-            fixed (SPlane** csharpisbad = &first_plane)
+            fixed (PlaneStruct** csharpisbad = &first_plane)
             {
-                SPlane** pptr = csharpisbad;
+                PlaneStruct** pptr = csharpisbad;
 
                 while (*pptr != plane)
                     pptr = &(*pptr)->list_next;
@@ -178,14 +178,14 @@ namespace Engine.Data
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal SPlane* NearestPlane(Ray ray, out float nearest_dist, out float nearest_ratio)
+        internal PlaneStruct* NearestPlane(Ray ray, out float nearest_dist, out float nearest_ratio)
         {
             unchecked
             {
-                SPlane* nearest = null;
+                PlaneStruct* nearest = null;
                 nearest_dist = float.PositiveInfinity;
                 nearest_ratio = 2f;
-                SPlane* cur = first_plane;
+                PlaneStruct* cur = first_plane;
 
                 while (cur != null)
                 {

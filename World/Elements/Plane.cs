@@ -6,7 +6,7 @@ namespace Engine.World
     public unsafe class Plane : Entity
     {
         #region What should happen to the unmanaged data if its position/direction changes? Here's where the class answers it.
-        internal SPlane* unmanaged;
+        internal PlaneStruct* unmanaged;
 
         private protected override Vector PositionData
         {
@@ -52,12 +52,12 @@ namespace Engine.World
 
         public Plane(Vector start, Vector end, Texture texture)
         {
-            unmanaged = SPlane.Create(start, end, texture);
+            unmanaged = PlaneStruct.Create(start, end, texture);
         }
 
         public override void Dispose()
         {
-            SPlane.Delete(unmanaged);
+            PlaneStruct.Delete(unmanaged);
             unmanaged = null;
         }
 

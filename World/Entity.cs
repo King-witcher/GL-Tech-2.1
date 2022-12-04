@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections;
+using Engine.Data;
 
 namespace Engine.World
 {
     public abstract partial class Entity : IDisposable
     {
         private Scene scene;
+        private static int entityCount = 0;
 
         internal Entity()
         {
-            name = "unnamed";
+            name = $"Entity {entityCount}";
         }
 
         public const int MAX_NAME_LENGTH = 63;
@@ -23,6 +27,40 @@ namespace Engine.World
                         "when trying to save this map in a file.", Debug.Options.Warning);
                 name = value;
             }
+        }
+
+        public IEnumerable<Entity> GetNodes()
+        {
+            Queue<Entity> queue = new ();
+            queue.Enqueue(this);
+
+            while (queue.TryDequeue(out Entity current))
+            {
+                yield return current;
+                foreach (Entity entity in current.Children)
+                    queue.Enqueue(entity);
+            }
+        }
+
+        internal virtual IEnumerable<Plane> GetPlanes()
+        {
+            foreach (Entity entity in GetNodes())
+                if (entity is Plane plane)
+                    yield return plane;
+        }
+
+        internal virtual IEnumerable<Collider> GetColliders()
+        {
+            foreach (Entity entity in GetNodes())
+                if (entity is Collider collider)
+                    yield return collider;
+        }
+
+        internal virtual IEnumerable<Floor> GetFloors()
+        {
+            foreach (Entity entity in GetNodes())
+                if (entity is Floor floor)
+                    yield return floor;
         }
 
         private protected virtual Vector PositionData { get; set; }

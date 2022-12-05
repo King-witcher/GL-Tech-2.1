@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
-using Engine.Data;
 
 namespace Engine.World
 {
@@ -75,5 +73,21 @@ namespace Engine.World
         {
             this.scene = scene;
         }
+    }
+}
+
+interface Implementada
+{
+    static void Test()
+    {
+        Console.WriteLine("asdf");
+    }
+}
+
+class Teste : Implementada
+{
+    public static void Test()
+    {
+
     }
 }

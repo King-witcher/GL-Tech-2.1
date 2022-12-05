@@ -1,6 +1,6 @@
 ﻿using Engine.Imaging;
 
-namespace Engine.World.Prefab
+namespace Engine.World.Composed
 {
     public sealed class RegularPolygon : Polygon
     {

@@ -1,6 +1,6 @@
 ﻿using Engine;
 using Engine.World;
-using Engine.World.Prefab;
+using Engine.World.Composed;
 using Engine.Imaging;
 using Engine.Scripting;
 using Engine.Scripting.Prefab;

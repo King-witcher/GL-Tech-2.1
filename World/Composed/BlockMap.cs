@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 using Engine.Imaging;
 
-namespace Engine.World.Prefab
+namespace Engine.World.Composed
 {
     public partial class BlockMap : Entity
     {

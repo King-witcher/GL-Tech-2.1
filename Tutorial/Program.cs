@@ -4,7 +4,7 @@ using Engine.Scripting;
 using Engine.Scripting.Prefab;
 using Engine.Scripting.Physics;
 using Engine.World;
-using Engine.World.Prefab;
+using Engine.World.Composed;
 
 namespace Engine.Tutorial
 {

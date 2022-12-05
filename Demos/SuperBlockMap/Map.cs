@@ -1,7 +1,7 @@
 ﻿using Engine;
 using Engine.Imaging;
 using Engine.World;
-using Engine.World.Prefab;
+using Engine.World.Composed;
 using Engine.Scripting.Debugging;
 using Engine.Scripting.Prefab;
 using Engine.Scripting.Physics;

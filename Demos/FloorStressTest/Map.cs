@@ -28,7 +28,7 @@ namespace Engine.Demos.FloorStressTest
             // Floors
             {
                 var texture = new Texture(floors_buffer);
-                const int size = 6;
+                const int size = 20;
                 for (float i = 0; i < size; i++)
                 {
                     for (float j = 0; j < size; j++)

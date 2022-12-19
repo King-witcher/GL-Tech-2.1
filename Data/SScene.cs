@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Collections.Generic;
 
 using Engine.Imaging;
 using Engine.World;
-using Engine.Data;
 
 namespace Engine.Data
 {
@@ -24,9 +22,7 @@ namespace Engine.Data
         internal int collider_count;
         internal Texture background;
         internal SCamera* camera;  // Talvez eu mude isso
-        internal SFloor* first_floor;
-        internal SFloor* last_floor;
-        internal int floor_count;
+        internal SFloorList floor_list;
 
         internal static SScene* Create()
         {
@@ -42,9 +38,7 @@ namespace Engine.Data
             result->collider_count = 0;
             result->background = Texture.NullTexture;
             result->camera = null;
-            result->first_floor = null;
-            result->last_floor = null;
-            result->floor_count = 0;
+            result->floor_list = new();
 
             return result;
         }
@@ -201,37 +195,12 @@ namespace Engine.Data
 
         internal SFloor* FloorAt(Vector point)
         {
-            SFloor* prev = null;
-            SFloor* cur = first_floor;
-
-            while (cur != null)
-            {
-                if (cur->Contains(point))
-                {
-                    if (prev != null)
-                    {
-                        prev->list_next = cur->list_next;
-                        cur->list_next = first_floor;
-                        first_floor = cur;
-                    }
-                    return cur;
-                }
-                prev = cur;
-                cur = cur->list_next;
-            }
-            return cur;
+            return floor_list.Locate(point);
         }
 
         internal void Add(SFloor* floor)
         {
-            if (first_floor == null)    // Has no elements
-                first_floor = last_floor = floor;
-            else
-            {
-                last_floor->list_next = floor;
-                last_floor = floor;
-            }
-            floor_count++;
+            floor_list.Add(floor);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

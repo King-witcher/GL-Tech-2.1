@@ -10,8 +10,8 @@ namespace Engine.World
 
         private protected override Vector PositionData
         {
-            get => unmanaged->oa;
-            set => unmanaged->oa = value;
+            get => unmanaged->tl;
+            set => unmanaged->tl = value;
         }
 
         private protected override Vector DirectionData
@@ -24,8 +24,8 @@ namespace Engine.World
         public Vector Position
         {
             // Just a bit spaguetti
-            get => unmanaged->oa;
-            set => unmanaged->oa = value;
+            get => unmanaged->tl;
+            set => unmanaged->tl = value;
         }
 
         public Texture Texture
@@ -37,9 +37,9 @@ namespace Engine.World
             }
         }
 
-        public Floor(Vector a, Vector b, Vector c, Texture texture)
+        public Floor(Vector topLeft, Vector bottomRight, Texture texture)
         {
-            unmanaged = SFloor.Create(a, b, c, texture);
+            unmanaged = SFloor.Create(topLeft, bottomRight, texture);
         }
 
         public override void Dispose()

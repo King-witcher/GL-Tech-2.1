@@ -307,6 +307,42 @@ namespace Engine
                 for (int i = 0; i < screen.Width; i++)
                     DrawColumn(i);
 
+            // Checks if the code should be run in all cores or just one.
+            if (ParallelRendering)
+                Parallel.For(fromInclusive: screen.Height >> 1, toExclusive: screen.Height, body: drawFloorLine);
+            else
+                for (int i = screen.Height >> 1; i < screen.Height; i++)
+                    drawFloorLine(i);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            void drawFloorLine(int line)
+            {
+                float fall_dist = cache->fall_dists[line];
+
+                Vector camera_dir = new(scene->camera->rotation);
+
+                Vector center_floor_hit = scene->camera->position + camera_dir * fall_dist;
+                float scratio = screen.flt_width / screen.flt_height;
+                float factor = cache->fall_factors[line];
+                Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
+                Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
+
+                for (int i = 0; i < screen.Width; i++)
+                {
+                    Vector point = left_floor_hit + i * lr_direction / screen.flt_width;
+
+                    SFloor* strf = scene->FloorAt(point);
+                    if (strf != null)
+                    {
+                        screen[i, line] = strf->MapTexture(point);
+                    }
+                    else
+                    {
+                        screen[i, line] = 0;
+                    }
+                }
+            }
+
             // Render a vertical column of the screen.
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             void DrawColumn(int screen_column)
@@ -362,7 +398,7 @@ namespace Engine
                     if (scene->background.source.Buffer != IntPtr.Zero)
                         for (int line = draw_column_end; line < screen.Height; line++)
                         {
-                            drawFloorOrBackground(line);
+                            //drawFloorOrBackground(line);
                         }
                     #endregion
 

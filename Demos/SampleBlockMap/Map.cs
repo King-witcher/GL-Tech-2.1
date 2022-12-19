@@ -15,7 +15,7 @@ namespace Engine.Demos.SampleBlockMap
     public class Map : Scene
     {
         Image floors_buffer = new(Resources.Floors);
-        Image golden_buffer = new(Resources.Golden);
+        Image golden_buffer = new(Resources.golden);
         Image got_buffer = new(Resources.GOT);
         Image background_buffer = new(Resources.Universe);
 

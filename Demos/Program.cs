@@ -51,6 +51,11 @@ namespace Engine.Demos
             Renderer.CaptureMouse = true;
 
             // Mapa pequeno para exemplificar o funcionamento do BlockMap
+            FloorStressTest.Map floorStressTest = new();
+            Renderer.Run(floorStressTest);
+            floorStressTest.Dispose();
+
+            // Mapa pequeno para exemplificar o funcionamento do BlockMap
             SampleBlockMap.Map sampleBlockMap = new();
             Renderer.Run(sampleBlockMap);
             sampleBlockMap.Dispose();

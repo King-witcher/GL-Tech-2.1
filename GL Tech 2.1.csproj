@@ -53,6 +53,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Demos\FloorStressTest\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Update="GLTech2\Metadata.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -86,6 +91,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Demos\FloorStressTest\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="GLTech2\Metadata.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Metadata.Designer.cs</LastGenOutput>

@@ -46,10 +46,6 @@ namespace Engine.Data
             result->last_floor = null;
             result->floor_count = 0;
 
-            // Teste
-            Texture tex = new(new(Demos.SampleBlockMap.Resources.Golden));
-            result->Add(SFloor.Create((-2, 0), (0, 2 * 1.707f), (2, 0), tex));
-
             return result;
         }
 

@@ -282,11 +282,13 @@ namespace Engine
 
                     float step = 1 / buffer.flt_width;
 
+                    SFloor* strf = null;
+
                     for (int screen_column = 0; screen_column < buffer.Width; screen_column++)
                     {
                         Vector point = left_floor_hit + screen_column * step * lr_direction;
-
-                        SFloor* strf = scene->FloorAt(point);
+                        SFloor* current = scene->FloorAt(point);
+                        if (strf != null && current != strf)
                         if (strf != null)
                         {
                             buffer[screen_column, screen_line] = strf->MapTexture(point);

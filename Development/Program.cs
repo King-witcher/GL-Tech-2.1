@@ -12,8 +12,6 @@ namespace Engine.Development
         static unsafe void Main()
         {
             Scene scene = new Engine.Demos.SuperBlockMap.Map();
-
-            scene.Save("data.sqlite");
         }
     }
 }

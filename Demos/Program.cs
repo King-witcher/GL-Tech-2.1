@@ -43,9 +43,9 @@ namespace Engine.Demos
         static void RenderDemos()
         {
             // Renderer customization
-            Renderer.FullScreen = false;
-            Renderer.CustomHeight = 600;
-            Renderer.CustomWidth = 800;
+            Renderer.FullScreen = true;
+            //Renderer.CustomHeight = 600;
+            //Renderer.CustomWidth = 800;
             Renderer.FieldOfView = 110f;
             Renderer.SynchronizeThreads = true;
             Renderer.CaptureMouse = true;

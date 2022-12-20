@@ -1,13 +1,14 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 using Engine.Imaging;
 
 namespace Engine.Data
 {
-    internal unsafe struct SFloorList
+    internal unsafe struct SFloorList : IDisposable
     {
-        public Node* first;
+        private Node* first;
 
         public SFloorList()
         {
@@ -28,13 +29,28 @@ namespace Engine.Data
 
         void Raise(Node* prev)
         {
-            Node* cur = prev->next;
+            var cur = prev->next;
             prev->next = cur->next;
             cur->next = first;
             first = cur;
         }
 
-        internal SFloor* Locate(Vector point)
+        public SFloorList GetIntersections(Vector a, Vector b)
+        {
+            var cur = first;
+            var list = new SFloorList();
+
+            while(cur != null)
+            {
+                if (cur->data->Intersects(a, b))
+                    list.Add(Node.Create(cur->data));
+                cur = cur->next;
+            }
+
+            return list;
+        }
+
+        public SFloor* Locate(Vector point)
         {
             Node* prev = null;
             Node* cur = first;
@@ -54,6 +70,18 @@ namespace Engine.Data
             return null;
         }
 
+        public void Dispose()
+        {
+            var current = first;
+
+            while (current != null)
+            {
+                var next = current->next;
+                Node.Delete(current);
+                current = next;
+            }
+        }
+
         [NativeCppClass]
         [StructLayout(LayoutKind.Sequential)]
         internal unsafe struct Node
@@ -66,6 +94,11 @@ namespace Engine.Data
                 Node* result = (Node*)Marshal.AllocHGlobal(sizeof(Node));
                 result->data = sfloor;
                 return result;
+            }
+
+            public static void Delete(Node* node)
+            {
+                Marshal.FreeHGlobal((IntPtr) node);
             }
         }
     }
@@ -89,9 +122,25 @@ namespace Engine.Data
             return result;
         }
 
+        public bool Intersects(Vector start, Vector end)
+        {
+            var bottom = Math.Min(start.y, end.y);
+            var top = Math.Max(start.y, end.y);
+            var left = Math.Min(start.x, end.x);
+            var right = Math.Max(start.x, end.x);
+
+            if (top > br.y && bottom < tl.y && left < br.x && right > tl.x)
+                return true;
+
+            if (Contains(start) || Contains(end))
+                return true;
+
+            return false;
+        }
+
         public bool Contains(Vector point)
         {
-            if (point.x > tl.x && point.x < br.x && point.y > tl.y && point.y < br.y)
+            if (point.x > tl.x && point.x < br.x && point.y < tl.y && point.y > br.y)
                 return true;
             return false;
         }

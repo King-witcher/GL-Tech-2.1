@@ -1,5 +1,6 @@
 ﻿using Engine.Imaging;
 using Engine.Data;
+using System;
 
 namespace Engine.World
 {
@@ -37,9 +38,14 @@ namespace Engine.World
             }
         }
 
-        public Floor(Vector topLeft, Vector bottomRight, Texture texture)
+        public Floor(Vector start, Vector end, Texture texture)
         {
-            unmanaged = SFloor.Create(topLeft, bottomRight, texture);
+            var bottom = Math.Min(start.y, end.y);
+            var top = Math.Max(start.y, end.y);
+            var left = Math.Min(start.x, end.x);
+            var right = Math.Max(start.x, end.x);
+
+            unmanaged = SFloor.Create((left, top), (right, bottom), texture);
         }
 
         public override void Dispose()

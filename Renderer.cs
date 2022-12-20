@@ -327,11 +327,13 @@ namespace Engine
                 Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
                 Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
 
+                SFloorList list = scene->floor_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
+
                 for (int i = 0; i < screen.Width; i++)
                 {
                     Vector point = left_floor_hit + i * lr_direction / screen.flt_width;
 
-                    SFloor* strf = scene->FloorAt(point);
+                    SFloor* strf = list.Locate(point);
                     if (strf != null)
                     {
                         screen[i, line] = strf->MapTexture(point);
@@ -341,6 +343,8 @@ namespace Engine
                         screen[i, line] = 0;
                     }
                 }
+
+                list.Dispose();
             }
 
             // Render a vertical column of the screen.

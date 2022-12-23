@@ -15,22 +15,9 @@ namespace Engine.Demos
             Renderer.ParallelRendering = false;
             Renderer.SynchronizeThreads = true;
 
-            Segment ab = (
-                (0f, 10f),
-                (10f, 0f));
-
-            Segment cd = (
-                (0f, 0f),
-                (7f, 7f));
-
             Debug.OpenConsole();
 
-            Vector ratios = Segment.GetIntersectionRatio(ab, cd);
-
-            System.Console.WriteLine(ratios);
-            System.Console.ReadKey();
-
-            //RenderDemos();
+            RenderDemos();
         }
 
         static void TestFloor()

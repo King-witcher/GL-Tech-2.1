@@ -24,7 +24,7 @@ namespace Engine.Data
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal bool Test(Ray ray, out float distance)
+        internal bool Test(Segment ray, out float distance)
         {
             // Culling
             if (direction.x * ray.direction.y - direction.y * ray.direction.x <= 0)

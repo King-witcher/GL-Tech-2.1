@@ -168,7 +168,7 @@ namespace Engine.Data
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal PlaneStruct* NearestPlane(Ray ray, out float nearest_dist, out float nearest_ratio)
+        internal PlaneStruct* NearestPlane(Segment ray, out float nearest_dist, out float nearest_ratio)
         {
             unchecked
             {
@@ -204,7 +204,7 @@ namespace Engine.Data
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal SCollider* Cllsn_rcast(Ray ray, out float distance)
+        internal SCollider* Cllsn_rcast(Segment ray, out float distance)
         {
             // 0 < distance <= infinity
             // 0 <= split < 1

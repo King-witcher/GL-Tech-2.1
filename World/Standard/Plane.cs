@@ -10,35 +10,35 @@ namespace Engine.World
 
         private protected override Vector PositionData
         {
-            get => unmanaged->start;
-            set => unmanaged->start = value;
+            get => unmanaged->segment.start;
+            set => unmanaged->segment.start = value;
         }
 
         private protected override Vector DirectionData
         {
-            get => unmanaged->direction;
-            set => unmanaged->direction = value;
+            get => unmanaged->segment.direction;
+            set => unmanaged->segment.direction = value;
         }
         #endregion
 
         public Vector Start
         {
             // Just a bit spaguetti
-            get => unmanaged->start;
-            set => unmanaged->start = value;
+            get => unmanaged->segment.start;
+            set => unmanaged->segment.start = value;
         }
 
         public Vector End
         {
             // Spaguetti?
-            get => unmanaged->start + unmanaged->direction;
-            set => unmanaged->direction = value - unmanaged->start;
+            get => unmanaged->segment.start + unmanaged->segment.direction;
+            set => unmanaged->segment.direction = value - unmanaged->segment.start;
         }
 
         public float Length
         {
-            get => unmanaged->direction.Module;
-            set => unmanaged->direction *= value / unmanaged->direction.Module;
+            get => unmanaged->segment.direction.Module;
+            set => unmanaged->segment.direction *= value / unmanaged->segment.direction.Module;
         }
 
         public Texture Texture

@@ -45,7 +45,7 @@ namespace Engine.Scripting.Physics
             float deltaS = Speed * Frame.DeltaTime;
 
             Scene.CastRay(
-                new Ray(Entity.WorldPosition, Velocity),
+                new Segment(Entity.WorldPosition, Velocity),
                 out float cllsn_dist,
                 out Vector cllsn_normal);
 
@@ -60,7 +60,7 @@ namespace Engine.Scripting.Physics
                 deltaS = Speed * Frame.DeltaTime;
 
                 Scene.CastRay(
-                    new Ray(Entity.WorldPosition, Velocity),
+                    new Segment(Entity.WorldPosition, Velocity),
                     out cllsn_dist,
                     out cllsn_normal);
 

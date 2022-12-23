@@ -42,7 +42,7 @@ namespace Engine.World
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Test(Ray ray, out float distance)
+        public bool Test(Segment ray, out float distance)
         {
             return unmanaged->Test(ray, out distance);
         }

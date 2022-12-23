@@ -357,7 +357,7 @@ namespace Engine
                     float ray_cos = cache->cosines[screen_column];
                     float ray_angle = cache->angles[screen_column] + scene->camera->rotation;
                     Texture background = scene->background;
-                    Ray ray = new Ray(scene->camera->position, ray_angle);
+                    Segment ray = new Segment(scene->camera->position, ray_angle);
 
                     // Cast the ray towards every plane.
                     PlaneStruct* nearest = scene->NearestPlane(ray, out float nearest_dist, out float nearest_ratio);

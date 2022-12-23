@@ -78,6 +78,7 @@ namespace Engine
         public static Vector Right { get => new Vector(1, 0); }
         public static Vector Backward { get => new Vector(0, -1); }
         public static Vector Left { get => new Vector(-1, 0); }
+        public static Vector Infinity { get => new Vector(float.PositiveInfinity, float.PositiveInfinity); }
 
         public static Vector[] GetRegularPolygon(Vector center, float radius, int edges)
         {
@@ -124,6 +125,11 @@ namespace Engine
                 return true;
             else
                 return false;
+        }
+
+        public static float CrossProduct(Vector left, Vector right)
+        {
+            return left.X * right.Y - left.Y * right.X;
         }
 
         public static float DotProduct(Vector left, Vector right) =>

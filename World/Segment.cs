@@ -9,20 +9,36 @@ namespace Engine.World
         internal Vector start;
         internal Vector direction;
 
-        public Vector A => start;
+        public Vector Start => start;
 
-        public Vector B => direction;
+        public Vector Direction => direction;
 
-        public Segment(Vector a, Vector b)
+        public Segment(Vector start, Vector direction)
         {
-            this.start = a;
-            this.direction = b;
+            this.start = start;
+            this.direction = direction;
         }
 
-        public Segment(Vector a, float angle)
+        public Segment(Vector start, float angle)
         {
-            this.start = a;
+            this.start = start;
             direction = new Vector(angle);
+        }
+
+        public static Vector GetIntersectionRatio(Segment ab, Segment cd)
+        {
+            float cross_product = Vector.CrossProduct(ab.direction, cd.direction);
+
+            // Parallel lines
+            if (cross_product == 0)
+                return Vector.Infinity;
+
+            Vector ac = cd.start - ab.start;
+
+            float x = Vector.CrossProduct(ac, cd.direction) / cross_product;
+            float y = Vector.CrossProduct(ac, ab.direction) / cross_product;
+
+            return new(x, y);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -98,5 +114,13 @@ namespace Engine.World
             intersection = segment.start + spltmp * (segment.direction - segment.start);
             return true;
         }
+
+        public override string ToString()
+        {
+            return $"<{start} -> {start + direction}>";
+        }
+
+        public static implicit operator Segment ((Vector start, Vector end) tuple) =>
+            new(tuple.start, tuple.end - tuple.start);
     }
 }

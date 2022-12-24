@@ -6,6 +6,8 @@ using Engine.Scripting;
 using Engine.Scripting.Prefab;
 using System.Diagnostics;
 
+using System;
+
 namespace Engine.Demos
 {
     unsafe static internal partial class Program
@@ -15,9 +17,19 @@ namespace Engine.Demos
             Renderer.ParallelRendering = false;
             Renderer.SynchronizeThreads = true;
 
+            Triangle abc = new(
+                (0, 0),
+                (0, 2),
+                (2, 0)
+                );
+
+
             Debug.OpenConsole();
 
-            RenderDemos();
+            System.Console.WriteLine(abc.Contains((2f, 0f)));
+            Console.ReadKey();
+
+            //RenderDemos();
         }
 
         static void TestFloor()

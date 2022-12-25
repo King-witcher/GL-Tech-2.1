@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Engine.World
+namespace Engine
 {
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct Segment

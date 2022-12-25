@@ -42,8 +42,10 @@ namespace Engine.Data
 
             while(cur != null)
             {
-                if (cur->data->Intersects(a, b))
+                if (cur->data->Cull((a, b)))
+                {
                     list.Add(Node.Create(cur->data));
+                }
                 cur = cur->next;
             }
 
@@ -122,20 +124,14 @@ namespace Engine.Data
             return result;
         }
 
-        public bool Intersects(Vector start, Vector end)
+        internal bool Cull(Segment segment)
         {
-            var bottom = Math.Min(start.y, end.y);
-            var top = Math.Max(start.y, end.y);
-            var left = Math.Min(start.x, end.x);
-            var right = Math.Max(start.x, end.x);
+            Vector center = (tl + br) / 2f;
+            float radius = (tl - br).Module / 2f;
 
-            if (top > br.y && bottom < tl.y && left < br.x && right > tl.x)
-                return true;
+            float distance = Math.Abs((segment.start.y - center.y) * segment.direction.x - (segment.start.x - center.x) * segment.direction.y) / segment.direction.Module;
 
-            if (Contains(start) || Contains(end))
-                return true;
-
-            return false;
+            return distance < radius;
         }
 
         public bool Contains(Vector point)

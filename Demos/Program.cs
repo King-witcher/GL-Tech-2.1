@@ -4,32 +4,65 @@ using Engine.World.Composed;
 using Engine.Imaging;
 using Engine.Scripting;
 using Engine.Scripting.Prefab;
+using System.Runtime.InteropServices;
 using System.Diagnostics;
 
 using System;
 
 namespace Engine.Demos
 {
+    unsafe struct StructTest
+    {
+        float a;
+        float b;
+        float c;
+        float d;
+        float e;
+        float f;
+        float g;
+        float h;
+        float i;
+        StructTest* next;
+
+        public static StructTest* Create(StructTest* next)
+        {
+            StructTest* result = (StructTest*) Marshal.AllocHGlobal(sizeof(StructTest));
+            *result = default;
+            result->next = next;
+            return result;
+        }
+
+    }
+
+    class ClassTest
+    {
+        float a;
+        float b;
+        float c;
+        float d;
+        float e;
+        float f;
+        float g;
+        float h;
+        float i;
+
+        public ClassTest(ClassTest next)
+        {
+            this.next = next;
+        }
+
+        ClassTest next;
+    }
+
     unsafe static internal partial class Program
     {
         static void Main()
         {
             Renderer.ParallelRendering = false;
             Renderer.SynchronizeThreads = true;
-
-            Triangle abc = new(
-                (0, 0),
-                (0, 2),
-                (2, 0)
-                );
-
-
             Debug.OpenConsole();
 
-            System.Console.WriteLine(abc.Contains((2f, 0f)));
-            Console.ReadKey();
-
-            //RenderDemos();
+            RenderDemos();
         }
 
         static void TestFloor()

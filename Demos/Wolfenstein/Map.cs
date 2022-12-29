@@ -188,6 +188,19 @@ namespace Engine.Demos.Wolfenstein
                 Add(blockMap);
             }
 
+            // Floor
+            {
+                Texture tex = new Texture(
+                    source: textures,
+                    hrepeat: 1 / 6f,
+                    vrepeat: 1 / 19f,
+                    hoffset: 0 / 6f,
+                    voffset: 0 / 19f);
+
+                Floor floor = new Floor((0, 0), (64, 64), tex);
+                Add(floor);
+            }
+
             // Camera
             {
                 Camera camera = Camera;

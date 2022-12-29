@@ -300,6 +300,8 @@ namespace Engine
 
         private unsafe static void Draw(Image screen, SScene* scene)
         {
+            ushort[] column_height_table = new ushort[screen.Width];
+
             // Checks if the code should be run in all cores or just one.
             if (ParallelRendering)
                 Parallel.For(fromInclusive: 0, toExclusive: screen.Width, body: DrawColumn);
@@ -329,18 +331,20 @@ namespace Engine
 
                 SFloorList list = scene->floor_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
 
-                for (int i = 0; i < screen.Width; i++)
+                for (ushort screen_column = 0; screen_column < screen.Width; screen_column++)
                 {
-                    Vector point = left_floor_hit + i * lr_direction / screen.flt_width;
+                    if ((column_height_table[screen_column] + screen.Height) >> 1 > line)
+                        continue;
+                    Vector point = left_floor_hit + screen_column * lr_direction / screen.flt_width;
 
                     SFloor* strf = list.Locate(point);
                     if (strf != null)
                     {
-                        screen[i, line] = strf->MapTexture(point);
+                        screen[screen_column, line] = strf->MapTexture(point);
                     }
                     else
                     {
-                        screen[i, line] = 0;
+                        screen[screen_column, line] = 0;
                     }
                 }
 
@@ -367,6 +371,7 @@ namespace Engine
 
                     // Height that the current column should have on the screen.
                     float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); // Wall column size in pixels
+                    column_height_table[screen_column] = (ushort)columnHeight;
 
                     // Where the column starts and ends relative to the screen.
                     float column_start = (screen.flt_height - 1 - columnHeight) / 2f;

@@ -11,23 +11,27 @@ namespace Engine.Data
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct PlaneList
     {
-        private Node* first;
+        public Node* first;
+        public int count;
 
         public PlaneList()
         {
             first = null;
+            count = 0;
         }
 
         public void Add(Node* node)
         {
             node->next = first;
             first = node;
+            count++;
         }
 
         public void Add(PlaneStruct* plane)
         {
             Node* node = Node.Create(plane);
             Add(node);
+            count++;
         }
 
         void Raise(Node* prev)

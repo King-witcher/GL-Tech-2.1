@@ -14,9 +14,7 @@ namespace Engine.Data
         internal SSprite* first_sprite; //not implemented
         internal SSprite* last_sprite;
         internal int sprite_count;
-        internal PlaneStruct* first_plane;
-        internal PlaneStruct* last_plane;
-        internal int plane_count;
+        internal PlaneList plane_list;
         internal SCollider* first_collider;
         internal SCollider* last_collider;
         internal int collider_count;
@@ -28,13 +26,11 @@ namespace Engine.Data
         {
             SceneStruct* result = (SceneStruct*)Marshal.AllocHGlobal(sizeof(SceneStruct));
             result->first_sprite = null;
-            result->first_plane = null;
+            result->plane_list = new();
             result->first_collider = null;
             result->last_sprite = null;
-            result->last_plane = null;
             result->last_collider = null;
             result->sprite_count = 0;
-            result->plane_count = 0;
             result->collider_count = 0;
             result->background = Texture.NullTexture;
             result->camera = null;
@@ -79,32 +75,7 @@ namespace Engine.Data
 
         private void Add(PlaneStruct* plane)
         {
-            if (first_plane == null)    // Has no entities
-                first_plane = last_plane = plane;
-            else
-            {
-                last_plane->list_next = plane;
-                last_plane = plane;
-            }
-            plane_count++;
-        }
-
-        [Obsolete]
-        private void Remove(PlaneStruct* plane)
-        {
-            fixed (PlaneStruct** csharpisbad = &first_plane)
-            {
-                PlaneStruct** pptr = csharpisbad;
-
-                while (*pptr != plane)
-                    pptr = &(*pptr)->list_next;
-
-                *pptr = plane->list_next;
-                plane_count--;
-
-                if (*pptr == null) // Maybe it's wrong
-                    last_plane = null;
-            }
+            plane_list.Add(plane);
         }
 
         private void Add(SSprite* sprite)
@@ -116,7 +87,7 @@ namespace Engine.Data
                 last_sprite->list_next = sprite;
                 last_sprite = sprite;
             }
-            plane_count++;
+            sprite_count++;
         }
 
         [Obsolete]
@@ -175,18 +146,18 @@ namespace Engine.Data
                 PlaneStruct* nearest = null;
                 nearest_dist = float.PositiveInfinity;
                 nearest_ratio = 2f;
-                PlaneStruct* cur = first_plane;
+                PlaneList.Node* cur = plane_list.first;
 
                 while (cur != null)
                 {
-                    cur->Test(ray, out float cur_dist, out float cur_ratio);
+                    cur->data->Test(ray, out float cur_dist, out float cur_ratio);
                     if (cur_dist < nearest_dist)
                     {
                         nearest_ratio = cur_ratio;
                         nearest_dist = cur_dist;
-                        nearest = cur;
+                        nearest = cur->data;
                     }
-                    cur = cur->list_next;
+                    cur = cur->next;
                 }
 
                 return nearest;

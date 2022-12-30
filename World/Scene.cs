@@ -8,7 +8,7 @@ namespace Engine.World
 {
     public unsafe partial class Scene : IDisposable
     {
-        internal SScene* unmanaged;
+        internal SceneStruct* unmanaged;
 
         private List<Entity> entities = new List<Entity>();
         private List<Collider> colliders = new List<Collider>();
@@ -16,7 +16,7 @@ namespace Engine.World
 
         public Scene()
         {
-            unmanaged = SScene.Create();
+            unmanaged = SceneStruct.Create();
 
             // Bad smell
             Camera defaultCamera = new();
@@ -127,7 +127,7 @@ namespace Engine.World
             foreach (Entity item in entities)
                 item.Dispose();
 
-            SScene.Delete(unmanaged);
+            SceneStruct.Delete(unmanaged);
             unmanaged = null;
 
             Delete();

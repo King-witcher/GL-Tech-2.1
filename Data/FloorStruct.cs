@@ -6,11 +6,11 @@ using Engine.Imaging;
 
 namespace Engine.Data
 {
-    internal unsafe struct SFloorList : IDisposable
+    internal unsafe struct FloorList : IDisposable
     {
         private Node* first;
 
-        public SFloorList()
+        public FloorList()
         {
             first = null;
         }
@@ -21,7 +21,7 @@ namespace Engine.Data
             first = node;
         }
 
-        public void Add(SFloor* floor)
+        public void Add(FloorStruct* floor)
         {
             Node* node = Node.Create(floor);
             Add(node);
@@ -35,10 +35,10 @@ namespace Engine.Data
             first = cur;
         }
 
-        public SFloorList GetIntersections(Vector a, Vector b)
+        public FloorList GetIntersections(Vector a, Vector b)
         {
             var cur = first;
-            var list = new SFloorList();
+            var list = new FloorList();
 
             while(cur != null)
             {
@@ -52,14 +52,14 @@ namespace Engine.Data
             return list;
         }
 
-        public SFloor* Locate(Vector point)
+        public FloorStruct* Locate(Vector point)
         {
             Node* prev = null;
             Node* cur = first;
 
             while (cur != null)
             {
-                SFloor* data = cur->data;
+                FloorStruct* data = cur->data;
                 if (data->Contains(point))
                 {
                     if (prev != null)
@@ -88,10 +88,10 @@ namespace Engine.Data
         [StructLayout(LayoutKind.Sequential)]
         internal unsafe struct Node
         {
-            public SFloor* data;
+            public FloorStruct* data;
             public Node* next;
 
-            public static Node* Create(SFloor* sfloor)
+            public static Node* Create(FloorStruct* sfloor)
             {
                 Node* result = (Node*)Marshal.AllocHGlobal(sizeof(Node));
                 result->data = sfloor;
@@ -108,16 +108,16 @@ namespace Engine.Data
 
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct SFloor
+    internal unsafe struct FloorStruct
     {
         internal Vector tl;
         internal Vector br;
 
         public Texture texture;
 
-        internal static SFloor* Create(Vector topLeft, Vector bottomRight, Texture texture)
+        internal static FloorStruct* Create(Vector topLeft, Vector bottomRight, Texture texture)
         {
-            SFloor* result = (SFloor*)Marshal.AllocHGlobal(sizeof(SFloor));
+            FloorStruct* result = (FloorStruct*)Marshal.AllocHGlobal(sizeof(FloorStruct));
             result->tl = topLeft;
             result->br = bottomRight;
             result->texture = texture;

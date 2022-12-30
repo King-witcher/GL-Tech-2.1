@@ -7,7 +7,7 @@ namespace Engine.World
     public unsafe class Floor : Entity
     {
         #region What should happen to the unmanaged data if its position/direction changes? Here's where the class answers it.
-        internal SFloor* unmanaged;
+        internal FloorStruct* unmanaged;
 
         private protected override Vector PositionData
         {
@@ -45,7 +45,7 @@ namespace Engine.World
             var left = Math.Min(start.x, end.x);
             var right = Math.Max(start.x, end.x);
 
-            unmanaged = SFloor.Create((left, top), (right, bottom), texture);
+            unmanaged = FloorStruct.Create((left, top), (right, bottom), texture);
         }
 
         public override void Dispose()

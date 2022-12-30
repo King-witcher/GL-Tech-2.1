@@ -252,7 +252,7 @@ namespace Engine
         }
 
         // EXTREMELLY suboptimal; spike version
-        private unsafe static void DrawFloors(Image buffer, SScene* scene)
+        private unsafe static void DrawFloors(Image buffer, SceneStruct* scene)
         {
             // Checks if the code should be ran in all cores or just one.
             if (ParallelRendering)
@@ -282,12 +282,12 @@ namespace Engine
 
                     float step = 1 / buffer.flt_width;
 
-                    SFloor* strf = null;
+                    FloorStruct* strf = null;
 
                     for (int screen_column = 0; screen_column < buffer.Width; screen_column++)
                     {
                         Vector point = left_floor_hit + screen_column * step * lr_direction;
-                        SFloor* current = scene->FloorAt(point);
+                        FloorStruct* current = scene->FloorAt(point);
                         if (strf != null && current != strf)
                         if (strf != null)
                         {
@@ -298,7 +298,7 @@ namespace Engine
             }
         }
 
-        private unsafe static void Draw(Image screen, SScene* scene)
+        private unsafe static void Draw(Image screen, SceneStruct* scene)
         {
             ushort[] column_height_table = new ushort[screen.Width];
 
@@ -329,7 +329,7 @@ namespace Engine
                 Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
                 Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
 
-                SFloorList list = scene->floor_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
+                FloorList list = scene->floor_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
 
                 for (ushort screen_column = 0; screen_column < screen.Width; screen_column++)
                 {
@@ -337,7 +337,7 @@ namespace Engine
                         continue;
                     Vector point = left_floor_hit + screen_column * lr_direction / screen.flt_width;
 
-                    SFloor* strf = list.Locate(point);
+                    FloorStruct* strf = list.Locate(point);
                     if (strf != null)
                     {
                         screen[screen_column, line] = strf->MapTexture(point);
@@ -425,7 +425,7 @@ namespace Engine
                         float step = 1 / screen.flt_width;
                         Vector point = left_floor_hit + screen_column * step * lr_direction;
 
-                        SFloor* strf = scene->FloorAt(point);
+                        FloorStruct* strf = scene->FloorAt(point);
                         if (strf != null)
                         {
                             screen[screen_column, line] = strf->MapTexture(point);

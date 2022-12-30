@@ -9,7 +9,7 @@ namespace Engine.Data
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct SScene
+    internal unsafe struct SceneStruct
     {
         internal SSprite* first_sprite; //not implemented
         internal SSprite* last_sprite;
@@ -22,11 +22,11 @@ namespace Engine.Data
         internal int collider_count;
         internal Texture background;
         internal SCamera* camera;  // Talvez eu mude isso
-        internal SFloorList floor_list;
+        internal FloorList floor_list;
 
-        internal static SScene* Create()
+        internal static SceneStruct* Create()
         {
-            SScene* result = (SScene*)Marshal.AllocHGlobal(sizeof(SScene));
+            SceneStruct* result = (SceneStruct*)Marshal.AllocHGlobal(sizeof(SceneStruct));
             result->first_sprite = null;
             result->first_plane = null;
             result->first_collider = null;
@@ -44,7 +44,7 @@ namespace Engine.Data
         }
 
         // Must delete plane list!
-        public static void Delete(SScene* item)
+        public static void Delete(SceneStruct* item)
         {
             // Marshal.FreeHGlobal((IntPtr)item->sprities);
             // Marshal.FreeHGlobal((IntPtr)item->planes);
@@ -193,12 +193,12 @@ namespace Engine.Data
             }
         }
 
-        internal SFloor* FloorAt(Vector point)
+        internal FloorStruct* FloorAt(Vector point)
         {
             return floor_list.Locate(point);
         }
 
-        internal void Add(SFloor* floor)
+        internal void Add(FloorStruct* floor)
         {
             floor_list.Add(floor);
         }

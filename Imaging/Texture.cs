@@ -6,11 +6,11 @@ namespace Engine.Imaging
     [NativeCppClass] [StructLayout(LayoutKind.Sequential)]
     public unsafe struct Texture
     {
-        internal Image source; //Propositalmente salvo por valor
-        internal float hoffset;
-        internal float hrepeat;
-        internal float voffset;
-        internal float vrepeat;
+        internal readonly Image source; //Propositalmente salvo por valor
+        internal readonly float hoffset;
+        internal readonly float hrepeat;
+        internal readonly float voffset;
+        internal readonly float vrepeat;
 
         public Texture(Image source, float hoffset = 0f, float hrepeat = 1f, float voffset = 0f, float vrepeat = 1f)
         {

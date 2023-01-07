@@ -23,7 +23,7 @@ namespace Engine.Demos.FloorStressTest
 
         public Map()
         {
-            Background = new Texture(new Image(1, 1));
+            Background = Texture.FromColor(Color.Black, out _);
 
             // Floors
             {
@@ -40,11 +40,16 @@ namespace Engine.Demos.FloorStressTest
                 }
             }
 
+            // Wall
+            {
+                var texture = new Texture(floors_buffer);
+                var wall = new Wall((1, 2), (2, 2), texture);
+                Add(wall);
+            }
+
             // Camera
             {
                 Camera camera = Camera;
-                camera.WorldPosition = (5f, 5f);
-                camera.RelativeRotation = -90f;
 
                 camera.AddScript<DebugPerformanceStats>();
                 camera.AddScript<DebugSceneInfo>();

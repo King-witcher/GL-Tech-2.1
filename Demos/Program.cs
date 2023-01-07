@@ -58,10 +58,6 @@ namespace Engine.Demos
     {
         static void Main()
         {
-            Renderer.ParallelRendering = false;
-            Renderer.SynchronizeThreads = true;
-            Debug.OpenConsole();
-
             RenderDemos();
         }
 
@@ -89,6 +85,8 @@ namespace Engine.Demos
 
         static void RenderDemos()
         {
+            Debug.OpenConsole();
+
             // Renderer customization
             Renderer.FullScreen = true;
             //Renderer.CustomHeight = 600;

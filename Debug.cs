@@ -7,6 +7,7 @@ namespace Engine
 {
     public static class Debug
     {
+
         private static bool enabled = false;
         public static bool Enabled => enabled;
 

@@ -9,7 +9,7 @@ namespace Engine.Data
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct PlaneList
+    internal unsafe struct PlaneList : IDisposable
     {
         public Node* first;
         public int count;
@@ -32,6 +32,48 @@ namespace Engine.Data
             Node* node = Node.Create(plane);
             Add(node);
             count++;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal PlaneStruct* NearestPlane(Segment ray, out float distance, out float splitRatio)
+        {
+            unchecked
+            {
+                PlaneStruct* nearest = null;
+                distance = float.PositiveInfinity;
+                splitRatio = 2f;
+                Node* cur = first;
+
+                while (cur != null)
+                {
+                    cur->data->Test(ray, out float cur_dist, out float cur_ratio);
+                    if (cur_dist < distance)
+                    {
+                        splitRatio = cur_ratio;
+                        distance = cur_dist;
+                        nearest = cur->data;
+                    }
+                    cur = cur->next;
+                }
+
+                return nearest;
+            }
+        }
+
+        internal PlaneList CullByView(View view)
+        {
+            var planeList = new PlaneList();
+
+            var current = first;
+
+            while (current != null)
+            {
+                if(view.Contains(current->data->segment))
+                    planeList.Add(current->data);
+                current = current->next;
+            }
+
+            return planeList;
         }
 
         void Raise(Node* prev)

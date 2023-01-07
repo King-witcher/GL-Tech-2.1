@@ -302,12 +302,18 @@ namespace Engine
         {
             ushort[] column_height_table = new ushort[screen.Width];
 
+            // Cull only the planes that appear in the field of view.
+            View view = new View(scene->camera->position, new(cache->angles[0] + scene->camera->rotation), new(cache->angles[screen.Width - 1] + scene->camera->rotation));
+            PlaneList plane_list = scene->plane_list.CullByView(view);
+
             // Checks if the code should be run in all cores or just one.
-            if (ParallelRendering)
-                Parallel.For(fromInclusive: 0, toExclusive: screen.Width, body: DrawColumn);
-            else
-                for (int i = 0; i < screen.Width; i++)
-                    DrawColumn(i);
+            {
+                if (ParallelRendering)
+                    Parallel.For(fromInclusive: 0, toExclusive: screen.Width, body: DrawColumn);
+                else
+                    for (int i = 0; i < screen.Width; i++)
+                        DrawColumn(i);
+            }
 
             // Checks if the code should be run in all cores or just one.
             if (ParallelRendering)
@@ -315,6 +321,7 @@ namespace Engine
             else
                 for (int i = screen.Height >> 1; i < screen.Height; i++)
                     drawFloorLine(i);
+            plane_list.Dispose();
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             void drawFloorLine(int line)
@@ -364,7 +371,7 @@ namespace Engine
                     Segment ray = new Segment(scene->camera->position, ray_angle);
 
                     // Cast the ray towards every plane.
-                    PlaneStruct* nearest = scene->NearestPlane(ray, out float nearest_dist, out float nearest_ratio);
+                    PlaneStruct* nearest = plane_list.NearestPlane(ray, out float nearest_dist, out float nearest_ratio);
 
                     // Found out that optimizing this part by separing the case when it hits and not a wall is unecessary.
                     #region Render the plane

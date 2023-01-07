@@ -127,6 +127,7 @@ namespace Engine
                 return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float CrossProduct(Vector left, Vector right)
         {
             return left.X * right.Y - left.Y * right.X;

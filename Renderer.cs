@@ -378,7 +378,7 @@ namespace Engine
 
                     // Height that the current column should have on the screen.
                     float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); // Wall column size in pixels
-                    column_height_table[screen_column] = (ushort)columnHeight;
+
 
                     // Where the column starts and ends relative to the screen.
                     float column_start = (screen.flt_height - 1 - columnHeight) / 2f;
@@ -393,6 +393,8 @@ namespace Engine
                         draw_column_start = 0;
                     if (draw_column_end > screen.Height)
                         draw_column_end = screen.Height;
+
+                    column_height_table[screen_column] = (ushort)(draw_column_end - draw_column_start);
 
                     // Draws the background before the wall.
                     // Critical performance impact.

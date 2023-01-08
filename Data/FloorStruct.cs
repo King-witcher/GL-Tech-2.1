@@ -6,6 +6,8 @@ using Engine.Imaging;
 
 namespace Engine.Data
 {
+    [NativeCppClass]
+    [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct FloorList : IDisposable
     {
         private Node* first;

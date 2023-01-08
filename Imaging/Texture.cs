@@ -33,7 +33,7 @@ namespace Engine.Imaging
         }
 
         // Mapeia um pixel da textura baseado em uma proporção x e uma y que vai de 0 a 1
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
         internal unsafe uint MapPixel(float hratio, float vratio)
         {
 #if DEBUG

@@ -11,49 +11,6 @@ using System;
 
 namespace Engine.Demos
 {
-    unsafe struct StructTest
-    {
-        float a;
-        float b;
-        float c;
-        float d;
-        float e;
-        float f;
-        float g;
-        float h;
-        float i;
-        StructTest* next;
-
-        public static StructTest* Create(StructTest* next)
-        {
-            StructTest* result = (StructTest*) Marshal.AllocHGlobal(sizeof(StructTest));
-            *result = default;
-            result->next = next;
-            return result;
-        }
-
-    }
-
-    class ClassTest
-    {
-        float a;
-        float b;
-        float c;
-        float d;
-        float e;
-        float f;
-        float g;
-        float h;
-        float i;
-
-        public ClassTest(ClassTest next)
-        {
-            this.next = next;
-        }
-
-        ClassTest next;
-    }
-
     unsafe static internal partial class Program
     {
         static void Main()

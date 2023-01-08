@@ -8,15 +8,15 @@ namespace Engine.Structs
 {
     [NativeCppClass]
     [StructLayout(layoutKind: LayoutKind.Sequential)]
-    internal unsafe struct SCollider
+    internal unsafe struct ColliderStruct
     {
         internal Vector start;
         internal Vector direction;
-        internal SCollider* list_next;
+        internal ColliderStruct* list_next;
 
-        internal static SCollider* Create(Vector start, Vector end)
+        internal static ColliderStruct* Create(Vector start, Vector end)
         {
-            SCollider* result = (SCollider*)Marshal.AllocHGlobal(sizeof(SCollider));
+            ColliderStruct* result = (ColliderStruct*)Marshal.AllocHGlobal(sizeof(ColliderStruct));
             result->start = start;
             result->direction = end - start;
             result->list_next = null;
@@ -58,7 +58,7 @@ namespace Engine.Structs
             return true;
         }
 
-        internal static void Delete(SCollider* item)
+        internal static void Delete(ColliderStruct* item)
         {
             Marshal.FreeHGlobal((IntPtr)item);
         }

@@ -6,20 +6,20 @@ namespace Engine.Structs
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct SCamera
+    internal unsafe struct CameraStruct
     {
         internal Vector position;
         internal float rotation; //MUST be 0 <= x < 360
 
-        static internal SCamera* Create(Vector position, float rotation) // a little bit optimizable
+        static internal CameraStruct* Create(Vector position, float rotation) // a little bit optimizable
         {
-            SCamera* result = (SCamera*)Marshal.AllocHGlobal(sizeof(SCamera));
+            CameraStruct* result = (CameraStruct*)Marshal.AllocHGlobal(sizeof(CameraStruct));
             result->position = position;
             result->rotation = rotation;
             return result;
         }
 
-        static internal void Delete(SCamera* item)
+        static internal void Delete(CameraStruct* item)
         {
             Marshal.FreeHGlobal((IntPtr)item);
         }

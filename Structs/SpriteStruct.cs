@@ -9,26 +9,26 @@ namespace Engine.Structs
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct SSprite
+    internal unsafe struct SpriteStruct
     {
         internal Vector position;
         internal Texture material;
-        internal SSprite* list_next;
+        internal SpriteStruct* list_next;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static SSprite* Create(Vector position, Texture material)
+        internal static SpriteStruct* Create(Vector position, Texture material)
         {
-            SSprite* result = (SSprite*)Marshal.AllocHGlobal(sizeof(SSprite));
+            SpriteStruct* result = (SpriteStruct*)Marshal.AllocHGlobal(sizeof(SpriteStruct));
             result->position = position;
             result->material = material;
             result->list_next = null;
             return result;
         }
 
-        public static implicit operator SSprite(Sprite sprite) =>
+        public static implicit operator SpriteStruct(Sprite sprite) =>
             *sprite.unmanaged;
 
-        public static void Delete(SSprite* item)
+        public static void Delete(SpriteStruct* item)
         {
             Marshal.FreeHGlobal((IntPtr)item);
         }

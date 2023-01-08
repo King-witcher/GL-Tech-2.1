@@ -5,7 +5,7 @@ namespace Engine.World
 {
     internal unsafe sealed class Sprite : Entity
     {
-        internal SSprite* unmanaged;
+        internal SpriteStruct* unmanaged;
 
         private protected override Vector PositionData
         {
@@ -17,12 +17,12 @@ namespace Engine.World
 
         public Sprite(Vector position, Texture material)
         {
-            unmanaged = SSprite.Create(position, material);
+            unmanaged = SpriteStruct.Create(position, material);
         }
 
         public override void Dispose()
         {
-            SSprite.Delete(unmanaged);
+            SpriteStruct.Delete(unmanaged);
             unmanaged = null;
         }
     }

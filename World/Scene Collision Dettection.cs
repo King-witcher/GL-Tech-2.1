@@ -45,7 +45,7 @@ namespace Engine.World
                 return y;
             }
 
-            SCollider* nearest = unmanaged->Cllsn_rcast(ray, out distance);
+            ColliderStruct* nearest = unmanaged->Cllsn_rcast(ray, out distance);
 
             if (nearest != null)
             {

@@ -11,15 +11,15 @@ namespace Engine.Structs
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct SceneStruct
     {
-        internal SSprite* first_sprite; //not implemented
-        internal SSprite* last_sprite;
+        internal SpriteStruct* first_sprite; //not implemented
+        internal SpriteStruct* last_sprite;
         internal int sprite_count;
         internal PlaneList plane_list;
-        internal SCollider* first_collider;
-        internal SCollider* last_collider;
+        internal ColliderStruct* first_collider;
+        internal ColliderStruct* last_collider;
         internal int collider_count;
         internal Texture background;
-        internal SCamera* camera;  // Talvez eu mude isso
+        internal CameraStruct* camera;  // Talvez eu mude isso
         internal HorizontalList floor_list;
         internal HorizontalList ceiling_list;
 
@@ -84,7 +84,7 @@ namespace Engine.Structs
             plane_list.Add(plane);
         }
 
-        private void Add(SSprite* sprite)
+        private void Add(SpriteStruct* sprite)
         {
             if (first_sprite == null)
                 first_sprite = last_sprite = sprite;
@@ -97,11 +97,11 @@ namespace Engine.Structs
         }
 
         [Obsolete]
-        private void Remove(SSprite* sprite)
+        private void Remove(SpriteStruct* sprite)
         {
-            fixed (SSprite** csharpisbad = &first_sprite)
+            fixed (SpriteStruct** csharpisbad = &first_sprite)
             {
-                SSprite** pptr = csharpisbad;
+                SpriteStruct** pptr = csharpisbad;
 
                 while (*pptr != sprite)
                     pptr = &(*pptr)->list_next;
@@ -114,7 +114,7 @@ namespace Engine.Structs
             }
         }
 
-        private void Add(SCollider* collider)
+        private void Add(ColliderStruct* collider)
         {
             if (first_collider == null)    // Has no elements
                 first_collider = last_collider = collider;
@@ -127,11 +127,11 @@ namespace Engine.Structs
         }
 
         [Obsolete]
-        private void Remove(SCollider* collider)
+        private void Remove(ColliderStruct* collider)
         {
-            fixed (SCollider** csharpisbad = &first_collider)
+            fixed (ColliderStruct** csharpisbad = &first_collider)
             {
-                SCollider** pptr = csharpisbad;
+                ColliderStruct** pptr = csharpisbad;
 
                 while (*pptr != collider)
                     pptr = &(*pptr)->list_next;
@@ -176,13 +176,13 @@ namespace Engine.Structs
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal SCollider* Cllsn_rcast(Segment ray, out float distance)
+        internal ColliderStruct* Cllsn_rcast(Segment ray, out float distance)
         {
             // 0 < distance <= infinity
             // 0 <= split < 1
             // split = 2f means no collision
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            void GetCollisionData(SCollider* collider, out float cur_dist, out float cur_split)
+            void GetCollisionData(ColliderStruct* collider, out float cur_dist, out float cur_split)
             {
                 unchecked
                 {
@@ -223,9 +223,9 @@ namespace Engine.Structs
                 }
             }
 
-            SCollider* nearest = null;
+            ColliderStruct* nearest = null;
             distance = float.PositiveInfinity;
-            SCollider* cur = first_collider;
+            ColliderStruct* cur = first_collider;
 
             while (cur != null)
             {

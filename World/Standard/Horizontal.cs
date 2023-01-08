@@ -1,13 +1,14 @@
-﻿using Engine.Imaging;
-using Engine.Structs;
-using System;
+﻿using System;
+
+using Engine.Imaging;
+using Struct = Engine.Structs.HorizontalStruct;
 
 namespace Engine.World
 {
     public abstract unsafe class Horizontal : Entity
     {
         #region What should happen to the unmanaged data if its position/direction changes? Here's where the class answers it.
-        internal HorizontalStruct* unmanaged;
+        internal Struct* unmanaged;
 
         private protected override Vector PositionData
         {
@@ -45,7 +46,7 @@ namespace Engine.World
             var left = Math.Min(start.x, end.x);
             var right = Math.Max(start.x, end.x);
 
-            unmanaged = HorizontalStruct.Create((left, top), (right, bottom), texture);
+            unmanaged = Struct.Create((left, top), (right, bottom), texture);
         }
 
         public override void Dispose()

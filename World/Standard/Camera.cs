@@ -1,12 +1,12 @@
 ﻿using System;
-using Engine.Structs;
+using Struct = Engine.Structs.CameraStruct;
 
 namespace Engine.World
 {
     public unsafe sealed class Camera : Entity, IDisposable
     {
         #region What should happen to the unmanaged data if its position/direction changes? Here's where the class answers it.
-        internal CameraStruct* unmanaged;
+        internal Struct* unmanaged;
 
         private protected override Vector PositionData
         {
@@ -23,12 +23,12 @@ namespace Engine.World
 
         internal Camera()
         {
-            unmanaged = CameraStruct.Create(Vector.Zero, 0f);
+            unmanaged = Struct.Create(Vector.Zero, 0f);
         }
 
         public override void Dispose()
         {
-            CameraStruct.Delete(unmanaged);
+            Struct.Delete(unmanaged);
             unmanaged = null;
         }
     }

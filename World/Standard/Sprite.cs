@@ -1,11 +1,12 @@
 ﻿using Engine.Imaging;
-using Engine.Structs;
+
+using Struct = Engine.Structs.SpriteStruct;
 
 namespace Engine.World
 {
     internal unsafe sealed class Sprite : Entity
     {
-        internal SpriteStruct* unmanaged;
+        internal Struct* unmanaged;
 
         private protected override Vector PositionData
         {
@@ -17,12 +18,12 @@ namespace Engine.World
 
         public Sprite(Vector position, Texture material)
         {
-            unmanaged = SpriteStruct.Create(position, material);
+            unmanaged = Struct.Create(position, material);
         }
 
         public override void Dispose()
         {
-            SpriteStruct.Delete(unmanaged);
+            Struct.Delete(unmanaged);
             unmanaged = null;
         }
     }

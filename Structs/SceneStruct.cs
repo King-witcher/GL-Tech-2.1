@@ -3,7 +3,14 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 using Engine.Imaging;
-using Engine.World;
+
+using Entity = Engine.World.Entity;
+using PlaneClass = Engine.World.Plane;
+using ColliderClass = Engine.World.Collider;
+using SpriteClass = Engine.World.Sprite;
+using FloorClass = Engine.World.Floor;
+using CeilingClass = Engine.World.Ceiling;
+using CameraClass = Engine.World.Camera;
 
 namespace Engine.Structs
 {
@@ -51,35 +58,35 @@ namespace Engine.Structs
 
         public void Add(Entity entity)
         {
-            if (entity is Camera camera)
+            if (entity is CameraClass camera)
             {
                 if (this.camera != null)    // Must be changed.
                     return;
                 this.camera = camera.unmanaged;
             }
-            else if (entity is Plane plane)
+            else if (entity is PlaneClass plane)
             {
                 Add(plane.unmanaged);
             }
-            else if (entity is Collider collider)
+            else if (entity is ColliderClass collider)
             {
                 Add(collider.unmanaged);
             }
-            else if (entity is Sprite sprite)
+            else if (entity is SpriteClass sprite)
             {
                 Add(sprite.unmanaged);
             }
-            else if (entity is Floor floor)
+            else if (entity is FloorClass floor)
             {
                 floor_list.Add(floor.unmanaged);
             }
-            else if (entity is Ceiling ceiling)
+            else if (entity is CeilingClass ceiling)
             {
                 ceiling_list.Add(ceiling.unmanaged);
             }
         }
 
-        private void Add(PlaneStruct* plane)
+        private void Add(Plane* plane)
         {
             plane_list.Add(plane);
         }
@@ -145,11 +152,11 @@ namespace Engine.Structs
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal PlaneStruct* NearestPlane(Segment ray, out float nearest_dist, out float nearest_ratio)
+        internal Plane* NearestPlane(Segment ray, out float nearest_dist, out float nearest_ratio)
         {
             unchecked
             {
-                PlaneStruct* nearest = null;
+                Plane* nearest = null;
                 nearest_dist = float.PositiveInfinity;
                 nearest_ratio = 2f;
                 PlaneList.Node* cur = plane_list.first;

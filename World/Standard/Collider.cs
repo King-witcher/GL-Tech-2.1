@@ -1,12 +1,13 @@
 ﻿using System.Runtime.CompilerServices;
-using Engine.Structs;
+
+using Struct = Engine.Structs.ColliderStruct;
 
 namespace Engine.World
 {
     public unsafe sealed class Collider : Entity
     {
         #region What should happen to the unmanaged data if its position/direction changes? Here's where the class answers it.
-        internal ColliderStruct* unmanaged;
+        internal Struct* unmanaged;
 
         private protected override Vector PositionData
         {
@@ -26,18 +27,18 @@ namespace Engine.World
 
         public Collider(Vector start, Vector end)
         {
-            unmanaged = ColliderStruct.Create(start, end);
+            unmanaged = Struct.Create(start, end);
         }
 
         public Collider(Plane visiblePlane)
         {
-            unmanaged = ColliderStruct.Create(visiblePlane.Start, visiblePlane.End);
+            unmanaged = Struct.Create(visiblePlane.Start, visiblePlane.End);
             visibleBody = visiblePlane;
         }
 
         public Collider(Vector start, Vector end, Entity visibleBody)
         {
-            unmanaged = ColliderStruct.Create(start, end);
+            unmanaged = Struct.Create(start, end);
             this.visibleBody = visibleBody;
         }
 
@@ -49,7 +50,7 @@ namespace Engine.World
 
         public override void Dispose()
         {
-            ColliderStruct.Delete(unmanaged);
+            Struct.Delete(unmanaged);
             unmanaged = null;
         }
     }

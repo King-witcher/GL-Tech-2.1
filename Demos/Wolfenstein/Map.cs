@@ -198,7 +198,8 @@ namespace Engine.Demos.Wolfenstein
                     voffset: 0 / 19f);
 
                 Floor floor = new Floor((0, 0), (64, 64), tex);
-                Add(floor);
+                Ceiling ceiling = new Ceiling((0, 0), (64, 64), tex);
+                Add(floor, ceiling);
             }
 
             // Camera

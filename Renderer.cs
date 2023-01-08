@@ -304,7 +304,7 @@ public static partial class Renderer
 
         // Cull only the planes that appear in the field of view.
         View view = new View(scene->camera->position, new(cache->angles[0] + scene->camera->rotation), new(cache->angles[screen.Width - 1] + scene->camera->rotation));
-        PlaneList plane_list = scene->plane_list.CullByView(view);
+        using PlaneList plane_list = scene->plane_list.CullByView(view);
 
         // Checks if the code should be run in all cores or just one.
         {
@@ -317,26 +317,32 @@ public static partial class Renderer
 
         // Checks if the code should be run in all cores or just one.
         if (ParallelRendering)
+            Parallel.For(fromInclusive: 0, toExclusive: screen.Height >> 1, body: drawCeilingLine);
+        else
+            for (int i = 0; i < screen.Height >> 1; i++)
+                drawCeilingLine(i);
+
+        // Checks if the code should be run in all cores or just one.
+        if (ParallelRendering)
             Parallel.For(fromInclusive: screen.Height >> 1, toExclusive: screen.Height, body: drawFloorLine);
         else
             for (int i = screen.Height >> 1; i < screen.Height; i++)
                 drawFloorLine(i);
-        plane_list.Dispose();
 
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
         void drawFloorLine(int line)
         {
-            float fall_dist = cache->fall_dists[line];
+            float fall_dist = cache->fall_dists[screen.Height - line];
 
             Vector camera_dir = new(scene->camera->rotation);
 
             Vector center_floor_hit = scene->camera->position + camera_dir * fall_dist;
             float scratio = screen.flt_width / screen.flt_height;
-            float factor = cache->fall_factors[line];
+            float factor = cache->fall_factors[screen.Height - line];
             Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
             Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
 
-            HorizontalList list = scene->floor_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
+            using HorizontalList list = scene->floor_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
 
             for (ushort screen_column = 0; screen_column < screen.Width; screen_column++)
             {
@@ -354,8 +360,6 @@ public static partial class Renderer
                     screen[screen_column, line] = 0;
                 }
             }
-
-            list.Dispose();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
@@ -371,11 +375,11 @@ public static partial class Renderer
             Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
             Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
 
-            HorizontalList list = scene->ceiling_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
+            using HorizontalList list = scene->ceiling_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
 
             for (ushort screen_column = 0; screen_column < screen.Width; screen_column++)
             {
-                if ((column_height_table[screen_column] + screen.Height) >> 1 > line)
+                if ((screen.Height - column_height_table[screen_column]) >> 1 < line)
                     continue;
                 Vector point = left_floor_hit + screen_column * lr_direction / screen.flt_width;
 
@@ -389,8 +393,6 @@ public static partial class Renderer
                     screen[screen_column, line] = 0;
                 }
             }
-
-            list.Dispose();
         }
 
         // Render a vertical column of the screen.

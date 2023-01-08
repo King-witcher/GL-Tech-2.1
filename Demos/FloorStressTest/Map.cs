@@ -28,14 +28,15 @@ namespace Engine.Demos.FloorStressTest
             // Floors
             {
                 var texture = new Texture(floors_buffer);
-                const int size = 1;
+                const int size = 3;
                 for (float i = 0; i < size; i++)
                 {
                     for (float j = 0; j < size; j++)
                     {
-                        Floor f = new Floor((i, j), (i+1, j+1), texture);
+                        Floor f = new Floor((i, j), (i + 1, j + 1), texture);
+                        Ceiling c = new Ceiling((i, j), (i + 1, j + 1), texture);
                         System.Console.WriteLine(f);
-                        Add(f);
+                        Add(f, c);
                     }
                 }
             }

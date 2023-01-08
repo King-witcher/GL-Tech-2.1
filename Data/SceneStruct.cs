@@ -69,9 +69,13 @@ namespace Engine.Data
             {
                 Add(sprite.unmanaged);
             }
-            else if (entity is Horizontal floor)
+            else if (entity is Floor floor)
             {
-                Add(floor.unmanaged);
+                floor_list.Add(floor.unmanaged);
+            }
+            else if (entity is Ceiling ceiling)
+            {
+                ceiling_list.Add(ceiling.unmanaged);
             }
         }
 
@@ -169,11 +173,6 @@ namespace Engine.Data
         internal HorizontalStruct* FloorAt(Vector point)
         {
             return floor_list.Locate(point);
-        }
-
-        internal void Add(HorizontalStruct* floor)
-        {
-            floor_list.Add(floor);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

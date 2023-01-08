@@ -39,12 +39,12 @@ namespace Engine.Data
             }
 
             // Fall distances
-            fall_dists = (float*)Marshal.AllocHGlobal(sizeof(float) * height);
-            fall_factors = (float*)Marshal.AllocHGlobal(sizeof(float) * height);
-            for (int line = height / 2; line < height; line++)
+            fall_dists = (float*)Marshal.AllocHGlobal(sizeof(float) * height >> 1);
+            fall_factors = (float*)Marshal.AllocHGlobal(sizeof(float) * height >> 1);
+            float pre_dist = width / (2 * height * (float)Math.Tan(Util.ToRad * FOV / 2f));
+            for (int line = 0; line < height >> 1; line++)
             {
-                float pre_dist = width / (2 * height * (float)Math.Tan(Util.ToRad * FOV / 2f));
-                float post_dist = pre_dist * (height - line - 0.5f) / (line - height / 2 + 0.5f);
+                float post_dist = pre_dist * (line - 0.5f) / (height / 2 - line + 0.5f);
                 float fall_dist = pre_dist + post_dist;
                 fall_dists[line] = pre_dist + post_dist;
                 fall_factors[line] = fall_dist / pre_dist;

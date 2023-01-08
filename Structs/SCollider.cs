@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 using Engine.World;
 
-namespace Engine.Data
+namespace Engine.Structs
 {
     [NativeCppClass]
     [StructLayout(layoutKind: LayoutKind.Sequential)]

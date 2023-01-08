@@ -1,5 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
-using Engine.Data;
+using Engine.Structs;
 
 namespace Engine.World
 {

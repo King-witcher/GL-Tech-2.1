@@ -7,7 +7,7 @@ using Engine.Imaging;
 using Engine.Imaging.Processing;
 using Engine.World;
 using Engine.Scripting;
-using Engine.Data;
+using Engine.Structs;
 using System.Runtime.CompilerServices;
 
 namespace Engine;

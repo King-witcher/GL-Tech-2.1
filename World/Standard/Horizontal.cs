@@ -1,5 +1,5 @@
 ﻿using Engine.Imaging;
-using Engine.Data;
+using Engine.Structs;
 using System;
 
 namespace Engine.World

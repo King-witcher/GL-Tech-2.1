@@ -3,7 +3,7 @@ using System.IO;
 
 using Engine.World;
 using Engine.Serialization;
-using Engine.Data;
+using Engine.Structs;
 
 namespace Engine.Development
 {

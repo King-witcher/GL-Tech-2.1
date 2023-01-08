@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 using Engine.Imaging;
 
-namespace Engine.Data
+namespace Engine.Structs
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]

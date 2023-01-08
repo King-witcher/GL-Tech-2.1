@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Engine.Data;
+using Engine.Structs;
 using Engine.Imaging;
 using Engine.Scripting;
 

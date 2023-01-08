@@ -54,10 +54,10 @@ namespace Engine.World
                     yield return collider;
         }
 
-        internal virtual IEnumerable<Floor> GetFloors()
+        internal virtual IEnumerable<Horizontal> GetFloors()
         {
             foreach (Entity entity in GetNodes())
-                if (entity is Floor floor)
+                if (entity is Horizontal floor)
                     yield return floor;
         }
 

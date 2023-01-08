@@ -8,11 +8,11 @@ namespace Engine.Data
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct FloorList : IDisposable
+    internal unsafe struct HorizontalList : IDisposable
     {
         private Node* first;
 
-        public FloorList()
+        public HorizontalList()
         {
             first = null;
         }
@@ -23,9 +23,9 @@ namespace Engine.Data
             first = node;
         }
 
-        public void Add(FloorStruct* floor)
+        public void Add(HorizontalStruct* horizontal)
         {
-            Node* node = Node.Create(floor);
+            Node* node = Node.Create(horizontal);
             Add(node);
         }
 
@@ -37,10 +37,10 @@ namespace Engine.Data
             first = cur;
         }
 
-        public FloorList GetIntersections(Vector a, Vector b)
+        public HorizontalList GetIntersections(Vector a, Vector b)
         {
             var cur = first;
-            var list = new FloorList();
+            var list = new HorizontalList();
 
             while(cur != null)
             {
@@ -54,14 +54,14 @@ namespace Engine.Data
             return list;
         }
 
-        public FloorStruct* Locate(Vector point)
+        public HorizontalStruct* Locate(Vector point)
         {
             Node* prev = null;
             Node* cur = first;
 
             while (cur != null)
             {
-                FloorStruct* data = cur->data;
+                HorizontalStruct* data = cur->data;
                 if (data->Contains(point))
                 {
                     if (prev != null)
@@ -90,10 +90,10 @@ namespace Engine.Data
         [StructLayout(LayoutKind.Sequential)]
         internal unsafe struct Node
         {
-            public FloorStruct* data;
+            public HorizontalStruct* data;
             public Node* next;
 
-            public static Node* Create(FloorStruct* sfloor)
+            public static Node* Create(HorizontalStruct* sfloor)
             {
                 Node* result = (Node*)Marshal.AllocHGlobal(sizeof(Node));
                 result->data = sfloor;
@@ -110,16 +110,16 @@ namespace Engine.Data
 
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct FloorStruct
+    internal unsafe struct HorizontalStruct
     {
         internal Vector tl;
         internal Vector br;
 
         public Texture texture;
 
-        internal static FloorStruct* Create(Vector topLeft, Vector bottomRight, Texture texture)
+        internal static HorizontalStruct* Create(Vector topLeft, Vector bottomRight, Texture texture)
         {
-            FloorStruct* result = (FloorStruct*)Marshal.AllocHGlobal(sizeof(FloorStruct));
+            HorizontalStruct* result = (HorizontalStruct*)Marshal.AllocHGlobal(sizeof(HorizontalStruct));
             result->tl = topLeft;
             result->br = bottomRight;
             result->texture = texture;
@@ -143,6 +143,7 @@ namespace Engine.Data
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color MapTexture(Vector coordinates)
         {
             float xratio = (coordinates.x) % 1f;

@@ -20,7 +20,8 @@ namespace Engine.Data
         internal int collider_count;
         internal Texture background;
         internal SCamera* camera;  // Talvez eu mude isso
-        internal FloorList floor_list;
+        internal HorizontalList floor_list;
+        internal HorizontalList ceiling_list;
 
         internal static SceneStruct* Create()
         {
@@ -35,11 +36,12 @@ namespace Engine.Data
             result->background = Texture.NullTexture;
             result->camera = null;
             result->floor_list = new();
+            result->ceiling_list = new();
 
             return result;
         }
 
-        // Must delete plane list!
+        // TODO Must delete plane list!
         public static void Delete(SceneStruct* item)
         {
             // Marshal.FreeHGlobal((IntPtr)item->sprities);
@@ -67,7 +69,7 @@ namespace Engine.Data
             {
                 Add(sprite.unmanaged);
             }
-            else if (entity is Floor floor)
+            else if (entity is Horizontal floor)
             {
                 Add(floor.unmanaged);
             }
@@ -164,12 +166,12 @@ namespace Engine.Data
             }
         }
 
-        internal FloorStruct* FloorAt(Vector point)
+        internal HorizontalStruct* FloorAt(Vector point)
         {
             return floor_list.Locate(point);
         }
 
-        internal void Add(FloorStruct* floor)
+        internal void Add(HorizontalStruct* floor)
         {
             floor_list.Add(floor);
         }

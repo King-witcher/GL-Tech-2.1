@@ -282,12 +282,12 @@ public static partial class Renderer
 
                 float step = 1 / buffer.flt_width;
 
-                FloorStruct* strf = null;
+                HorizontalStruct* strf = null;
 
                 for (int screen_column = 0; screen_column < buffer.Width; screen_column++)
                 {
                     Vector point = left_floor_hit + screen_column * step * lr_direction;
-                    FloorStruct* current = scene->FloorAt(point);
+                    HorizontalStruct* current = scene->FloorAt(point);
                     if (strf != null && current != strf)
                         if (strf != null)
                         {
@@ -336,7 +336,7 @@ public static partial class Renderer
             Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
             Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
 
-            FloorList list = scene->floor_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
+            HorizontalList list = scene->floor_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
 
             for (ushort screen_column = 0; screen_column < screen.Width; screen_column++)
             {
@@ -344,7 +344,42 @@ public static partial class Renderer
                     continue;
                 Vector point = left_floor_hit + screen_column * lr_direction / screen.flt_width;
 
-                FloorStruct* strf = list.Locate(point);
+                HorizontalStruct* strf = list.Locate(point);
+                if (strf != null)
+                {
+                    screen[screen_column, line] = strf->MapTexture(point);
+                }
+                else
+                {
+                    screen[screen_column, line] = 0;
+                }
+            }
+
+            list.Dispose();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+        void drawCeilingLine(int line)
+        {
+            float fall_dist = cache->fall_dists[line];
+
+            Vector camera_dir = new(scene->camera->rotation);
+
+            Vector center_floor_hit = scene->camera->position + camera_dir * fall_dist;
+            float scratio = screen.flt_width / screen.flt_height;
+            float factor = cache->fall_factors[line];
+            Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
+            Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
+
+            HorizontalList list = scene->ceiling_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
+
+            for (ushort screen_column = 0; screen_column < screen.Width; screen_column++)
+            {
+                if ((column_height_table[screen_column] + screen.Height) >> 1 > line)
+                    continue;
+                Vector point = left_floor_hit + screen_column * lr_direction / screen.flt_width;
+
+                HorizontalStruct* strf = list.Locate(point);
                 if (strf != null)
                 {
                     screen[screen_column, line] = strf->MapTexture(point);
@@ -433,7 +468,7 @@ public static partial class Renderer
                     float step = 1 / screen.flt_width;
                     Vector point = left_floor_hit + screen_column * step * lr_direction;
 
-                    FloorStruct* strf = scene->FloorAt(point);
+                    HorizontalStruct* strf = scene->FloorAt(point);
                     if (strf != null)
                     {
                         screen[screen_column, line] = strf->MapTexture(point);

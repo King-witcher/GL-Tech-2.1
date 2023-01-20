@@ -86,7 +86,7 @@ namespace Engine.Structs
             }
         }
 
-        private void Add(Plane* plane)
+        private void Add(PlaneStruct* plane)
         {
             plane_list.Add(plane);
         }
@@ -152,11 +152,11 @@ namespace Engine.Structs
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal Plane* NearestPlane(Segment ray, out float nearest_dist, out float nearest_ratio)
+        internal PlaneStruct* NearestPlane(Segment ray, out float nearest_dist, out float nearest_ratio)
         {
             unchecked
             {
-                Plane* nearest = null;
+                PlaneStruct* nearest = null;
                 nearest_dist = float.PositiveInfinity;
                 nearest_ratio = 2f;
                 PlaneList.Node* cur = plane_list.first;

@@ -7,9 +7,9 @@ using Engine.Input;
 
 namespace Engine
 {
-    public partial class WindowAdapter : IDisposable, IKeyboard
+    public partial class Canvas : IDisposable, IKeyboard
     {
-        ConcreteWindow concrete;
+        CanvasWindow concrete;
         HashSet<InputKey> pressedKeys = new();
 
         public event Action Focus;
@@ -17,9 +17,9 @@ namespace Engine
         public event Action<InputKey> KeyDown;
         public event Action<InputKey> KeyUp;
 
-        public unsafe WindowAdapter(Imaging.Image output, bool fullscreen = false)
+        public unsafe Canvas(Imaging.Image output, bool fullscreen = false)
         {
-            concrete = new ConcreteWindow((Bitmap)output, fullscreen);
+            concrete = new CanvasWindow((Bitmap)output, fullscreen);
 
             concrete.KeyDown += TreatKeyDown;
             concrete.KeyUp += TreatKeyUp;

@@ -27,7 +27,7 @@ namespace Engine.Structs
             count++;
         }
 
-        public void Add(Plane* plane)
+        public void Add(PlaneStruct* plane)
         {
             Node* node = Node.Create(plane);
             Add(node);
@@ -35,11 +35,11 @@ namespace Engine.Structs
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal Plane* NearestPlane(Segment ray, out float distance, out float splitRatio)
+        internal PlaneStruct* NearestPlane(Segment ray, out float distance, out float splitRatio)
         {
             unchecked
             {
-                Plane* nearest = null;
+                PlaneStruct* nearest = null;
                 distance = float.PositiveInfinity;
                 splitRatio = 2f;
                 Node* cur = first;
@@ -103,7 +103,7 @@ namespace Engine.Structs
             while (current != null)
             {
                 var next = current->next;
-                Plane.Delete(current->data);
+                PlaneStruct.Delete(current->data);
                 Node.Delete(current);
                 current = next;
             }
@@ -111,10 +111,10 @@ namespace Engine.Structs
 
         public struct Node
         {
-            public Plane* data;
+            public PlaneStruct* data;
             public Node* next;
 
-            public static Node* Create(Plane* plane)
+            public static Node* Create(PlaneStruct* plane)
             {
                 Node* result = (Node*)Marshal.AllocHGlobal(sizeof(Node));
                 result->data = plane;
@@ -131,24 +131,24 @@ namespace Engine.Structs
 
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct Plane
+    internal unsafe struct PlaneStruct
     {
         internal Segment segment;
         internal Texture texture;               // Yes, by value.
-        internal Plane* list_next;    // Planes are stored in scenes a linked list.
+        internal PlaneStruct* list_next;    // Planes are stored in scenes a linked list.
 
-        internal static Plane* Create(Vector start, Vector end, Texture texture)
+        internal static PlaneStruct* Create(Vector start, Vector end, Texture texture)
         {
-            Plane* result = (Plane*)Marshal.AllocHGlobal(sizeof(Plane));
+            PlaneStruct* result = (PlaneStruct*)Marshal.AllocHGlobal(sizeof(PlaneStruct));
             result->texture = texture;
             result->segment = new(start, end - start);
             result->list_next = null;
             return result;
         }
 
-        internal static Plane* Create(Vector start, float angle, float length, Texture texture)
+        internal static PlaneStruct* Create(Vector start, float angle, float length, Texture texture)
         {
-            Plane* result = (Plane*)Marshal.AllocHGlobal(sizeof(Plane));
+            PlaneStruct* result = (PlaneStruct*)Marshal.AllocHGlobal(sizeof(PlaneStruct));
             Vector direction = new Vector(angle) * length;
             result->texture = texture;
             result->segment = new(start, direction);
@@ -162,7 +162,7 @@ namespace Engine.Structs
             segment.TestAgainstRay(ray, out cur_dist, out cur_split);
         }
 
-        internal static void Delete(Plane* item)
+        internal static void Delete(PlaneStruct* item)
         {
             Marshal.FreeHGlobal((IntPtr)item);
         }

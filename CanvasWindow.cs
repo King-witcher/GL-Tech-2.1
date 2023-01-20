@@ -7,13 +7,13 @@ namespace Engine
 {
     // This is a complete cheat. I use a windows forms window with a PictureBox to render everything =]
     // Unfortunately that's the only practical way I know yet.
-    class ConcreteWindow : Form, IDisposable
+    class CanvasWindow : Form, IDisposable
     {
         PictureBox outputBox;  // Will only be released by GC
 
         public event Action<TimeSpan> Render;
 
-        public ConcreteWindow(Image source, bool fullscreen)
+        public CanvasWindow(Image source, bool fullscreen)
         {
             Stopwatch rePaintStopwatch = new Stopwatch();
 
@@ -50,7 +50,7 @@ namespace Engine
 
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConcreteWindow));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CanvasWindow));
             this.outputBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.outputBox)).BeginInit();
             this.SuspendLayout();

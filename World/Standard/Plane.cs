@@ -1,5 +1,5 @@
 ﻿using Engine.Imaging;
-using Struct = Engine.Structs.Plane;
+using Struct = Engine.Structs.PlaneStruct;
 
 namespace Engine.World
 {

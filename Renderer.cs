@@ -134,7 +134,7 @@ public static partial class Renderer
         frontBuffer = new(CustomWidth, CustomHeight);
 
         // A window that will continuously display the buffer
-        WindowAdapter window = new(frontBuffer, FullScreen);
+        Canvas window = new(frontBuffer, FullScreen);
 
         // Setup input managers
         if (CaptureMouse)
@@ -408,7 +408,7 @@ public static partial class Renderer
                 Segment ray = new Segment(scene->camera->position, ray_angle);
 
                 // Cast the ray towards every plane.
-                Structs.Plane* nearest = plane_list.NearestPlane(ray, out float nearest_dist, out float nearest_ratio);
+                PlaneStruct* nearest = plane_list.NearestPlane(ray, out float nearest_dist, out float nearest_ratio);
 
                 // Found out that optimizing this part by separing the case when it hits and not a wall is unecessary.
                 #region Render the plane

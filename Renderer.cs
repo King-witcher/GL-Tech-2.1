@@ -22,13 +22,13 @@ public static partial class Renderer
 
     public static Scene ActiveScene => currentScene;
 
-    private static float minframetime = 4;
+    private static float minframetime = 2;
     public static int MaxFps
     {
         get => (int)(1000f / minframetime);
         set
         {
-            Util.Clip(ref value, 1, 250);
+            Util.Clip(ref value, 1, 500);
             minframetime = 1000f / value;
         }
     }
@@ -161,7 +161,7 @@ public static partial class Renderer
 
         // And then start the control thread, which is reponsible for distributing the buffer among the threads
         // and running the scene scripts.
-        var controlThread = Task.Run(() => ControlTrhead(frontBuffer, in stopRequested));
+        var controlThread = Task.Run(() => SyncControlThread(frontBuffer, window, in stopRequested));
 
         // Finally, passes control to the rendering screen and displays it.
         window.Open();
@@ -197,7 +197,57 @@ public static partial class Renderer
         ScheduledActions = null;
     }
 
-    private unsafe static void ControlTrhead(Image frontBuffer, in bool stopRequested)
+    internal unsafe static void SyncControlThread(Image frontBuffer, Canvas canvas, in bool stopRequested)
+    {
+        // Spaguetti
+        RefreshCache();
+
+        // Buffer where the image will be rendered
+        Image backBuffer = SynchronizeThreads ?
+            new(frontBuffer.Width, frontBuffer.Height) :
+            frontBuffer;
+
+        #region Warnings
+        if (!SynchronizeThreads && postProcessing.Count > 0)
+            Debug.InternalLog(
+                message: "The renderer has post processing effects set but DoubleBuffering is disabled. " +
+                    "Post processing effects may not work properly.",
+                debugOption: Debug.Options.Warning);
+        #endregion
+
+        Stopwatch controlStopwatch = new Stopwatch();   // Required to cap framerate
+        Script.Frame.RestartFrame();
+        Script.Frame.BeginScript();
+        currentScene.Start?.Invoke();
+        Script.Frame.EndScript();
+
+        canvas.RePaint += Render;
+
+        void Render(TimeSpan time)
+        {
+            controlStopwatch.Restart();
+            Script.Frame.BeginRender();
+
+            Draw(backBuffer, currentScene.unmanaged);
+            //DrawFloors(backBuffer, currentScene.unmanaged);
+            //PostProcess(backBuffer);
+
+            if (SynchronizeThreads)
+                Image.BufferCopy(backBuffer, frontBuffer);
+            Script.Frame.EndRender();
+
+            while (controlStopwatch.ElapsedMilliseconds < minframetime)
+                Thread.Yield();
+
+            RunScheduled();
+            Script.Frame.RestartFrame();
+            Script.Frame.BeginScript();
+            currentScene.OnFrame?.Invoke();
+            Script.Frame.EndScript();
+        }
+    }
+
+    private unsafe static void ControlThread(Image frontBuffer, in bool stopRequested)
     {
         // Spaguetti
         RefreshCache();
@@ -332,32 +382,35 @@ public static partial class Renderer
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
         void drawFloorLine(int line)
         {
-            float fall_dist = cache->fall_dists[screen.Height - line];
-
-            Vector camera_dir = new(scene->camera->rotation);
-
-            Vector center_floor_hit = scene->camera->position + camera_dir * fall_dist;
-            float scratio = screen.flt_width / screen.flt_height;
-            float factor = cache->fall_factors[screen.Height - line];
-            Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
-            Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
-
-            using HorizontalList list = scene->floor_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
-
-            for (ushort screen_column = 0; screen_column < screen.Width; screen_column++)
+            unchecked
             {
-                if ((column_height_table[screen_column] + screen.Height) >> 1 > line)
-                    continue;
-                Vector point = left_floor_hit + screen_column * lr_direction / screen.flt_width;
+                float fall_dist = cache->fall_dists[screen.Height - line];
 
-                HorizontalStruct* strf = list.Locate(point);
-                if (strf != null)
+                Vector camera_dir = new(scene->camera->rotation);
+
+                Vector center_floor_hit = scene->camera->position + camera_dir * fall_dist;
+                float scratio = screen.flt_width / screen.flt_height;
+                float factor = cache->fall_factors[screen.Height - line];
+                Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
+                Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
+
+                using HorizontalList list = scene->floor_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
+
+                for (ushort screen_column = 500; screen_column < screen.Width; screen_column++)
                 {
-                    screen[screen_column, line] = strf->MapTexture(point);
-                }
-                else
-                {
-                    screen[screen_column, line] = 0;
+                    if ((column_height_table[screen_column] + screen.Height) >> 1 > line)
+                        continue;
+                    Vector point = left_floor_hit + screen_column * lr_direction / screen.flt_width;
+
+                    HorizontalStruct* strf = list.Locate(point);
+                    if (strf != null)
+                    {
+                        screen[screen_column, line] = strf->MapTexture(point);
+                    }
+                    else
+                    {
+                        screen[screen_column, line] = 0;
+                    }
                 }
             }
         }
@@ -365,32 +418,35 @@ public static partial class Renderer
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
         void drawCeilingLine(int line)
         {
-            float fall_dist = cache->fall_dists[line];
-
-            Vector camera_dir = new(scene->camera->rotation);
-
-            Vector center_floor_hit = scene->camera->position + camera_dir * fall_dist;
-            float scratio = screen.flt_width / screen.flt_height;
-            float factor = cache->fall_factors[line];
-            Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
-            Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
-
-            using HorizontalList list = scene->ceiling_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
-
-            for (ushort screen_column = 0; screen_column < screen.Width; screen_column++)
+            unchecked
             {
-                if ((screen.Height - column_height_table[screen_column]) >> 1 < line)
-                    continue;
-                Vector point = left_floor_hit + screen_column * lr_direction / screen.flt_width;
+                float fall_dist = cache->fall_dists[line];
 
-                HorizontalStruct* strf = list.Locate(point);
-                if (strf != null)
+                Vector camera_dir = new(scene->camera->rotation);
+
+                Vector center_floor_hit = scene->camera->position + camera_dir * fall_dist;
+                float scratio = screen.flt_width / screen.flt_height;
+                float factor = cache->fall_factors[line];
+                Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
+                Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
+
+                using HorizontalList list = scene->ceiling_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
+
+                for (ushort screen_column = 500; screen_column < screen.Width; screen_column++)
                 {
-                    screen[screen_column, line] = strf->MapTexture(point);
-                }
-                else
-                {
-                    screen[screen_column, line] = 0;
+                    if ((screen.Height - column_height_table[screen_column]) >> 1 < line)
+                        continue;
+                    Vector point = left_floor_hit + screen_column * lr_direction / screen.flt_width;
+
+                    HorizontalStruct* strf = list.Locate(point);
+                    if (strf != null)
+                    {
+                        screen[screen_column, line] = strf->MapTexture(point);
+                    }
+                    else
+                    {
+                        screen[screen_column, line] = 0;
+                    }
                 }
             }
         }
@@ -434,9 +490,9 @@ public static partial class Renderer
 
                 // Draws the background before the wall.
                 // Critical performance impact.
-                if (scene->background.source.Buffer != IntPtr.Zero)
-                    for (int line = 0; line < draw_column_start; line++)
-                        drawBackground(line);
+                //if (scene->background.source.Buffer != IntPtr.Zero)
+                //    for (int line = 0; line < draw_column_start; line++)
+                //        drawBackground(line);
 
                 // Draw the wall
                 // Critical performance impact.
@@ -449,11 +505,11 @@ public static partial class Renderer
 
                 // Draw the other side of the background
                 // Critical performance impact.
-                if (scene->background.source.Buffer != IntPtr.Zero)
-                    for (int line = draw_column_end; line < screen.Height; line++)
-                    {
+                //if (scene->background.source.Buffer != IntPtr.Zero)
+                //    for (int line = draw_column_end; line < screen.Height; line++)
+                //    {
                         //drawFloorOrBackground(line);
-                    }
+                //    }
                 #endregion
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]

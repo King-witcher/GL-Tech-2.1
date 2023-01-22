@@ -30,8 +30,8 @@ namespace Engine
             outputBox.Paint += RePaint; // Refactor
             void RePaint(object _ = null, EventArgs __ = null)
             {
-                rePaintStopwatch.Restart();
                 Render?.Invoke(rePaintStopwatch.Elapsed);
+                rePaintStopwatch.Restart();
                 outputBox.Image = source;
             }
         }

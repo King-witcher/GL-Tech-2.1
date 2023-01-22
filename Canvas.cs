@@ -16,6 +16,11 @@ namespace Engine
         public event Action Unfocus;
         public event Action<InputKey> KeyDown;
         public event Action<InputKey> KeyUp;
+        public event Action<TimeSpan> RePaint
+        {
+            add => this.concrete.Render += value;
+            remove => this.concrete.Render -= value;
+        }
 
         public unsafe Canvas(Imaging.Image output, bool fullscreen = false)
         {

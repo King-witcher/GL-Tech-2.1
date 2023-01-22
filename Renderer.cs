@@ -384,19 +384,19 @@ public static partial class Renderer
         {
             unchecked
             {
-                float fall_dist = cache->fall_dists[screen.Height - line];
+                float fall_dist = cache->fall_dists[line - (screen.Height >> 1)];
 
                 Vector camera_dir = new(scene->camera->rotation);
 
                 Vector center_floor_hit = scene->camera->position + camera_dir * fall_dist;
                 float scratio = screen.flt_width / screen.flt_height;
-                float factor = cache->fall_factors[screen.Height - line];
+                float factor = cache->fall_factors[line - (screen.Height >> 1)];
                 Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
                 Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
 
                 using HorizontalList list = scene->floor_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
 
-                for (ushort screen_column = 500; screen_column < screen.Width; screen_column++)
+                for (ushort screen_column = 0; screen_column < screen.Width; screen_column++)
                 {
                     if ((column_height_table[screen_column] + screen.Height) >> 1 > line)
                         continue;
@@ -420,21 +420,21 @@ public static partial class Renderer
         {
             unchecked
             {
-                float fall_dist = cache->fall_dists[line];
+                float fall_dist = cache->fall_dists[(screen.Height >> 1) - line - 1];
 
                 Vector camera_dir = new(scene->camera->rotation);
 
                 Vector center_floor_hit = scene->camera->position + camera_dir * fall_dist;
                 float scratio = screen.flt_width / screen.flt_height;
-                float factor = cache->fall_factors[line];
+                float factor = cache->fall_factors[(screen.Height >> 1) - line - 1];
                 Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
                 Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
 
                 using HorizontalList list = scene->ceiling_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
 
-                for (ushort screen_column = 500; screen_column < screen.Width; screen_column++)
+                for (ushort screen_column = 0; screen_column < screen.Width; screen_column++)
                 {
-                    if ((screen.Height - column_height_table[screen_column]) >> 1 < line)
+                    if ((screen.Height - column_height_table[screen_column]) >> 1 < line + 1)
                         continue;
                     Vector point = left_floor_hit + screen_column * lr_direction / screen.flt_width;
 

@@ -68,7 +68,7 @@ namespace Engine.Structs
             while  (current != null)
             {
                 var left = current->data->segment.start - position;
-                var right = current->data->segment.direction + a;
+                var right = current->data->segment.direction + left;
 
                 if (Vector.CrossProduct(left, right) < 0)
                     planeList.Add(current->data);

@@ -22,11 +22,11 @@ public abstract class GUIElement : Entity
 
     public Vector Size { get; set; }
 
-    public float right;
-    public float? Right { get; set; }
-
     public VerticalAnchor VerticalAnchor { get; set; }
     public HorizontalAnchor HorizontalAnchor { get; set; }
 
-    internal abstract void Render(Image screen);
+    internal virtual void Render(Image screen)
+    {
+
+    }
 }

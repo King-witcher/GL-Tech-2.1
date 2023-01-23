@@ -44,13 +44,6 @@ namespace Engine
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void TestAgainstRay(Segment ray, out float cur_dist, out float cur_split)
         {
-            if (direction.x * ray.direction.y - direction.y * ray.direction.x <= 0)
-            {
-                cur_dist = float.PositiveInfinity;
-                cur_split = 2f;
-                return;
-            }
-
             // Medium performance impact.
             float
                 drx = direction.x,

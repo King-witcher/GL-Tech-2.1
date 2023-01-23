@@ -60,7 +60,25 @@ namespace Engine.Structs
             }
         }
 
-        internal PlaneList CullByView(View view)
+        internal PlaneList CullBySurface(Vector position)
+        {
+            var planeList = new PlaneList();
+            var current = first;
+
+            while  (current != null)
+            {
+                var left = current->data->segment.start - position;
+                var right = current->data->segment.direction + a;
+
+                if (Vector.CrossProduct(left, right) < 0)
+                    planeList.Add(current->data);
+                current = current->next;
+            }
+
+            return planeList;
+        }
+
+        internal PlaneList CullByFrustum(View view)
         {
             var planeList = new PlaneList();
 

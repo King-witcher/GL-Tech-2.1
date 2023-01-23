@@ -238,7 +238,7 @@ public static partial class Renderer
             if (framerate == float.PositiveInfinity)
                 framerate = 0f;
 
-            GUI.Text text = new GUI.Text();
+            GUI.Text text = new GUI.Text("");
             text.Value = ((int)framerate).ToString();
             text.Render(backBuffer);
 
@@ -311,60 +311,13 @@ public static partial class Renderer
         return;
     }
 
-    // EXTREMELLY suboptimal; spike version
-    private unsafe static void DrawFloors(Image buffer, SceneStruct* scene)
-    {
-        // Checks if the code should be ran in all cores or just one.
-        if (ParallelRendering)
-            Parallel.For(fromInclusive: 0, toExclusive: buffer.Height, body: DrawLine);
-        else
-            for (int i = 0; i < buffer.Height; i++)
-                DrawLine(i);
-
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-        void DrawLine(int screen_line)
-        {
-            if (screen_line > buffer.Height >> 1)
-            {
-                float pre_dist = buffer.flt_width / (2 * buffer.flt_height * (float)Math.Tan(Util.ToRad * fieldOfView / 2f));
-                float post_dist = pre_dist * (buffer.flt_height - screen_line - 0.5f) / (screen_line - buffer.flt_height / 2 + 0.5f);
-                float fall_dist = pre_dist + post_dist;
-
-                Vector camera_dir = new(scene->camera->rotation);
-                Vector center_floor_hit = scene->camera->position + camera_dir * fall_dist;
-
-                float scratio = buffer.flt_width / buffer.flt_height;
-                float factor = cache->fall_factors[screen_line];
-
-                Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
-
-                Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
-
-                float step = 1 / buffer.flt_width;
-
-                HorizontalStruct* strf = null;
-
-                for (int screen_column = 0; screen_column < buffer.Width; screen_column++)
-                {
-                    Vector point = left_floor_hit + screen_column * step * lr_direction;
-                    HorizontalStruct* current = scene->FloorAt(point);
-                    if (strf != null && current != strf)
-                        if (strf != null)
-                        {
-                            buffer[screen_column, screen_line] = strf->MapTexture(point);
-                        }
-                }
-            }
-        }
-    }
-
     private unsafe static void Draw(Image screen, SceneStruct* scene)
     {
         ushort[] column_height_table = new ushort[screen.Width];
 
         // Cull only the planes that appear in the field of view.
         View view = new View(scene->camera->position, new(cache->angles[0] + scene->camera->rotation), new(cache->angles[screen.Width - 1] + scene->camera->rotation));
-        using PlaneList plane_list = scene->plane_list.CullByView(view);
+        using PlaneList plane_list = scene->plane_list.CullBySurface(scene->camera->position).CullByFrustum(view);
 
         // Checks if the code should be run in all cores or just one.
         {

@@ -220,6 +220,7 @@ public static partial class Renderer
         Script.Frame.BeginScript();
         currentScene.Start?.Invoke();
         Script.Frame.EndScript();
+        float framerate = 0f;
 
         canvas.RePaint += Render;
 
@@ -231,6 +232,15 @@ public static partial class Renderer
             Draw(backBuffer, currentScene.unmanaged);
             //DrawFloors(backBuffer, currentScene.unmanaged);
             //PostProcess(backBuffer);
+
+            framerate = 0.95f * framerate + 0.05f / (float)Script.Frame.RenderTime;
+
+            if (framerate == float.PositiveInfinity)
+                framerate = 0f;
+
+            GUI.Text text = new GUI.Text();
+            text.Value = ((int)framerate).ToString();
+            text.Render(backBuffer);
 
             if (SynchronizeThreads)
                 Image.BufferCopy(backBuffer, frontBuffer);

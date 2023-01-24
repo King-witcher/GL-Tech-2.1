@@ -73,7 +73,7 @@ namespace Engine.Demos.SampleBlockMap
 
             // Camera
             {
-                Camera camera = Camera;
+                Camera camera = InitialCamera;
                 camera.WorldPosition = (5f, 5f);
                 camera.RelativeRotation = -90f;
 

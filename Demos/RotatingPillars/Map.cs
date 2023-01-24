@@ -125,13 +125,13 @@ namespace Engine.Demos.RotatingPillars
 
             // Camera
             {
-                Camera.AddScript<SwitchBackgroundScript>();
-                Camera.AddScript<DebugPerformanceStats>();
-                Camera.AddScript<MouseLook>();
+                InitialCamera.AddScript<SwitchBackgroundScript>();
+                InitialCamera.AddScript<DebugPerformanceStats>();
+                InitialCamera.AddScript<MouseLook>();
                 Noclip nm = new Noclip();
-                Camera.AddScript(nm);
+                InitialCamera.AddScript(nm);
                 SoftMovement movement = new SoftMovement(nm);
-                Camera.AddScript(movement);
+                InitialCamera.AddScript(movement);
             }
         }
     }

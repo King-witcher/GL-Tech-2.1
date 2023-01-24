@@ -50,7 +50,7 @@ namespace Engine.Demos.FloorStressTest
 
             // Camera
             {
-                Camera camera = Camera;
+                Camera camera = InitialCamera;
 
                 camera.AddScript<DebugPerformanceStats>();
                 camera.AddScript<DebugSceneInfo>();

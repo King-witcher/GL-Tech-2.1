@@ -55,7 +55,7 @@ namespace Engine.Demos.SuperBlockMap
 
             // Camera
             {
-                Camera camera = Camera;
+                Camera camera = InitialCamera;
                 camera.AddScript(new MouseLook(2.2f));
                 camera.AddScript<DebugPerformanceStats>();
                 camera.AddScript<DebugSceneInfo>();

@@ -44,13 +44,13 @@ namespace Engine.Tutorial
 
             // Camera
             {
-                Camera.WorldPosition = (0f, -1f);
+                InitialCamera.WorldPosition = (0f, -1f);
 
                 PointCollider collider = new();
                 SoftMovement movement = new(collider);
 
-                Camera.AddScripts(collider, movement);
-                Camera.AddScript<MouseLook>();
+                InitialCamera.AddScripts(collider, movement);
+                InitialCamera.AddScript<MouseLook>();
             }
         }
 

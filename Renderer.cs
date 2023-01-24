@@ -106,14 +106,14 @@ public sealed partial class Renderer
         AddEffect(new EffectClass());
     }
 
-    public unsafe void Play(Scene scene)
+    public unsafe void Play(Scene initialScene)
     {
         #region Checks
         if (IsRunning)
             return;
         IsRunning = true;
 
-        if (scene == null)
+        if (initialScene == null)
         {
             Debug.InternalLog(
                 message: $"Cannot render a null Scene.",
@@ -121,14 +121,14 @@ public sealed partial class Renderer
             return;
         }
 
-        if (scene.Background.source.Buffer == IntPtr.Zero)
+        if (initialScene.Background.source.Buffer == IntPtr.Zero)
             Debug.InternalLog(
                 message: $"The Scene being rendered does not have a background texture. Add it by using Scene.Background property.",
                 debugOption: Debug.Options.Warning);
         #endregion
 
-        Camera camera = scene.Camera;
-        currentScene = scene;
+        Camera camera = initialScene.InitialCamera;
+        currentScene = initialScene;
 
         // Unmanaged buffer where the video will be put.
         frontBuffer = new(CustomWidth, CustomHeight);
@@ -147,13 +147,13 @@ public sealed partial class Renderer
         window.KeyDown += key => Schedule(() =>
         {
             Input.Keyboard.SetKeyDown(key);
-            scene.OnKeyDown?.Invoke(key);
+            initialScene.OnKeyDown?.Invoke(key);
         });
 
         window.KeyUp += key => Schedule(() =>
         {
             Input.Keyboard.SetKeyUp(key);
-            scene.OnKeyUp?.Invoke(key);
+            initialScene.OnKeyUp?.Invoke(key);
         });
 
         // When set to true, the ControlThread will render for the last time and stop.
@@ -317,7 +317,9 @@ public sealed partial class Renderer
 
         // Cull only the planes that appear in the field of view.
         View view = new View(scene->camera->position, new(cache->angles[0] + scene->camera->rotation), new(cache->angles[screen.Width - 1] + scene->camera->rotation));
-        using PlaneList plane_list = scene->plane_list.CullBySurface(scene->camera->position).CullByFrustum(view);
+        var culling1 = scene->plane_list.CullBySurface(scene->camera->position);
+        using var plane_list = culling1.CullByFrustum(view);
+        culling1.Dispose();
 
         // Checks if the code should be run in all cores or just one.
         {

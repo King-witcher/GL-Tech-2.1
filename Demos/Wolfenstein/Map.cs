@@ -204,7 +204,7 @@ namespace Engine.Demos.Wolfenstein
 
             // Camera
             {
-                Camera camera = Camera;
+                Camera camera = InitialCamera;
                 camera.WorldPosition = (57.5f, 29.5f);
                 camera.AddScript<DebugPerformanceStats>();
                 camera.AddScript<DebugSceneInfo>();

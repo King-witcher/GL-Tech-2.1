@@ -36,7 +36,7 @@ namespace Engine.World
         public int ColliderCount => colliders.Count;
         public int EntityCount => entities.Count;
         public int PlaneCount => unmanaged->plane_list.count;
-        public Camera Camera => camera;
+        public Camera InitialCamera => camera;
 
         public Texture Background
         {

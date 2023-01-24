@@ -68,11 +68,6 @@ namespace Engine.Demos.SuperBlockMap
 
                 Add(camera);
             }
-
-            Engine.Renderer.CaptureMouse = true;
-            Engine.Renderer.FullScreen = true;
-            Engine.Renderer.SynchronizeThreads = true;
-            // Engine.Renderer.Run(this);
         }
     }
 }

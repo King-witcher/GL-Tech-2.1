@@ -12,18 +12,18 @@ using System.Runtime.CompilerServices;
 
 namespace Engine;
 
-public static partial class Renderer
+public sealed partial class Renderer
 {
-    unsafe static RenderCache* cache;
-    static Image frontBuffer;
-    static Scene currentScene = null;
-    static Action ScheduledActions = null;
-    public static bool ParallelRendering { get; set; } = true;
+    unsafe RenderCache* cache;
+    Image frontBuffer;
+    Scene currentScene = null;
+    Action ScheduledActions = null;
+    public bool ParallelRendering { get; set; } = true;
 
-    public static Scene ActiveScene => currentScene;
+    public Scene ActiveScene => currentScene;
 
-    private static float minframetime = 2;
-    public static int MaxFps
+    private float minframetime = 2;
+    public int MaxFps
     {
         get => (int)(1000f / minframetime);
         set
@@ -33,29 +33,29 @@ public static partial class Renderer
         }
     }
 
-    static bool doubleBuffer = true;
-    public static bool SynchronizeThreads
+    bool doubleBuffer = true;
+    public bool SynchronizeThreads
     {
         get => doubleBuffer;
         set => ChangeIfNotRunning("DoubleBuffer", ref doubleBuffer, value);
     }
 
-    private static int customWidth = 960;
-    public static int CustomWidth
+    private int customWidth = 960;
+    public int CustomWidth
     {
         get => customWidth;
         set => ChangeIfNotRunning("CustomWidth", ref customWidth, value);
     }
 
-    private static int customHeight = 520;
-    public static int CustomHeight
+    private int customHeight = 520;
+    public int CustomHeight
     {
         get => customHeight;
         set => ChangeIfNotRunning("CustomHeight", ref customHeight, value);
     }
 
-    static bool fullScreen;
-    public static bool FullScreen
+    bool fullScreen;
+    public bool FullScreen
     {
         get => fullScreen;
         set
@@ -69,8 +69,8 @@ public static partial class Renderer
         }
     }
 
-    static float fieldOfView = 90f;
-    public static float FieldOfView
+    float fieldOfView = 90f;
+    public float FieldOfView
     {
         get => fieldOfView;
         set
@@ -80,33 +80,33 @@ public static partial class Renderer
         }
     }
 
-    static bool captureMouse = false;
-    public static bool CaptureMouse
+    bool captureMouse = false;
+    public bool CaptureMouse
     {
         get => captureMouse;
         set => captureMouse = value;    // Revisar
     }
 
-    public static bool IsRunning { get; private set; } = false;
+    public bool IsRunning { get; private set; } = false;
 
-    public static Image GetScreenshot()
+    public Image GetScreenshot()
     {
         Image screenshot = new Image(CustomWidth, CustomHeight);
         Image.BufferCopy(frontBuffer, screenshot);
         return screenshot;
     }
 
-    public static void AddEffect(Effect effect)
+    public void AddEffect(Effect effect)
     {
-        Renderer.postProcessing.Add(effect);
+        postProcessing.Add(effect);
     }
 
-    public static void AddEffect<EffectClass>() where EffectClass : Effect, new()
+    public void AddEffect<EffectClass>() where EffectClass : Effect, new()
     {
         AddEffect(new EffectClass());
     }
 
-    public unsafe static void Run(Scene scene)
+    public unsafe void Run(Scene scene)
     {
         #region Checks
         if (IsRunning)
@@ -181,23 +181,23 @@ public static partial class Renderer
         IsRunning = false;
     }
 
-    private static unsafe void RefreshCache()
+    private unsafe void RefreshCache()
     {
         if (cache != null)
             RenderCache.Delete(cache);
         cache = RenderCache.Create(CustomWidth, CustomHeight, FieldOfView);
     }
 
-    private static void Schedule(Action action) => ScheduledActions += action;
+    private void Schedule(Action action) => ScheduledActions += action;
 
     // Executa ações que foram agendadas enquanto a engine renderizava.
-    private static void RunScheduled()
+    private void RunScheduled()
     {
         ScheduledActions?.Invoke();
         ScheduledActions = null;
     }
 
-    internal unsafe static void SyncControlThread(Image frontBuffer, Canvas canvas, in bool stopRequested)
+    internal unsafe void SyncControlThread(Image frontBuffer, Canvas canvas, in bool stopRequested)
     {
         // Spaguetti
         RefreshCache();
@@ -257,7 +257,7 @@ public static partial class Renderer
         }
     }
 
-    private unsafe static void ControlThread(Image frontBuffer, in bool stopRequested)
+    private unsafe void ControlThread(Image frontBuffer, in bool stopRequested)
     {
         // Spaguetti
         RefreshCache();
@@ -311,7 +311,7 @@ public static partial class Renderer
         return;
     }
 
-    private unsafe static void Draw(Image screen, SceneStruct* scene)
+    private unsafe void Draw(Image screen, SceneStruct* scene)
     {
         ushort[] column_height_table = new ushort[screen.Width];
 
@@ -514,14 +514,14 @@ public static partial class Renderer
         }
     }
 
-    private static List<Effect> postProcessing = new List<Effect>();
-    private static void PostProcess(Image target)
+    private List<Effect> postProcessing = new List<Effect>();
+    private void PostProcess(Image target)
     {
         foreach (var effect in postProcessing)
             effect.Process(target);
     }
 
-    static void ChangeIfNotRunning<T>(string name, ref T obj, T value)
+    void ChangeIfNotRunning<T>(string name, ref T obj, T value)
     {
         if (IsRunning)
             Debug.InternalLog(

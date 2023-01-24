@@ -216,13 +216,6 @@ namespace Engine.Demos.Wolfenstein
                 camera.AddScript(movement);
                 //camera.AddScript<Rotate>();
             }
-
-            // Renderer customization
-            Engine.Renderer.FullScreen = true;
-            Engine.Renderer.FieldOfView = 72f;
-            Engine.Renderer.ParallelRendering = true;
-            Engine.Renderer.SynchronizeThreads = true;
-            Engine.Renderer.CaptureMouse = true;
         }
         static Image Resize(Image pb, int scale)
         {

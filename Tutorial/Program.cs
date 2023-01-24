@@ -66,9 +66,6 @@ namespace Engine.Tutorial
         static void Main()
         {
             using Mundo mundo = new();
-            Renderer.FieldOfView = 90f;
-            Renderer.CaptureMouse = true;
-            Renderer.Run(mundo);
         }
     }
 }

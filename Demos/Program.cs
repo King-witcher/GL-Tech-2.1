@@ -35,28 +35,28 @@ namespace Engine.Demos
 
             // Mapa pequeno para exemplificar o funcionamento do BlockMap
             FloorStressTest.Map floorStressTest = new();
-            renderer.Run(floorStressTest);
+            renderer.Play(floorStressTest);
             floorStressTest.Dispose();
 
             // Mapa pequeno para exemplificar o funcionamento do BlockMap
             SampleBlockMap.Map sampleBlockMap = new();
-            renderer.Run(sampleBlockMap);
+            renderer.Play(sampleBlockMap);
             sampleBlockMap.Dispose();
 
             // Mapa que demonstra o funcionamento do sistema de parenting e do background
             RotatingPillars.Map pillarsMap = new();
             renderer.CaptureMouse = true;
-            renderer.Run(pillarsMap);
+            renderer.Play(pillarsMap);
             pillarsMap.Dispose();
 
             // Primeiro mapa do jogo Wolfenstein 3D - clássico da computação gráfica por usar a técnica de RayCasting
             Wolfenstein.Map wolfenstein = new();
-            renderer.Run(wolfenstein);
+            renderer.Play(wolfenstein);
             wolfenstein.Dispose();
 
             // Teste de estresse com um blockmap composto por muitas paredes com tratamento de colisão
             SuperBlockMap.Map superBlockMap = new();
-            renderer.Run(superBlockMap);
+            renderer.Play(superBlockMap);
             superBlockMap.Dispose();
         }
     }

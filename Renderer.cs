@@ -106,7 +106,7 @@ public sealed partial class Renderer
         AddEffect(new EffectClass());
     }
 
-    public unsafe void Run(Scene scene)
+    public unsafe void Play(Scene scene)
     {
         #region Checks
         if (IsRunning)

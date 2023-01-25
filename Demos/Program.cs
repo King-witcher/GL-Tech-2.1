@@ -21,6 +21,7 @@ namespace Engine.Demos
             renderer.CustomHeight = 600;
             renderer.CustomWidth = 800;
             renderer.FieldOfView = 72f;
+            renderer.FullScreen = true;
             renderer.SynchronizeThreads = true;
             renderer.CaptureMouse = true;
         }

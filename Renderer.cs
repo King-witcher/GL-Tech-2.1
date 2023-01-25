@@ -459,12 +459,15 @@ public sealed partial class Renderer
                 //    for (int line = 0; line < draw_column_start; line++)
                 //        drawBackground(line);
 
+                int xCoord = 0;
+                if (nearest != null)
+                    xCoord = nearest->texture.MapXCoord(nearest_ratio);
                 // Draw the wall
                 // Critical performance impact.
                 for (int line = draw_column_start; line < draw_column_end; line++)
                 {
                     float vratio = (line - column_start) / columnHeight;
-                    Color color = nearest->texture.MapPixel(nearest_ratio, vratio);
+                    Color color = nearest->texture.MapPixel(xCoord, vratio);
                     screen[screen_column, line] = color;
                 }
 

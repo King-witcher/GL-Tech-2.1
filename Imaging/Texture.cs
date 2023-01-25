@@ -34,6 +34,27 @@ namespace Engine.Imaging
 
         // Mapeia um pixel da textura baseado em uma proporção x e uma y que vai de 0 a 1
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+        internal unsafe int MapXCoord(float hratio)
+        {
+            unchecked
+            {
+                return (int)(source.flt_width * (hrepeat * hratio + hoffset)) % source.Width;
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+        internal unsafe uint MapPixel(int xCoord, float vratio)
+        {
+            unchecked
+            {
+                // This is the most performance critical segment of code in the entire engine
+                int y = (int)(source.flt_height * (vrepeat * vratio + voffset)) % source.Height;
+                uint color = ((uint*)source.Buffer)[source.Width * y + xCoord];
+                return color;
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
         internal unsafe uint MapPixel(float hratio, float vratio)
         {
 #if DEBUG

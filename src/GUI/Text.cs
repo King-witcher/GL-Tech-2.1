@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using Engine;
-using Engine.Imaging;
 
 namespace Engine.GUI
 {
@@ -16,9 +14,9 @@ namespace Engine.GUI
 
         public string Value { get; set; }
         public float FontSize { get; set; }
-        public Engine.Imaging.Color Color { get; set; } = Engine.Imaging.Color.White;
+        public Color Color { get; set; } = Color.White;
 
-        internal override void Render(Engine.Imaging.Image image)
+        internal override void Render(Image image)
         {
             base.Render(image);
 

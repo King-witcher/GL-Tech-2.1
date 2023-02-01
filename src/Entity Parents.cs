@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace Engine.World
+namespace Engine
 {
     partial class Entity
     {

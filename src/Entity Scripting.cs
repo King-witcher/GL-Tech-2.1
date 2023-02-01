@@ -4,7 +4,7 @@ using Engine.Scripting;
 
 // Talvez as World devam atualizar as relativas tambem. Posso criar uma que atualize apenas a interna e usar por quest'oes de performance.
 
-namespace Engine.World
+namespace Engine
 {
     partial class Entity
     {

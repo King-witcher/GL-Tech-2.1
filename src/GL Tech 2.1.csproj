@@ -15,14 +15,15 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>GLTech2.1</PackageId>
     <IsPublishable>False</IsPublishable>
-    <BaseIntermediateOutputPath>$(SolutionDir)obj</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>$(SolutionDir)..\obj</BaseIntermediateOutputPath>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <MinimumPlatformVersion>10.0.17763.0</MinimumPlatformVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <UseWPF>False</UseWPF>
-    <BaseOutputPath>$(SolutionDir)bin</BaseOutputPath>
-    <AssemblyName>gltech2</AssemblyName>
+    <BaseOutputPath>$(SolutionDir)..\bin</BaseOutputPath>
+    <AssemblyName>aliengine3d</AssemblyName>
+    <SignAssembly>False</SignAssembly>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -33,7 +34,9 @@
     <NoWarn>1701;1702;CS1592</NoWarn>
     <WarningsAsErrors>;NU1605</WarningsAsErrors>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <Deterministic>False</Deterministic>
+    <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -43,7 +46,9 @@
     <DocumentationFile>bin\Release\GL Tech 2.1.xml</DocumentationFile>
     <NoWarn>1701;1702;CS1592</NoWarn>
     <WarningsAsErrors>;NU1605</WarningsAsErrors>
-    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <Deterministic>False</Deterministic>
+    <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
 
   <ItemGroup>

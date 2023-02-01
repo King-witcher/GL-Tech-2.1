@@ -1,5 +1,5 @@
 ﻿
-namespace Engine.Imaging
+namespace Engine
 {
     public partial struct Color
     {

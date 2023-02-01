@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using Engine.Structs;
 using Engine.Imaging;
 using Engine.Scripting;
+using Engine.World;
 
-namespace Engine.World
+namespace Engine
 {
     public unsafe partial class Scene : IDisposable
     {

@@ -2,13 +2,14 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Engine.Imaging
+namespace Engine
 {
     [StructLayout(LayoutKind.Explicit)]
     public partial struct Color : IEquatable<Color>
     {
         // Union
         [FieldOffset(0)] uint uint_value;
+        [FieldOffset(0)] int int_value;
 
         [FieldOffset(3)] byte a;
         [FieldOffset(2)] byte r;
@@ -22,6 +23,7 @@ namespace Engine.Imaging
         // TODO liberar a transparência no A
         public Color(byte red, byte green, byte blue)
         {
+            int_value = default;
             uint_value = default;
             a = 0xff; r = red; g = green; b = blue;
         }

@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 
 using Engine.Imaging;
 
-using Entity = Engine.World.Entity;
 using PlaneClass = Engine.World.Plane;
 using ColliderClass = Engine.World.Collider;
 using SpriteClass = Engine.World.Sprite;

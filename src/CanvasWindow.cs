@@ -13,7 +13,7 @@ namespace Engine
 
         public event Action<TimeSpan> Render;
 
-        public CanvasWindow(Image source, bool fullscreen)
+        public CanvasWindow(System.Drawing.Image source, bool fullscreen)
         {
             Stopwatch rePaintStopwatch = new Stopwatch();
 

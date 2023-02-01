@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Engine.World;
+using Engine;
 
 namespace Engine.Scripting.Physics
 {

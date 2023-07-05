@@ -35,7 +35,6 @@ namespace Engine.Demos.FloorStressTest
                     {
                         Floor f = new Floor((i, j), (i + 1, j + 1), texture);
                         Ceiling c = new Ceiling((i, j), (i + 1, j + 1), texture);
-                        System.Console.WriteLine(f);
                         Add(f, c);
                     }
                 }
@@ -52,9 +51,9 @@ namespace Engine.Demos.FloorStressTest
             {
                 Camera camera = Camera;
 
-                camera.AddScript<DebugPerformanceStats>();
-                camera.AddScript<DebugSceneInfo>();
-                camera.AddScript<DebugComponents>();
+                //camera.AddScript<DebugPerformanceStats>();
+                //camera.AddScript<DebugSceneInfo>();
+                //camera.AddScript<DebugComponents>();
 
                 PointCollider collider = new PointCollider();
                 SoftMovement movement = new SoftMovement(collider);

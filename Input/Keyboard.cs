@@ -5,18 +5,18 @@ namespace Engine.Input
 {
     public static class Keyboard
     {
-        static HashSet<InputKey> keysDown = new();
+        static HashSet<ScanCode> keysDown = new();
 
-        public static bool IsKeyDown(InputKey key) => keysDown.Contains(key);
+        public static bool IsKeyDown(ScanCode key) => keysDown.Contains(key);
 
         // Chamado por Renderer
-        internal static void SetKeyDown(InputKey key)
+        internal static void SetKeyDown(ScanCode key)
         {
             keysDown.Add(key);
         }
 
         // Chamado por Renderer
-        internal static void SetKeyUp(InputKey key)
+        internal static void SetKeyUp(ScanCode key)
         {
             keysDown.Remove(key);
         }

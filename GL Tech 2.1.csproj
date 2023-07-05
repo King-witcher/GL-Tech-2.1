@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>Engine</RootNamespace>
-    <UseWindowsForms>True</UseWindowsForms>
+    <UseWindowsForms>False</UseWindowsForms>
     <StartupObject>Engine.Demos.Program</StartupObject>
     <Nullable>disable</Nullable>
     <AnalysisLevel>5.0</AnalysisLevel>
@@ -123,6 +123,12 @@
 
   <ItemGroup>
     <Folder Include="Tutorial\Scripts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ppy.SDL2-CS" Version="1.0.82" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+    <PackageReference Include="System.Resources.Extensions" Version="7.0.0" />
   </ItemGroup>
 
 </Project>

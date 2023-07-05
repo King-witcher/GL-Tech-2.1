@@ -23,19 +23,19 @@ namespace Engine.Scripting.Prefab
 
         public float TurnSpeed { get; set; } = 90f;
 
-        public InputKey StepForward { get; set; } = InputKey.W;
+        public ScanCode StepForward { get; set; } = ScanCode.W;
 
-        public InputKey StepBack { get; set; } = InputKey.S;
+        public ScanCode StepBack { get; set; } = ScanCode.S;
 
-        public InputKey StepLeft { get; set; } = InputKey.A;
+        public ScanCode StepLeft { get; set; } = ScanCode.A;
 
-        public InputKey StepRight { get; set; } = InputKey.D;
+        public ScanCode StepRight { get; set; } = ScanCode.D;
 
-        public InputKey TurnRight { get; set; } = InputKey.Right;
+        public ScanCode TurnRight { get; set; } = ScanCode.RIGHT;
 
-        public InputKey TurnLeft { get; set; } = InputKey.Left;
+        public ScanCode TurnLeft { get; set; } = ScanCode.LEFT;
 
-        public InputKey ChangeRun_Walk { get; set; } = InputKey.ShiftKey;
+        public ScanCode ChangeRun_Walk { get; set; } = ScanCode.LSHIFT;
 
         void OnFrame()
         {

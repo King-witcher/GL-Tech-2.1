@@ -69,9 +69,9 @@ namespace Engine.Demos.SuperBlockMap
                 Add(camera);
             }
 
-            Engine.Renderer.CaptureMouse = true;
-            Engine.Renderer.FullScreen = true;
-            Engine.Renderer.SynchronizeThreads = true;
+            global::Engine.Renderer.CaptureMouse = true;
+            global::Engine.Renderer.FullScreen = true;
+            global::Engine.Renderer.SynchronizeThreads = true;
             // Engine.Renderer.Run(this);
         }
     }

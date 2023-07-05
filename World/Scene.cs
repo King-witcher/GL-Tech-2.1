@@ -31,8 +31,8 @@ namespace Engine.World
 
         internal Action Start { get; private set; }
         internal Action OnFrame { get; private set; }
-        internal Action<Input.InputKey> OnKeyDown { get; private set; }
-        internal Action<Input.InputKey> OnKeyUp { get; private set; }
+        internal Action<Input.ScanCode> OnKeyDown { get; private set; }
+        internal Action<Input.ScanCode> OnKeyUp { get; private set; }
         public int ColliderCount => colliders.Count;
         public int EntityCount => entities.Count;
         public int PlaneCount => unmanaged->plane_list.count;

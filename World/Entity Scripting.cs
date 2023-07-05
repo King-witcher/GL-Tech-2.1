@@ -35,22 +35,22 @@ namespace Engine.World
             }
         }
 
-        internal Action<Input.InputKey> OnKeyDown
+        internal Action<Input.ScanCode> OnKeyDown
         {
             get
             {
-                Action<Input.InputKey> action = null;
+                Action<Input.ScanCode> action = null;
                 foreach (Script script in scripts)
                     action += script.OnKeyDownAction;
                 return action;
             }
         }
 
-        internal Action<Input.InputKey> OnKeyUp
+        internal Action<Input.ScanCode> OnKeyUp
         {
             get
             {
-                Action<Input.InputKey> action = null;
+                Action<Input.ScanCode> action = null;
                 foreach (Script script in scripts)
                     action += script.OnKeyUpAction;
                 return action;

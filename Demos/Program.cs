@@ -1,14 +1,4 @@
-﻿using Engine;
-using Engine.World;
-using Engine.World.Composed;
-using Engine.Imaging;
-using Engine.Scripting;
-using Engine.Scripting.Prefab;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
-
-using System;
-
+﻿
 namespace Engine.Demos
 {
     unsafe static internal partial class Program
@@ -18,36 +8,14 @@ namespace Engine.Demos
             RenderDemos();
         }
 
-        static void TestFloor()
-        {
-            Renderer.CustomHeight = 100;
-            Renderer.CustomWidth = 100;
-            Renderer.FieldOfView = 90;
-
-            Scene sc = new Scene(Texture.FromColor(Color.White, out _));
-            sc.Camera.WorldPosition = (0.5f, 0.5f);
-            sc.Camera.WorldDirection = Vector.Forward;
-
-            {
-                Plane a = new((0, 1), (1, 1), Texture.FromColor(Color.Blue, out _));
-                Script move = new Move(-0.005f * Vector.Forward);
-                sc.Camera.AddScript(move);
-                sc.Add(a);
-            }
-
-            sc.AddOnFrame(() => { System.Console.WriteLine(sc.Camera.WorldPosition); });
-
-            Renderer.Run(sc);
-        }
-
         static void RenderDemos()
         {
             Debug.OpenConsole();
 
             // Renderer customization
             Renderer.FullScreen = true;
-            //Renderer.CustomHeight = 600;
-            //Renderer.CustomWidth = 800;
+            Renderer.CustomWidth = 1920;
+            Renderer.CustomHeight = 1080;
             Renderer.FieldOfView = 110f;
             Renderer.SynchronizeThreads = true;
             Renderer.CaptureMouse = true;
@@ -64,7 +32,7 @@ namespace Engine.Demos
 
             // Mapa que demonstra o funcionamento do sistema de parenting e do background
             RotatingPillars.Map pillarsMap = new();
-            Engine.Renderer.CaptureMouse = true;
+            Renderer.CaptureMouse = true;
             Renderer.Run(pillarsMap);
             pillarsMap.Dispose();
 

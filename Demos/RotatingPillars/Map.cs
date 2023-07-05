@@ -146,17 +146,17 @@ class SwitchBackgroundScript : Script
         background = Scene.Background;
     }
 
-    void OnKeyDown(InputKey key)
+    void OnKeyDown(ScanCode key)
     {
         switch (key)
         {
-            case InputKey.Q:
+            case ScanCode.Q:
                 if (Scene.Background.source.Buffer == System.IntPtr.Zero)
                     Debug.Log("Scene background enabled.");
                 Scene.Background = background;
                 break;
 
-            case InputKey.E:
+            case ScanCode.E:
                 if (Scene.Background.source.Buffer != System.IntPtr.Zero)
                     Debug.Log("Scene background disabled.");
                 Scene.Background = Texture.NullTexture;

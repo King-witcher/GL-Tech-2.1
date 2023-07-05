@@ -1,55 +1,53 @@
 ﻿
 using System.Drawing;
-using System.Windows.Forms;
+using static SDL2.SDL;
 
 namespace Engine.Input
 {
     public static class Mouse
     {
+        private readonly static int width;
+        private readonly static int height;
+
         static (int x, int y) previousCursorPosition;
 
         static Mouse()
         {
-            int x = Screen.PrimaryScreen.Bounds.Width / 2;
-            int y = Screen.PrimaryScreen.Bounds.Height / 2;
-            MouseFixedPoint = (x, y);
+            SDL_GetCurrentDisplayMode(0, out SDL_DisplayMode mode);
+            width = mode.w;
+            height = mode.h;
+            int x = width / 2;
+            int y = height / 2;
         }
 
-        public static (int x, int y) CursorPosition
+        public static (int x, int y) MousePosition
         {
-            get => (Cursor.Position.X, Cursor.Position.Y);
-            set => Cursor.Position = new Point(value.x, value.y);
+            get {
+                SDL_GetMouseState(out int x, out int y);
+                return (x, y);
+            }
+            set
+            {
+                //Cursor.Position = new Point(value.x, value.y);
+            }
+        }
+
+        public static (int X, int Y) Shift
+        {
+            get;
+            internal set;
         }
 
         static bool captureMouse = false;
-
-        public static (int x, int y) MouseFixedPoint { get; set; }
-
-        public static (int dx, int dy) Hook()
-        {
-            if (captureMouse)
-            {
-                int delta_x = CursorPosition.x - MouseFixedPoint.x;
-                int delta_y = CursorPosition.y - MouseFixedPoint.y;
-
-                CursorPosition = MouseFixedPoint;
-
-                return (delta_x, delta_y);
-            }
-            else
-            {
-                return (0, 0);
-            }
-        }
 
         internal static void Enable()
         {
             if (!captureMouse)
             {
-                Cursor.Hide();
+                /*Cursor.Hide();
                 previousCursorPosition = (Cursor.Position.X, Cursor.Position.Y);
                 Cursor.Position = new Point(MouseFixedPoint.x, MouseFixedPoint.y);
-                captureMouse = true;
+                captureMouse = true;*/
             }
         }
 
@@ -57,8 +55,8 @@ namespace Engine.Input
         {
             if (captureMouse)
             {
-                CursorPosition = previousCursorPosition;
-                Cursor.Show();
+                MousePosition = previousCursorPosition;
+                //Cursor.Show();
                 captureMouse = false;
             }
         }

@@ -22,7 +22,7 @@ namespace Engine.Scripting.Prefab
         void OnFrame()
         {
             Entity.RelativePosition += Direction * Speed * Frame.DeltaTime;
-            System.Console.WriteLine(Entity as Engine.World.Plane);
+            System.Console.WriteLine(Entity as World.Plane);
         }
     }
 }

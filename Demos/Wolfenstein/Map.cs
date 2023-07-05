@@ -25,9 +25,9 @@ namespace Engine.Demos.Wolfenstein
 
         void OnFrame()
         {
-            if (Keyboard.IsKeyDown(InputKey.F5))
+            if (Keyboard.IsKeyDown(ScanCode.F5))
                 fm.HandleCollisions = false;
-            if (Keyboard.IsKeyDown(InputKey.F6))
+            if (Keyboard.IsKeyDown(ScanCode.F6))
                 fm.HandleCollisions = true;
         }
     }
@@ -218,11 +218,11 @@ namespace Engine.Demos.Wolfenstein
             }
 
             // Renderer customization
-            Engine.Renderer.FullScreen = true;
-            Engine.Renderer.FieldOfView = 72f;
-            Engine.Renderer.ParallelRendering = true;
-            Engine.Renderer.SynchronizeThreads = true;
-            Engine.Renderer.CaptureMouse = true;
+            global::Engine.Renderer.FullScreen = true;
+            global::Engine.Renderer.FieldOfView = 72f;
+            global::Engine.Renderer.ParallelRendering = true;
+            global::Engine.Renderer.SynchronizeThreads = true;
+            global::Engine.Renderer.CaptureMouse = true;
         }
         static Image Resize(Image pb, int scale)
         {

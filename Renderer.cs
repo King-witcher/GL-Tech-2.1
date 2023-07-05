@@ -10,6 +10,9 @@ using Engine.Scripting;
 using Engine.Structs;
 using System.Runtime.CompilerServices;
 
+using static SDL2.SDL;
+using Engine.Input;
+
 namespace Engine;
 
 public static partial class Renderer
@@ -63,8 +66,8 @@ public static partial class Renderer
             ChangeIfNotRunning("FullScreen", ref fullScreen, value);
             if (fullScreen == true)
             {
-                CustomWidth = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
-                customHeight = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
+                CustomWidth = 1920; // Gambiarra
+                customHeight = 1080;
             }
         }
     }
@@ -133,74 +136,11 @@ public static partial class Renderer
         // Unmanaged buffer where the video will be put.
         frontBuffer = new(CustomWidth, CustomHeight);
 
-        // A window that will continuously display the buffer
-        Canvas window = new(frontBuffer, FullScreen);
-
-        // Setup input managers
-        if (CaptureMouse)
-        {
-            window.Focus += Input.Mouse.Enable;
-            window.Unfocus += Input.Mouse.Disable;
-        }
-
-        // These parts are scheduled to prevent user scripts from running while the engine  is rendering the scene.
-        window.KeyDown += key => Schedule(() =>
-        {
-            Input.Keyboard.SetKeyDown(key);
-            scene.OnKeyDown?.Invoke(key);
-        });
-
-        window.KeyUp += key => Schedule(() =>
-        {
-            Input.Keyboard.SetKeyUp(key);
-            scene.OnKeyUp?.Invoke(key);
-        });
-
-        // When set to true, the ControlThread will render for the last time and stop.
-        var stopRequested = false;
-
-        // And then start the control thread, which is reponsible for distributing the buffer among the threads
-        // and running the scene scripts.
-        var controlThread = Task.Run(() => SyncControlThread(frontBuffer, window, in stopRequested));
-
-        // Finally, passes control to the rendering screen and displays it.
-        window.Open();
-
-        // Theese lines run after the renderer window is closed.
-        stopRequested = true;
-        controlThread.Wait();
-
-        // Clears the Keyboard
-        Input.Keyboard.Clear();
-
-        // Finally, dispose everythihng.
-        window.Dispose();
-        frontBuffer.Dispose();
-
-        currentScene = null;
-        IsRunning = false;
-    }
-
-    private static unsafe void RefreshCache()
-    {
-        if (cache != null)
-            RenderCache.Delete(cache);
-        cache = RenderCache.Create(CustomWidth, CustomHeight, FieldOfView);
-    }
-
-    private static void Schedule(Action action) => ScheduledActions += action;
-
-    // Executa ações que foram agendadas enquanto a engine renderizava.
-    private static void RunScheduled()
-    {
-        ScheduledActions?.Invoke();
-        ScheduledActions = null;
-    }
-
-    internal unsafe static void SyncControlThread(Image frontBuffer, Canvas canvas, in bool stopRequested)
-    {
         // Spaguetti
         RefreshCache();
+        Input.Mouse.Enable();
+
+        bool quitRequested = false;
 
         // Buffer where the image will be rendered
         Image backBuffer = SynchronizeThreads ?
@@ -222,10 +162,21 @@ public static partial class Renderer
         Script.Frame.EndScript();
         float framerate = 0f;
 
-        canvas.RePaint += Render;
+        Stopwatch sw = new Stopwatch();
 
-        void Render(TimeSpan time)
+
+        Window window = new Window(frontBuffer, fullScreen);
+        window.OnQuit += () => { quitRequested = true; };
+        window.OnKeyDown += Keyboard.SetKeyDown;
+        window.OnKeyUp += Keyboard.SetKeyUp;
+        window.Spawn();
+        while (!quitRequested)
         {
+            sw.Restart();
+            window.Update();
+            sw.Stop();
+            TimeSpan time = sw.Elapsed;
+
             controlStopwatch.Restart();
             Script.Frame.BeginRender();
 
@@ -246,69 +197,46 @@ public static partial class Renderer
                 Image.BufferCopy(backBuffer, frontBuffer);
             Script.Frame.EndRender();
 
-            while (controlStopwatch.ElapsedMilliseconds < minframetime)
-                Thread.Yield();
+            //while (controlStopwatch.ElapsedMilliseconds < minframetime)
+            //    Thread.Yield();
 
-            RunScheduled();
+            FlushSchedule();
             Script.Frame.RestartFrame();
             Script.Frame.BeginScript();
+            window.PollEvents();
+            if (CaptureMouse)
+                Mouse.Shift = window.GetMouseShift();
             currentScene.OnFrame?.Invoke();
             Script.Frame.EndScript();
         }
+
+        window.Close();
+
+        // Clears the Keyboard
+        Input.Keyboard.Clear();
+
+        // Finally, dispose everythihng.
+        //window.Dispose();
+        frontBuffer.Dispose();
+
+        currentScene = null;
+        IsRunning = false;
     }
 
-    private unsafe static void ControlThread(Image frontBuffer, in bool stopRequested)
+    private static unsafe void RefreshCache()
     {
-        // Spaguetti
-        RefreshCache();
+        if (cache != null)
+            RenderCache.Delete(cache);
+        cache = RenderCache.Create(CustomWidth, CustomHeight, FieldOfView);
+    }
 
-        // Buffer where the image will be rendered
-        Image backBuffer = SynchronizeThreads ?
-            new(frontBuffer.Width, frontBuffer.Height) :
-            frontBuffer;
+    private static void Schedule(Action action) => ScheduledActions += action;
 
-        #region Warnings
-        if (!SynchronizeThreads && postProcessing.Count > 0)
-            Debug.InternalLog(
-                message: "The renderer has post processing effects set but DoubleBuffering is disabled. " +
-                    "Post processing effects may not work properly.",
-                debugOption: Debug.Options.Warning);
-        #endregion
-
-        Stopwatch controlStopwatch = new Stopwatch();   // Required to cap framerate
-        Script.Frame.RestartFrame();
-        Script.Frame.BeginScript();
-        currentScene.Start?.Invoke();
-        Script.Frame.EndScript();
-
-        while (!stopRequested)
-        {
-            controlStopwatch.Restart();
-            Script.Frame.BeginRender();
-
-            Draw(backBuffer, currentScene.unmanaged);
-            //DrawFloors(backBuffer, currentScene.unmanaged);
-            //PostProcess(backBuffer);
-
-            if (SynchronizeThreads)
-                Image.BufferCopy(backBuffer, frontBuffer);
-            Script.Frame.EndRender();
-
-            while (controlStopwatch.ElapsedMilliseconds < minframetime)
-                Thread.Yield();
-
-            RunScheduled();
-            Script.Frame.RestartFrame();
-            Script.Frame.BeginScript();
-            currentScene.OnFrame?.Invoke();
-            Script.Frame.EndScript();
-        }
-        controlStopwatch.Stop();
-        Script.Frame.Stop();
-
-        if (SynchronizeThreads)
-            backBuffer.Dispose();
-        return;
+    // Executa ações que foram agendadas enquanto a engine renderizava.
+    private static void FlushSchedule()
+    {
+        ScheduledActions?.Invoke();
+        ScheduledActions = null;
     }
 
     private unsafe static void Draw(Image screen, SceneStruct* scene)

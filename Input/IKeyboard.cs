@@ -4,7 +4,7 @@ namespace Engine.Input
 {
     internal interface IKeyboard
     {
-        public event Action<InputKey> KeyDown;
-        public event Action<InputKey> KeyUp;
+        public event Action<ScanCode> KeyDown;
+        public event Action<ScanCode> KeyUp;
     }
 }

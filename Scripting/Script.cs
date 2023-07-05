@@ -67,14 +67,14 @@ namespace Engine.Scripting
             }
         }
 
-        private Action<InputKey> onKeyDown = null;
-        internal Action<InputKey> OnKeyDownAction
+        private Action<ScanCode> onKeyDown = null;
+        internal Action<ScanCode> OnKeyDownAction
         {
             get
             {
                 if (onKeyDown == null)
                 {
-                    var method = GetMethod("OnKeyDown", typeof(InputKey));
+                    var method = GetMethod("OnKeyDown", typeof(ScanCode));
                     if (method != null)
                     {
                         onKeyDown = inputKey =>
@@ -89,14 +89,14 @@ namespace Engine.Scripting
             }
         }
 
-        private Action<InputKey> onKeyUp = null;
-        internal Action<InputKey> OnKeyUpAction
+        private Action<ScanCode> onKeyUp = null;
+        internal Action<ScanCode> OnKeyUpAction
         {
             get
             {
                 if (onKeyUp == null)
                 {
-                    var method = GetMethod("OnKeyUp", typeof(InputKey));
+                    var method = GetMethod("OnKeyUp", typeof(ScanCode));
                     if (method != null)
                     {
                         onKeyUp = inputKey =>

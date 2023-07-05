@@ -19,7 +19,7 @@ namespace Engine.Scripting.Prefab
         {
             if (Enabled)
             {
-                Entity.Rotate(Mouse.Hook().dx * 0.022f * Sensitivity);
+                Entity.Rotate(Mouse.Shift.X * 0.022f * Sensitivity);
             }
         }
     }

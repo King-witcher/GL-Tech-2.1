@@ -17,21 +17,21 @@ namespace Engine.Scripting.Prefab
         public float TurnSpeed { get; set; } = 90f;
         public float Friction { get; set; } = 10f;
         public float Acceleration { get; set; } = 10f;
-        public InputKey StepForward { get; set; } = InputKey.W;
-        public InputKey StepBack { get; set; } = InputKey.S;
-        public InputKey StepLeft { get; set; } = InputKey.A;
-        public InputKey StepRight { get; set; } = InputKey.D;
-        public InputKey TurnRight { get; set; } = InputKey.Right;
-        public InputKey TurnLeft { get; set; } = InputKey.Left;
-        public InputKey ChangeRun_Walk { get; set; } = InputKey.ShiftKey;
+        public ScanCode StepForward { get; set; } = ScanCode.W;
+        public ScanCode StepBack { get; set; } = ScanCode.S;
+        public ScanCode StepLeft { get; set; } = ScanCode.A;
+        public ScanCode StepRight { get; set; } = ScanCode.D;
+        public ScanCode TurnRight { get; set; } = ScanCode.RIGHT;
+        public ScanCode TurnLeft { get; set; } = ScanCode.LEFT;
+        public ScanCode ChangeRun_Walk { get; set; } = ScanCode.LSHIFT;
 
         void OnFrame()
         {
             UpdateVelocity(GetMaxSpeed());
 
-            if (Keyboard.IsKeyDown(InputKey.Left))
+            if (Keyboard.IsKeyDown(ScanCode.LEFT))
                 Entity.RelativeRotation -= Frame.DeltaTime * TurnSpeed;
-            if (Keyboard.IsKeyDown(InputKey.Right))
+            if (Keyboard.IsKeyDown(ScanCode.RIGHT))
                 Entity.RelativeRotation += Frame.DeltaTime * TurnSpeed;
         }
 

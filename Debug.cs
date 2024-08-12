@@ -155,3 +155,17 @@ namespace Engine
         }
     }
 }
+
+public class Joke
+{
+
+}
+
+
+public class Meme
+{
+    public Joke Joke
+    {
+        set; private get;
+    }
+}

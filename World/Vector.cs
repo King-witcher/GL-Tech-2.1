@@ -29,8 +29,8 @@ namespace Engine
 
         public static Vector FromAngle(float angle, float module)
         {
-            float x = (float)Math.Sin(angle * Math.PI / 180);
-            float y = (float)Math.Cos(angle * Math.PI / 180);
+            float x = MathF.Sin(angle * TORAD);
+            float y = MathF.Cos(angle * TORAD);
             return new Vector(module * x, module * y);
         }
 
@@ -49,7 +49,7 @@ namespace Engine
                 if (Module == 0)
                     return 0;
 
-                float temp = 180f * (float)Math.Asin(x / Module) / (float)Math.PI;
+                float temp = 180f * MathF.Asin(x / Module) / MathF.PI;
                 if (y > 0)
                     return temp;
                 else
@@ -65,7 +65,7 @@ namespace Engine
         public float Module
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => (float)Math.Sqrt(x * x + y * y);
+            get => MathF.Sqrt(x * x + y * y);
             set
             {
                 float delta = value / Module;
@@ -95,7 +95,7 @@ namespace Engine
         {
             float dx = vector.x - x;
             float dy = vector.y - y;
-            return (float)Math.Sqrt(dx * dx + dy * dy);
+            return MathF.Sqrt(dx * dx + dy * dy);
         }
 
         public Vector Projection(Vector origin, Vector normal)

@@ -13,7 +13,7 @@ namespace Engine.Scripting.Prefab
         }
 
         public bool AlwaysRun { get; set; } = true;
-        public float MaxSpeed { get; set; } = 5f;
+        public float MaxSpeed { get; set; } = 2.5f;
         public float TurnSpeed { get; set; } = 90f;
         public float Friction { get; set; } = 10f;
         public float Acceleration { get; set; } = 10f;

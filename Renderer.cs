@@ -138,7 +138,6 @@ public static partial class Renderer
 
         // Spaguetti
         RefreshCache();
-        Input.Mouse.Enable();
 
         bool quitRequested = false;
 
@@ -245,8 +244,9 @@ public static partial class Renderer
 
         // Cull only the planes that appear in the field of view.
         View view = new View(scene->camera->position, new(cache->angles[0] + scene->camera->rotation), new(cache->angles[screen.Width - 1] + scene->camera->rotation));
-        using PlaneList plane_list = scene->plane_list.CullBySurface(scene->camera->position).CullByFrustum(view);
-
+        using var surface_culled = scene->plane_list.CullBySurface(scene->camera->position);
+        using var plane_list = surface_culled.CullByFrustum(view);
+        
         // Checks if the code should be run in all cores or just one.
         {
             if (ParallelRendering)

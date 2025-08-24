@@ -21,6 +21,12 @@ namespace Engine.World
         }
         #endregion
 
+        public float Z
+        {
+            get => unmanaged->z;
+            set => unmanaged->z = value;
+        }
+
         internal Camera()
         {
             unmanaged = Struct.Create(Vector.Zero, 0f);

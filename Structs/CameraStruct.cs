@@ -10,12 +10,14 @@ namespace Engine.Structs
     {
         internal Vector position;
         internal float rotation; //MUST be 0 <= x < 360
+        internal float z;
 
         static internal CameraStruct* Create(Vector position, float rotation) // a little bit optimizable
         {
             CameraStruct* result = (CameraStruct*)Marshal.AllocHGlobal(sizeof(CameraStruct));
             result->position = position;
             result->rotation = rotation;
+            result->z = 0.5f;
             return result;
         }
 

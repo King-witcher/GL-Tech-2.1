@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 using Engine.Imaging;
 using Engine.Imaging.Processing;
@@ -10,7 +9,6 @@ using Engine.Scripting;
 using Engine.Structs;
 using System.Runtime.CompilerServices;
 
-using static SDL2.SDL;
 using Engine.Input;
 
 namespace Engine;
@@ -102,7 +100,7 @@ public static partial class Renderer
 
     public static void AddEffect(Effect effect)
     {
-        Renderer.postProcessing.Add(effect);
+        postProcessing.Add(effect);
     }
 
     public static void AddEffect<EffectClass>() where EffectClass : Effect, new()
@@ -234,7 +232,8 @@ public static partial class Renderer
 
     private unsafe static void Draw(Image screen, SceneStruct* scene)
     {
-        var column_height_table = new int[screen.Width];
+        var col_start_table = new int[screen.Width];
+        var col_end_table = new int[screen.Width];
 
         // Cull only the planes that appear in the field of view.
         View view = new View(scene->camera->position, new(cache->angles[0] + scene->camera->rotation), new(cache->angles[screen.Width - 1] + scene->camera->rotation));
@@ -268,29 +267,27 @@ public static partial class Renderer
         {
             unchecked
             {
-                float fall_dist = cache->fall_dists[line - (screen.Height >> 1)];
+                float hit_dist = scene->camera->z / ((line - screen.flt_height * 0.5f) * cache->step0);
+                float step = cache->step0 * hit_dist;
 
                 Vector camera_dir = new(scene->camera->rotation);
+                Vector right = new Vector(camera_dir.Y, -camera_dir.X);
+                Vector center_hit = scene->camera->position + camera_dir * hit_dist;
 
-                Vector center_floor_hit = scene->camera->position + camera_dir * fall_dist;
-                float scratio = screen.flt_width / screen.flt_height;
-                float factor = cache->fall_factors[line - (screen.Height >> 1)];
-                Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
-                Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
-
-                using HorizontalList list = scene->floor_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
-
-                for (int screen_column = 0; screen_column < screen.Width; screen_column++)
+                Vector left_bound_hit = center_hit - right * step * (screen.Width >> 1);
+                using HorizontalList list = scene->floor_list.GetIntersections(left_bound_hit, left_bound_hit + right);
+                var step_vec = right * step;
+                for (int col = 0; col < screen.Width; col++)
                 {
-                    if ((column_height_table[screen_column] + screen.Height) >> 1 > line)
-                        continue;
-                    Vector point = left_floor_hit + screen_column * lr_direction / screen.flt_width;
+                    if (col_end_table[col] > line) continue;
 
-                    HorizontalStruct* strf = list.Locate(point);
-                    if (strf != null)
-                        screen[screen_column, line] = strf->MapTexture(point);
+                    Vector floor_hit = left_bound_hit + col * step_vec;
+                    HorizontalStruct* floor = list.Locate(floor_hit);
+
+                    if (floor != null)
+                        screen[col, line] = floor->MapTexture(floor_hit);
                     else
-                        screen[screen_column, line] = 0;
+                        screen[col, line] = 0;
                 }
             }
         }
@@ -300,69 +297,69 @@ public static partial class Renderer
         {
             unchecked
             {
-                float fall_dist = cache->fall_dists[(screen.Height >> 1) - line - 1];
+                float hit_dist = (1 - scene->camera->z) / ((screen.flt_height * 0.5f - line) * cache->step0);
+                float step = cache->step0 * hit_dist;
 
                 Vector camera_dir = new(scene->camera->rotation);
+                Vector right = new Vector(camera_dir.Y, -camera_dir.X);
+                Vector center_hit = scene->camera->position + camera_dir * hit_dist;
 
-                Vector center_floor_hit = scene->camera->position + camera_dir * fall_dist;
-                float scratio = screen.flt_width / screen.flt_height;
-                float factor = cache->fall_factors[(screen.Height >> 1) - line - 1];
-                Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
-                Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
+                Vector left_bound_hit = center_hit - right * step * (screen.Width >> 1);
+                using HorizontalList list = scene->floor_list.GetIntersections(left_bound_hit, left_bound_hit + right);
 
-                using HorizontalList list = scene->ceiling_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
-
-                for (int screen_column = 0; screen_column < screen.Width; screen_column++)
+                var step_vec = right * step;
+                for (int col = 0; col < screen.Width; col++)
                 {
-                    if ((screen.Height - column_height_table[screen_column]) >> 1 < line + 1)
-                        continue;
-                    Vector point = left_floor_hit + screen_column * lr_direction / screen.flt_width;
+                    if (col_start_table[col] <= line) continue;
 
-                    HorizontalStruct* strf = list.Locate(point);
-                    if (strf != null)
-                        screen[screen_column, line] = strf->MapTexture(point);
+                    Vector hit = left_bound_hit + step_vec * col;
+                    HorizontalStruct* ceiling = list.Locate(hit);
+
+                    if (ceiling != null)
+                        screen[col, line] = ceiling->MapTexture(hit);
                     else
-                        screen[screen_column, line] = 0;
+                        screen[col, line] = 0;
                 }
             }
         }
 
         // Render a vertical column of the screen.
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-        void DrawColumn(int screen_column)
+        void DrawColumn(int scr_col)
         {
             unchecked
             {
                 // Caching frequently used variables
-                float ray_cos = cache->cosines[screen_column];
-                float ray_angle = cache->angles[screen_column] + scene->camera->rotation;
-                Texture background = scene->background;
+                float ray_cos = cache->cosines[scr_col];
+                float ray_angle = cache->angles[scr_col] + scene->camera->rotation;
+                Texture bg = scene->background;
                 Segment ray = new Segment(scene->camera->position, ray_angle);
 
                 // Cast the ray towards every plane.
-                PlaneStruct* nearest = plane_list.NearestPlane(ray, out float nearest_dist, out float nearest_ratio);
+                PlaneStruct* plane = plane_list.NearestPlane(ray, out float col_dist, out float plane_ratio);
 
                 // Found out that optimizing this part by separing the case when it hits and not a wall is unecessary.
                 #region Render the plane
 
                 // Height that the current column should have on the screen.
-                float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); // Wall column size in pixels
+                float col_h = (cache->colHeight1 / (ray_cos * col_dist)); // Wall column size in pixels
 
                 // Where the column starts and ends relative to the screen.
-                float column_start = (screen.flt_height - 1f - columnHeight) * 0.5f;
-                float column_end = (screen.flt_height - 1f + columnHeight) * 0.5f;
+                float col_start = (screen.flt_height - 1f - col_h) * 0.5f + col_h * (scene->camera->z - 0.5f);
+                float col_end = (screen.flt_height - 1f + col_h) * 0.5f + col_h * (scene->camera->z - 0.5f);
 
                 // Wall rendering bounds on the screen...
-                int draw_column_start = screen.Height - (int)(screen.flt_height - column_start);    // Inclusive
-                int draw_column_end = screen.Height - (int)(screen.flt_height - column_end);        // Exclusive
+                int draw_col_start = screen.Height - (int)(screen.flt_height - col_start);    // Inclusive
+                int draw_col_end = screen.Height - (int)(screen.flt_height - col_end);        // Exclusive
 
                 // Which cannot exceed the full screen bounds.
-                if (draw_column_start < 0)
-                    draw_column_start = 0;
-                if (draw_column_end > screen.Height)
-                    draw_column_end = screen.Height;
+                if (draw_col_start < 0)
+                    draw_col_start = 0;
+                if (draw_col_end > screen.Height)
+                    draw_col_end = screen.Height;
 
-                column_height_table[screen_column] = draw_column_end - draw_column_start;
+                col_start_table[scr_col] = draw_col_start;
+                col_end_table[scr_col] = draw_col_end;
 
                 // Draws the background before the wall.
                 // Critical performance impact.
@@ -372,12 +369,12 @@ public static partial class Renderer
 
                 // Draw the wall
                 // Critical performance impact.
-                float iColumnHeight = 1f / columnHeight;
-                for (int line = draw_column_start; line < draw_column_end; line++)
+                float i_col_h = 1f / col_h;
+                for (int line = draw_col_start; line < draw_col_end; line++)
                 {
-                    float vratio = (line - column_start) * iColumnHeight;
-                    Color color = nearest->texture.MapPixel(nearest_ratio, vratio);
-                    screen[screen_column, line] = color;
+                    float vratio = (line - col_start) * i_col_h;
+                    Color c = plane->texture.MapPixel(plane_ratio, vratio);
+                    screen[scr_col, line] = c;
                 }
 
                 // Draw the other side of the background
@@ -389,31 +386,6 @@ public static partial class Renderer
                 //    }
                 #endregion
 
-                [MethodImpl(MethodImplOptions.AggressiveInlining)]
-                void drawFloorOrBackground(int line)
-                {
-                    float fall_dist = cache->fall_dists[line];
-
-                    Vector camera_dir = new(scene->camera->rotation);
-                    Vector center_floor_hit = scene->camera->position + camera_dir * fall_dist;
-                    float scratio = screen.flt_width / screen.flt_height;
-                    float factor = cache->fall_factors[line];
-                    Vector lr_direction = new Vector(camera_dir.Y, -camera_dir.X) * scratio * factor;
-                    Vector left_floor_hit = center_floor_hit - lr_direction * 0.5f;
-                    float step = 1 / screen.flt_width;
-                    Vector point = left_floor_hit + screen_column * step * lr_direction;
-
-                    HorizontalStruct* strf = scene->FloorAt(point);
-                    if (strf != null)
-                    {
-                        screen[screen_column, line] = strf->MapTexture(point);
-                    }
-                    else
-                    {
-                        drawBackground(line);
-                    }
-                }
-
                 // Draws background
                 [MethodImpl(MethodImplOptions.AggressiveOptimization)]
                 void drawBackground(int line)
@@ -421,8 +393,8 @@ public static partial class Renderer
                     float background_hratio = ray_angle / 360f + 1f; //Temporary bugfix to avoid hratio being < 0
                     float screenVratio = line / screen.flt_height;
                     float background_vratio = (1f - ray_cos) * 0.5f + ray_cos * screenVratio;
-                    uint color = background.MapPixel(background_hratio, background_vratio);
-                    screen[screen_column, line] = color;
+                    uint color = bg.MapPixel(background_hratio, background_vratio);
+                    screen[scr_col, line] = color;
                 }
             }
         }

@@ -10,44 +10,37 @@ namespace Engine.Structs
     {
         // Height that a column at 1 unit of distance from the spectator should be drawn on the screen.
         internal readonly float colHeight1;
-        internal readonly float FOV;
+        internal readonly float hfov;
         internal readonly float* angles;
         internal readonly float* cosines;
-        internal readonly float* fall_dists;
-        internal readonly float* fall_factors;
 
-        internal RenderCache(int width, int height, float FOV = 90f)
+        /// <summary>
+        ///  How distant the collision from a pixel is from it's direct neighbors in a perperndicular plane at 1u.
+        /// </summary>
+        internal readonly float step0;
+
+        internal RenderCache(int width, int height, float hfov = 90f)
         {
-            const double TORAD = Math.PI / 180f;
+            const float TORAD = MathF.PI / 180f;
 
-            this.FOV = FOV;
+            this.hfov = hfov;
 
-            double tan = Math.Tan(TORAD * FOV / 2f);
-            colHeight1 = width / (float)(2.0 * tan);
+            float tan = MathF.Tan(TORAD * hfov * 0.5f);
+            float per_pixel_step = 2f * tan / width;
+            step0 = per_pixel_step;
+
+            colHeight1 = width / (2f * tan);
 
             // Allocates both angles and cosines pointers at once.
             angles = (float*)Marshal.AllocHGlobal(2 * sizeof(float) * width);
+            cosines = (float*)Marshal.AllocHGlobal(2 * sizeof(float) * width);
             cosines = angles + width;
-
-            double step = 2.0 * tan / width;
-            double leftPixel = tan - step / 2.0;
+            float leftPixel = tan - per_pixel_step * 0.5f;
             for (int i = 0; i < width; i++)
             {
-                float angle = (float)(Math.Atan(i * step - leftPixel) / TORAD);
+                float angle = MathF.Atan(i * per_pixel_step - leftPixel) / TORAD;
                 angles[i] = angle;
-                cosines[i] = (float)(Math.Cos(TORAD * angle));
-            }
-
-            // Fall distances
-            fall_dists = (float*)Marshal.AllocHGlobal(sizeof(float) * height);
-            fall_factors = (float*)Marshal.AllocHGlobal(sizeof(float) * height);
-            float pre_dist = width / (2 * height * (float)Math.Tan(Util.ToRad * FOV / 2f));
-            for (int line = 0; line < height >> 1; line++)
-            {
-                float post_dist = pre_dist * (height / 2 - line - 0.5f) / (line + 0.5f);
-                float fall_dist = pre_dist + post_dist;
-                fall_dists[line] = pre_dist + post_dist;
-                fall_factors[line] = fall_dist / pre_dist;
+                cosines[i] = MathF.Cos(TORAD * angle);
             }
         }
 
@@ -67,9 +60,8 @@ namespace Engine.Structs
 
         public void Dispose()
         {
-            // Releases both sines and cosines.
             Marshal.FreeHGlobal((IntPtr)angles);
-            Marshal.FreeHGlobal((IntPtr)fall_dists);
+            Marshal.FreeHGlobal((IntPtr)cosines);
         }
     }
 }

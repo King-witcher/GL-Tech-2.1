@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Engine
 {
@@ -15,129 +16,122 @@ namespace Engine
 
         public static void Log()
         {
-            if (Enabled)
-                Console.WriteLine();
+            if (enabled) Console.WriteLine();
         }
 
-        public static void Log(object message, Options debugOption = Options.Normal)
+        public static void Log(object message, string context = null, Options debugOption = Options.Normal)
         {
-            if (Enabled)
+            if (!enabled) return;
+
+            ConsoleColor prev = Console.ForegroundColor;
+
+            Console.ForegroundColor = debugOption switch
             {
-                ConsoleColor prev = Console.ForegroundColor;
+                Options.Normal => ConsoleColor.Gray,
+                Options.Success => ConsoleColor.Green,
+                Options.Warning => ConsoleColor.DarkYellow,
+                Options.Error => ConsoleColor.DarkRed,
+                _ => ConsoleColor.White,
+            };
 
-                Console.ForegroundColor = debugOption switch
-                {
-                    Options.Normal => ConsoleColor.Gray,
-                    Options.Success => ConsoleColor.Green,
-                    Options.Warning => ConsoleColor.DarkYellow,
-                    Options.Error => ConsoleColor.DarkRed,
-                    _ => ConsoleColor.White,
-                };
+            var logBuilder = new StringBuilder(25);
+            logBuilder.Append(debugOption switch
+            {
+                Options.Normal => "       ",
+                Options.Success => "[SUCC] ",
+                Options.Warning => "[WARN] ",
+                Options.Error => "[ERRO] ",
+                _ => "",
+            });
 
-                string pre = debugOption switch
-                {
-                    Options.Normal => "",
-                    Options.Success => "[Success]: ",
-                    Options.Warning => "[WARNING]: ",
-                    Options.Error => "[ERROR]: ",
-                    _ => "",
-                };
-
-                Console.WriteLine(pre + message.ToString());
-
-                Console.ForegroundColor = prev;
+            if (context != null && context.Length > 0)
+            {
+                logBuilder.Append(context);
+                logBuilder.Append(new String(' ', Math.Max(0, 15 - context.Length)));
             }
+
+            logBuilder.Append(message);
+
+            Console.WriteLine(logBuilder.ToString());
+            Console.ForegroundColor = prev;
         }
 
         public static string Read()
         {
-            if (enabled)
-            {
-                DebuggerMessage("Waiting for input...");
-                string retn = Console.ReadLine();
-                Console.WriteLine();
-                return retn;
-            }
-            else
-                return string.Empty;
+            if (!enabled) return string.Empty;
+
+            DebuggerMessage("Waiting for input...");
+            string retn = Console.ReadLine();
+            Console.WriteLine();
+            return retn;
         }
 
         public static void Pause()
         {
-            if (enabled)
-            {
-                DebuggerMessage("Waiting for a key...");
-                Console.ReadKey();
-                Console.Write("\b \b\n");
-            }
+            if (!enabled) return;
+
+            DebuggerMessage("Waiting for a key...");
+            Console.ReadKey();
+            Console.Write("\b \b\n");
         }
 
         public static void Clear()
         {
-            if (enabled)
-                Console.Clear();
+            if (enabled) Console.Clear();
         }
+
+        #region kernel32.dll
+        [DllImport("kernel32.dll", EntryPoint = "GetStdHandle")]
+        static extern IntPtr kernel32_GetStdHandle(int nStdHandle);
+
+        [DllImport("kernel32.dll", EntryPoint = "AllocConsole")]
+        static extern bool kernel32_AllocConsole();
+
+        [DllImport("kernel32.dll", EntryPoint = "FreeConsole", SetLastError = true, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool kernel32_FreeConsole();
+        #endregion
 
         internal static void OpenConsole()
         {
-            if (!enabled)
-            {
-                kernel32_AllocConsole();
+            if (enabled) return;
 
-                IntPtr stdinh = kernel32_GetStdHandle(-10);
-                IntPtr stdouth = kernel32_GetStdHandle(-11);
-                IntPtr stderrh = kernel32_GetStdHandle(-12);
+            kernel32_AllocConsole();
 
-                var safein = new SafeFileHandle(stdinh, true);
-                var safeout = new SafeFileHandle(stdouth, true);
-                var safeerr = new SafeFileHandle(stderrh, true);
+            IntPtr stdinh = kernel32_GetStdHandle(-10);
+            IntPtr stdouth = kernel32_GetStdHandle(-11);
+            IntPtr stderrh = kernel32_GetStdHandle(-12);
 
-                var fsin = new FileStream(safein, FileAccess.Read);
-                var fsout = new FileStream(safeout, FileAccess.Write);
-                var fserr = new FileStream(safeerr, FileAccess.Write);
+            var safein = new SafeFileHandle(stdinh, true);
+            var safeout = new SafeFileHandle(stdouth, true);
+            var safeerr = new SafeFileHandle(stderrh, true);
 
-                var srin = new StreamReader(fsin, Console.InputEncoding);
-                var srout = new StreamWriter(fsout, Console.OutputEncoding);
+            var fsin = new FileStream(safein, FileAccess.Read);
+            var fsout = new FileStream(safeout, FileAccess.Write);
+            var fserr = new FileStream(safeerr, FileAccess.Write);
 
-                var srerr = new StreamWriter(fserr, Console.OutputEncoding);
+            var srin = new StreamReader(fsin, Console.InputEncoding);
+            var srout = new StreamWriter(fsout, Console.OutputEncoding);
 
-                srout.AutoFlush = srerr.AutoFlush = true;
+            var srerr = new StreamWriter(fserr, Console.OutputEncoding);
 
-                Console.SetIn(srin);
-                Console.SetOut(srout);
-                Console.SetError(srerr);
+            srout.AutoFlush = srerr.AutoFlush = true;
 
-                Console.Title = "GL Tech 2.1 - Debugger";
+            Console.SetIn(srin);
+            Console.SetOut(srout);
+            Console.SetError(srerr);
 
-                enabled = true;
-            }
-            #region kernel32.dll
-            [DllImport("kernel32.dll", EntryPoint = "GetStdHandle")]
-            static extern IntPtr kernel32_GetStdHandle(int nStdHandle);
+            Console.Title = "GL Tech 2.1 - Debugger";
 
-            [DllImport("kernel32.dll", EntryPoint = "AllocConsole")]
-            static extern bool kernel32_AllocConsole();
-            #endregion
+            enabled = true;
         }
 
         internal static void CloseConsole()
         {
-            if (enabled)
-            {
-                enabled = false;
+            if (!enabled) return;
+            enabled = false;
 
-                kernel32_FreeConsole();
-
-                // Those lines were responsible for making the entire .NET crash in the past, so I'll keep those standard devices as they are.
-                // Console.SetIn(TextReader.Null);
-                // Console.SetOut(TextWriter.Null);
-                // Console.SetError(TextWriter.Null);
-            }
-            #region kernel32.dll
-            [DllImport("kernel32.dll", EntryPoint = "FreeConsole", SetLastError = true, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
-            [return: MarshalAs(UnmanagedType.Bool)]
-            static extern bool kernel32_FreeConsole();
-            #endregion
+            kernel32_FreeConsole();
         }
 
         private static void DebuggerMessage(string message)
@@ -148,24 +142,9 @@ namespace Engine
             Console.ForegroundColor = prev;
         }
 
-        internal static void InternalLog(object message, Options debugOption = Options.Normal)
+        internal static void InternalLog(object message, string context = "Internal", Options debugOption = Options.Normal)
         {
-            DebuggerMessage("GL Tech 2.1 says:");
-            Log(message.ToString() + "\n", debugOption);
+            Log(message.ToString(), context, debugOption);
         }
-    }
-}
-
-public class Joke
-{
-
-}
-
-
-public class Meme
-{
-    public Joke Joke
-    {
-        set; private get;
     }
 }

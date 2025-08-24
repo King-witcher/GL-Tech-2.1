@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Engine.Imaging
@@ -24,7 +25,7 @@ namespace Engine.Imaging
 
         public static Texture NullTexture => default;
 
-        public bool IsNull => source.Buffer == System.IntPtr.Zero;
+        public bool IsNull => source.Buffer == IntPtr.Zero;
 
         public static Texture FromColor(Color color, out Image source)
         {
@@ -43,13 +44,24 @@ namespace Engine.Imaging
 #endif
             unchecked
             {
-                // This is the most performance critical segment of code in the entire engine
+#if false
+                float x = (source.flt_width * (hrepeat * hratio + hoffset)) % source.Width;
+                float y = (source.flt_height * (vrepeat * vratio + voffset)) % source.Height;
+
+                int x0 = (int) x;
+                int y0 = (int) y;
+
+                uint color = Color.Mix(source[x0, y0], source[x0 + 1, y0], );
+
+                return color;
+#else
                 int x = (int)(source.flt_width * (hrepeat * hratio + hoffset)) % source.Width;
                 int y = (int)(source.flt_height * (vrepeat * vratio + voffset)) % source.Height;
 
                 uint color = ((uint*)source.Buffer)[source.Width * y + x];
 
                 return color;
+#endif
             }
         }
 

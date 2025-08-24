@@ -234,14 +234,13 @@ public static partial class Renderer
 
     private unsafe static void Draw(Image screen, SceneStruct* scene)
     {
-        ushort[] column_height_table = new ushort[screen.Width];
+        var column_height_table = new int[screen.Width];
 
         // Cull only the planes that appear in the field of view.
         View view = new View(scene->camera->position, new(cache->angles[0] + scene->camera->rotation), new(cache->angles[screen.Width - 1] + scene->camera->rotation));
         using var surface_culled = scene->plane_list.CullBySurface(scene->camera->position);
         using var plane_list = surface_culled.CullByFrustum(view);
 
-        // Checks if the code should be run in all cores or just one.
         {
             if (ParallelRendering)
                 Parallel.For(fromInclusive: 0, toExclusive: screen.Width, body: DrawColumn);
@@ -281,7 +280,7 @@ public static partial class Renderer
 
                 using HorizontalList list = scene->floor_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
 
-                for (ushort screen_column = 0; screen_column < screen.Width; screen_column++)
+                for (int screen_column = 0; screen_column < screen.Width; screen_column++)
                 {
                     if ((column_height_table[screen_column] + screen.Height) >> 1 > line)
                         continue;
@@ -289,13 +288,9 @@ public static partial class Renderer
 
                     HorizontalStruct* strf = list.Locate(point);
                     if (strf != null)
-                    {
                         screen[screen_column, line] = strf->MapTexture(point);
-                    }
                     else
-                    {
                         screen[screen_column, line] = 0;
-                    }
                 }
             }
         }
@@ -317,7 +312,7 @@ public static partial class Renderer
 
                 using HorizontalList list = scene->ceiling_list.GetIntersections(left_floor_hit, left_floor_hit + lr_direction);
 
-                for (ushort screen_column = 0; screen_column < screen.Width; screen_column++)
+                for (int screen_column = 0; screen_column < screen.Width; screen_column++)
                 {
                     if ((screen.Height - column_height_table[screen_column]) >> 1 < line + 1)
                         continue;
@@ -325,13 +320,9 @@ public static partial class Renderer
 
                     HorizontalStruct* strf = list.Locate(point);
                     if (strf != null)
-                    {
                         screen[screen_column, line] = strf->MapTexture(point);
-                    }
                     else
-                    {
                         screen[screen_column, line] = 0;
-                    }
                 }
             }
         }
@@ -358,12 +349,12 @@ public static partial class Renderer
                 float columnHeight = (cache->colHeight1 / (ray_cos * nearest_dist)); // Wall column size in pixels
 
                 // Where the column starts and ends relative to the screen.
-                float column_start = (screen.flt_height - 1 - columnHeight) / 2f;
-                float column_end = (screen.flt_height - 1 + columnHeight) / 2f;
+                float column_start = (screen.flt_height - 1f - columnHeight) * 0.5f;
+                float column_end = (screen.flt_height - 1f + columnHeight) * 0.5f;
 
                 // Wall rendering bounds on the screen...
-                int draw_column_start = screen.Height - (int)(screen.Height - column_start);    // Inclusive
-                int draw_column_end = screen.Height - (int)(screen.Height - column_end);        // Exclusive
+                int draw_column_start = screen.Height - (int)(screen.flt_height - column_start);    // Inclusive
+                int draw_column_end = screen.Height - (int)(screen.flt_height - column_end);        // Exclusive
 
                 // Which cannot exceed the full screen bounds.
                 if (draw_column_start < 0)
@@ -371,7 +362,7 @@ public static partial class Renderer
                 if (draw_column_end > screen.Height)
                     draw_column_end = screen.Height;
 
-                column_height_table[screen_column] = (ushort)(draw_column_end - draw_column_start);
+                column_height_table[screen_column] = draw_column_end - draw_column_start;
 
                 // Draws the background before the wall.
                 // Critical performance impact.
@@ -381,9 +372,10 @@ public static partial class Renderer
 
                 // Draw the wall
                 // Critical performance impact.
+                float iColumnHeight = 1f / columnHeight;
                 for (int line = draw_column_start; line < draw_column_end; line++)
                 {
-                    float vratio = (line - column_start) / columnHeight;
+                    float vratio = (line - column_start) * iColumnHeight;
                     Color color = nearest->texture.MapPixel(nearest_ratio, vratio);
                     screen[screen_column, line] = color;
                 }
@@ -426,9 +418,9 @@ public static partial class Renderer
                 [MethodImpl(MethodImplOptions.AggressiveOptimization)]
                 void drawBackground(int line)
                 {
-                    float background_hratio = ray_angle / 360 + 1; //Temporary bugfix to avoid hratio being < 0
+                    float background_hratio = ray_angle / 360f + 1f; //Temporary bugfix to avoid hratio being < 0
                     float screenVratio = line / screen.flt_height;
-                    float background_vratio = (1 - ray_cos) / 2 + ray_cos * screenVratio;
+                    float background_vratio = (1f - ray_cos) * 0.5f + ray_cos * screenVratio;
                     uint color = background.MapPixel(background_hratio, background_vratio);
                     screen[screen_column, line] = color;
                 }

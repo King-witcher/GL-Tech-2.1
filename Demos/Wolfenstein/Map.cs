@@ -1,9 +1,6 @@
-﻿using Engine;
-using Engine.Imaging;
-using Engine.Input;
+﻿using Engine.Imaging;
 using Engine.World;
 using Engine.World.Composed;
-using Engine.Scripting;
 using Engine.Scripting.Debugging;
 using Engine.Scripting.Physics;
 using Engine.Scripting.Prefab;
@@ -13,26 +10,7 @@ using System.Collections.Generic;
 
 namespace Engine.Demos.Wolfenstein
 {
-
-    class EnableNoclip : Script
-    {
-        FlatMovement fm;
-
-        public EnableNoclip(FlatMovement fm)
-        {
-            this.fm = fm;
-        }
-
-        void OnFrame()
-        {
-            if (Keyboard.IsKeyDown(ScanCode.F5))
-                fm.HandleCollisions = false;
-            if (Keyboard.IsKeyDown(ScanCode.F6))
-                fm.HandleCollisions = true;
-        }
-    }
-
-    // Essa é a priemira fase do Wolfenstein 3D
+    // Wolfenstein 3D's first level
     public class Map : Scene
     {
         Image textures = new(Resources.WolfTextures);
@@ -204,26 +182,23 @@ namespace Engine.Demos.Wolfenstein
 
             // Camera
             {
-                Camera camera = Camera;
-                camera.WorldPosition = (57.5f, 29.5f);
-                camera.AddScript<DebugPerformanceStats>();
-                camera.AddScript<DebugSceneInfo>();
-                camera.AddScript(new MouseLook(2.2f));
+                Camera.WorldPosition = (57.5f, 29.5f);
+                Camera.AddScript<DebugPerformance>();
+                Camera.AddScript<DebugScene>();
+                Camera.AddScript(new MouseLook(2.2f));
 
                 PointCollider pc = new PointCollider();
-                camera.AddScript(pc);
                 SoftMovement movement = new SoftMovement(pc);
-                camera.AddScript(movement);
-                //camera.AddScript<Rotate>();
+
+                Camera.AddScript(pc);
+                Camera.AddScript(movement);
             }
 
             // Renderer customization
-            global::Engine.Renderer.FullScreen = true;
+            // FIXME: Create a setup method.
             global::Engine.Renderer.FieldOfView = 72f;
-            global::Engine.Renderer.ParallelRendering = true;
-            global::Engine.Renderer.SynchronizeThreads = true;
-            global::Engine.Renderer.CaptureMouse = true;
         }
+
         static Image Resize(Image pb, int scale)
         {
             Image resized = new Image(pb.Width * scale, pb.Height * scale);

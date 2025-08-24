@@ -6,7 +6,6 @@ using Engine.Scripting;
 using Engine.Scripting.Debugging;
 using Engine.Scripting.Prefab;
 using Engine.Scripting.Physics;
-using Engine.Demos; // Fiz isso na pura preguiça de ficar renomeando o DemoTextures bugado do VS
 using Engine.Input;
 
 namespace Engine.Demos.RotatingPillars
@@ -126,9 +125,9 @@ namespace Engine.Demos.RotatingPillars
             // Camera
             {
                 Camera.AddScript<SwitchBackgroundScript>();
-                Camera.AddScript<DebugPerformanceStats>();
+                Camera.AddScript<DebugPerformance>();
                 Camera.AddScript<MouseLook>();
-                Noclip nm = new Noclip();
+                Noclip nm = new ();
                 Camera.AddScript(nm);
                 SoftMovement movement = new SoftMovement(nm);
                 Camera.AddScript(movement);
@@ -140,9 +139,11 @@ namespace Engine.Demos.RotatingPillars
 class SwitchBackgroundScript : Script
 {
     Texture background;
+    static Logger logger = new("RotatingPillars");
 
     void Start()
     {
+        logger.Log("Press Q to enable background, E to disable it.");
         background = Scene.Background;
     }
 
@@ -152,13 +153,13 @@ class SwitchBackgroundScript : Script
         {
             case ScanCode.Q:
                 if (Scene.Background.source.Buffer == System.IntPtr.Zero)
-                    Debug.Log("Scene background enabled.");
+                    logger.Log("Scene background enabled.");
                 Scene.Background = background;
                 break;
 
             case ScanCode.E:
                 if (Scene.Background.source.Buffer != System.IntPtr.Zero)
-                    Debug.Log("Scene background disabled.");
+                    logger.Log("Scene background disabled.");
                 Scene.Background = Texture.NullTexture;
                 break;
         }

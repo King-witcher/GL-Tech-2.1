@@ -6,6 +6,7 @@ namespace Engine.Imaging
     [NativeCppClass] [StructLayout(LayoutKind.Sequential)]
     public unsafe struct Texture
     {
+        static Logger logger = new(typeof(Texture).Name);
         internal Image source; //Propositalmente salvo por valor
         internal float hoffset;
         internal float hrepeat;
@@ -38,7 +39,7 @@ namespace Engine.Imaging
         {
 #if DEBUG
             if (hratio < 0 || vratio < 0)
-                Debug.InternalLog($"Ratios are ({hratio}, {vratio}) out of range.", Debug.Options.Error);
+                logger.Warn($"Ratios ({hratio}, {vratio}) are out of range.");
 #endif
             unchecked
             {

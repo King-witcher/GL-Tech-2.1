@@ -72,41 +72,5 @@ namespace Engine.Scripting.Prefab
             if (Keyboard.IsKeyDown(TurnRight))
                 Entity.Rotate(TurnSpeed * Frame.DeltaTime);
         }
-
-        private void TryTranslate(Vector translation)
-        {
-            // Treats as original
-            translation *= Entity.WorldDirection;
-
-            float translMod = translation.Module;
-            if (translMod == 0)
-                return;
-
-            if (HandleCollisions)
-            {
-                Scene.CastRay(
-                    new Segment(Entity.WorldPosition, translation),
-                    out float distance,
-                    out Vector normal);
-
-                if (translMod >= distance)
-                {
-                    Vector excess = (translMod - distance) * (translation / translMod);
-
-                    normal /= normal.Module; // Optimizable by fast inverse square root
-                    Vector compensation = normal * (Vector.DotProduct(excess, normal) - 0.01f);
-                    translation -= compensation;
-
-                    Scene.CastRay(new Segment(Entity.WorldPosition, translation), out float newDist, out Vector _);
-
-                    if (newDist < translation.Module)
-                    {
-                        translation = Vector.Zero;
-                    }
-                }
-            }
-
-            Entity.WorldPosition += translation;
-        }
     }
 }

@@ -4,21 +4,17 @@ namespace Engine.World.Composed
 {
     public sealed class RegularPolygon : Polygon
     {
-        private static readonly string className = typeof(RegularPolygon).FullName;
+        static Logger logger = new Logger(typeof(RegularPolygon).Name);
 
         public RegularPolygon(Vector position, int vertices, float radius, Texture texture)
         {
             if (vertices <= 2)
-                Debug.InternalLog(
-                    message: "An actual polygon has at least 3 vertices. If you want to make a polygon with only 2 vertices, consider creating two walls manually.",
-                    debugOption: Debug.Options.Warning);
+                logger.Warn("An actual polygon has at least 3 vertices. If you want to make a polygon with only 2 vertices, consider creating two walls manually.");
 
 
             if (radius == 0)
             {
-                Debug.InternalLog(
-                    message: "Radius cannot be zero. The polygon was not be created and the RegularPolygon was returned as an empty RegularPolygon.",
-                    debugOption: Debug.Options.Error);
+                logger.Error("Radius cannot be zero. The polygon was not be created and the RegularPolygon was returned as an empty RegularPolygon.");
 
                 PositionData = position;
                 DirectionData = Vector.Forward;
@@ -30,8 +26,9 @@ namespace Engine.World.Composed
             DirectionData = Vector.Forward * radius;
 
             Build(
-                Vector.GetRegularPolygon(position, radius, vertices),
-                texture);
+                verts: Vector.GetRegularPolygon(position, radius, vertices),
+                texture
+            );
         }
     }
 }

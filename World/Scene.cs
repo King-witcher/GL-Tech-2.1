@@ -10,6 +10,7 @@ namespace Engine.World
     {
         internal SceneStruct* unmanaged;
 
+        private static Logger logger = new(typeof(Scene).Name);
         private List<Entity> entities = new List<Entity>();
         private List<Collider> colliders = new List<Collider>();
         private Camera camera;
@@ -71,9 +72,7 @@ namespace Engine.World
             // Elements cannot be added twice + elements cannot have already been added to another scene.
             if (entity.Scene != null)
             {
-                Debug.InternalLog(
-                    message: $"The element \"{entity}\" cannot be added to the scene \"{this}\" because it's already bound to \"{entity.Scene}\".",
-                    debugOption: Debug.Options.Error);
+                logger.Error($"The element \"{entity}\" cannot be added to the scene \"{this}\" because it's already bound to \"{entity.Scene}\".");
                 return;
             }
 
@@ -81,9 +80,7 @@ namespace Engine.World
             // Besides, Element class's referencing system cannot allow elements to be added to different scenes.
             if (entity.Parent != null)
             {
-                Debug.InternalLog(
-                    message: $"The element \"{entity}\" cannot be added to the scene \"{this}\" because it already has a parent element. Only root elements are allowed to be directly added to a scene. Consider adding root element and all the child elements will recursively added.",
-                    debugOption: Debug.Options.Error);
+                logger.Error($"The element \"{entity}\" cannot be added to the scene \"{this}\" because it already has a parent element. Only root elements are allowed to be directly added to a scene. Consider adding root element and all the child elements will recursively added.");
                 return;
             }
             #endregion

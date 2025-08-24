@@ -2,12 +2,8 @@
 using Engine.Imaging;
 using Engine.World;
 using Engine.World.Composed;
-using Engine.Scripting.Debugging;
 using Engine.Scripting.Prefab;
 using Engine.Scripting.Physics;
-using Engine.Demos;
-
-using System.Collections.Generic;
 
 namespace Engine.Demos.FloorStressTest
 {
@@ -49,8 +45,6 @@ namespace Engine.Demos.FloorStressTest
 
             // Camera
             {
-                Camera camera = Camera;
-
                 //camera.AddScript<DebugPerformanceStats>();
                 //camera.AddScript<DebugSceneInfo>();
                 //camera.AddScript<DebugComponents>();
@@ -59,11 +53,9 @@ namespace Engine.Demos.FloorStressTest
                 SoftMovement movement = new SoftMovement(collider);
                 MouseLook mouseLook = new MouseLook(2.2f);
 
-                camera.AddScript(collider);
-                camera.AddScript(movement);
-                camera.AddScript(mouseLook);
-
-                Add(camera);
+                Camera.AddScript(collider);
+                Camera.AddScript(movement);
+                Camera.AddScript(mouseLook);
             }
         }
     }

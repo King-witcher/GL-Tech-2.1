@@ -6,6 +6,8 @@ namespace Engine.Scripting.Physics
 {
     public class PointCollider : KinematicBody
     {
+        const float MIN_DIST = 0.01f;
+
         public bool HandleCollisions { get; set; } = true;
 
         public override void Accelerate(Vector direction)
@@ -28,6 +30,7 @@ namespace Engine.Scripting.Physics
             throw new NotImplementedException();
         }
 
+        // FIXME
         void OnFrame()
         {
             if (HandleCollisions)
@@ -35,25 +38,24 @@ namespace Engine.Scripting.Physics
             Entity.WorldPosition += Velocity * Frame.DeltaTime;
         }
 
-        // Esse método faz exatamente o que você sugeriu, professor =]
         private void ClipCollisions()
         {
-            if (Speed == 0)
-                return;
+            if (Speed == 0) return;
 
             // Step relative to current frame
             float deltaS = Speed * Frame.DeltaTime;
 
             Scene.CastRay(
                 new Segment(Entity.WorldPosition, Velocity),
-                out float cllsn_dist,
-                out Vector cllsn_normal);
+                out float c_dist,
+                out Vector c_normal
+            );
 
             // If it is in collision route for the next frame, cap the speed so that 
-            if (deltaS > cllsn_dist - 0.01f)
+            if (deltaS > c_dist - MIN_DIST)
             {
                 // Compensate the current step.
-                Vector compensation = cllsn_normal * (Vector.DotProduct(Velocity, cllsn_normal));
+                Vector compensation = c_normal * (Vector.DotProduct(Velocity, c_normal));
                 Velocity -= compensation;
 
                 // Test against a second collision. If so, stop.
@@ -61,10 +63,11 @@ namespace Engine.Scripting.Physics
 
                 Scene.CastRay(
                     new Segment(Entity.WorldPosition, Velocity),
-                    out cllsn_dist,
-                    out cllsn_normal);
+                    out c_dist,
+                    out c_normal
+                );
 
-                if (deltaS > cllsn_dist - 0.01f)
+                if (deltaS > c_dist - MIN_DIST)
                     Velocity = Vector.Zero;
             }
         }

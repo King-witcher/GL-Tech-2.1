@@ -62,25 +62,19 @@ namespace Engine.World
             #region Ensures that the entry is not null and the script was not added to any entity.
             if (script is null)
             {
-                Debug.InternalLog(
-                    message: $"Cannot add a null script to entity \"{this}\".",
-                    debugOption: Debug.Options.Warning);
+                logger.Error( $"Cannot add a null script to entity \"{this}\".");
                 return;
             }
 
             if (ContainsScript(script))
             {
-                Debug.InternalLog(
-                    message: $"Cannot add script \"{script}\" twice to the same entity \"{this}\".",
-                    debugOption: Debug.Options.Warning);
+                logger.Error($"Cannot add script \"{script}\" twice to the same entity \"{this}\".");
                 return;
             }
 
             if (script.Entity != null)
             {
-                Debug.InternalLog(
-                    message: $"Cannot add script \"{script}\" to \"{this}\" becuase it's already bound to \"{script.Entity}\".",
-                    debugOption: Debug.Options.Error);
+                logger.Error($"Cannot add script \"{script}\" to \"{this}\" becuase it's already bound to \"{script.Entity}\".");
                 return;
             }
             #endregion

@@ -73,23 +73,20 @@ namespace Engine.Demos.SampleBlockMap
 
             // Camera
             {
-                Camera camera = Camera;
-                camera.WorldPosition = (5f, 5f);
-                camera.RelativeRotation = -90f;
+                Camera.WorldPosition = (5f, 5f);
+                Camera.RelativeRotation = -90f;
 
-                camera.AddScript<DebugPerformanceStats>();
-                camera.AddScript<DebugSceneInfo>();
-                camera.AddScript<DebugComponents>();
+                Camera.AddScript<DebugPerformance>();
+                Camera.AddScript<DebugScene>();
+                Camera.AddScript<DebugEntity>();
 
                 PointCollider collider = new PointCollider();
                 SoftMovement movement = new SoftMovement(collider);
                 MouseLook mouseLook = new MouseLook(2.2f);
 
-                camera.AddScript(collider);
-                camera.AddScript(movement);
-                camera.AddScript(mouseLook);
-
-                Add(camera);
+                Camera.AddScript(collider);
+                Camera.AddScript(movement);
+                Camera.AddScript(mouseLook);
             }
         }
     }

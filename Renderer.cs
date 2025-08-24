@@ -21,6 +21,7 @@ public static partial class Renderer
     static Image frontBuffer;
     static Scene currentScene = null;
     static Action ScheduledActions = null;
+    private static Logger logger = new("Renderer");
     public static bool ParallelRendering { get; set; } = true;
 
     public static Scene ActiveScene => currentScene;
@@ -118,16 +119,12 @@ public static partial class Renderer
 
         if (scene == null)
         {
-            Debug.InternalLog(
-                message: $"Cannot render a null Scene.",
-                debugOption: Debug.Options.Error);
+            logger.Error($"Cannot render a null Scene.");
             return;
         }
 
         if (scene.Background.source.Buffer == IntPtr.Zero)
-            Debug.InternalLog(
-                message: $"The Scene being rendered does not have a background texture. Add it by using Scene.Background property.",
-                debugOption: Debug.Options.Warning);
+            logger.Warn($"The Scene being rendered does not have a background texture. Add it by using Scene.Background property.");
         #endregion
 
         Camera camera = scene.Camera;
@@ -148,10 +145,7 @@ public static partial class Renderer
 
         #region Warnings
         if (!SynchronizeThreads && postProcessing.Count > 0)
-            Debug.InternalLog(
-                message: "The renderer has post processing effects set but DoubleBuffering is disabled. " +
-                    "Post processing effects may not work properly.",
-                debugOption: Debug.Options.Warning);
+            logger.Warn("The renderer has post processing effects set but DoubleBuffering is disabled. Post processing effects may not work properly.");
         #endregion
 
         Stopwatch controlStopwatch = new Stopwatch();   // Required to cap framerate
@@ -246,7 +240,7 @@ public static partial class Renderer
         View view = new View(scene->camera->position, new(cache->angles[0] + scene->camera->rotation), new(cache->angles[screen.Width - 1] + scene->camera->rotation));
         using var surface_culled = scene->plane_list.CullBySurface(scene->camera->position);
         using var plane_list = surface_culled.CullByFrustum(view);
-        
+
         // Checks if the code should be run in all cores or just one.
         {
             if (ParallelRendering)
@@ -399,7 +393,7 @@ public static partial class Renderer
                 //if (scene->background.source.Buffer != IntPtr.Zero)
                 //    for (int line = draw_column_end; line < screen.Height; line++)
                 //    {
-                        //drawFloorOrBackground(line);
+                //drawFloorOrBackground(line);
                 //    }
                 #endregion
 
@@ -452,9 +446,7 @@ public static partial class Renderer
     static void ChangeIfNotRunning<T>(string name, ref T obj, T value)
     {
         if (IsRunning)
-            Debug.InternalLog(
-                message: $"The value of \"{name}\" cannot be modified while running. Value will keep \"{obj}\".",
-                debugOption: Debug.Options.Warning);
+            logger.Warn($"The value of \"{name}\" cannot be modified while running. Value will keep \"{obj}\".");
         else
             obj = value;
     }

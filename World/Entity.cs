@@ -21,8 +21,8 @@ namespace Engine.World
             set
             {
                 if (value.Length > MAX_NAME_LENGTH)
-                    Debug.InternalLog("Maximum recommended name lenght was exceeded. You may have problems" +
-                        "when trying to save this map in a file.", Debug.Options.Warning);
+                    Debug.Log("Maximum recommended name lenght was exceeded. You may have problems" +
+                        "when trying to save this map in a file.", "Entity", Debug.Options.Warning);
                 name = value;
             }
         }

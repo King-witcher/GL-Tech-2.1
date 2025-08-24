@@ -6,6 +6,7 @@ namespace Engine.World
 {
     partial class Entity
     {
+        private static Logger logger = new(typeof(Entity).Name);
         private Vector relativePosition;
         private Vector relativeDirection;
         private List<Entity> children = new();
@@ -117,9 +118,7 @@ namespace Engine.World
                 // Check if the scenes are compatible. Elements cannot take as reference point others that are in differente scnees.
                 if (value != null && scene != value.scene)
                 {
-                    Debug.InternalLog(
-                        message: $"The entity \"{value}\" cannot be set parent of \"{this}\" because they are bound to different scenes.",
-                        debugOption: Debug.Options.Error);
+                    logger.Error($"The entity \"{value}\" cannot be set parent of \"{this}\" because they are bound to different scenes.");
                     return;
                 }
 

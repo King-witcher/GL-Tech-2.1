@@ -1,8 +1,9 @@
 ﻿
 namespace Engine.Scripting.Debugging
 {
-    public class DebugComponents : Script
+    public class DebugEntity : Script
     {
+        private static Logger logger = new(typeof(DebugEntity).Name);
         public float Interval { get; set; } = 1f;
 
         public bool DebugPosition { get; set; } = true;
@@ -20,15 +21,13 @@ namespace Engine.Scripting.Debugging
             if (timeSpent >= Interval)
             {
                 if (DebugPosition)
-                    Debug.Log($"Relative position: {Entity.RelativePosition}");
+                    logger.Log($"Relative position: {Entity.RelativePosition}");
 
                 if (DebugRotation)
-                    Debug.Log($"Relative rotation: {Entity.RelativeRotation}");
+                    logger.Log($"Relative rotation: {Entity.RelativeRotation}");
 
                 if (DebugNormal)
-                    Debug.Log($"Relative normal: {Entity.RelativeDirection}");
-
-                Debug.Log();
+                    logger.Log($"Relative normal: {Entity.RelativeDirection}");
 
                 timeSpent = 0f;
             }

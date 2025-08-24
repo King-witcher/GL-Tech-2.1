@@ -6,9 +6,8 @@ using System.Text;
 
 namespace Engine
 {
-    public static class Debug
+    public class Debug
     {
-
         private static bool enabled = false;
         public static bool Enabled => enabled;
 
@@ -34,7 +33,7 @@ namespace Engine
                 _ => ConsoleColor.White,
             };
 
-            var logBuilder = new StringBuilder(25);
+            var logBuilder = new StringBuilder(40);
             logBuilder.Append(debugOption switch
             {
                 Options.Normal => "       ",
@@ -47,7 +46,7 @@ namespace Engine
             if (context != null && context.Length > 0)
             {
                 logBuilder.Append(context);
-                logBuilder.Append(new String(' ', Math.Max(0, 15 - context.Length)));
+                logBuilder.Append(new String(' ', Math.Max(1, 20 - context.Length)));
             }
 
             logBuilder.Append(message);
@@ -60,7 +59,6 @@ namespace Engine
         {
             if (!enabled) return string.Empty;
 
-            DebuggerMessage("Waiting for input...");
             string retn = Console.ReadLine();
             Console.WriteLine();
             return retn;
@@ -70,7 +68,6 @@ namespace Engine
         {
             if (!enabled) return;
 
-            DebuggerMessage("Waiting for a key...");
             Console.ReadKey();
             Console.Write("\b \b\n");
         }
@@ -132,19 +129,6 @@ namespace Engine
             enabled = false;
 
             kernel32_FreeConsole();
-        }
-
-        private static void DebuggerMessage(string message)
-        {
-            ConsoleColor prev = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine(message);
-            Console.ForegroundColor = prev;
-        }
-
-        internal static void InternalLog(object message, string context = "Internal", Options debugOption = Options.Normal)
-        {
-            Log(message.ToString(), context, debugOption);
         }
     }
 }

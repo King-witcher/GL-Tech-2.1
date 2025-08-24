@@ -1,12 +1,9 @@
-﻿using Engine;
-using Engine.Imaging;
+﻿using Engine.Imaging;
+using Engine.Scripting.Debugging;
+using Engine.Scripting.Physics;
+using Engine.Scripting.Prefab;
 using Engine.World;
 using Engine.World.Composed;
-using Engine.Scripting.Debugging;
-using Engine.Scripting.Prefab;
-using Engine.Scripting.Physics;
-using Engine.Demos;
-
 using System.Collections.Generic;
 
 namespace Engine.Demos.SuperBlockMap
@@ -28,7 +25,7 @@ namespace Engine.Demos.SuperBlockMap
         public Map()
         {
             Texture background = new Texture(crazyBackground_buffer, 0, 9, 0, 3);
-            this.Background = background;
+            Background = background;
 
             // BlockMap
             {
@@ -47,7 +44,8 @@ namespace Engine.Demos.SuperBlockMap
                     },
                     textureFilling: BlockMap.TextureFilling.Side,
                     optimize: true,
-                    colliders: false);
+                    colliders: false
+                );
 
                 blockMap.WorldScale = 0.04f;
                 Add(blockMap);
@@ -55,24 +53,16 @@ namespace Engine.Demos.SuperBlockMap
 
             // Camera
             {
-                Camera camera = Camera;
-                camera.AddScript(new MouseLook(2.2f));
-                camera.AddScript<DebugPerformanceStats>();
-                camera.AddScript<DebugSceneInfo>();
+                Camera.AddScript(new MouseLook(2.2f));
+                Camera.AddScript<DebugPerformance>();
+                Camera.AddScript<DebugScene>();
 
                 // Tratador de colisão
                 PointCollider pointCollider = new();
                 SoftMovement softMovement = new(pointCollider);
-                camera.AddScript(pointCollider);
-                camera.AddScript(softMovement);
-
-                Add(camera);
+                Camera.AddScript(pointCollider);
+                Camera.AddScript(softMovement);
             }
-
-            global::Engine.Renderer.CaptureMouse = true;
-            global::Engine.Renderer.FullScreen = true;
-            global::Engine.Renderer.SynchronizeThreads = true;
-            // Engine.Renderer.Run(this);
         }
     }
 }

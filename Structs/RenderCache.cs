@@ -32,9 +32,8 @@ namespace Engine.Structs
             colHeight1 = width / (2f * tan);
 
             // Allocates both angles and cosines pointers at once.
-            angles = (float*)Marshal.AllocHGlobal(2 * sizeof(float) * width);
-            cosines = (float*)Marshal.AllocHGlobal(2 * sizeof(float) * width);
-            cosines = angles + width;
+            angles = (float*)Marshal.AllocHGlobal(sizeof(float) * width);
+            cosines = (float*)Marshal.AllocHGlobal(sizeof(float) * width);
             float leftPixel = tan - per_pixel_step * 0.5f;
             for (int i = 0; i < width; i++)
             {
@@ -47,7 +46,7 @@ namespace Engine.Structs
         internal static RenderCache* Create(int width, int height, float FOV = 90f)
         {
             RenderCache* result = (RenderCache*)Marshal.AllocHGlobal(sizeof(RenderCache));
-            *result = new RenderCache(width, height, FOV);
+            *result = new(width, height, FOV);
             return result;
         }
 

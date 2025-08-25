@@ -44,24 +44,12 @@ namespace Engine.Imaging
 #endif
             unchecked
             {
-#if false
-                float x = (source.flt_width * (hrepeat * hratio + hoffset)) % source.Width;
-                float y = (source.flt_height * (vrepeat * vratio + voffset)) % source.Height;
-
-                int x0 = (int) x;
-                int y0 = (int) y;
-
-                uint color = Color.Mix(source[x0, y0], source[x0 + 1, y0], );
-
-                return color;
-#else
                 int x = (int)(source.flt_width * (hrepeat * hratio + hoffset)) % source.Width;
                 int y = (int)(source.flt_height * (vrepeat * vratio + voffset)) % source.Height;
 
                 uint color = ((uint*)source.Buffer)[source.Width * y + x];
 
                 return color;
-#endif
             }
         }
 

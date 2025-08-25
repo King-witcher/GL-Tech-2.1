@@ -361,12 +361,6 @@ public static partial class Renderer
                 col_start_table[scr_col] = draw_col_start;
                 col_end_table[scr_col] = draw_col_end;
 
-                // Draws the background before the wall.
-                // Critical performance impact.
-                //if (scene->background.source.Buffer != IntPtr.Zero)
-                //    for (int line = 0; line < draw_column_start; line++)
-                //        drawBackground(line);
-
                 // Draw the wall
                 // Critical performance impact.
                 float i_col_h = 1f / col_h;
@@ -376,26 +370,7 @@ public static partial class Renderer
                     Color c = plane->texture.MapPixel(plane_ratio, vratio);
                     screen[scr_col, line] = c;
                 }
-
-                // Draw the other side of the background
-                // Critical performance impact.
-                //if (scene->background.source.Buffer != IntPtr.Zero)
-                //    for (int line = draw_column_end; line < screen.Height; line++)
-                //    {
-                //drawFloorOrBackground(line);
-                //    }
                 #endregion
-
-                // Draws background
-                [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-                void drawBackground(int line)
-                {
-                    float background_hratio = ray_angle / 360f + 1f; //Temporary bugfix to avoid hratio being < 0
-                    float screenVratio = line / screen.flt_height;
-                    float background_vratio = (1f - ray_cos) * 0.5f + ray_cos * screenVratio;
-                    uint color = bg.MapPixel(background_hratio, background_vratio);
-                    screen[scr_col, line] = color;
-                }
             }
         }
     }

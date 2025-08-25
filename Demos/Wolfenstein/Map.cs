@@ -190,7 +190,7 @@ namespace Engine.Demos.Wolfenstein
                 Camera.AddScript(new MouseLook(2.2f));
 
                 PointCollider pc = new PointCollider();
-                Q1Movement movement = new Q1Movement(pc);
+                var movement = new Q1Movement(pc);
 
                 Camera.AddScript(pc);
                 Camera.AddScript(movement);

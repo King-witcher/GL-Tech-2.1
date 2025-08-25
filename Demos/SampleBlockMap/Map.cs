@@ -81,7 +81,7 @@ namespace Engine.Demos.SampleBlockMap
                 Camera.AddScript<DebugEntity>();
 
                 PointCollider collider = new PointCollider();
-                SoftMovement movement = new SoftMovement(collider);
+                Q1Movement movement = new Q1Movement(collider);
                 MouseLook mouseLook = new MouseLook(2.2f);
 
                 Camera.AddScript(collider);

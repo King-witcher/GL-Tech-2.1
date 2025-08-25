@@ -50,7 +50,7 @@ namespace Engine.Demos.FloorStressTest
                 //camera.AddScript<DebugComponents>();
 
                 PointCollider collider = new PointCollider();
-                SoftMovement movement = new SoftMovement(collider);
+                Q1Movement movement = new Q1Movement(collider);
                 MouseLook mouseLook = new MouseLook(2.2f);
 
                 Camera.AddScript(collider);

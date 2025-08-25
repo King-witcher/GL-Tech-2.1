@@ -12,43 +12,6 @@ using Engine.Input;
 
 namespace Engine.Demos.Wolfenstein
 {
-    class Jump : Script
-    {
-        float zspeed = 0f;
-
-        public float JumpSpeed = 2.5f;
-        public float Gravity = 8f;
-
-        void Start()
-        {
-            if (!(Entity is Camera))
-                Debug.Log($"Entity {Entity} is not a camera.", "Jump", Debug.Options.Error);
-        }
-
-        void OnFrame()
-        {
-            if (Entity is Camera camera) {
-                if (Input.Keyboard.IsKeyDown(ScanCode.SPACE) && Scene.Camera.Z == 0.5f)
-                    zspeed = JumpSpeed;
-
-                Scene.Camera.Z += zspeed * Frame.DeltaTime;
-                if (Scene.Camera.Z < 0.5f)
-                {
-                    Scene.Camera.Z = 0.5f;
-                    zspeed = 0f;
-                }
-
-                if (Scene.Camera.Z > 1f)
-                {
-                    Scene.Camera.Z = 1f;
-                    zspeed = 0f;
-                }
-
-                zspeed -= Gravity * Frame.DeltaTime;
-            }
-        }
-    }
-
     // Wolfenstein 3D's first level
     public class Map : Scene
     {
@@ -224,11 +187,10 @@ namespace Engine.Demos.Wolfenstein
                 Camera.WorldPosition = (57.5f, 29.5f);
                 Camera.AddScript<DebugPerformance>();
                 Camera.AddScript<DebugScene>();
-                Camera.AddScript<Jump>();
                 Camera.AddScript(new MouseLook(2.2f));
 
                 PointCollider pc = new PointCollider();
-                SoftMovement movement = new SoftMovement(pc);
+                Q1Movement movement = new Q1Movement(pc);
 
                 Camera.AddScript(pc);
                 Camera.AddScript(movement);

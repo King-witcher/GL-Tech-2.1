@@ -47,7 +47,7 @@ namespace Engine.Tutorial
                 Camera.WorldPosition = (0f, -1f);
 
                 PointCollider collider = new();
-                SoftMovement movement = new(collider);
+                Q1Movement movement = new(collider);
 
                 Camera.AddScripts(collider, movement);
                 Camera.AddScript<MouseLook>();

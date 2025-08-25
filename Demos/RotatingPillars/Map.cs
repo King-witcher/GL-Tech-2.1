@@ -129,7 +129,7 @@ namespace Engine.Demos.RotatingPillars
                 Camera.AddScript<MouseLook>();
                 Noclip nm = new ();
                 Camera.AddScript(nm);
-                SoftMovement movement = new SoftMovement(nm);
+                Q1Movement movement = new Q1Movement(nm);
                 Camera.AddScript(movement);
             }
         }

@@ -59,7 +59,7 @@ namespace Engine.Demos.SuperBlockMap
 
                 // Tratador de colisão
                 PointCollider pointCollider = new();
-                SoftMovement softMovement = new(pointCollider);
+                Q1Movement softMovement = new(pointCollider);
                 Camera.AddScript(pointCollider);
                 Camera.AddScript(softMovement);
             }

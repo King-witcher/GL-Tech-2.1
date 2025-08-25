@@ -33,7 +33,7 @@ namespace Engine.Demos
 
                 if (option.KeyChar == '0') break;
 
-                using Scene scene = option.KeyChar switch
+                using Scene? scene = option.KeyChar switch
                 {
                     '1' => new FloorStressTest.Map(),
                     '2' => new RotatingPillars.Map(),

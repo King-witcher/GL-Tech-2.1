@@ -7,29 +7,28 @@ using Engine.Scripting.Prefab;
 
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Engine.Scripting;
-using Engine.Input;
+using System;
 
 namespace Engine.Demos.Wolfenstein
 {
     // Wolfenstein 3D's first level
     public class Map : Scene
     {
-        Image textures = new(Resources.WolfTextures);
-        Image background_buffer = new(Resources.Background);
+        Image textures = new(Resources.textures);
+        Image textures_censored = new(Resources.textures_censored);
+        Image background_buffer = new(Resources.bg);
         Image lula_buffer = new(Resources.lula);
         Image pt_buffer = new(Resources.pt);
         Image bolsonaro_buffer = new(Resources.bolsonaro);
-        Image dolar_buffer = new(Resources._1dolar);
 
         protected override void Delete()
         {
             textures.Dispose();
+            textures_censored.Dispose();
             background_buffer.Dispose();
             lula_buffer.Dispose();
             pt_buffer.Dispose();
             bolsonaro_buffer.Dispose();
-            dolar_buffer.Dispose();
         }
 
         public Map()
@@ -83,26 +82,47 @@ namespace Engine.Demos.Wolfenstein
                         hoffset: 2 / 6f,
                         voffset: 0 / 19f);
 
-                    Texture gs_naziFlag = new Texture(
-                        source: textures,
-                        hrepeat: 1 / 6f,
-                        vrepeat: 1 / 19f,
-                        hoffset: 4 / 6f,
-                        voffset: 0 / 19f);
+                    //Texture gs_naziFlag = new Texture(
+                    //    source: textures,
+                    //    hrepeat: 1 / 6f,
+                    //    vrepeat: 1 / 19f,
+                    //    hoffset: 4 / 6f,
+                    //    voffset: 0 / 19f);
 
-                    Texture gs_hitler = new Texture(
-                        source: textures,
-                        hrepeat: 1 / 6f,
-                        vrepeat: 1 / 19f,
-                        hoffset: 0 / 6f,
-                        voffset: 1 / 19f);
+                    Texture gs_naziFlag = new(
+                        source: textures_censored,
+                        hrepeat: 1f / 4f,
+                        vrepeat: 1f / 4f,
+                        hoffset: 2f / 4f,
+                        voffset: 2f / 4f);
 
-                    Texture gs_goldEagle = new Texture(
-                        source: textures,
-                        hrepeat: 1 / 6f,
-                        vrepeat: 1 / 19f,
-                        hoffset: 4 / 6f,
-                        voffset: 1 / 19f);
+                    //Texture gs_hitler = new Texture(
+                    //    source: textures,
+                    //    hrepeat: 1 / 6f,
+                    //    vrepeat: 1 / 19f,
+                    //    hoffset: 0 / 6f,
+                    //    voffset: 1 / 19f);
+
+                    Texture gs_hitler = new(
+                        source: textures_censored,
+                        hrepeat: 1f / 4f,
+                        vrepeat: 1f / 4f,
+                        hoffset: 1f / 4f,
+                        voffset: 2f / 4f);
+
+                    //Texture gs_goldEagle = new Texture(
+                    //    source: textures,
+                    //    hrepeat: 1 / 6f,
+                    //    vrepeat: 1 / 19f,
+                    //    hoffset: 4 / 6f,
+                    //    voffset: 1 / 19f);
+
+                    Texture gs_goldEagle = new(
+                        source: textures_censored,
+                        hrepeat: 1f / 4f,
+                        vrepeat: 1f / 4f,
+                        hoffset: 0f / 4f,
+                        voffset: 2f / 4f);
 
                     Texture woodPanelling = new Texture(
                         source: textures,
@@ -111,19 +131,33 @@ namespace Engine.Demos.Wolfenstein
                         hoffset: 4 / 6f,
                         voffset: 3 / 19f);
 
-                    Texture wp_whiteEagle = new Texture(
-                        source: textures,
-                        hrepeat: 1 / 6f,
-                        vrepeat: 1 / 19f,
-                        hoffset: 0 / 6f,
-                        voffset: 3 / 19f);
+                    //Texture wp_whiteEagle = new Texture(
+                    //    source: textures,
+                    //    hrepeat: 1 / 6f,
+                    //    vrepeat: 1 / 19f,
+                    //    hoffset: 0 / 6f,
+                    //    voffset: 3 / 19f);
 
-                    Texture wp_hitler = new Texture(
-                        source: textures,
-                        hrepeat: 1 / 6f,
-                        vrepeat: 1 / 19f,
-                        hoffset: 2 / 6f,
-                        voffset: 3 / 19f);
+                    Texture wp_whiteEagle = new(
+                        source: textures_censored,
+                        hrepeat: 1f / 4f,
+                        vrepeat: 1f / 4f,
+                        hoffset: 3f / 4f,
+                        voffset: 1f / 4f);
+
+                    //Texture wp_hitler = new Texture(
+                    //    source: textures,
+                    //    hrepeat: 1 / 6f,
+                    //    vrepeat: 1 / 19f,
+                    //    hoffset: 2 / 6f,
+                    //    voffset: 3 / 19f);
+
+                    Texture wp_hitler = new(
+                        source: textures_censored,
+                        hrepeat: 1f / 4f,
+                        vrepeat: 1f / 4f,
+                        hoffset: 2f / 4f,
+                        voffset: 1f / 4f);
 
                     Texture elevator = new Texture(
                         source: textures,
@@ -131,11 +165,6 @@ namespace Engine.Demos.Wolfenstein
                         vrepeat: 1 / 19f,
                         hoffset: 0 / 6f,
                         voffset: 17 / 19f);
-
-                    Texture pt = new Texture(pt_buffer);
-                    Texture lula = new Texture(lula_buffer);
-                    Texture bolsonaro = new Texture(bolsonaro_buffer);
-                    Texture dolar = new Texture(dolar_buffer);
 
                     dict[(0, 0, 255)] = blueStone1;
                     dict[(0, 0, 128)] = blueStone2;
@@ -189,8 +218,8 @@ namespace Engine.Demos.Wolfenstein
                 Camera.AddScript<DebugScene>();
                 Camera.AddScript(new MouseLook(2.2f));
 
-                PointCollider pc = new PointCollider();
-                var movement = new Q1Movement(pc);
+                PointCollider pc = new();
+                Q1Movement movement = new(pc);
 
                 Camera.AddScript(pc);
                 Camera.AddScript(movement);
@@ -198,7 +227,7 @@ namespace Engine.Demos.Wolfenstein
 
             // Renderer customization
             // FIXME: Create a setup method.
-            global::Engine.Renderer.FieldOfView = 72f;
+            global::Engine.Renderer.FieldOfView = 93.93f;
         }
 
         static Image Resize(Image pb, int scale)

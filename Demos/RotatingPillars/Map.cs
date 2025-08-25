@@ -127,9 +127,9 @@ namespace Engine.Demos.RotatingPillars
                 Camera.AddScript<SwitchBackgroundScript>();
                 Camera.AddScript<DebugPerformance>();
                 Camera.AddScript<MouseLook>();
-                Noclip nm = new ();
+                Noclip nm = new();
                 Camera.AddScript(nm);
-                Q1Movement movement = new Q1Movement(nm);
+                Q3Movement movement = new(nm);
                 Camera.AddScript(movement);
             }
         }

@@ -27,12 +27,12 @@ namespace Engine
         {
             window = SDL_CreateWindow("GLTech 2.1", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, buffer.Width, buffer.Height, 0);
             SDL_GetWindowSize(window, out windowSize.width, out windowSize.height);
-            renderer = SDL_CreateRenderer(window, -1, 0);
-            texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, (int)SDL_TextureAccess.SDL_TEXTUREACCESS_STATIC, buffer.Width, buffer.Height);
+            renderer = SDL_CreateRenderer(window, -1, SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC);
+            texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB888, (int)SDL_TextureAccess.SDL_TEXTUREACCESS_STATIC, buffer.Width, buffer.Height);
             
             if (fullscreen)
             {
-                SDL_SetWindowFullscreen(window, (int)SDL_WindowFlags.SDL_WINDOW_FULLSCREEN);
+                SDL_SetWindowFullscreen(window, (int)(SDL_WindowFlags.SDL_WINDOW_FULLSCREEN));
             }
             SDL_SetRelativeMouseMode(SDL_bool.SDL_TRUE);
         }

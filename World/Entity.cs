@@ -10,7 +10,7 @@ namespace Engine.World
 
         internal Entity()
         {
-            name = $"Entity {entityCount}";
+            name = $"Entity {entityCount++}";
         }
 
         public const int MAX_NAME_LENGTH = 63;

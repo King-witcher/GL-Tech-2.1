@@ -7,10 +7,74 @@ using Engine.Scripting.Prefab;
 
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Engine.Scripting;
+using System.Diagnostics;
 using System;
 
 namespace Engine.Demos.Wolfenstein
 {
+    public class FlagBehavior : Script
+    {
+        Logger logger = new(typeof(FlagBehavior).Name);
+        bool started = false;
+        int nextCheckpoint = 0;
+        Stopwatch sw = new Stopwatch();
+        Vector[] checkpoints;
+
+        public float Radius { get; set; } = 0.707f;
+
+        public FlagBehavior(params Vector[] checkpoints)
+        {
+            if (checkpoints.Length < 2)
+                throw new System.ArgumentException("You must provide at least two checkpoints (start and end).");
+
+            this.checkpoints = checkpoints;
+        }
+
+        void Start()
+        {
+            Entity.WorldPosition = checkpoints[0];
+        }
+
+        void OnFrame()
+        {
+            float distance = (Entity.WorldPosition - Scene.Camera.WorldPosition).Module;
+            bool colliding = distance < Radius;
+
+            if (colliding)
+            {
+                var time = sw.ElapsedMilliseconds / 1000f;
+
+                if (!started)
+                {
+                    sw.Restart();
+                    started = true;
+                    Entity.WorldPosition = checkpoints[++nextCheckpoint];
+                    logger.Success("You have started the run! Go to the next checkpoint.");
+                    //flag.WorldPosition = (47.5f, 2.5f);
+                    //flag.WorldPosition = (57.5f, 35.5f);
+                    return;
+                }
+
+                if (nextCheckpoint < checkpoints.Length - 1)
+                {
+                    logger.Success($"Checkpoint #{nextCheckpoint}: {time}s");
+                    Entity.WorldPosition = checkpoints[++nextCheckpoint];
+                    //flag.WorldPosition = (57.5f, 31.5f);
+                    return;
+                }
+
+
+                sw.Stop();
+                logger.Success($"You finished in {time}s!");
+                Entity.WorldPosition = checkpoints[0];
+                started = false;
+                nextCheckpoint = 0;
+                return;
+            }
+        }
+    }
+
     // Wolfenstein 3D's first level
     public class Map : Scene
     {
@@ -197,26 +261,86 @@ namespace Engine.Demos.Wolfenstein
                 Add(blockMap);
             }
 
-            // Floor
+            // Floor and ceiling
             {
-                Texture tex = new Texture(
+                Texture bricks = new Texture(
+                    source: textures,
+                    hrepeat: 1f / 6f,
+                    vrepeat: 1f / 19f,
+                    hoffset: 3f / 6f,
+                    voffset: 11f / 19f);
+
+                Texture brownBricks = new Texture(
+                    source: textures,
+                    hrepeat: 1f / 6f,
+                    vrepeat: 1f / 19f,
+                    hoffset: 2f / 6f,
+                    voffset: 9f / 19f);
+
+                Texture checkered = new Texture(
+                    source: textures,
+                    hrepeat: 1f / 6f,
+                    vrepeat: 1f / 19f,
+                    hoffset: 4f / 6f,
+                    voffset: 13f / 19f);
+
+                var floor = new Floor((0, 0), (64, 64), checkered);
+                var ceiling = new Ceiling((0, 0), (64, 64), bricks);
+                Add(floor, ceiling);
+            }
+
+            // Flag
+            {
+                var tex = new Texture(
                     source: textures,
                     hrepeat: 1 / 6f,
                     vrepeat: 1 / 19f,
                     hoffset: 0 / 6f,
-                    voffset: 0 / 19f);
+                    voffset: 6 / 19f);
 
-                Floor floor = new Floor((0, 0), (64, 64), tex);
-                Ceiling ceiling = new Ceiling((0, 0), (64, 64), tex);
-                Add(floor, ceiling);
+                var polygon = new RegularPolygon(
+                    position: Vector.Zero, // To be defined by flag behavior
+                    radius: 0.2f,
+                    vertices: 3,
+                    texture: tex);
+
+                var flagBehavior = new FlagBehavior(new Vector[] {
+                    (57.5f, 31.5f),
+                    (50.5f, 34.5f),
+                    (38.5f, 34.5f),
+                    (33.5f, 43.5f),
+                    (33.5f, 53.5f),
+                    (36.5f, 60.5f),
+                    (30.5f, 60.5f),
+                    (33.5f, 53.5f),
+                    (33.5f, 43.5f),
+                    (29.5f, 34.5f),
+                    (15.5f, 34.5f),
+                    (11.5f, 29.5f),
+                    (16.5f, 18.5f),
+                    (20.5f, 10.5f),
+                    (33.5f, 6.5f),
+                    (35.5f, 2.5f),
+                    (46.5f, 3.5f),
+                    (38.5f, 10.5f),
+                    (21.5f, 10.5f),
+                    (17.5f, 15.5f),
+                    (14.5f, 34.5f),
+                    (38.5f, 34.5f),
+                    (57.5f, 33.5f),
+                    (57.5f, 28.5f),
+                });
+                var rotate = new Rotate(360f);
+                polygon.AddScripts(flagBehavior, rotate);
+                Add(polygon);
             }
 
             // Camera
             {
                 Camera.WorldPosition = (57.5f, 29.5f);
-                Camera.AddScript<DebugPerformance>();
                 Camera.AddScript<DebugScene>();
                 Camera.AddScript(new MouseLook(2.2f));
+                //Camera.AddScript<DebugEntity>();
 
                 PointCollider pc = new();
                 Q1Movement movement = new(pc);

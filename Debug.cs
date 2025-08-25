@@ -18,7 +18,7 @@ namespace Engine
             if (enabled) Console.WriteLine();
         }
 
-        public static void Log(object message, string context = null, Options debugOption = Options.Normal)
+        public static void Log(object message, string? context = null, Options debugOption = Options.Normal)
         {
             if (!enabled) return;
 

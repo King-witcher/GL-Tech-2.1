@@ -305,7 +305,7 @@ public static partial class Renderer
                 Vector center_hit = scene->camera->position + camera_dir * hit_dist;
 
                 Vector left_bound_hit = center_hit - right * step * (screen.Width >> 1);
-                using HorizontalList list = scene->floor_list.GetIntersections(left_bound_hit, left_bound_hit + right);
+                using HorizontalList list = scene->ceiling_list.GetIntersections(left_bound_hit, left_bound_hit + right);
 
                 var step_vec = right * step;
                 for (int col = 0; col < screen.Width; col++)

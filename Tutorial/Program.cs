@@ -1,63 +1,56 @@
-﻿using Engine;
+﻿
 using Engine.Imaging;
 using Engine.Scripting;
-using Engine.Scripting.Prefab;
 using Engine.Scripting.Physics;
+using Engine.Scripting.Prefab;
 using Engine.World;
 using Engine.World.Composed;
 
 namespace Engine.Tutorial
 {
-    class Mundo : Scene
+    class Map : Scene
     {
-        Image buffer = new(Resources.Golden);
-        Image background_buffer = new(Resources.Universe);
+        Image golden = new(Resources.Golden);
+        Image universe = new(Resources.Universe);
 
-        public Mundo()
+        protected override void Delete()
         {
-            // Background
+            golden.Dispose();
+            universe.Dispose();
+        }
+
+        public Map()
+        {
+            // Plane
             {
-                Texture tex = new(background_buffer);
-                Background = tex;
-            }
-
-            // Plano
-            {
-                Texture tex = new(buffer);
-
-                Plane plane = new(
-                    start: (-1f, 3f),
-                    end: (1f, 2f),
-                    texture: tex);
-
+                var tex = new Texture(golden);
+                var plane = new Wall(
+                    start: (-1f, 2f),
+                    end: (1f, 3f),
+                    texture: tex
+                );
                 Add(plane);
             }
 
-            // Polígono
+            // Plane 2
             {
-                Texture tex = new(buffer, hrepeat: 5f);
-                RegularPolygon polygon = new(Vector.Forward, 5, 1f, tex);
-                polygon.AddScript<Rotate>();
-
-                Add(polygon);
+                var tex = new Texture(universe);
+                var plane = new Plane(
+                    start: (-1f, 4f),
+                    end: (1f, 4f),
+                    texture: tex
+                );
+                Add(plane);
             }
 
             // Camera
             {
-                Camera.WorldPosition = (0f, -1f);
+                KinematicBody body = new PointCollider();
+                Script movement = new Q1Movement(body);
 
-                PointCollider collider = new();
-                Q1Movement movement = new(collider);
-
-                Camera.AddScripts(collider, movement);
                 Camera.AddScript<MouseLook>();
+                Camera.AddScripts(body, movement);
             }
-        }
-
-        protected override void Delete()
-        {
-            buffer.Dispose();
-            background_buffer.Dispose();
         }
     }
 
@@ -65,10 +58,10 @@ namespace Engine.Tutorial
     {
         static void Main()
         {
-            using Mundo mundo = new();
-            Renderer.FieldOfView = 90f;
+            Scene scene = new Map();
             Renderer.CaptureMouse = true;
-            Renderer.Run(mundo);
+            Renderer.FullScreen = true;
+            Renderer.Run(scene);
         }
     }
 }

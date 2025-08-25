@@ -13,6 +13,7 @@ namespace Engine.World
         private static Logger logger = new(typeof(Scene).Name);
         private List<Entity> entities = new List<Entity>();
         private List<Collider> colliders = new List<Collider>();
+        private Dictionary<string, Entity> entityNames = new Dictionary<string, Entity>();
         private Camera camera;
 
         public Scene()
@@ -61,6 +62,13 @@ namespace Engine.World
             OnKeyUp -= script.OnKeyUpAction;
         }
 
+        public Entity? FindByname(string name)
+        {
+            if (entityNames.TryGetValue(name, out Entity entity))
+                return entity;
+            else return null;
+        }
+
         public void Add(Entity entity)
         {
             #region Deffensive programming part
@@ -91,6 +99,7 @@ namespace Engine.World
             void add(Entity entity)
             {
                 entities.Add(entity);
+                entityNames.Add(entity.Name, entity);   
                 if (entity is Collider collider)
                     colliders.Add(collider);
 

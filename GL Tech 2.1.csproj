@@ -131,6 +131,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Demos\Wolfenstein\TrajectoryRecorder.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ppy.SDL2-CS" Version="1.0.82" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     <PackageReference Include="System.Resources.Extensions" Version="7.0.0" />

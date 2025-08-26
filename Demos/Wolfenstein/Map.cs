@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Engine.Scripting;
 using System.Diagnostics;
-using System;
 
 namespace Engine.Demos.Wolfenstein
 {
@@ -20,6 +19,7 @@ namespace Engine.Demos.Wolfenstein
         int nextCheckpoint = 0;
         Stopwatch sw = new Stopwatch();
         Vector[] checkpoints;
+        TrajectoryRecorder? trajectoryRecorder;
 
         public float Radius { get; set; } = 0.707f;
 
@@ -34,6 +34,8 @@ namespace Engine.Demos.Wolfenstein
         void Start()
         {
             Entity.WorldPosition = checkpoints[0];
+            Entity? highscore = Scene.FindByname("highscore");
+            trajectoryRecorder = highscore?.GetScript<TrajectoryRecorder>();
         }
 
         void OnFrame()
@@ -47,12 +49,11 @@ namespace Engine.Demos.Wolfenstein
 
                 if (!started)
                 {
+                    trajectoryRecorder?.StartRecording();
                     sw.Restart();
                     started = true;
                     Entity.WorldPosition = checkpoints[++nextCheckpoint];
                     logger.Success("You have started the run! Go to the next checkpoint.");
-                    //flag.WorldPosition = (47.5f, 2.5f);
-                    //flag.WorldPosition = (57.5f, 35.5f);
                     return;
                 }
 
@@ -60,12 +61,12 @@ namespace Engine.Demos.Wolfenstein
                 {
                     logger.Success($"Checkpoint #{nextCheckpoint}: {time}s");
                     Entity.WorldPosition = checkpoints[++nextCheckpoint];
-                    //flag.WorldPosition = (57.5f, 31.5f);
                     return;
                 }
 
 
                 sw.Stop();
+                trajectoryRecorder?.FinishRecording();
                 logger.Success($"You finished in {time}s!");
                 Entity.WorldPosition = checkpoints[0];
                 started = false;
@@ -333,6 +334,15 @@ namespace Engine.Demos.Wolfenstein
                 var rotate = new Rotate(360f);
                 polygon.AddScripts(flagBehavior, rotate);
                 Add(polygon);
+            }
+
+            // Highscore
+            {
+                Texture tex = Texture.FromColor(Color.Green, out _);
+                Entity highscore = new RegularPolygon(Vector.Zero, 16, 0.02f, tex);
+                highscore.Name = "highscore";
+                highscore.AddScript(new TrajectoryRecorder(1f / 20f));
+                Add(highscore);
             }
 
             // Camera

@@ -14,9 +14,9 @@ namespace Engine.Demos
             Debug.OpenConsole();
 
             // Renderer settings
-            Renderer.FullScreen = false;
-            //Renderer.CustomWidth = 800;
-            //Renderer.CustomHeight = 600;
+            Renderer.FullScreen = true;
+            //Renderer.CustomWidth = 1366;
+            //Renderer.CustomHeight = 768;
             Renderer.FieldOfView = 110f;
             Renderer.SynchronizeThreads = true;
             Renderer.CaptureMouse = true;

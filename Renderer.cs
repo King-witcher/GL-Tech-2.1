@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Engine.Imaging;
+﻿using Engine.Imaging;
 using Engine.Imaging.Processing;
-using Engine.World;
+using Engine.Input;
 using Engine.Scripting;
 using Engine.Structs;
+using Engine.World;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
-
-using Engine.Input;
+using System.Threading.Tasks;
+using Windows.Storage.Streams;
 
 namespace Engine;
 
 public static partial class Renderer
 {
     unsafe static RenderCache* cache;
-    static Image frontBuffer;
+    static Image buffer;
     static Scene currentScene = null;
     static Action ScheduledActions = null;
     private static Logger logger = new("Renderer");
@@ -82,11 +82,10 @@ public static partial class Renderer
         }
     }
 
-    static bool captureMouse = false;
     public static bool CaptureMouse
     {
-        get => captureMouse;
-        set => captureMouse = value;    // Revisar
+        get => Window.CaptureMouse;
+        set => Window.CaptureMouse = value;
     }
 
     public static bool IsRunning { get; private set; } = false;
@@ -94,7 +93,7 @@ public static partial class Renderer
     public static Image GetScreenshot()
     {
         Image screenshot = new Image(CustomWidth, CustomHeight);
-        Image.BufferCopy(frontBuffer, screenshot);
+        Image.BufferCopy(buffer, screenshot);
         return screenshot;
     }
 
@@ -128,23 +127,10 @@ public static partial class Renderer
         Camera camera = scene.Camera;
         currentScene = scene;
 
-        // Unmanaged buffer where the video will be put.
-        frontBuffer = new(CustomWidth, CustomHeight);
-
         // Spaguetti
         RefreshCache();
 
         bool quitRequested = false;
-
-        // Buffer where the image will be rendered
-        Image backBuffer = SynchronizeThreads ?
-            new(frontBuffer.Width, frontBuffer.Height) :
-            frontBuffer;
-
-        #region Warnings
-        if (!SynchronizeThreads && postProcessing.Count > 0)
-            logger.Warn("The renderer has post processing effects set but DoubleBuffering is disabled. Post processing effects may not work properly.");
-        #endregion
 
         Stopwatch controlStopwatch = new Stopwatch();   // Required to cap framerate
         Script.Frame.RestartFrame();
@@ -155,13 +141,19 @@ public static partial class Renderer
 
         Stopwatch sw = new Stopwatch();
 
+        Window window = new(
+            title: "GL Tech 2.1",
+            w: CustomWidth,
+            h: customHeight,
+            bufw: CustomWidth,
+            bufh: customHeight,
+            fullscreen: FullScreen,
+            out buffer
+        );
 
-        Window window = new Window(frontBuffer, fullScreen);
         window.OnQuit += () => { quitRequested = true; };
         window.OnKeyDown += Keyboard.SetKeyDown;
         window.OnKeyUp += Keyboard.SetKeyUp;
-        //window.CaptureMouse = CaptureMouse;
-        window.Spawn();
         while (!quitRequested)
         {
             sw.Restart();
@@ -172,9 +164,8 @@ public static partial class Renderer
             controlStopwatch.Restart();
             Script.Frame.BeginRender();
 
-            Draw(backBuffer, currentScene.unmanaged);
-            //DrawFloors(backBuffer, currentScene.unmanaged);
-            //PostProcess(backBuffer);
+            Draw(buffer, currentScene.unmanaged);
+            //PostProcess(frontBuffer);
 
             framerate = 0.95f * framerate + 0.05f / (float)Script.Frame.RenderTime;
 
@@ -183,10 +174,8 @@ public static partial class Renderer
 
             GUI.Text text = new GUI.Text("");
             text.Value = ((int)framerate).ToString();
-            text.Render(backBuffer);
+            text.Render(buffer);
 
-            if (SynchronizeThreads)
-                Image.BufferCopy(backBuffer, frontBuffer);
             Script.Frame.EndRender();
 
             //while (controlStopwatch.ElapsedMilliseconds < minframetime)
@@ -195,21 +184,20 @@ public static partial class Renderer
             FlushSchedule();
             Script.Frame.RestartFrame();
             Script.Frame.BeginScript();
-            window.PollEvents();
+            window.ProcessEvents();
             if (CaptureMouse)
                 Mouse.Shift = window.GetMouseShift();
             currentScene.OnFrame?.Invoke();
             Script.Frame.EndScript();
         }
 
-        window.Close();
+        window.Destroy();
 
         // Clears the Keyboard
         Input.Keyboard.Clear();
 
         // Finally, dispose everythihng.
-        //window.Dispose();
-        frontBuffer.Dispose();
+        buffer.Dispose();
 
         currentScene = null;
         IsRunning = false;

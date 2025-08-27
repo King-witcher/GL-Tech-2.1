@@ -9,11 +9,14 @@ namespace Engine
     internal sealed class Window
     {
         Image buffer;
-        IntPtr window;
-        IntPtr renderer;
-        IntPtr texture;
-        bool fullscreen;
-        (int width, int height) windowSize;
+        nint window;
+        nint renderer;
+        nint texture;
+
+        static Window()
+        {
+            SDL_Init(SDL_INIT_VIDEO);
+        }
 
         public static bool CaptureMouse
         {
@@ -21,44 +24,57 @@ namespace Engine
             set => SDL_SetRelativeMouseMode(value ? SDL_bool.SDL_TRUE : SDL_bool.SDL_FALSE);
         }
 
-        public Window(Image buffer, bool fullscreen = false)
+        public bool Fullscreen
         {
-            this.buffer = buffer;
-            this.fullscreen = fullscreen;
+            get => (SDL_GetWindowFlags(window) & (uint)SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) != 0;
+            set => SDL_SetWindowFullscreen(window, value ? (uint)SDL_WindowFlags.SDL_WINDOW_FULLSCREEN : 0);
         }
 
-        public void Spawn()
+        internal Window(
+            string title,
+            int w,
+            int h,
+            int bufw,
+            int bufh,
+            bool fullscreen,
+            out Image buffer
+        )
         {
+            this.buffer = new Image(bufw, bufh);
+            buffer = this.buffer;
+            Fullscreen = fullscreen;
+
             window = SDL_CreateWindow(
-                title: "GLTech 2.1",
-                x: SDL_WINDOWPOS_UNDEFINED,
-                y: SDL_WINDOWPOS_UNDEFINED,
-                w: buffer.Width,
-                h: buffer.Height,
-                flags: 0
+                title,
+                x: SDL_WINDOWPOS_CENTERED,
+                y: SDL_WINDOWPOS_CENTERED,
+                w,
+                h,
+                flags: fullscreen ? SDL_WindowFlags.SDL_WINDOW_FULLSCREEN : 0
             );
-            SDL_GetWindowSize(window, out windowSize.width, out windowSize.height);
-            renderer = SDL_CreateRenderer(window, -1, SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC);
-            texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB888, (int)SDL_TextureAccess.SDL_TEXTUREACCESS_STATIC, buffer.Width, buffer.Height);
 
-            if (fullscreen)
-            {
-                SDL_SetWindowFullscreen(window, (int)(SDL_WindowFlags.SDL_WINDOW_FULLSCREEN));
-            }
+            renderer = SDL_CreateRenderer(window, -1, SDL_RendererFlags.SDL_RENDERER_TARGETTEXTURE);
+
+            texture = SDL_CreateTexture(
+                renderer,
+                SDL_PIXELFORMAT_RGB888,
+                (int)SDL_TextureAccess.SDL_TEXTUREACCESS_STATIC,
+                bufw,
+                bufh
+            );
         }
 
-        public void Update()
+        internal void Update()
         {
             // SDL_RenderClear(renderer);
-            SDL_UpdateTexture(texture, IntPtr.Zero, buffer.Buffer, buffer.Width * 4);
-            SDL_RenderCopy(renderer, texture, IntPtr.Zero, IntPtr.Zero);
+            SDL_UpdateTexture(texture, 0, buffer.Buffer, buffer.Width * 4);
+            SDL_RenderCopy(renderer, texture, 0, 0);
             SDL_RenderPresent(renderer);
         }
 
-        public void PollEvents()
+        /** Processes all pending events from the event queue. */
+        internal void ProcessEvents()
         {
-            (int x, int y) mouseShift = (0, 0);
-
             while (SDL_PollEvent(out SDL_Event sdlEvent) != 0)
             {
                 switch (sdlEvent.type)
@@ -76,22 +92,22 @@ namespace Engine
             }
         }
 
-        public (int x, int y) GetMouseShift()
+        internal (int x, int y) GetMouseShift()
         {
             SDL_GetRelativeMouseState(out int x, out int y);
             return (x, y);
         }
 
-        public void Close()
+        internal void Destroy()
         {
-            SDL_DestroyWindow(window);
-            SDL_DestroyRenderer(renderer);
             SDL_DestroyTexture(texture);
+            SDL_DestroyRenderer(renderer);
+            SDL_DestroyWindow(window);
         }
 
-        public event Action<ScanCode> OnKeyDown;
-        public event Action<ScanCode> OnKeyUp;
+        internal event Action<ScanCode>? OnKeyDown;
+        internal event Action<ScanCode>? OnKeyUp;
 
-        public event Action OnQuit;
+        internal event Action? OnQuit;
     }
 }

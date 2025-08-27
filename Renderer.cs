@@ -160,6 +160,7 @@ public static partial class Renderer
         window.OnQuit += () => { quitRequested = true; };
         window.OnKeyDown += Keyboard.SetKeyDown;
         window.OnKeyUp += Keyboard.SetKeyUp;
+        //window.CaptureMouse = CaptureMouse;
         window.Spawn();
         while (!quitRequested)
         {

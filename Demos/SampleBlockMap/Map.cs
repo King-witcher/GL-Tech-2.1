@@ -1,11 +1,9 @@
-﻿using Engine;
-using Engine.Imaging;
+﻿using Engine.Imaging;
 using Engine.World;
 using Engine.World.Composed;
 using Engine.Scripting.Debugging;
 using Engine.Scripting.Prefab;
 using Engine.Scripting.Physics;
-using Engine.Demos;
 
 using System.Collections.Generic;
 
@@ -73,7 +71,7 @@ namespace Engine.Demos.SampleBlockMap
 
             // Camera
             {
-                Camera.WorldPosition = (5f, 5f);
+                Camera.WorldPosition = (8f, 8f);
                 Camera.RelativeRotation = -90f;
 
                 Camera.AddScript<DebugPerformance>();

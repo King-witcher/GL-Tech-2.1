@@ -1,6 +1,9 @@
 ﻿
 using Engine.World;
+using SDL2;
 using System;
+using Windows.Storage.Streams;
+using static SDL2.SDL;
 
 namespace Engine.Demos
 {
@@ -11,7 +14,7 @@ namespace Engine.Demos
             Debug.OpenConsole();
 
             // Renderer settings
-            Renderer.FullScreen = true;
+            Renderer.FullScreen = false;
             //Renderer.CustomWidth = 800;
             //Renderer.CustomHeight = 600;
             Renderer.FieldOfView = 110f;

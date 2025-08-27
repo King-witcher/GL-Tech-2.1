@@ -15,7 +15,11 @@ namespace Engine
         bool fullscreen;
         (int width, int height) windowSize;
 
-        public bool CaptureMouse { get; set; } = false;
+        public static bool CaptureMouse
+        {
+            get => SDL_GetRelativeMouseMode() == SDL_bool.SDL_TRUE;
+            set => SDL_SetRelativeMouseMode(value ? SDL_bool.SDL_TRUE : SDL_bool.SDL_FALSE);
+        }
 
         public Window(Image buffer, bool fullscreen = false)
         {
@@ -25,16 +29,22 @@ namespace Engine
 
         public void Spawn()
         {
-            window = SDL_CreateWindow("GLTech 2.1", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, buffer.Width, buffer.Height, 0);
+            window = SDL_CreateWindow(
+                title: "GLTech 2.1",
+                x: SDL_WINDOWPOS_UNDEFINED,
+                y: SDL_WINDOWPOS_UNDEFINED,
+                w: buffer.Width,
+                h: buffer.Height,
+                flags: 0
+            );
             SDL_GetWindowSize(window, out windowSize.width, out windowSize.height);
             renderer = SDL_CreateRenderer(window, -1, SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC);
             texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB888, (int)SDL_TextureAccess.SDL_TEXTUREACCESS_STATIC, buffer.Width, buffer.Height);
-            
+
             if (fullscreen)
             {
                 SDL_SetWindowFullscreen(window, (int)(SDL_WindowFlags.SDL_WINDOW_FULLSCREEN));
             }
-            SDL_SetRelativeMouseMode(SDL_bool.SDL_TRUE);
         }
 
         public void Update()
@@ -74,9 +84,9 @@ namespace Engine
 
         public void Close()
         {
-            SDL_DestroyTexture(texture);
-            SDL_DestroyRenderer(renderer);
             SDL_DestroyWindow(window);
+            SDL_DestroyRenderer(renderer);
+            SDL_DestroyTexture(texture);
         }
 
         public event Action<ScanCode> OnKeyDown;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.CompilerServices;
@@ -18,12 +19,13 @@ namespace Engine.Imaging
 
         public const int DefaultBytesPerPixel = 4;
         public const PixelFormat DefaultPixelFormat = PixelFormat.Format32bppArgb;
+        internal static int count = 0;
 
         readonly IntPtr buffer;
         readonly int width;
         readonly int height;
-        readonly internal float flt_width;  // Low level optimization
-        readonly internal float flt_height;
+        readonly internal float widthf;
+        readonly internal float heightf;
 
         public IntPtr Buffer => buffer;
         public int Height => height;
@@ -32,13 +34,14 @@ namespace Engine.Imaging
 
         public Image(int width, int height)
         {
+            count++;
             if (width <= 0 || height <= 0)
                 throw new ArgumentOutOfRangeException("width/height");
 
-            this.flt_width = this.width = width;
-            this.flt_height = this.height = height;
+            widthf = this.width = width;
+            heightf = this.height = height;
 
-            this.buffer = Marshal.AllocHGlobal(width * height * DefaultBytesPerPixel);
+            buffer = Marshal.AllocHGlobal(width * height * DefaultBytesPerPixel);
         }
 
         public Image(Bitmap source) : this (source.Width, source.Height)
@@ -55,6 +58,13 @@ namespace Engine.Imaging
                 destinationSizeInBytes: MemorySize);
 
             src32.UnlockBits(lockdata);
+        }
+
+        public static Image FromColor(Color color)
+        {
+            Image source = new(1, 1);
+            source[0, 0] = color;
+            return source;
         }
 
         public static void BufferCopy(Image source, Image destination)
@@ -118,6 +128,7 @@ namespace Engine.Imaging
 
         public void Dispose()
         {
+            count--;
             Marshal.FreeHGlobal(Buffer);
         }
 
@@ -128,21 +139,8 @@ namespace Engine.Imaging
                 data.Height,
                 DefaultBytesPerPixel * data.Width,
                 DefaultPixelFormat,
-                data.Buffer);
-        }
-
-        public static bool operator ==(Image left, Image right)
-        {
-            if (left.buffer != right.buffer || left.width != right.width || left.height != right.height)
-                return false;
-            return true;
-        }
-        
-        public static bool operator !=(Image left, Image right)
-        {
-            if (left.buffer != right.buffer || left.width != right.width || left.height != right.height)
-                return true;
-            return false;
+                data.Buffer
+            );
         }
     }
 }

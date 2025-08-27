@@ -44,16 +44,19 @@ namespace Engine
             buffer = this.buffer;
             Fullscreen = fullscreen;
 
+            SDL_WindowFlags flags = SDL_WindowFlags.SDL_WINDOW_VULKAN;
+            if (fullscreen) flags |= SDL_WindowFlags.SDL_WINDOW_FULLSCREEN;
+
             window = SDL_CreateWindow(
                 title,
                 x: SDL_WINDOWPOS_CENTERED,
                 y: SDL_WINDOWPOS_CENTERED,
                 w,
                 h,
-                flags: fullscreen ? SDL_WindowFlags.SDL_WINDOW_FULLSCREEN : 0
+                flags
             );
 
-            renderer = SDL_CreateRenderer(window, -1, SDL_RendererFlags.SDL_RENDERER_TARGETTEXTURE);
+            renderer = SDL_CreateRenderer(window, -1, SDL_RendererFlags.SDL_RENDERER_ACCELERATED);
 
             texture = SDL_CreateTexture(
                 renderer,
@@ -103,6 +106,7 @@ namespace Engine
             SDL_DestroyTexture(texture);
             SDL_DestroyRenderer(renderer);
             SDL_DestroyWindow(window);
+            buffer.Dispose();
         }
 
         internal event Action<ScanCode>? OnKeyDown;

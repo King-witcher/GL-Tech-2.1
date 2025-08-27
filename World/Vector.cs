@@ -7,8 +7,8 @@ namespace Engine
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct Vector : IEquatable<Vector>
     {
-        private const float TORAD = (float)(Math.PI / 180.0);
-        private const float TODEGREE = (float)(180.0 / Math.PI);
+        private const float TORAD = MathF.PI / 180f;
+        private const float TODEGREE = 180f / MathF.PI;
 
         internal readonly float x;
         internal readonly float y;
@@ -23,8 +23,8 @@ namespace Engine
 
         public Vector(float angle) // Not optimized by fast sin and fast cos
         {
-            x = (float)Math.Sin(angle * TORAD);
-            y = (float)Math.Cos(angle * TORAD);
+            x = MathF.Sin(angle * TORAD);
+            y = MathF.Cos(angle * TORAD);
         }
 
         public static Vector FromAngle(float angle, float module)

@@ -31,14 +31,14 @@ namespace Engine.Demos.Wolfenstein
             this.checkpoints = checkpoints;
         }
 
-        void Start()
+        public void Start()
         {
             Entity.WorldPosition = checkpoints[0];
             Entity? highscore = Scene.FindByname("highscore");
             trajectoryRecorder = highscore?.GetScript<TrajectoryRecorder>();
         }
 
-        void OnFrame()
+        public void OnFrame()
         {
             float distance = (Entity.WorldPosition - Scene.Camera.WorldPosition).Module;
             bool colliding = distance < Radius;
@@ -85,6 +85,7 @@ namespace Engine.Demos.Wolfenstein
         Image lula_buffer = new(Resources.lula);
         Image pt_buffer = new(Resources.pt);
         Image bolsonaro_buffer = new(Resources.bolsonaro);
+        Image highscore = Image.FromColor(Color.Green);
 
         protected override void Delete()
         {
@@ -94,6 +95,7 @@ namespace Engine.Demos.Wolfenstein
             lula_buffer.Dispose();
             pt_buffer.Dispose();
             bolsonaro_buffer.Dispose();
+            highscore.Dispose();
         }
 
         public Map()
@@ -254,11 +256,12 @@ namespace Engine.Demos.Wolfenstein
                     {
                         if (dict.TryGetValue(color, out Texture texture))
                             return texture;
-                        else return Texture.NullTexture;
+                        return Texture.NullTexture;
                     },
                     textureFilling: BlockMap.TextureFilling.Side,
                     optimize: true,
-                    colliders: true);
+                    colliders: true
+                );
                 Add(blockMap);
             }
 

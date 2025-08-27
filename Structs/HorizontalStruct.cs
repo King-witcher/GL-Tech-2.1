@@ -92,9 +92,11 @@ namespace Engine.Structs
         {
             public HorizontalStruct* data;
             public Node* next;
+            internal static int count;
 
             public static Node* Create(HorizontalStruct* sfloor)
             {
+                count++;
                 Node* result = (Node*)Marshal.AllocHGlobal(sizeof(Node));
                 result->data = sfloor;
                 return result;
@@ -102,6 +104,7 @@ namespace Engine.Structs
 
             public static void Delete(Node* node)
             {
+                count--;
                 Marshal.FreeHGlobal((IntPtr) node);
             }
         }
@@ -114,11 +117,12 @@ namespace Engine.Structs
     {
         internal Vector tl;
         internal Vector br;
-
         public Texture texture;
+        internal static int count;
 
         internal static HorizontalStruct* Create(Vector topLeft, Vector bottomRight, Texture texture)
         {
+            count++;
             HorizontalStruct* result = (HorizontalStruct*)Marshal.AllocHGlobal(sizeof(HorizontalStruct));
             result->tl = topLeft;
             result->br = bottomRight;
@@ -128,10 +132,10 @@ namespace Engine.Structs
 
         internal bool Cull(Segment segment)
         {
-            Vector center = (tl + br) / 2f;
-            float radius = (tl - br).Module / 2f;
+            Vector center = (tl + br) * 0.5f;
+            float radius = (tl - br).Module * 0.5f;
 
-            float distance = Math.Abs((segment.start.y - center.y) * segment.direction.x - (segment.start.x - center.x) * segment.direction.y) / segment.direction.Module;
+            float distance = MathF.Abs((segment.start.y - center.y) * segment.direction.x - (segment.start.x - center.x) * segment.direction.y) / segment.direction.Module;
 
             return distance < radius;
         }

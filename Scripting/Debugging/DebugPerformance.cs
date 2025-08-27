@@ -17,7 +17,7 @@ namespace Engine.Scripting.Debugging
         public bool DebugWindowTime { get; set; } = true;
         public float Interval { get; set; } = 4f;
 
-        void OnFrame()
+        public void OnFrame()
         {
             frameCount++;
             totalFrameTime += Frame.DeltaTime;
@@ -28,12 +28,12 @@ namespace Engine.Scripting.Debugging
             if (totalFrameTime < Interval)
                 return;
 
-            double frameTime = Math.Round(1000.0 * totalFrameTime / frameCount, 2);
+            float frameTime = MathF.Round(1000f * totalFrameTime / frameCount, 2);
             double renderTime = Math.Round(1000.0 * totalRenderTime / frameCount, 2);
             double scriptTime = Math.Round(1000.0 * totalScriptTime / frameCount, 2);
             double windowTime = Math.Round(1000.0 * totalWindowTime / frameCount, 2);
 
-            double frameRate = Math.Round(frameCount / totalFrameTime, 1);
+            float frameRate = MathF.Round(frameCount / totalFrameTime, 1);
             double renderRate = Math.Round(frameCount / totalRenderTime, 1);
             double scriptRate = Math.Round(frameCount / totalScriptTime, 1);
             double windowRate = Math.Round(frameCount / totalWindowTime, 1);

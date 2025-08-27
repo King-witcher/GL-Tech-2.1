@@ -8,6 +8,7 @@ namespace Engine.Structs
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct RenderCache : IDisposable
     {
+        internal static int count;
         // Height that a column at 1 unit of distance from the spectator should be drawn on the screen.
         internal readonly float colHeight1;
         internal readonly float hfov;
@@ -19,7 +20,7 @@ namespace Engine.Structs
         /// </summary>
         internal readonly float step0;
 
-        internal RenderCache(int width, int height, float hfov = 90f)
+        private RenderCache(int width, int height, float hfov)
         {
             const float TORAD = MathF.PI / 180f;
 
@@ -43,16 +44,18 @@ namespace Engine.Structs
             }
         }
 
-        internal static RenderCache* Create(int width, int height, float FOV = 90f)
+        internal static RenderCache* Create(int width, int height, float hfov)
         {
+            count++;
             RenderCache* result = (RenderCache*)Marshal.AllocHGlobal(sizeof(RenderCache));
-            *result = new(width, height, FOV);
+            *result = new(width, height, hfov);
             return result;
         }
 
         // Mem leak porque nao ta deletando todos os buffers alocados
         internal static void Delete(RenderCache* cache)
         {
+            count--;
             cache->Dispose();
             Marshal.FreeHGlobal((IntPtr)cache);
         }

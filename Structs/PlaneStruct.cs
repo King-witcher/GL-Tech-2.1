@@ -131,9 +131,11 @@ namespace Engine.Structs
         {
             public PlaneStruct* data;
             public Node* next;
+            internal static int count;
 
             public static Node* Create(PlaneStruct* plane)
             {
+                count++;
                 Node* result = (Node*)Marshal.AllocHGlobal(sizeof(Node));
                 result->data = plane;
                 return result;
@@ -141,6 +143,7 @@ namespace Engine.Structs
 
             public static void Delete(Node* node)
             {
+                count--;
                 Marshal.FreeHGlobal((IntPtr)node);
             }
         }
@@ -154,9 +157,11 @@ namespace Engine.Structs
         internal Segment segment;
         internal Texture texture;               // Yes, by value.
         internal PlaneStruct* list_next;    // Planes are stored in scenes a linked list.
+        internal static int count;
 
         internal static PlaneStruct* Create(Vector start, Vector end, Texture texture)
         {
+            count++;
             PlaneStruct* result = (PlaneStruct*)Marshal.AllocHGlobal(sizeof(PlaneStruct));
             result->texture = texture;
             result->segment = new(start, end - start);
@@ -166,6 +171,7 @@ namespace Engine.Structs
 
         internal static PlaneStruct* Create(Vector start, float angle, float length, Texture texture)
         {
+            count++;
             PlaneStruct* result = (PlaneStruct*)Marshal.AllocHGlobal(sizeof(PlaneStruct));
             Vector direction = new Vector(angle) * length;
             result->texture = texture;
@@ -182,6 +188,7 @@ namespace Engine.Structs
 
         internal static void Delete(PlaneStruct* item)
         {
+            count--;
             Marshal.FreeHGlobal((IntPtr)item);
         }
     }

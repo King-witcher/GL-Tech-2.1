@@ -29,8 +29,7 @@ namespace Engine.Imaging
 
         public static Texture FromColor(Color color, out Image source)
         {
-            source = new(1, 1);
-            source[0, 0] = color;
+            source = Image.FromColor(color);
             return new(source);
         }
 
@@ -38,41 +37,15 @@ namespace Engine.Imaging
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
         internal unsafe uint MapPixel(float hratio, float vratio)
         {
-#if DEBUG
-            if (hratio < 0 || vratio < 0)
-                logger.Warn($"Ratios ({hratio}, {vratio}) are out of range.");
-#endif
             unchecked
             {
-                int x = (int)(source.flt_width * (hrepeat * hratio + hoffset)) % source.Width;
-                int y = (int)(source.flt_height * (vrepeat * vratio + voffset)) % source.Height;
+                int x = (int)(source.widthf * (hrepeat * hratio + hoffset)) % source.Width;
+                int y = (int)(source.heightf * (vrepeat * vratio + voffset)) % source.Height;
 
                 uint color = ((uint*)source.Buffer)[source.Width * y + x];
 
                 return color;
             }
-        }
-
-        public static bool operator ==(Texture left, Texture right)
-        {
-            if (left.source != right.source ||
-                left.hrepeat != right.hrepeat ||
-                left.hoffset != right.hoffset ||
-                left.voffset != right.voffset ||
-                left.vrepeat != right.vrepeat)
-                return false;
-            return true;
-        }
-
-        public static bool operator !=(Texture left, Texture right)
-        {
-            if (left.source != right.source ||
-                left.hoffset != right.hoffset ||
-                left.hrepeat != right.hrepeat ||
-                left.voffset != right.voffset ||
-                left.vrepeat != right.vrepeat)
-                return true;
-            return false;
         }
     }
 }

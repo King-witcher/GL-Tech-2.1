@@ -1,9 +1,7 @@
 ﻿
+using Engine.Structs;
 using Engine.World;
-using SDL2;
 using System;
-using Windows.Storage.Streams;
-using static SDL2.SDL;
 
 namespace Engine.Demos
 {
@@ -11,6 +9,7 @@ namespace Engine.Demos
     {
         static void Main()
         {
+            Logger logger = new Logger("Program");
             Debug.OpenConsole();
 
             // Renderer settings
@@ -22,13 +21,22 @@ namespace Engine.Demos
 
             while (true)
             {
+#if false
+                logger.Log($"Cameras count: {CameraStruct.count}");
+                logger.Log($"Planes count: {PlaneStruct.count}");
+                logger.Log($"Colliders count: {ColliderStruct.count}");
+                logger.Log($"Horizontals count: {HorizontalStruct.count}");
+                logger.Log($"HorizontalNodes count: {HorizontalList.Node.count}");
+#endif
+
                 Console.Write(
                     "Choose a map to test:\n" +
-                    "1 - Floor Stress Test\n" +
-                    "2 - Rotating Pillars\n" +
-                    "3 - Wolfenstein 3D\n" +
-                    "4 - Simple BlockMap\n" +
-                    "5 - Super BlockMap\n" +
+                    "1 - Empty Scene\n" +
+                    "2 - Floor Stress Test\n" +
+                    "3 - Rotating Pillars\n" +
+                    "4 - Wolfenstein 3D\n" +
+                    "5 - Simple BlockMap\n" +
+                    "6 - Super BlockMap\n" +
                     "0 - Exit\n]");
                 var option = Console.ReadKey();
                 Console.WriteLine();
@@ -37,11 +45,12 @@ namespace Engine.Demos
 
                 using Scene? scene = option.KeyChar switch
                 {
-                    '1' => new FloorStressTest.Map(),
-                    '2' => new RotatingPillars.Map(),
-                    '3' => new Wolfenstein.Map(),
-                    '4' => new SampleBlockMap.Map(),
-                    '5' => new SuperBlockMap.Map(),
+                    '1' => new Scene(),
+                    '2' => new FloorStressTest.Map(),
+                    '3' => new RotatingPillars.Map(),
+                    '4' => new Wolfenstein.Map(),
+                    '5' => new SampleBlockMap.Map(),
+                    '6' => new SuperBlockMap.Map(),
                     _ => null
                 };
 

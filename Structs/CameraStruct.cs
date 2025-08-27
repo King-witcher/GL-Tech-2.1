@@ -11,9 +11,11 @@ namespace Engine.Structs
         internal Vector position;
         internal float rotation; //MUST be 0 <= x < 360
         internal float z;
+        internal static int count;
 
         static internal CameraStruct* Create(Vector position, float rotation) // a little bit optimizable
         {
+            count++;
             CameraStruct* result = (CameraStruct*)Marshal.AllocHGlobal(sizeof(CameraStruct));
             result->position = position;
             result->rotation = rotation;
@@ -23,6 +25,7 @@ namespace Engine.Structs
 
         static internal void Delete(CameraStruct* item)
         {
+            count--;
             Marshal.FreeHGlobal((IntPtr)item);
         }
     }

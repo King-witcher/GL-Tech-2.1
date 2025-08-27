@@ -13,9 +13,11 @@ namespace Engine.Structs
         internal Vector start;
         internal Vector direction;
         internal ColliderStruct* list_next;
+        static internal int count;
 
         internal static ColliderStruct* Create(Vector start, Vector end)
         {
+            count++;
             ColliderStruct* result = (ColliderStruct*)Marshal.AllocHGlobal(sizeof(ColliderStruct));
             result->start = start;
             result->direction = end - start;
@@ -60,6 +62,7 @@ namespace Engine.Structs
 
         internal static void Delete(ColliderStruct* item)
         {
+            count--;
             Marshal.FreeHGlobal((IntPtr)item);
         }
     }

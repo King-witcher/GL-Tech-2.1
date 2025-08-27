@@ -190,10 +190,7 @@ public static partial class Renderer
         window.Destroy();
 
         // Clears the Keyboard
-        Input.Keyboard.Clear();
-
-        // Finally, dispose everythihng.
-        buffer.Dispose();
+        Keyboard.Clear();
 
         currentScene = null;
         IsRunning = false;
@@ -252,7 +249,7 @@ public static partial class Renderer
         {
             unchecked
             {
-                float hit_dist = scene->camera->z / ((line - screen.flt_height * 0.5f) * cache->step0);
+                float hit_dist = scene->camera->z / ((line - screen.heightf * 0.5f) * cache->step0);
                 float step = cache->step0 * hit_dist;
 
                 Vector camera_dir = new(scene->camera->rotation);
@@ -282,7 +279,7 @@ public static partial class Renderer
         {
             unchecked
             {
-                float hit_dist = (1 - scene->camera->z) / ((screen.flt_height * 0.5f - line) * cache->step0);
+                float hit_dist = (1 - scene->camera->z) / ((screen.heightf * 0.5f - line) * cache->step0);
                 float step = cache->step0 * hit_dist;
 
                 Vector camera_dir = new(scene->camera->rotation);
@@ -330,12 +327,12 @@ public static partial class Renderer
                 float col_h = (cache->colHeight1 / (ray_cos * col_dist)); // Wall column size in pixels
 
                 // Where the column starts and ends relative to the screen.
-                float col_start = (screen.flt_height - 1f - col_h) * 0.5f + col_h * (scene->camera->z - 0.5f);
-                float col_end = (screen.flt_height - 1f + col_h) * 0.5f + col_h * (scene->camera->z - 0.5f);
+                float col_start = (screen.heightf - 1f - col_h) * 0.5f + col_h * (scene->camera->z - 0.5f);
+                float col_end = (screen.heightf - 1f + col_h) * 0.5f + col_h * (scene->camera->z - 0.5f);
 
                 // Wall rendering bounds on the screen...
-                int draw_col_start = screen.Height - (int)(screen.flt_height - col_start);    // Inclusive
-                int draw_col_end = screen.Height - (int)(screen.flt_height - col_end);        // Exclusive
+                int draw_col_start = screen.Height - (int)(screen.heightf - col_start);    // Inclusive
+                int draw_col_end = screen.Height - (int)(screen.heightf - col_end);        // Exclusive
 
                 // Which cannot exceed the full screen bounds.
                 if (draw_col_start < 0)

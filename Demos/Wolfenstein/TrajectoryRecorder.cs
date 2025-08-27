@@ -25,7 +25,6 @@ namespace Engine.Demos.Wolfenstein
 
         public void StartRecording()
         {
-            Renderer.FullScreen = false;
             recording = true;
             currentRun.Clear();
             playbackRun = bestRun;

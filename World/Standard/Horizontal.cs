@@ -41,10 +41,10 @@ namespace Engine.World
 
         internal Horizontal(Vector start, Vector end, Texture texture)
         {
-            var bottom = Math.Min(start.y, end.y);
-            var top = Math.Max(start.y, end.y);
-            var left = Math.Min(start.x, end.x);
-            var right = Math.Max(start.x, end.x);
+            var bottom = MathF.Min(start.y, end.y);
+            var top = MathF.Max(start.y, end.y);
+            var left = MathF.Min(start.x, end.x);
+            var right = MathF.Max(start.x, end.x);
 
             unmanaged = Struct.Create((left, top), (right, bottom), texture);
         }

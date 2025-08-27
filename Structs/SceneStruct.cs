@@ -18,6 +18,7 @@ namespace Engine.Structs
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct SceneStruct
     {
+        internal static int count;
         internal SpriteStruct* first_sprite; //not implemented
         internal SpriteStruct* last_sprite;
         internal int sprite_count;
@@ -32,6 +33,7 @@ namespace Engine.Structs
 
         internal static SceneStruct* Create()
         {
+            count++;
             SceneStruct* result = (SceneStruct*)Marshal.AllocHGlobal(sizeof(SceneStruct));
             result->first_sprite = null;
             result->plane_list = new();
@@ -54,6 +56,7 @@ namespace Engine.Structs
             // Marshal.FreeHGlobal((IntPtr)item->sprities);
             // Marshal.FreeHGlobal((IntPtr)item->planes);
             Marshal.FreeHGlobal((IntPtr)item);
+            count--;
         }
 
         public void Add(Entity entity)

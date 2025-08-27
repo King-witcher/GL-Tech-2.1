@@ -27,7 +27,7 @@ namespace Engine.GUI
             using Brush brush = new SolidBrush(System.Drawing.Color.FromArgb(Color.R, Color.G, Color.B));
             using Font font = new Font("Consolas", image.Height * FontSize / 1.5612f);
 
-            RectangleF rectf = new RectangleF(WorldPosition.X * image.Width, WorldPosition.Y * image.Height, image.flt_width, image.flt_height);
+            RectangleF rectf = new RectangleF(WorldPosition.X * image.Width, WorldPosition.Y * image.Height, image.widthf, image.heightf);
             
             g.DrawString(Value, font, brush, rectf);
 

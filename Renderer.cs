@@ -19,55 +19,51 @@ public static partial class Renderer
     static Image buffer;
     static Scene currentScene = null;
     static Action ScheduledActions = null;
+    static Window? window;
     private static Logger logger = new("Renderer");
     public static bool ParallelRendering { get; set; } = true;
 
     public static Scene ActiveScene => currentScene;
 
-    private static float minframetime = 2;
+    private static float minframetime = 1;
     public static int MaxFps
     {
         get => (int)(1000f / minframetime);
         set
         {
-            Util.Clip(ref value, 1, 500);
+            Util.Clip(ref value, 1, 1000);
             minframetime = 1000f / value;
         }
     }
 
-    static bool doubleBuffer = true;
-    public static bool SynchronizeThreads
-    {
-        get => doubleBuffer;
-        set => ChangeIfNotRunning("DoubleBuffer", ref doubleBuffer, value);
-    }
-
-    private static int customWidth = 960;
+    private static int initialWidth = 960;
     public static int CustomWidth
     {
-        get => customWidth;
-        set => ChangeIfNotRunning("CustomWidth", ref customWidth, value);
+        get => initialWidth;
+        set => ChangeIfNotRunning("CustomWidth", ref initialWidth, value);
     }
 
-    private static int customHeight = 520;
+    private static int customHeight = 540;
     public static int CustomHeight
     {
         get => customHeight;
         set => ChangeIfNotRunning("CustomHeight", ref customHeight, value);
     }
 
-    static bool fullScreen;
+    static bool initialFullscreen;
     public static bool FullScreen
     {
-        get => fullScreen;
+        get
+        {
+            if (window != null)
+                return window.Fullscreen;
+            return initialFullscreen;
+        }
         set
         {
-            ChangeIfNotRunning("FullScreen", ref fullScreen, value);
-            if (fullScreen == true)
-            {
-                CustomWidth = 1920; // Gambiarra
-                customHeight = 1080;
-            }
+            initialFullscreen = value;
+            if (window != null)
+                window.Fullscreen = value;
         }
     }
 
@@ -141,7 +137,7 @@ public static partial class Renderer
 
         Stopwatch sw = new Stopwatch();
 
-        Window window = new(
+        window = new(
             title: "GL Tech 2.1",
             w: CustomWidth,
             h: customHeight,

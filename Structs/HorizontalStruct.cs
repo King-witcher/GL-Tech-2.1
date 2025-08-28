@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-
+using System.Threading;
 using Engine.Imaging;
 
 namespace Engine.Structs
@@ -17,7 +17,7 @@ namespace Engine.Structs
             first = null;
         }
 
-        public void Add(Node* node)
+        private void Add(Node* node)
         {
             node->next = first;
             first = node;
@@ -29,7 +29,7 @@ namespace Engine.Structs
             Add(node);
         }
 
-        void Raise(Node* prev)
+        private void Raise(Node* prev)
         {
             var cur = prev->next;
             prev->next = cur->next;
@@ -96,7 +96,7 @@ namespace Engine.Structs
 
             public static Node* Create(HorizontalStruct* sfloor)
             {
-                count++;
+                Interlocked.Increment(ref count);
                 Node* result = (Node*)Marshal.AllocHGlobal(sizeof(Node));
                 result->data = sfloor;
                 return result;
@@ -104,7 +104,7 @@ namespace Engine.Structs
 
             public static void Delete(Node* node)
             {
-                count--;
+                Interlocked.Decrement(ref count);
                 Marshal.FreeHGlobal((IntPtr) node);
             }
         }

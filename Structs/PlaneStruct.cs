@@ -3,7 +3,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 using Engine.Imaging;
-using Engine.World;
 
 namespace Engine.Structs
 {

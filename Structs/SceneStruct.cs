@@ -16,7 +16,7 @@ namespace Engine.Structs
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct SceneStruct
+    internal unsafe struct SceneStruct : IDisposable
     {
         internal static int count;
         internal SpriteStruct* first_sprite; //not implemented
@@ -50,11 +50,19 @@ namespace Engine.Structs
             return result;
         }
 
+        public void Dispose()
+        {
+            plane_list.Dispose();
+            floor_list.Dispose();
+            ceiling_list.Dispose();
+        }
+
         // TODO Must delete plane list!
         public static void Delete(SceneStruct* item)
         {
             // Marshal.FreeHGlobal((IntPtr)item->sprities);
             // Marshal.FreeHGlobal((IntPtr)item->planes);
+            item->Dispose();
             Marshal.FreeHGlobal((IntPtr)item);
             count--;
         }
@@ -106,24 +114,6 @@ namespace Engine.Structs
             sprite_count++;
         }
 
-        [Obsolete]
-        private void Remove(SpriteStruct* sprite)
-        {
-            fixed (SpriteStruct** csharpisbad = &first_sprite)
-            {
-                SpriteStruct** pptr = csharpisbad;
-
-                while (*pptr != sprite)
-                    pptr = &(*pptr)->list_next;
-
-                *pptr = sprite->list_next;
-                sprite_count--;
-
-                if (*pptr == null)
-                    last_sprite = null;
-            }
-        }
-
         private void Add(ColliderStruct* collider)
         {
             if (first_collider == null)    // Has no elements
@@ -134,24 +124,6 @@ namespace Engine.Structs
                 last_collider = collider;
             }
             collider_count++;
-        }
-
-        [Obsolete]
-        private void Remove(ColliderStruct* collider)
-        {
-            fixed (ColliderStruct** csharpisbad = &first_collider)
-            {
-                ColliderStruct** pptr = csharpisbad;
-
-                while (*pptr != collider)
-                    pptr = &(*pptr)->list_next;
-
-                *pptr = collider->list_next;
-                collider_count--;
-
-                if (*pptr == null)
-                    last_collider = null;
-            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

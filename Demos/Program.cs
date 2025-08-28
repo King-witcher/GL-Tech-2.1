@@ -21,7 +21,7 @@ namespace Engine.Demos
 
             while (true)
             {
-#if false
+#if true
                 logger.Log($"Cameras count: {CameraStruct.count}");
                 logger.Log($"Planes count: {PlaneStruct.count}");
                 logger.Log($"Colliders count: {ColliderStruct.count}");

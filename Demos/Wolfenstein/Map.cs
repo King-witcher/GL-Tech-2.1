@@ -295,20 +295,22 @@ namespace Engine.Demos.Wolfenstein
 
             // Flag
             {
-                var tex = new Texture(
+                Texture tex = new(
                     source: textures,
                     hrepeat: 1 / 6f,
                     vrepeat: 1 / 19f,
                     hoffset: 0 / 6f,
-                    voffset: 6 / 19f);
+                    voffset: 6 / 19f
+                );
 
-                var polygon = new RegularPolygon(
+                RegularPolygon polygon = new(
                     position: Vector.Zero, // To be defined by flag behavior
                     radius: 0.2f,
                     vertices: 3,
-                    texture: tex);
+                    texture: tex
+                );
 
-                var flagBehavior = new FlagBehavior(new Vector[] {
+                FlagBehavior flagBehavior = new([
                     (57.5f, 31.5f),
                     (50.5f, 34.5f),
                     (38.5f, 34.5f),
@@ -333,7 +335,7 @@ namespace Engine.Demos.Wolfenstein
                     (38.5f, 34.5f),
                     (57.5f, 33.5f),
                     (57.5f, 28.5f),
-                });
+                ]);
                 var rotate = new Rotate(360f);
                 polygon.AddScripts(flagBehavior, rotate);
                 Add(polygon);

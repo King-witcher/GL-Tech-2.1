@@ -264,7 +264,7 @@ public static partial class Renderer
                     if (col_end_table[col] > line) continue;
 
                     Vector floor_hit = left_bound_hit + col * step_vec;
-                    HorizontalStruct* floor = list.Locate(floor_hit);
+                    HorizontalStruct* floor = list.FindAndRaise(floor_hit);
 
                     if (floor != null)
                         screen[col, line] = floor->MapTexture(floor_hit);
@@ -295,7 +295,7 @@ public static partial class Renderer
                     if (col_start_table[col] <= line) continue;
 
                     Vector hit = left_bound_hit + step_vec * col;
-                    HorizontalStruct* ceiling = list.Locate(hit);
+                    HorizontalStruct* ceiling = list.FindAndRaise(hit);
 
                     if (ceiling != null)
                         screen[col, line] = ceiling->MapTexture(hit);

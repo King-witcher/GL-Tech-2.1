@@ -4,6 +4,7 @@ using Engine.World;
 using Engine.World.Composed;
 using Engine.Scripting.Prefab;
 using Engine.Scripting.Physics;
+using Engine.Scripting.Debugging;
 
 namespace Engine.Demos.FloorStressTest
 {
@@ -50,9 +51,7 @@ namespace Engine.Demos.FloorStressTest
 
             // Camera
             {
-                //camera.AddScript<DebugPerformanceStats>();
-                //camera.AddScript<DebugSceneInfo>();
-                //camera.AddScript<DebugComponents>();
+                Camera.AddScript<DebugPerformance>();
                 Camera.WorldPosition = (0.5f, 0.5f);
                 Camera.WorldDirection = (1f, 1f);
 

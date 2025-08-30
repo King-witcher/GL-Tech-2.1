@@ -16,6 +16,7 @@ namespace Engine
         static Window()
         {
             SDL_Init(SDL_INIT_VIDEO);
+            SDL_InitSubSystem(SDL_INIT_VIDEO);
         }
 
         public static bool CaptureMouse
@@ -49,8 +50,8 @@ namespace Engine
 
             window = SDL_CreateWindow(
                 title,
-                x: SDL_WINDOWPOS_CENTERED,
-                y: SDL_WINDOWPOS_CENTERED,
+                x: SDL_WINDOWPOS_UNDEFINED,
+                y: SDL_WINDOWPOS_UNDEFINED,
                 w,
                 h,
                 flags

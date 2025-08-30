@@ -54,7 +54,7 @@ namespace Engine.Structs
             return list;
         }
 
-        public HorizontalStruct* Locate(Vector point)
+        public HorizontalStruct* FindAndRaise(Vector point)
         {
             Node* prev = null;
             Node* cur = first;

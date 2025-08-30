@@ -21,13 +21,13 @@ namespace Engine.Imaging
         public const PixelFormat DefaultPixelFormat = PixelFormat.Format32bppArgb;
         internal static int count = 0;
 
-        readonly IntPtr buffer;
-        readonly int width;
-        readonly int height;
+        readonly internal nint buffer;
+        readonly internal int width;
+        readonly internal int height;
         readonly internal float widthf;
         readonly internal float heightf;
 
-        public IntPtr Buffer => buffer;
+        public nint Buffer => buffer;
         public int Height => height;
         public int Width => width;
         public long MemorySize => DefaultBytesPerPixel * width * height;

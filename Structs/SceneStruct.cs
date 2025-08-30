@@ -154,7 +154,7 @@ namespace Engine.Structs
 
         internal HorizontalStruct* FloorAt(Vector point)
         {
-            return floor_list.Locate(point);
+            return floor_list.FindAndRaise(point);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -39,10 +39,10 @@ namespace Engine.Imaging
         {
             unchecked
             {
-                int x = (int)(source.widthf * (hrepeat * hratio + hoffset)) % source.Width;
-                int y = (int)(source.heightf * (vrepeat * vratio + voffset)) % source.Height;
+                int x = (int)(source.widthf * (hrepeat * hratio + hoffset)) % source.width;
+                int y = (int)(source.heightf * (vrepeat * vratio + voffset)) % source.height;
 
-                uint color = ((uint*)source.Buffer)[source.Width * y + x];
+                uint color = ((uint*)source.buffer)[source.width * y + x];
 
                 return color;
             }

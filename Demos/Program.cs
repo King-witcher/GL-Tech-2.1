@@ -18,6 +18,7 @@ namespace Engine.Demos
             Renderer.CustomHeight = 1080;
             Renderer.FieldOfView = 110f;
             Renderer.CaptureMouse = true;
+            Renderer.ParallelRendering = true;
 
             while (true)
             {
@@ -37,6 +38,7 @@ namespace Engine.Demos
                     "4 - Wolfenstein 3D\n" +
                     "5 - Simple BlockMap\n" +
                     "6 - Super BlockMap\n" +
+                    "7 - Simple Benchmark\n" +
                     "0 - Exit\n]");
                 var option = Console.ReadKey();
                 Console.WriteLine();
@@ -51,6 +53,7 @@ namespace Engine.Demos
                     '4' => new Wolfenstein.Map(),
                     '5' => new SampleBlockMap.Map(),
                     '6' => new SuperBlockMap.Map(),
+                    '7' => new SimpleBenchmark.Map(),
                     _ => null
                 };
 

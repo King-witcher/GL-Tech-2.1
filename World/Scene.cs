@@ -94,9 +94,9 @@ namespace Engine.World
             #endregion
 
             foreach (Entity node in entity.GetNodes())
-                add(node);
+                add_node(node);
 
-            void add(Entity entity)
+            void add_node(Entity entity)
             {
                 entities.Add(entity);
                 entityNames.Add(entity.Name, entity);   

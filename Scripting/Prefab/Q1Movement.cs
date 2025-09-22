@@ -24,7 +24,7 @@ namespace Engine.Scripting.Prefab
         public float StopSpeed { get; set; } = 1f;
         public float MaxSpeed { get; set; } = 3.2f;
         public float Acceleration { get; set; } = 10f;
-        public float AirAcceleration { get; set; } = 7f;
+        public float AirAcceleration { get; set; } = 10f;
         public float Friction { get; set; } = 6f;
         public float Height { get; set; } = 0.45f;
         public ScanCode StepForward { get; set; } = ScanCode.W;

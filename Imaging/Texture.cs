@@ -42,7 +42,7 @@ namespace Engine.Imaging
                 int x = (int)(source.widthf * (hrepeat * hratio + hoffset)) % source.width;
                 int y = (int)(source.heightf * (vrepeat * vratio + voffset)) % source.height;
 
-                uint color = ((uint*)source.buffer)[source.width * y + x];
+                uint color = source.buffer[source.width * y + x];
 
                 return color;
             }

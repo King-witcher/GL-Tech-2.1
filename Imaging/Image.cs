@@ -21,13 +21,13 @@ namespace Engine.Imaging
         public const PixelFormat DefaultPixelFormat = PixelFormat.Format32bppArgb;
         internal static int count = 0;
 
-        readonly internal nint buffer;
+        readonly internal uint* buffer;
         readonly internal int width;
         readonly internal int height;
         readonly internal float widthf;
         readonly internal float heightf;
 
-        public nint Buffer => buffer;
+        public nint Buffer => (nint) buffer;
         public int Height => height;
         public int Width => width;
         public long MemorySize => DefaultBytesPerPixel * width * height;
@@ -41,7 +41,7 @@ namespace Engine.Imaging
             widthf = this.width = width;
             heightf = this.height = height;
 
-            buffer = Marshal.AllocHGlobal(width * height * DefaultBytesPerPixel);
+            buffer = (uint*) Marshal.AllocHGlobal(width * height * DefaultBytesPerPixel);
         }
 
         public Image(Bitmap source) : this (source.Width, source.Height)

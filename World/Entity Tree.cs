@@ -162,7 +162,7 @@ namespace Engine.World
         }
 
         // Update relative position/normal info based on parent and absolute components.
-        // Must be called when which parent element this element takes as reference point changes.
+        // Must be called when which parent element changes.
         private void UpdateRelative()
         {
             // In case the reference point is the scene origin:

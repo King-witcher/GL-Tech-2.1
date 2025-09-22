@@ -61,7 +61,7 @@ namespace Engine
 
             texture = SDL_CreateTexture(
                 renderer,
-                SDL_PIXELFORMAT_RGB888,
+                SDL_PIXELFORMAT_ARGB8888,
                 (int)SDL_TextureAccess.SDL_TEXTUREACCESS_STATIC,
                 bufw,
                 bufh

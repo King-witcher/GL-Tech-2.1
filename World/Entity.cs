@@ -63,7 +63,7 @@ namespace Engine.World
 
         private protected virtual Vector PositionData { get; set; }
 
-        private protected virtual Vector DirectionData { get; set; }
+        private protected virtual Vector DirectionData { get; set; } = Vector.Forward;
 
         public Scene Scene => scene;
 

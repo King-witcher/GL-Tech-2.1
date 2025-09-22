@@ -6,8 +6,6 @@ namespace Engine.World.Composed
 {
     public partial class BlockMap : Entity
     {
-        private protected override Vector PositionData { get; set; } = Vector.Zero;
-        private protected override Vector DirectionData { get; set; } = Vector.Forward;
 
         private int walls = 0;
 

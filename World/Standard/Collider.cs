@@ -29,6 +29,11 @@ namespace Engine.World
         {
             unmanaged = Struct.Create(start, end);
         }
+        
+        ~Collider()
+        {
+            if (unmanaged != null) Dispose();
+        }
 
         public Collider(Plane visiblePlane)
         {

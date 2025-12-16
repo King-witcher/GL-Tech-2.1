@@ -32,6 +32,11 @@ namespace Engine.World
             unmanaged = Struct.Create(Vector.Zero, 0f);
         }
 
+        ~Camera()
+        {
+            if (unmanaged != null) Dispose();
+        }
+
         public override void Dispose()
         {
             Struct.Delete(unmanaged);

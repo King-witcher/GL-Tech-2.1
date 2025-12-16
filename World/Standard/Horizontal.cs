@@ -49,6 +49,11 @@ namespace Engine.World
             unmanaged = Struct.Create((left, top), (right, bottom), texture);
         }
 
+        ~Horizontal()
+        {
+            if (unmanaged != null) Dispose();
+        }
+
         public override void Dispose()
         {
             //STriFloor.Delete(unmanaged);

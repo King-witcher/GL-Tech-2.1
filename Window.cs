@@ -19,18 +19,6 @@ namespace Engine
             SDL_InitSubSystem(SDL_INIT_VIDEO);
         }
 
-        public static bool CaptureMouse
-        {
-            get => SDL_GetRelativeMouseMode() == SDL_bool.SDL_TRUE;
-            set => SDL_SetRelativeMouseMode(value ? SDL_bool.SDL_TRUE : SDL_bool.SDL_FALSE);
-        }
-
-        public bool Fullscreen
-        {
-            get => (SDL_GetWindowFlags(window) & (uint)SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) != 0;
-            set => SDL_SetWindowFullscreen(window, value ? (uint)SDL_WindowFlags.SDL_WINDOW_FULLSCREEN : 0);
-        }
-
         internal Window(
             string title,
             int w,
@@ -66,6 +54,18 @@ namespace Engine
                 bufw,
                 bufh
             );
+        }
+
+        public static bool CaptureMouse
+        {
+            get => SDL_GetRelativeMouseMode() == SDL_bool.SDL_TRUE;
+            set => SDL_SetRelativeMouseMode(value ? SDL_bool.SDL_TRUE : SDL_bool.SDL_FALSE);
+        }
+
+        public bool Fullscreen
+        {
+            get => (SDL_GetWindowFlags(window) & (uint)SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) != 0;
+            set => SDL_SetWindowFullscreen(window, value ? (uint)SDL_WindowFlags.SDL_WINDOW_FULLSCREEN : 0);
         }
 
         internal void Update()

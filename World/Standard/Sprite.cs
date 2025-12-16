@@ -21,6 +21,11 @@ namespace Engine.World
             unmanaged = Struct.Create(position, material);
         }
 
+        ~Sprite()
+        {
+            if (unmanaged != null) Dispose();
+        }
+
         public override void Dispose()
         {
             Struct.Delete(unmanaged);

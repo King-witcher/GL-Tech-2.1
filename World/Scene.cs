@@ -8,14 +8,6 @@ namespace Engine.World
 {
     public unsafe partial class Scene : IDisposable
     {
-        internal SceneStruct* unmanaged;
-
-        private static Logger logger = new(typeof(Scene).Name);
-        private List<Entity> entities = new List<Entity>();
-        private List<Collider> colliders = new List<Collider>();
-        private Dictionary<string, Entity> entityNames = new Dictionary<string, Entity>();
-        private Camera camera;
-
         public Scene()
         {
             unmanaged = SceneStruct.Create();
@@ -30,6 +22,14 @@ namespace Engine.World
         {
             unmanaged->background = background;
         }
+
+        internal SceneStruct* unmanaged;
+
+        private static Logger logger = new(typeof(Scene).Name);
+        private List<Entity> entities = new List<Entity>();
+        private List<Collider> colliders = new List<Collider>();
+        private Dictionary<string, Entity> entityNames = new Dictionary<string, Entity>();
+        private Camera camera;
 
         internal Action Start { get; private set; }
         internal Action OnFrame { get; private set; }
@@ -145,12 +145,17 @@ namespace Engine.World
             OnFrame = null;
         }
 
+        ~Scene()
+        {
+            if (unmanaged != null) Dispose();
+        }
+
         /// <summary>
         /// Releases unmanaged resources.
         /// </summary>
         protected virtual void Delete()
         {
-
+            // ?
         }
     }
 }

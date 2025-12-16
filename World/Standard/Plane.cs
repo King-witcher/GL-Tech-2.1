@@ -55,6 +55,11 @@ namespace Engine.World
             unmanaged = Struct.Create(start, end, texture);
         }
 
+        ~Plane()
+        {
+            if (unmanaged != null) Dispose();
+        }
+
         public override void Dispose()
         {
             Struct.Delete(unmanaged);

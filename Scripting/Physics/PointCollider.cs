@@ -7,9 +7,9 @@ namespace Engine.Scripting.Physics
     {
         const float MIN_DIST = 0.01f;
 
-        private Vector lastTruePosition;
+        private Vector truePosition;
         private Vector predictedPosition;
-        private Vector smoothPosition;
+        private Vector error = Vector.Zero;
 
         public bool HandleCollisions { get; set; } = true;
         public Vector StartPosition { get; set; } = Vector.Zero;
@@ -36,9 +36,8 @@ namespace Engine.Scripting.Physics
 
         void OnStart()
         {
-            lastTruePosition = StartPosition;
+            truePosition = StartPosition;
             predictedPosition = StartPosition;
-            smoothPosition = StartPosition;
         }
 
         // FIXME
@@ -46,16 +45,18 @@ namespace Engine.Scripting.Physics
         {
             if (HandleCollisions)
                 ClipCollisions();
-            lastTruePosition += Velocity * Time.TimeStep;
-            predictedPosition = lastTruePosition;
+            truePosition += Velocity * Time.TimeStep;
+            error = predictedPosition - truePosition;
         }
 
         void OnFrame()
         {
-            const float SMOOTH_FACTOR = 0.2f;
+            const float FIXED_TIMESTEP = 1.0f / Time.FIXED_TICKS_PER_SECOND;
             predictedPosition += Velocity * Time.TimeStep;
-            smoothPosition = predictedPosition * SMOOTH_FACTOR + smoothPosition * (1 - SMOOTH_FACTOR);
-            Entity.WorldPosition = smoothPosition;
+            var correction = error * Time.TimeStep / FIXED_TIMESTEP;
+            predictedPosition -= correction;
+            error -= correction;
+            Entity.WorldPosition = predictedPosition;
         }
 
         private void ClipCollisions()
@@ -66,7 +67,7 @@ namespace Engine.Scripting.Physics
             float deltaS = Speed * Time.TimeStep;
 
             Scene.CastRay(
-                new Segment(lastTruePosition, Velocity),
+                new Segment(truePosition, Velocity),
                 out float c_dist,
                 out Vector c_normal
             );
@@ -82,7 +83,7 @@ namespace Engine.Scripting.Physics
                 deltaS = Speed * Time.TimeStep;
 
                 Scene.CastRay(
-                    new Segment(lastTruePosition, Velocity),
+                    new Segment(truePosition, Velocity),
                     out c_dist,
                     out c_normal
                 );

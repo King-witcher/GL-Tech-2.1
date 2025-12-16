@@ -184,8 +184,6 @@ public static partial class Renderer
             Script.Time.TimeStep = (float)frameTime / Stopwatch.Frequency;
             Script.Time.FixedRemainder = (float)accumulator / FIXED_TIMESTEP;
             currentScene.OnFrame?.Invoke();
-
-            controlStopwatch.Restart();
         }
 
         window.Destroy();

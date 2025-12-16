@@ -40,7 +40,6 @@ namespace Engine.Scripting.Physics
             predictedPosition = StartPosition;
         }
 
-        // FIXME
         void OnFixedTick()
         {
             if (HandleCollisions)

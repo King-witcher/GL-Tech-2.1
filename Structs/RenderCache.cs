@@ -6,63 +6,30 @@ namespace Engine.Structs
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct RenderCache : IDisposable
+    internal unsafe struct RenderCache
     {
-        internal static int count;
         // Height that a column at 1 unit of distance from the spectator should be drawn on the screen.
         internal readonly float colHeight1;
-        internal readonly float hfov;
-        internal readonly float* angles;
-        internal readonly float* cosines;
-
-        /// <summary>
-        ///  How distant the collision from a pixel is from it's direct neighbors in a perperndicular plane at 1u.
-        /// </summary>
         internal readonly float step0;
 
-        private RenderCache(int width, int height, float hfov)
+        private RenderCache(float hfov_deg, float width)
         {
-            const float TORAD = MathF.PI / 180f;
-
-            this.hfov = hfov;
-
-            float tan = MathF.Tan(TORAD * hfov * 0.5f);
-            float per_pixel_step = 2f * tan / width;
-            step0 = per_pixel_step;
-
+            const float DEG_TO_RAD = MathF.PI / 180f;
+            var tan = MathF.Tan(DEG_TO_RAD * hfov_deg * .5f);
+            step0 = 2f * tan / width;
             colHeight1 = width / (2f * tan);
-
-            angles = (float*)Marshal.AllocHGlobal(sizeof(float) * width);
-            cosines = (float*)Marshal.AllocHGlobal(sizeof(float) * width);
-            float leftPixel = tan - per_pixel_step * 0.5f;
-            for (int i = 0; i < width; i++)
-            {
-                float angle = MathF.Atan(i * per_pixel_step - leftPixel) / TORAD;
-                angles[i] = angle;
-                cosines[i] = MathF.Cos(TORAD * angle);
-            }
         }
 
-        internal static RenderCache* Create(int width, int height, float hfov)
+        internal static RenderCache* Create(float hfov, float width)
         {
-            count++;
             RenderCache* result = (RenderCache*)Marshal.AllocHGlobal(sizeof(RenderCache));
-            *result = new(width, height, hfov);
+            *result = new(hfov, width);
             return result;
         }
 
-        // Mem leak porque nao ta deletando todos os buffers alocados
         internal static void Delete(RenderCache* cache)
         {
-            count--;
-            cache->Dispose();
             Marshal.FreeHGlobal((IntPtr)cache);
-        }
-
-        public void Dispose()
-        {
-            Marshal.FreeHGlobal((IntPtr)angles);
-            Marshal.FreeHGlobal((IntPtr)cosines);
         }
     }
 }

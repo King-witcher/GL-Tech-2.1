@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Windows.Storage.Streams;
 
 namespace Engine;
 
@@ -17,13 +16,13 @@ public static partial class Renderer
 {
     unsafe static RenderCache* cache;
     static Image buffer;
-    static Scene currentScene = null;
-    static Action ScheduledActions = null;
+    static Scene? currentScene = null;
+    static Action? ScheduledActions = null;
     static Window? window;
     private static Logger logger = new("Renderer");
     public static bool ParallelRendering { get; set; } = true;
 
-    public static Scene ActiveScene => currentScene;
+    public static Scene? ActiveScene => currentScene;
 
     private static float minframetime = 1;
     public static int MaxFps
@@ -200,7 +199,7 @@ public static partial class Renderer
     {
         if (cache != null)
             RenderCache.Delete(cache);
-        cache = RenderCache.Create(CustomWidth, CustomHeight, FieldOfView);
+        cache = RenderCache.Create(FieldOfView, CustomWidth);
     }
 
     private static void Schedule(Action action) => ScheduledActions += action;
@@ -214,11 +213,17 @@ public static partial class Renderer
 
     private unsafe static void Draw(Image screen, SceneStruct* scene)
     {
-        var col_start_table = new int[screen.Width];
-        var col_end_table = new int[screen.Width];
+        var col_start_table = new int[screen.width];
+        var col_end_table = new int[screen.width];
 
         // Cull only the planes that appear in the field of view.
-        View view = new View(scene->camera->position, new(cache->angles[0] + scene->camera->rotation), new(cache->angles[screen.Width - 1] + scene->camera->rotation));
+        var left = new Vector(-scene->camera->direction.y, scene->camera->direction.x);
+        var rtl = left * cache->step0 * screen.widthf;
+        View view = new(
+            center: scene->camera->position,
+            left: scene->camera->direction + rtl * 0.5f,
+            right: scene->camera->direction - rtl * 0.5f
+        );
         using var surface_culled = scene->plane_list.CullBySurface(scene->camera->position);
         using var plane_list = surface_culled.CullByFrustum(view);
 
@@ -252,7 +257,7 @@ public static partial class Renderer
                 float hit_dist = scene->camera->z / ((line - screen.heightf * 0.5f) * cache->step0);
                 float step = cache->step0 * hit_dist;
 
-                Vector camera_dir = new(scene->camera->rotation);
+                Vector camera_dir = scene->camera->direction;
                 Vector right = new Vector(camera_dir.Y, -camera_dir.X);
                 Vector center_hit = scene->camera->position + camera_dir * hit_dist;
 
@@ -282,7 +287,7 @@ public static partial class Renderer
                 float hit_dist = (1 - scene->camera->z) / ((screen.heightf * 0.5f - line) * cache->step0);
                 float step = cache->step0 * hit_dist;
 
-                Vector camera_dir = new(scene->camera->rotation);
+                Vector camera_dir = scene->camera->direction;
                 Vector right = new Vector(camera_dir.Y, -camera_dir.X);
                 Vector center_hit = scene->camera->position + camera_dir * hit_dist;
 
@@ -307,50 +312,55 @@ public static partial class Renderer
 
         // Render a vertical column of the screen.
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-        void DrawColumn(int scr_col)
+        void DrawColumn(int col_idx)
         {
             unchecked
             {
+                int width = screen.width;
+                int height = screen.height;
+                float height_f = screen.heightf;
+
                 // Caching frequently used variables
-                float ray_cos = cache->cosines[scr_col];
-                float ray_angle = cache->angles[scr_col] + scene->camera->rotation;
-                Texture bg = scene->background;
-                Segment ray = new Segment(scene->camera->position, ray_angle);
+                var delta = width / 2 - col_idx;
+                var dir = scene->camera->direction + left * (cache->step0 * delta);
+                Segment ray = new Segment(scene->camera->position, dir);
+                //Texture bg = scene->background;
 
                 // Cast the ray towards every plane.
-                PlaneStruct* plane = plane_list.NearestPlane(ray, out float col_dist, out float plane_ratio);
+                PlaneStruct* plane = plane_list.NearestPlane(ray, out Vector rs);
+                //if (plane == null) return;
 
                 // Found out that optimizing this part by separing the case when it hits and not a wall is unecessary.
                 #region Render the plane
 
                 // Height that the current column should have on the screen.
-                float col_h = (cache->colHeight1 / (ray_cos * col_dist)); // Wall column size in pixels
+                float colision_depth = Vector.DotProduct(ray.direction, scene->camera->direction) * rs.x;
+                float col_height_f = cache->colHeight1 / colision_depth; // Wall column size in pixels
 
                 // Where the column starts and ends relative to the screen.
-                float col_start = (screen.heightf - 1f - col_h) * 0.5f + col_h * (scene->camera->z - 0.5f);
-                float col_end = (screen.heightf - 1f + col_h) * 0.5f + col_h * (scene->camera->z - 0.5f);
+                float col_start_f = (height_f - 1f - col_height_f) * 0.5f + col_height_f * (scene->camera->z - 0.5f);
+                float col_end_f = (height_f - 1f + col_height_f) * 0.5f + col_height_f * (scene->camera->z - 0.5f);
 
                 // Wall rendering bounds on the screen...
-                int draw_col_start = screen.Height - (int)(screen.heightf - col_start);    // Inclusive
-                int draw_col_end = screen.Height - (int)(screen.heightf - col_end);        // Exclusive
+                int col_start_i = height - (int)(height_f - col_start_f);    // Inclusive
+                if (col_start_i < 0)
+                    col_start_i = 0;
 
-                // Which cannot exceed the full screen bounds.
-                if (draw_col_start < 0)
-                    draw_col_start = 0;
-                if (draw_col_end > screen.Height)
-                    draw_col_end = screen.Height;
+                int col_end_i = height - (int)(height_f - col_end_f);        // Exclusive
+                if (col_end_i > height)
+                    col_end_i = height;
 
-                col_start_table[scr_col] = draw_col_start;
-                col_end_table[scr_col] = draw_col_end;
+                col_start_table[col_idx] = col_start_i;
+                col_end_table[col_idx] = col_end_i;
 
                 // Draw the wall
                 // Critical performance impact.
-                float i_col_h = 1f / col_h;
-                for (int line = draw_col_start; line < draw_col_end; line++)
+                float i_col_h = 1f / col_height_f;
+                for (int line_idx = col_start_i; line_idx < col_end_i; line_idx++)
                 {
-                    float vratio = (line - col_start) * i_col_h;
-                    Color c = plane->texture.MapPixel(plane_ratio, vratio);
-                    screen[scr_col, line] = c;
+                    float v = (line_idx - col_start_f) * i_col_h;
+                    Color color = plane->texture.MapNearest(rs.y, v);
+                    screen[col_idx, line_idx] = color;
                 }
                 #endregion
             }

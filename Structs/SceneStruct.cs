@@ -1,16 +1,14 @@
-﻿using System;
+﻿using Engine.Imaging;
+using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-
-using Engine.Imaging;
-
-using Entity = Engine.World.Entity;
-using PlaneClass = Engine.World.Plane;
-using ColliderClass = Engine.World.Collider;
-using SpriteClass = Engine.World.Sprite;
-using FloorClass = Engine.World.Floor;
-using CeilingClass = Engine.World.Ceiling;
 using CameraClass = Engine.World.Camera;
+using CeilingClass = Engine.World.Ceiling;
+using ColliderClass = Engine.World.Collider;
+using Entity = Engine.World.Entity;
+using FloorClass = Engine.World.Floor;
+using PlaneClass = Engine.World.Plane;
+using SpriteClass = Engine.World.Sprite;
 
 namespace Engine.Structs
 {
@@ -127,22 +125,29 @@ namespace Engine.Structs
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal PlaneStruct* NearestPlane(Segment ray, out float nearest_dist, out float nearest_ratio)
+        internal PlaneStruct* NearestPlane(Segment ray, out Vector rs)
         {
             unchecked
             {
                 PlaneStruct* nearest = null;
-                nearest_dist = float.PositiveInfinity;
-                nearest_ratio = 2f;
+                rs = Vector.Infinity;
+                // Unsafe
                 PlaneList.Node* cur = plane_list.first;
 
                 while (cur != null)
                 {
-                    cur->data->Test(ray, out float cur_dist, out float cur_ratio);
-                    if (cur_dist < nearest_dist)
+                    Vector cur_rs = ray.GetRS(cur->data->segment);
+
+                    // If intersects before the ray starts or outside the plane bounds, skip.
+                    if (cur_rs.x < 0f || cur_rs.y < 0f || cur_rs.y >= 1f)
                     {
-                        nearest_ratio = cur_ratio;
-                        nearest_dist = cur_dist;
+                        cur = cur->next;
+                        continue;
+                    }
+
+                    if (cur_rs.x < rs.x)
+                    {
+                        rs = cur_rs;
                         nearest = cur->data;
                     }
                     cur = cur->next;

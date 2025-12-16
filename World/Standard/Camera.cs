@@ -16,8 +16,8 @@ namespace Engine.World
 
         private protected override Vector DirectionData
         {
-            get => new Vector(unmanaged->rotation);
-            set => unmanaged->rotation = value.Angle;
+            get => unmanaged->direction;
+            set => unmanaged->direction = value;
         }
         #endregion
 
@@ -29,7 +29,7 @@ namespace Engine.World
 
         internal Camera()
         {
-            unmanaged = Struct.Create(Vector.Zero, 0f);
+            unmanaged = Struct.Create(Vector.Zero, Vector.Forward);
         }
 
         ~Camera()

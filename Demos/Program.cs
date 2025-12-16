@@ -1,6 +1,4 @@
-﻿
-using Engine.Structs;
-using Engine.World;
+﻿using Engine.World;
 using System;
 
 namespace Engine.Demos
@@ -22,14 +20,6 @@ namespace Engine.Demos
 
             while (true)
             {
-#if true
-                logger.Log($"Cameras count: {CameraStruct.count}");
-                logger.Log($"Planes count: {PlaneStruct.count}");
-                logger.Log($"Colliders count: {ColliderStruct.count}");
-                logger.Log($"Horizontals count: {HorizontalStruct.count}");
-                logger.Log($"HorizontalNodes count: {HorizontalList.Node.count}");
-#endif
-
                 Console.Write(
                     "Choose a map to test:\n" +
                     "1 - Empty Scene\n" +

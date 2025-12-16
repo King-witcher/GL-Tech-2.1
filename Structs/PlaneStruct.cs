@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Engine.Imaging;
+using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-
-using Engine.Imaging;
 
 namespace Engine.Structs
 {
@@ -34,22 +33,28 @@ namespace Engine.Structs
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal PlaneStruct* NearestPlane(Segment ray, out float distance, out float splitRatio)
+        internal PlaneStruct* NearestPlane(Segment ray, out Vector rs)
         {
             unchecked
             {
+                rs = Vector.Infinity;
                 PlaneStruct* nearest = null;
-                distance = float.PositiveInfinity;
-                splitRatio = 2f;
                 Node* cur = first;
 
                 while (cur != null)
                 {
-                    cur->data->Test(ray, out float cur_dist, out float cur_ratio);
-                    if (cur_dist < distance)
+                    Vector cur_rs = ray.GetRS(cur->data->segment);
+
+                    // If intersects before the ray starts or outside the plane bounds, skip.
+                    if (cur_rs.x < 0f || cur_rs.y < 0f || cur_rs.y >= 1f)
                     {
-                        splitRatio = cur_ratio;
-                        distance = cur_dist;
+                        cur = cur->next;
+                        continue;
+                    }
+
+                    if (cur_rs.x < rs.x)
+                    {
+                        rs = cur_rs;
                         nearest = cur->data;
                     }
                     cur = cur->next;
@@ -64,7 +69,7 @@ namespace Engine.Structs
             var planeList = new PlaneList();
             var current = first;
 
-            while  (current != null)
+            while (current != null)
             {
                 var left = current->data->segment.start - position;
                 var right = current->data->segment.direction + left;
@@ -85,7 +90,7 @@ namespace Engine.Structs
 
             while (current != null)
             {
-                if(view.Contains(current->data->segment))
+                if (view.Contains(current->data->segment))
                     planeList.Add(current->data);
                 current = current->next;
             }
@@ -156,11 +161,9 @@ namespace Engine.Structs
         internal Segment segment;
         internal Texture texture;               // Yes, by value.
         internal PlaneStruct* list_next;    // Planes are stored in scenes a linked list.
-        internal static int count;
 
         internal static PlaneStruct* Create(Vector start, Vector end, Texture texture)
         {
-            count++;
             PlaneStruct* result = (PlaneStruct*)Marshal.AllocHGlobal(sizeof(PlaneStruct));
             result->texture = texture;
             result->segment = new(start, end - start);
@@ -170,7 +173,6 @@ namespace Engine.Structs
 
         internal static PlaneStruct* Create(Vector start, float angle, float length, Texture texture)
         {
-            count++;
             PlaneStruct* result = (PlaneStruct*)Marshal.AllocHGlobal(sizeof(PlaneStruct));
             Vector direction = new Vector(angle) * length;
             result->texture = texture;
@@ -179,15 +181,8 @@ namespace Engine.Structs
             return result;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void Test(Segment ray, out float cur_dist, out float cur_split)
-        {
-            segment.TestAgainstRay(ray, out cur_dist, out cur_split);
-        }
-
         internal static void Delete(PlaneStruct* item)
         {
-            count--;
             Marshal.FreeHGlobal((IntPtr)item);
         }
     }

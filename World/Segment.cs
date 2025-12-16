@@ -42,35 +42,27 @@ namespace Engine
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void TestAgainstRay(Segment ray, out float cur_dist, out float cur_split)
+        public Vector GetRS(Segment other)
         {
             // Medium performance impact.
             float
                 drx = direction.x,
                 dry = direction.y;
 
-            float det = ray.direction.x * dry - ray.direction.y * drx; // Caching can only be used here
+            float det = dry * other.direction.x - drx * other.direction.y; // Caching can only be used here
 
             if (det == 0) // Parallel
             {
-                cur_dist = float.PositiveInfinity;
-                cur_split = 2f;
-                return;
+                return new Vector(float.PositiveInfinity, float.PositiveInfinity);
             }
 
-            float spldet = ray.direction.x * (ray.start.y - start.y) - ray.direction.y * (ray.start.x - start.x);
-            float dstdet = drx * (ray.start.y - start.y) - dry * (ray.start.x - start.x);
-            float spltmp = spldet / det;
-            float dsttmp = dstdet / det;
-            if (spltmp < 0 || spltmp >= 1 || dsttmp <= 0) // dsttmp = 0 means column height = x/0.
-            {
-                cur_dist = float.PositiveInfinity;
-                cur_split = 2f;
-                return;
-            }
-            cur_split = spltmp;
-            cur_dist = dsttmp;
-            return;
+            float idet = 1f / det;
+            var delta = other.start - start;
+
+            float r = idet * (other.direction.x * delta.y - other.direction.y * delta.x);
+            float s = idet * (drx * delta.y - dry * delta.x);
+
+            return new Vector(r, s);
         }
 
         public bool TestIntersect(Segment segment, out Vector intersection)
@@ -113,7 +105,7 @@ namespace Engine
             return $"<{start} -> {start + direction}>";
         }
 
-        public static implicit operator Segment ((Vector start, Vector end) tuple) =>
+        public static implicit operator Segment((Vector start, Vector end) tuple) =>
             new(tuple.start, tuple.end - tuple.start);
     }
 }

@@ -37,18 +37,18 @@ namespace Engine
             if (Contains(segment.Start) || Contains(segment.Direction + segment.Start))
                 return true;
 
-            segment.TestAgainstRay(new(center, left), out float ldist, out _);
-            if (ldist < float.PositiveInfinity)
+            var rsl = segment.GetRS(new(center, left));
+            if (rsl.x < float.PositiveInfinity)
                 return true;
 
-            segment.TestAgainstRay(new (center, right), out float rdist, out _);
-            if (rdist < float.PositiveInfinity)
+            var rsr = segment.GetRS(new(center, right));
+            if (rsr.x < float.PositiveInfinity)
                 return true;
 
             return false;
         }
 
-        public static implicit operator View ((Vector a, Vector b, Vector c) vectors) =>
-            new (vectors.a, vectors.b, vectors.c);
+        public static implicit operator View((Vector a, Vector b, Vector c) vectors) =>
+            new(vectors.a, vectors.b, vectors.c);
     }
 }

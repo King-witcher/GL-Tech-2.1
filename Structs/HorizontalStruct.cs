@@ -152,7 +152,7 @@ namespace Engine.Structs
         {
             float xratio = (coordinates.x) % 1f;
             float yratio = (coordinates.y) % 1f;
-            return texture.MapPixel(xratio, yratio);
+            return texture.MapNearest(xratio, yratio);
         }
     }
 }

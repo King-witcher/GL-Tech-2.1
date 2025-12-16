@@ -16,7 +16,7 @@ namespace Engine.Scripting.Debugging
 
         void OnFrame()
         {
-            timeSpent += Frame.DeltaTime;
+            timeSpent += Time.TimeStep;
 
             if (timeSpent >= Interval)
             {

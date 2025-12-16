@@ -17,6 +17,6 @@ namespace Engine.Scripting.Prefab
         public float AngularSpeed { get; set; } = 30f;
 
         void OnFrame() =>
-            Entity.Rotate(AngularSpeed * Frame.DeltaTime);
+            Entity.Rotate(AngularSpeed * Time.TimeStep);
     }
 }

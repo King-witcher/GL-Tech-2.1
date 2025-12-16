@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Engine.Structs;
-using Engine.Imaging;
+﻿using Engine.Imaging;
 using Engine.Scripting;
+using Engine.Structs;
+using System;
+using System.Collections.Generic;
 
 namespace Engine.World
 {
@@ -33,6 +33,7 @@ namespace Engine.World
 
         internal Action Start { get; private set; }
         internal Action OnFrame { get; private set; }
+        internal Action OnFixedTick { get; private set; }
         internal Action<Input.ScanCode> OnKeyDown { get; private set; }
         internal Action<Input.ScanCode> OnKeyUp { get; private set; }
         public int ColliderCount => colliders.Count;
@@ -50,6 +51,7 @@ namespace Engine.World
         {
             Start += script.StartAction;
             OnFrame += script.OnFrameAction;
+            OnFixedTick += script.OnFixedTickAction;
             OnKeyDown += script.OnKeyDownAction;
             OnKeyUp += script.OnKeyUpAction;
         }
@@ -58,6 +60,7 @@ namespace Engine.World
         {
             Start -= script.StartAction;
             OnFrame -= script.OnFrameAction;
+            OnFixedTick -= script.OnFixedTickAction;
             OnKeyDown -= script.OnKeyDownAction;
             OnKeyUp -= script.OnKeyUpAction;
         }
@@ -99,7 +102,7 @@ namespace Engine.World
             void add_node(Entity entity)
             {
                 entities.Add(entity);
-                entityNames.Add(entity.Name, entity);   
+                entityNames.Add(entity.Name, entity);
                 if (entity is Collider collider)
                     colliders.Add(collider);
 

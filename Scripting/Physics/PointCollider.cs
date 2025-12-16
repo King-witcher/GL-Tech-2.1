@@ -1,6 +1,5 @@
-﻿using System;
-
-using Engine.World;
+﻿using Engine.World;
+using System;
 
 namespace Engine.Scripting.Physics
 {
@@ -8,11 +7,16 @@ namespace Engine.Scripting.Physics
     {
         const float MIN_DIST = 0.01f;
 
+        private Vector lastTruePosition;
+        private Vector predictedPosition;
+        private Vector smoothPosition;
+
         public bool HandleCollisions { get; set; } = true;
+        public Vector StartPosition { get; set; } = Vector.Zero;
 
         public override void Accelerate(Vector direction)
         {
-            Velocity += direction * Frame.DeltaTime;
+            Velocity += direction * Time.TimeStep;
         }
 
         public override void AddAngularVelocity(float momentum)
@@ -30,12 +34,28 @@ namespace Engine.Scripting.Physics
             throw new NotImplementedException();
         }
 
+        void OnStart()
+        {
+            lastTruePosition = StartPosition;
+            predictedPosition = StartPosition;
+            smoothPosition = StartPosition;
+        }
+
         // FIXME
-        void OnFrame()
+        void OnFixedTick()
         {
             if (HandleCollisions)
                 ClipCollisions();
-            Entity.WorldPosition += Velocity * Frame.DeltaTime;
+            lastTruePosition += Velocity * Time.TimeStep;
+            predictedPosition = lastTruePosition;
+        }
+
+        void OnFrame()
+        {
+            const float SMOOTH_FACTOR = 0.2f;
+            predictedPosition += Velocity * Time.TimeStep;
+            smoothPosition = predictedPosition * SMOOTH_FACTOR + smoothPosition * (1 - SMOOTH_FACTOR);
+            Entity.WorldPosition = smoothPosition;
         }
 
         private void ClipCollisions()
@@ -43,10 +63,10 @@ namespace Engine.Scripting.Physics
             if (Speed == 0) return;
 
             // Step relative to current frame
-            float deltaS = Speed * Frame.DeltaTime;
+            float deltaS = Speed * Time.TimeStep;
 
             Scene.CastRay(
-                new Segment(Entity.WorldPosition, Velocity),
+                new Segment(lastTruePosition, Velocity),
                 out float c_dist,
                 out Vector c_normal
             );
@@ -59,10 +79,10 @@ namespace Engine.Scripting.Physics
                 Velocity -= compensation;
 
                 // Test against a second collision. If so, stop.
-                deltaS = Speed * Frame.DeltaTime;
+                deltaS = Speed * Time.TimeStep;
 
                 Scene.CastRay(
-                    new Segment(Entity.WorldPosition, Velocity),
+                    new Segment(lastTruePosition, Velocity),
                     out c_dist,
                     out c_normal
                 );

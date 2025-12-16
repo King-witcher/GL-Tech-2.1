@@ -1,7 +1,7 @@
-﻿using System;
-using System.Reflection;
+﻿using Engine.Input;
 using Engine.World;
-using Engine.Input;
+using System;
+using System.Reflection;
 
 namespace Engine.Scripting
 {
@@ -34,8 +34,8 @@ namespace Engine.Scripting
         protected internal Scene Scene => entity.Scene;
 
         // Gets the method called void Start()
-        private Action start = null;
-        internal Action StartAction
+        private Action? start = null;
+        internal Action? StartAction
         {
             get
             {
@@ -51,8 +51,8 @@ namespace Engine.Scripting
         }
 
         // Gets the method called void OnFrame()
-        private Action onFrame = null;
-        internal Action OnFrameAction
+        private Action? onFrame = null;
+        internal Action? OnFrameAction
         {
             get
             {
@@ -64,6 +64,22 @@ namespace Engine.Scripting
                 }
 
                 return onFrame;
+            }
+        }
+
+        private Action? onFixedTick = null;
+        internal Action? OnFixedTickAction
+        {
+            get
+            {
+                if (onFixedTick is null)
+                {
+                    var method = GetMethod("OnFixedTick");
+                    if (method != null)
+                        onFixedTick = () => method.Invoke(this, null);
+                }
+
+                return onFixedTick;
             }
         }
 

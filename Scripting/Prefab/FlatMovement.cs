@@ -68,9 +68,9 @@ namespace Engine.Scripting.Prefab
 
             // Turn
             if (Keyboard.IsKeyDown(TurnLeft))
-                Entity.Rotate(-TurnSpeed * Frame.DeltaTime);
+                Entity.Rotate(-TurnSpeed * Time.TimeStep);
             if (Keyboard.IsKeyDown(TurnRight))
-                Entity.Rotate(TurnSpeed * Frame.DeltaTime);
+                Entity.Rotate(TurnSpeed * Time.TimeStep);
         }
     }
 }

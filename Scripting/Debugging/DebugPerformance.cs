@@ -20,10 +20,10 @@ namespace Engine.Scripting.Debugging
         public void OnFrame()
         {
             frameCount++;
-            totalFrameTime += Frame.DeltaTime;
-            totalRenderTime += Frame.RenderTime;
-            totalScriptTime += Frame.ScriptTime;
-            totalWindowTime += Frame.WindowTime;
+            totalFrameTime += Time.TimeStep;
+            totalRenderTime += Time.RenderTime;
+            totalScriptTime += Time.ScriptTime;
+            totalWindowTime += Time.WindowTime;
 
             if (totalFrameTime < Interval)
                 return;

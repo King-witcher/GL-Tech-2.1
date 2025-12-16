@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Engine.Scripting;
+using System;
 using System.Collections.Generic;
-using Engine.Scripting;
 
 // Talvez as World devam atualizar as relativas tambem. Posso criar uma que atualize apenas a interna e usar por quest'oes de performance.
 
@@ -35,6 +35,17 @@ namespace Engine.World
             }
         }
 
+        internal Action OnFixedTick
+        {
+            get
+            {
+                Action action = null;
+                foreach (Script script in scripts)
+                    action += script.OnFixedTickAction;
+                return action;
+            }
+        }
+
         internal Action<Input.ScanCode> OnKeyDown
         {
             get
@@ -62,7 +73,7 @@ namespace Engine.World
             #region Ensures that the entry is not null and the script was not added to any entity.
             if (script is null)
             {
-                logger.Error( $"Cannot add a null script to entity \"{this}\".");
+                logger.Error($"Cannot add a null script to entity \"{this}\".");
                 return;
             }
 

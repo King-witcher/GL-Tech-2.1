@@ -52,9 +52,9 @@ namespace Engine.Scripting.Prefab
                 UpdateZ(camera);
 
                 if (Keyboard.IsKeyDown(ScanCode.LEFT))
-                    camera.RelativeRotation -= Frame.DeltaTime * TurnSpeed;
+                    camera.RelativeRotation -= Time.TimeStep * TurnSpeed;
                 if (Keyboard.IsKeyDown(ScanCode.RIGHT))
-                    camera.RelativeRotation += Frame.DeltaTime * TurnSpeed;
+                    camera.RelativeRotation += Time.TimeStep * TurnSpeed;
             }
         }
 
@@ -71,7 +71,7 @@ namespace Engine.Scripting.Prefab
         {
             if (grounded) return;
 
-            camera.Z += zspeed * Frame.DeltaTime;
+            camera.Z += zspeed * Time.TimeStep;
             if (camera.Z < Height)
             {
                 camera.Z = Height;
@@ -85,7 +85,7 @@ namespace Engine.Scripting.Prefab
                 zspeed = 0f;
             }
 
-            zspeed -= Gravity * Frame.DeltaTime;
+            zspeed -= Gravity * Time.TimeStep;
         }
 
         float GetMaxSpeed()
@@ -122,7 +122,7 @@ namespace Engine.Scripting.Prefab
             float currentspeed = Vector.DotProduct(body.Velocity, wishdir);
             float addspeed = wishspeed - currentspeed;
             if (addspeed <= 0) return;
-            float accelspeed = accel * wishspeed * Frame.DeltaTime;
+            float accelspeed = accel * wishspeed * Time.TimeStep;
             if (accelspeed > addspeed)
                 accelspeed = addspeed;
 
@@ -140,7 +140,7 @@ namespace Engine.Scripting.Prefab
 
             if (addspeed < 0) return;
 
-            float accelspeed = Acceleration * wishspeed * Frame.DeltaTime;
+            float accelspeed = Acceleration * wishspeed * Time.TimeStep;
             if (accelspeed > addspeed)
                 accelspeed = addspeed;
 
@@ -178,7 +178,7 @@ namespace Engine.Scripting.Prefab
             }
 
             float control = body.Speed < StopSpeed ? StopSpeed : body.Speed;
-            float drop = control * Friction * Frame.DeltaTime;
+            float drop = control * Friction * Time.TimeStep;
 
             float newspeed = body.Speed - drop;
             if (newspeed < 0f)

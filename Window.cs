@@ -68,7 +68,7 @@ namespace Engine
             set => SDL_SetWindowFullscreen(window, value ? (uint)SDL_WindowFlags.SDL_WINDOW_FULLSCREEN : 0);
         }
 
-        internal void Update()
+        internal void Present()
         {
             // SDL_RenderClear(renderer);
             SDL_UpdateTexture(texture, 0, buffer.Buffer, buffer.Width * 4);

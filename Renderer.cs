@@ -15,7 +15,7 @@ namespace Engine;
 public static partial class Renderer
 {
     unsafe static RenderCache* cache;
-    static Image buffer;
+    static Image frameBuffer;
     static Scene? currentScene = null;
     static Action? ScheduledActions = null;
     static Window? window;
@@ -88,7 +88,7 @@ public static partial class Renderer
     public static Image GetScreenshot()
     {
         Image screenshot = new Image(CustomWidth, CustomHeight);
-        Image.BufferCopy(buffer, screenshot);
+        Image.BufferCopy(frameBuffer, screenshot);
         return screenshot;
     }
 
@@ -127,14 +127,12 @@ public static partial class Renderer
 
         bool quitRequested = false;
 
-        Stopwatch controlStopwatch = new Stopwatch();   // Required to cap framerate
-        Script.Frame.RestartFrame();
-        Script.Frame.BeginScript();
+        var controlStopwatch = new Stopwatch();   // Required to cap framerate
+        // Run setup scripts
+        Script.Time.RenderTime = 0;
+        Script.Time.TimeStep = 0;
+        Script.Time.WindowTime = 0;
         currentScene.Start?.Invoke();
-        Script.Frame.EndScript();
-        float framerate = 0f;
-
-        Stopwatch sw = new Stopwatch();
 
         window = new(
             title: "GL Tech 2.1",
@@ -143,47 +141,51 @@ public static partial class Renderer
             bufw: CustomWidth,
             bufh: customHeight,
             fullscreen: FullScreen,
-            out buffer
+            out frameBuffer
         );
 
         window.OnQuit += () => { quitRequested = true; };
         window.OnKeyDown += Keyboard.SetKeyDown;
         window.OnKeyUp += Keyboard.SetKeyUp;
+
+        long FIXED_TIMESTEP = Stopwatch.Frequency / Script.Time.FIXED_TICKS_PER_SECOND;
+
+        long initTime = Stopwatch.GetTimestamp();
+        long lastTime = initTime;
+        long accumulator = 0;
         while (!quitRequested)
         {
-            sw.Restart();
-            window.Update();
-            sw.Stop();
-            TimeSpan time = sw.Elapsed;
+            // Draw current state
+            Draw(frameBuffer, currentScene.unmanaged);
+            window.Present();
 
-            controlStopwatch.Restart();
-            Script.Frame.BeginRender();
+            // Update timers
+            long newTime = Stopwatch.GetTimestamp();
+            long frameTime = newTime - lastTime;
+            lastTime = newTime;
+            accumulator += frameTime;
 
-            Draw(buffer, currentScene.unmanaged);
-            //PostProcess(frontBuffer);
-
-            framerate = 0.95f * framerate + 0.05f / (float)Script.Frame.RenderTime;
-
-            if (framerate == float.PositiveInfinity)
-                framerate = 0f;
-
-            GUI.Text text = new GUI.Text("");
-            text.Value = ((int)framerate).ToString();
-            text.Render(buffer);
-
-            Script.Frame.EndRender();
-
-            //while (controlStopwatch.ElapsedMilliseconds < minframetime)
-            //    Thread.Yield();
-
+            // Update input state
             FlushSchedule();
-            Script.Frame.RestartFrame();
-            Script.Frame.BeginScript();
             window.ProcessEvents();
             if (CaptureMouse)
                 Mouse.Shift = window.GetMouseShift();
+
+            // Run fixed ticks
+            Script.Time.TimeStep = (float)FIXED_TIMESTEP / Stopwatch.Frequency;
+            Script.Time.FixedRemainder = 0f;
+            while (accumulator >= FIXED_TIMESTEP)
+            {
+                currentScene.OnFixedTick?.Invoke();
+                accumulator -= FIXED_TIMESTEP;
+            }
+
+            //// Run per frame tick
+            Script.Time.TimeStep = (float)frameTime / Stopwatch.Frequency;
+            Script.Time.FixedRemainder = (float)accumulator / FIXED_TIMESTEP;
             currentScene.OnFrame?.Invoke();
-            Script.Frame.EndScript();
+
+            controlStopwatch.Restart();
         }
 
         window.Destroy();

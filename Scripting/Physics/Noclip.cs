@@ -8,7 +8,7 @@ namespace Engine.Scripting.Physics
 
         public override void Accelerate(Vector direction)
         {
-            Velocity += direction * Frame.DeltaTime;
+            Velocity += direction * Time.TimeStep;
         }
 
         public override void AddAngularVelocity(float momentum)
@@ -28,7 +28,7 @@ namespace Engine.Scripting.Physics
 
         void OnFrame()
         {
-            Entity.WorldPosition += Velocity * Frame.DeltaTime;
+            Entity.WorldPosition += Velocity * Time.TimeStep;
         }
     }
 }

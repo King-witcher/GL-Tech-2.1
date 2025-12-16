@@ -1,14 +1,13 @@
 ﻿using Engine.Imaging;
-using Engine.World;
-using Engine.World.Composed;
+using Engine.Scripting;
 using Engine.Scripting.Debugging;
 using Engine.Scripting.Physics;
 using Engine.Scripting.Prefab;
-
-using System.Threading.Tasks;
+using Engine.World;
+using Engine.World.Composed;
 using System.Collections.Generic;
-using Engine.Scripting;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Engine.Demos.Wolfenstein
 {
@@ -352,12 +351,12 @@ namespace Engine.Demos.Wolfenstein
 
             // Camera
             {
-                Camera.WorldPosition = (57.5f, 29.5f);
                 Camera.AddScript<DebugScene>();
                 Camera.AddScript(new MouseLook(2.2f));
                 //Camera.AddScript<DebugEntity>();
 
                 PointCollider pc = new();
+                pc.StartPosition = (57.5f, 29.5f);
                 Q1Movement movement = new(pc);
 
                 Camera.AddScript(pc);

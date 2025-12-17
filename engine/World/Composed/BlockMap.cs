@@ -1,6 +1,5 @@
-﻿using System;
-
-using Engine.Imaging;
+﻿using Engine.Imaging;
+using System;
 
 namespace Engine.World.Composed
 {
@@ -26,12 +25,12 @@ namespace Engine.World.Composed
             left
         }
 
-        internal BlockMap(Image map, Func<Color, Texture> mapTexture, TextureFilling textureFilling,
+        public BlockMap(Image map, Func<Color, Texture> mapTexture, TextureFilling textureFilling,
             bool optimize = true, bool colliders = true)
         {
             if (optimize) optmizedMode();
             else suboptimalMode();
-            
+
             // Cada bloco, em tese, geraria quatro paredes e quatro colisores ao seu redor.
             // Esse método foi otimizado considerando-se que, se duas paredes forem desenhadas sobre o mesmo lugar, isso significa que não existe superfície visível por ali e, portanto, nenhuma das duas deverá ser realmente renderizada.
             bool isEmpty(int column, int line)

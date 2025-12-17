@@ -1,6 +1,4 @@
-﻿using Engine.Input;
-
-namespace Engine.Scripting.Prefab
+﻿namespace Engine.Scripting.Prefab
 {
     public sealed class MouseLook : Script
     {
@@ -19,7 +17,7 @@ namespace Engine.Scripting.Prefab
         {
             if (Enabled)
             {
-                Entity.Rotate(Mouse.Shift.X * 0.022f * Sensitivity);
+                Entity.Rotate(Input.MouseRel.x * 0.022f * Sensitivity);
             }
         }
     }

@@ -49,18 +49,17 @@ public static partial class Renderer
         set => ChangeIfNotRunning("CustomHeight", ref customHeight, value);
     }
 
-    static bool initialFullscreen;
     public static bool FullScreen
     {
         get
         {
             if (window != null)
                 return window.Fullscreen;
-            return initialFullscreen;
+            return field;
         }
         set
         {
-            initialFullscreen = value;
+            field = value;
             if (window != null)
                 window.Fullscreen = value;
         }
@@ -77,11 +76,11 @@ public static partial class Renderer
         }
     }
 
-    public static bool CaptureMouse
-    {
-        get => Window.CaptureMouse;
-        set => Window.CaptureMouse = value;
-    }
+    public static bool CaptureMouse = false;
+    //{
+    //    get => Window.CaptureMouse;
+    //    set => Window.CaptureMouse = value;
+    //}
 
     public static bool IsRunning { get; private set; } = false;
 
@@ -144,6 +143,8 @@ public static partial class Renderer
             out frameBuffer
         );
 
+        window.RelativeMouseMode = CaptureMouse;
+
         window.OnQuit += () => { quitRequested = true; };
         window.OnKeyDown += Keyboard.SetKeyDown;
         window.OnKeyUp += Keyboard.SetKeyUp;
@@ -153,7 +154,7 @@ public static partial class Renderer
         long initTime = Stopwatch.GetTimestamp();
         long lastTime = initTime;
         long accumulator = 0;
-        while (!quitRequested)
+        while (!Scripting.Input.ShouldExit)
         {
             // Draw current state
             Draw(frameBuffer, currentScene.unmanaged);
@@ -166,10 +167,11 @@ public static partial class Renderer
             accumulator += frameTime;
 
             // Update input state
+            Scripting.Input.Update();
             FlushSchedule();
             window.ProcessEvents();
-            if (CaptureMouse)
-                Mouse.Shift = window.GetMouseShift();
+            //if (CaptureMouse)
+            //    Mouse.Shift = window.GetMouseShift();
 
             // Run fixed ticks
             Script.Time.TimeStep = (float)FIXED_TIMESTEP / Stopwatch.Frequency;
@@ -185,6 +187,7 @@ public static partial class Renderer
             Script.Time.FixedRemainder = (float)accumulator / FIXED_TIMESTEP;
             currentScene.OnFrame?.Invoke();
         }
+        Scripting.Input.ShouldExit = false;
 
         window.Destroy();
 

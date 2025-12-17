@@ -1,9 +1,9 @@
 ﻿using System;
 
-using Engine.Imaging;
-using Struct = Engine.Structs.HorizontalStruct;
+using GLTech.Imaging;
+using Struct = GLTech.Structs.HorizontalStruct;
 
-namespace Engine.World
+namespace GLTech.World
 {
     public abstract unsafe class Horizontal : Entity
     {

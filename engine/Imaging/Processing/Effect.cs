@@ -1,5 +1,5 @@
 ﻿
-namespace Engine.Imaging.Processing
+namespace GLTech.Imaging.Processing
 {
     public abstract class Effect
     {

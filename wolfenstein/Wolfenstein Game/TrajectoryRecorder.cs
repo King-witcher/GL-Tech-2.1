@@ -1,5 +1,5 @@
-﻿using Engine;
-using Engine.Scripting;
+﻿using GLTech;
+using GLTech.Scripting;
 using System.Diagnostics;
 
 namespace wolf3d;

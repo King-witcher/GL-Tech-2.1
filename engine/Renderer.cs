@@ -1,227 +1,40 @@
-﻿using Engine.Imaging;
-using Engine.Imaging.Processing;
-using Engine.Input;
-using Engine.Scripting;
-using Engine.Structs;
-using Engine.World;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using GLTech.Imaging;
+using GLTech.Structs;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-namespace Engine;
+namespace GLTech;
 
-public static partial class Renderer
+internal unsafe class Renderer
 {
-    unsafe static RenderCache* cache;
-    static Image frameBuffer;
-    static Scene? currentScene = null;
-    static Action? ScheduledActions = null;
-    static Window? window;
-    private static Logger logger = new("Renderer");
-    public static bool ParallelRendering { get; set; } = true;
+    RenderCache* cache;
+    Image target;
 
-    public static Scene? ActiveScene => currentScene;
-
-    private static float minframetime = 1;
-    public static int MaxFps
+    public bool ParallelRendering { get; set; } = true;
+    public float HFov
     {
-        get => (int)(1000f / minframetime);
-        set
-        {
-            Util.Clip(ref value, 1, 1000);
-            minframetime = 1000f / value;
-        }
-    }
-
-    private static int initialWidth = 960;
-    public static int CustomWidth
-    {
-        get => initialWidth;
-        set => ChangeIfNotRunning("CustomWidth", ref initialWidth, value);
-    }
-
-    private static int customHeight = 540;
-    public static int CustomHeight
-    {
-        get => customHeight;
-        set => ChangeIfNotRunning("CustomHeight", ref customHeight, value);
-    }
-
-    public static bool FullScreen
-    {
-        get
-        {
-            if (window != null)
-                return window.Fullscreen;
-            return field;
-        }
+        get;
         set
         {
             field = value;
-            if (window != null)
-                window.Fullscreen = value;
+            RecalculateCache();
         }
+    } = 90f;
+
+    public Renderer(Image target)
+    {
+        this.target = target;
+        cache = RenderCache.Create(HFov, target.widthf);
     }
 
-    static float fieldOfView = 90f;
-    public static float FieldOfView
+    public unsafe void Draw(SceneStruct* scene)
     {
-        get => fieldOfView;
-        set
-        {
-            Util.Clip(ref value, 1f, 179f);
-            ChangeIfNotRunning("FieldOfView", ref fieldOfView, value);
-        }
-    }
-
-    public static bool CaptureMouse = false;
-    //{
-    //    get => Window.CaptureMouse;
-    //    set => Window.CaptureMouse = value;
-    //}
-
-    public static bool IsRunning { get; private set; } = false;
-
-    public static Image GetScreenshot()
-    {
-        Image screenshot = new Image(CustomWidth, CustomHeight);
-        Image.BufferCopy(frameBuffer, screenshot);
-        return screenshot;
-    }
-
-    public static void AddEffect(Effect effect)
-    {
-        postProcessing.Add(effect);
-    }
-
-    public static void AddEffect<EffectClass>() where EffectClass : Effect, new()
-    {
-        AddEffect(new EffectClass());
-    }
-
-    public unsafe static void Run(Scene scene)
-    {
-        #region Checks
-        if (IsRunning)
-            return;
-        IsRunning = true;
-
-        if (scene == null)
-        {
-            logger.Error($"Cannot render a null Scene.");
-            return;
-        }
-
-        if (scene.Background.source.Buffer == IntPtr.Zero)
-            logger.Warn($"The Scene being rendered does not have a background texture. Add it by using Scene.Background property.");
-        #endregion
-
-        Camera camera = scene.Camera;
-        currentScene = scene;
-
-        // Spaguetti
-        RefreshCache();
-
-        bool quitRequested = false;
-
-        var controlStopwatch = new Stopwatch();   // Required to cap framerate
-        // Run setup scripts
-        Script.Time.RenderTime = 0;
-        Script.Time.TimeStep = 0;
-        Script.Time.WindowTime = 0;
-        currentScene.Start?.Invoke();
-
-        window = new(
-            title: "GL Tech 2.1",
-            w: CustomWidth,
-            h: customHeight,
-            bufw: CustomWidth,
-            bufh: customHeight,
-            fullscreen: FullScreen,
-            out frameBuffer
-        );
-
-        window.RelativeMouseMode = CaptureMouse;
-
-        window.OnQuit += () => { quitRequested = true; };
-        window.OnKeyDown += Keyboard.SetKeyDown;
-        window.OnKeyUp += Keyboard.SetKeyUp;
-
-        long FIXED_TIMESTEP = Stopwatch.Frequency / Script.Time.FIXED_TICKS_PER_SECOND;
-
-        long initTime = Stopwatch.GetTimestamp();
-        long lastTime = initTime;
-        long accumulator = 0;
-        while (!Scripting.Input.ShouldExit)
-        {
-            // Draw current state
-            Draw(frameBuffer, currentScene.unmanaged);
-            window.Present();
-
-            // Update timers
-            long newTime = Stopwatch.GetTimestamp();
-            long frameTime = newTime - lastTime;
-            lastTime = newTime;
-            accumulator += frameTime;
-
-            // Update input state
-            Scripting.Input.Update();
-            FlushSchedule();
-            window.ProcessEvents();
-            //if (CaptureMouse)
-            //    Mouse.Shift = window.GetMouseShift();
-
-            // Run fixed ticks
-            Script.Time.TimeStep = (float)FIXED_TIMESTEP / Stopwatch.Frequency;
-            Script.Time.FixedRemainder = 0f;
-            while (accumulator >= FIXED_TIMESTEP)
-            {
-                currentScene.OnFixedTick?.Invoke();
-                accumulator -= FIXED_TIMESTEP;
-            }
-
-            //// Run per frame tick
-            Script.Time.TimeStep = (float)frameTime / Stopwatch.Frequency;
-            Script.Time.FixedRemainder = (float)accumulator / FIXED_TIMESTEP;
-            currentScene.OnFrame?.Invoke();
-        }
-        Scripting.Input.ShouldExit = false;
-
-        window.Destroy();
-
-        // Clears the Keyboard
-        Keyboard.Clear();
-
-        currentScene = null;
-        IsRunning = false;
-    }
-
-    private static unsafe void RefreshCache()
-    {
-        if (cache != null)
-            RenderCache.Delete(cache);
-        cache = RenderCache.Create(FieldOfView, CustomWidth);
-    }
-
-    private static void Schedule(Action action) => ScheduledActions += action;
-
-    // Executa ações que foram agendadas enquanto a engine renderizava.
-    private static void FlushSchedule()
-    {
-        ScheduledActions?.Invoke();
-        ScheduledActions = null;
-    }
-
-    private unsafe static void Draw(Image screen, SceneStruct* scene)
-    {
-        var col_start_table = new int[screen.width];
-        var col_end_table = new int[screen.width];
+        var col_start_table = new int[target.width];
+        var col_end_table = new int[target.width];
 
         // Cull only the planes that appear in the field of view.
         var left = new Vector(-scene->camera->direction.y, scene->camera->direction.x);
-        var rtl = left * cache->step0 * screen.widthf;
+        var rtl = left * cache->step0 * target.widthf;
         View view = new(
             center: scene->camera->position,
             left: scene->camera->direction + rtl * 0.5f,
@@ -232,24 +45,24 @@ public static partial class Renderer
 
         {
             if (ParallelRendering)
-                Parallel.For(fromInclusive: 0, toExclusive: screen.Width, body: DrawColumn);
+                Parallel.For(fromInclusive: 0, toExclusive: target.Width, body: DrawColumn);
             else
-                for (int i = 0; i < screen.Width; i++)
+                for (int i = 0; i < target.Width; i++)
                     DrawColumn(i);
         }
 
         // Checks if the code should be run in all cores or just one.
         if (ParallelRendering)
-            Parallel.For(fromInclusive: 0, toExclusive: screen.Height >> 1, body: drawCeilingLine);
+            Parallel.For(fromInclusive: 0, toExclusive: target.Height >> 1, body: drawCeilingLine);
         else
-            for (int i = 0; i < screen.Height >> 1; i++)
+            for (int i = 0; i < target.Height >> 1; i++)
                 drawCeilingLine(i);
 
         // Checks if the code should be run in all cores or just one.
         if (ParallelRendering)
-            Parallel.For(fromInclusive: screen.Height >> 1, toExclusive: screen.Height, body: drawFloorLine);
+            Parallel.For(fromInclusive: target.Height >> 1, toExclusive: target.Height, body: drawFloorLine);
         else
-            for (int i = screen.Height >> 1; i < screen.Height; i++)
+            for (int i = target.Height >> 1; i < target.Height; i++)
                 drawFloorLine(i);
 
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
@@ -257,17 +70,17 @@ public static partial class Renderer
         {
             unchecked
             {
-                float hit_dist = scene->camera->z / ((line - screen.heightf * 0.5f) * cache->step0);
+                float hit_dist = scene->camera->z / ((line - target.heightf * 0.5f) * cache->step0);
                 float step = cache->step0 * hit_dist;
 
                 Vector camera_dir = scene->camera->direction;
                 Vector right = new Vector(camera_dir.Y, -camera_dir.X);
                 Vector center_hit = scene->camera->position + camera_dir * hit_dist;
 
-                Vector left_bound_hit = center_hit - right * step * (screen.Width >> 1);
+                Vector left_bound_hit = center_hit - right * step * (target.Width >> 1);
                 using HorizontalList list = scene->floor_list.GetIntersections(left_bound_hit, left_bound_hit + right);
                 var step_vec = right * step;
-                for (int col = 0; col < screen.Width; col++)
+                for (int col = 0; col < target.Width; col++)
                 {
                     if (col_end_table[col] > line) continue;
 
@@ -275,9 +88,9 @@ public static partial class Renderer
                     HorizontalStruct* floor = list.FindAndRaise(floor_hit);
 
                     if (floor != null)
-                        screen[col, line] = floor->MapTexture(floor_hit);
+                        target[col, line] = floor->MapTexture(floor_hit);
                     else
-                        screen[col, line] = 0;
+                        target[col, line] = 0;
                 }
             }
         }
@@ -287,18 +100,18 @@ public static partial class Renderer
         {
             unchecked
             {
-                float hit_dist = (1 - scene->camera->z) / ((screen.heightf * 0.5f - line) * cache->step0);
+                float hit_dist = (1 - scene->camera->z) / ((target.heightf * 0.5f - line) * cache->step0);
                 float step = cache->step0 * hit_dist;
 
                 Vector camera_dir = scene->camera->direction;
                 Vector right = new Vector(camera_dir.Y, -camera_dir.X);
                 Vector center_hit = scene->camera->position + camera_dir * hit_dist;
 
-                Vector left_bound_hit = center_hit - right * step * (screen.Width >> 1);
+                Vector left_bound_hit = center_hit - right * step * (target.Width >> 1);
                 using HorizontalList list = scene->ceiling_list.GetIntersections(left_bound_hit, left_bound_hit + right);
 
                 var step_vec = right * step;
-                for (int col = 0; col < screen.Width; col++)
+                for (int col = 0; col < target.Width; col++)
                 {
                     if (col_start_table[col] <= line) continue;
 
@@ -306,9 +119,9 @@ public static partial class Renderer
                     HorizontalStruct* ceiling = list.FindAndRaise(hit);
 
                     if (ceiling != null)
-                        screen[col, line] = ceiling->MapTexture(hit);
+                        target[col, line] = ceiling->MapTexture(hit);
                     else
-                        screen[col, line] = 0;
+                        target[col, line] = 0;
                 }
             }
         }
@@ -319,9 +132,9 @@ public static partial class Renderer
         {
             unchecked
             {
-                int width = screen.width;
-                int height = screen.height;
-                float height_f = screen.heightf;
+                int width = target.width;
+                int height = target.height;
+                float height_f = target.heightf;
 
                 // Caching frequently used variables
                 var delta = width / 2 - col_idx;
@@ -363,25 +176,21 @@ public static partial class Renderer
                 {
                     float v = (line_idx - col_start_f) * i_col_h;
                     Color color = plane->texture.MapNearest(rs.y, v);
-                    screen[col_idx, line_idx] = color;
+                    target[col_idx, line_idx] = color;
                 }
                 #endregion
             }
         }
     }
 
-    private static List<Effect> postProcessing = new List<Effect>();
-    private static void PostProcess(Image target)
+    ~Renderer()
     {
-        foreach (var effect in postProcessing)
-            effect.Process(target);
+        RenderCache.Delete(cache);
     }
 
-    static void ChangeIfNotRunning<T>(string name, ref T obj, T value)
+    private void RecalculateCache()
     {
-        if (IsRunning)
-            logger.Warn($"The value of \"{name}\" cannot be modified while running. Value will keep \"{obj}\".");
-        else
-            obj = value;
+        RenderCache.Delete(cache);
+        cache = RenderCache.Create(HFov, target.widthf);
     }
 }

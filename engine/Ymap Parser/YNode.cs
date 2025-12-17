@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Engine.Ymap_Parser
+namespace GLTech.Ymap_Parser
 {
     internal class YNode
     {

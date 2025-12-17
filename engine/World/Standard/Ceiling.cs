@@ -1,6 +1,6 @@
-﻿using Engine.Imaging;
+﻿using GLTech.Imaging;
 
-namespace Engine.World;
+namespace GLTech.World;
 
 public class Ceiling : Horizontal
 {

@@ -1,7 +1,7 @@
 ﻿using System;
-using Struct = Engine.Structs.CameraStruct;
+using Struct = GLTech.Structs.CameraStruct;
 
-namespace Engine.World
+namespace GLTech.World
 {
     public unsafe sealed class Camera : Entity, IDisposable
     {

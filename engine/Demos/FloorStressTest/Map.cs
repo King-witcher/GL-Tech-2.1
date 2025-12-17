@@ -1,12 +1,11 @@
-﻿using Engine;
-using Engine.Imaging;
-using Engine.World;
-using Engine.World.Composed;
-using Engine.Scripting.Prefab;
-using Engine.Scripting.Physics;
-using Engine.Scripting.Debugging;
+﻿using GLTech.Imaging;
+using GLTech.Scripting.Debugging;
+using GLTech.Scripting.Physics;
+using GLTech.Scripting.Prefab;
+using GLTech.World;
+using GLTech.World.Composed;
 
-namespace Engine.Demos.FloorStressTest
+namespace GLTech.Demos.FloorStressTest
 {
     // Um pequeno mapa usando BlockMap
     public class Map : Scene

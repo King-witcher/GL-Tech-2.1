@@ -1,13 +1,13 @@
-﻿using Engine.Imaging;
-using Engine.World;
-using Engine.World.Composed;
-using Engine.Scripting.Debugging;
-using Engine.Scripting.Prefab;
-using Engine.Scripting.Physics;
+﻿using GLTech.Imaging;
+using GLTech.World;
+using GLTech.World.Composed;
+using GLTech.Scripting.Debugging;
+using GLTech.Scripting.Prefab;
+using GLTech.Scripting.Physics;
 
 using System.Collections.Generic;
 
-namespace Engine.Demos.SampleBlockMap
+namespace GLTech.Demos.SampleBlockMap
 {
     // Um pequeno mapa usando BlockMap
     public class Map : Scene

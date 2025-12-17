@@ -1,8 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
 
-using Struct = Engine.Structs.ColliderStruct;
+using Struct = GLTech.Structs.ColliderStruct;
 
-namespace Engine.World
+namespace GLTech.World
 {
     public unsafe sealed class Collider : Entity
     {

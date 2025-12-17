@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Engine.Imaging.Processing
+namespace GLTech.Imaging.Processing
 {
     //Incomplete
     internal sealed unsafe class GLTXAA : Effect, IDisposable

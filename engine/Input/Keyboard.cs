@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Engine.Input
+namespace GLTech.Input
 {
     public static class Keyboard
     {

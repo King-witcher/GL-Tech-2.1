@@ -1,7 +1,7 @@
 ﻿
-using Engine.Structs;
+using GLTech.Structs;
 
-namespace Engine.World
+namespace GLTech.World
 {
     partial class Scene
     {

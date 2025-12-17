@@ -1,4 +1,4 @@
-﻿namespace Engine.Serialization
+﻿namespace GLTech.Serialization
 {
     unsafe struct FScene
     {

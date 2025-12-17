@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace Engine.Structs
+namespace GLTech.Structs
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]

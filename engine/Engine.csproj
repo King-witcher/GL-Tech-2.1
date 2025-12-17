@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
-    <RootNamespace>Engine</RootNamespace>
+    <RootNamespace>GLTech</RootNamespace>
     <UseWindowsForms>False</UseWindowsForms>
-    <StartupObject>Engine.Demos.Program</StartupObject>
+    <StartupObject></StartupObject>
     <Nullable>enable</Nullable>
     <AnalysisLevel>5.0</AnalysisLevel>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>

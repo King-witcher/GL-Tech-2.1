@@ -1,7 +1,7 @@
-﻿using Engine.Imaging;
+﻿using GLTech.Imaging;
 using System;
 
-namespace Engine.World.Composed
+namespace GLTech.World.Composed
 {
     public partial class BlockMap : Entity
     {

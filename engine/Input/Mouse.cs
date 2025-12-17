@@ -2,7 +2,7 @@
 using System.Drawing;
 using static SDL2.SDL;
 
-namespace Engine.Input
+namespace GLTech.Input
 {
     public static class Mouse
     {

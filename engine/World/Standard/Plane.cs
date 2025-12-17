@@ -1,7 +1,7 @@
-﻿using Engine.Imaging;
-using Struct = Engine.Structs.PlaneStruct;
+﻿using GLTech.Imaging;
+using Struct = GLTech.Structs.PlaneStruct;
 
-namespace Engine.World
+namespace GLTech.World
 {
     public unsafe class Plane : Entity
     {

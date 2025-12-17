@@ -1,5 +1,5 @@
 ﻿
-namespace Engine
+namespace GLTech
 {
     public struct View
     {

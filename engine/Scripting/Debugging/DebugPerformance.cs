@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Engine.Scripting.Debugging
+namespace GLTech.Scripting.Debugging
 {
     public class DebugPerformance : Script
     {

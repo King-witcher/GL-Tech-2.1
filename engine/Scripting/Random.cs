@@ -1,5 +1,5 @@
 ﻿
-namespace Engine.Scripting
+namespace GLTech.Scripting
 {
     public static class Random
     {

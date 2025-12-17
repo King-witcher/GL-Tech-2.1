@@ -1,8 +1,8 @@
 ﻿using System;
 
-using Engine.Imaging;
+using GLTech.Imaging;
 
-namespace Engine.World.Composed
+namespace GLTech.World.Composed
 {
     public class Polygon : Entity
     {

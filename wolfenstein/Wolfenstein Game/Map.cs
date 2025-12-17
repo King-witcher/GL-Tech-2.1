@@ -1,11 +1,11 @@
-﻿using Engine;
-using Engine.Imaging;
-using Engine.Scripting;
-using Engine.Scripting.Debugging;
-using Engine.Scripting.Physics;
-using Engine.Scripting.Prefab;
-using Engine.World;
-using Engine.World.Composed;
+﻿using GLTech;
+using GLTech.Imaging;
+using GLTech.Scripting;
+using GLTech.Scripting.Debugging;
+using GLTech.Scripting.Physics;
+using GLTech.Scripting.Prefab;
+using GLTech.World;
+using GLTech.World.Composed;
 using System.Diagnostics;
 
 namespace wolf3d;
@@ -358,7 +358,7 @@ public class Map : Scene
 
         // Renderer customization
         // FIXME: Create a setup method.
-        global::Engine.Renderer.FieldOfView = 93.93f;
+        //global::GLTech.Engine.FieldOfView = 93.93f;
     }
 
     static Image Resize(Image pb, int scale)

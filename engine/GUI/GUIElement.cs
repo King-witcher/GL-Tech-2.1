@@ -1,7 +1,7 @@
-﻿using Engine.World;
-using Engine.Imaging;
+﻿using GLTech.World;
+using GLTech.Imaging;
 
-namespace Engine.GUI;
+namespace GLTech.GUI;
 
 public enum VerticalAnchor : byte
 {

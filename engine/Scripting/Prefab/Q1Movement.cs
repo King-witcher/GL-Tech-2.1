@@ -1,8 +1,9 @@
-﻿using Engine.Input;
-using Engine.Scripting.Physics;
-using Engine.World;
+﻿using GLTech.Input;
+using GLTech.Scripting.Physics;
+using GLTech.World;
+using SDL;
 
-namespace Engine.Scripting.Prefab
+namespace GLTech.Scripting.Prefab
 {
     public sealed class Q1Movement : Script
     {
@@ -26,13 +27,14 @@ namespace Engine.Scripting.Prefab
         public float AirAcceleration { get; set; } = 10f;
         public float Friction { get; set; } = 6f;
         public float Height { get; set; } = 0.45f;
-        public ScanCode StepForward { get; set; } = ScanCode.W;
-        public ScanCode StepBack { get; set; } = ScanCode.S;
-        public ScanCode StepLeft { get; set; } = ScanCode.A;
-        public ScanCode StepRight { get; set; } = ScanCode.D;
-        public ScanCode TurnRight { get; set; } = ScanCode.RIGHT;
-        public ScanCode TurnLeft { get; set; } = ScanCode.LEFT;
-        public ScanCode ChangeRun_Walk { get; set; } = ScanCode.LSHIFT;
+        public SDL_Scancode StepForward { get; set; } = SDL_Scancode.SDL_SCANCODE_W;
+        public SDL_Scancode StepBack { get; set; } = SDL_Scancode.SDL_SCANCODE_S;
+        public SDL_Scancode StepLeft { get; set; } = SDL_Scancode.SDL_SCANCODE_A;
+        public SDL_Scancode StepRight { get; set; } = SDL_Scancode.SDL_SCANCODE_D;
+        public SDL_Scancode TurnRight { get; set; } = SDL_Scancode.SDL_SCANCODE_RIGHT;
+        public SDL_Scancode TurnLeft { get; set; } = SDL_Scancode.SDL_SCANCODE_LEFT;
+        public SDL_Scancode ChangeRun_Walk { get; set; } = SDL_Scancode.SDL_SCANCODE_LSHIFT;
+        public SDL_Scancode Jump { get; set; } = SDL_Scancode.SDL_SCANCODE_SPACE;
 
         void OnStart()
         {
@@ -50,7 +52,7 @@ namespace Engine.Scripting.Prefab
                 UpdateVelocity(GetMaxSpeed());
                 UpdateZ(camera);
 
-                if (Keyboard.IsKeyDown(ScanCode.LEFT))
+                if (Input.IsKeyDown(SDL_Scancode.SDL_SCANCODE_LEFT))
                     camera.RelativeRotation -= Time.TimeStep * TurnSpeed;
                 if (Keyboard.IsKeyDown(ScanCode.RIGHT))
                     camera.RelativeRotation += Time.TimeStep * TurnSpeed;
@@ -59,7 +61,7 @@ namespace Engine.Scripting.Prefab
 
         void DetectJump()
         {
-            if (Keyboard.IsKeyDown(ScanCode.SPACE) && grounded)
+            if ((Input.WasKeyPressed(Jump) || Input.IsKeyDown(Jump)) && grounded)
             {
                 zspeed = JumpSpeed;
                 grounded = false;
@@ -90,7 +92,7 @@ namespace Engine.Scripting.Prefab
         float GetMaxSpeed()
         {
             bool run = AlwaysRun;
-            if (Keyboard.IsKeyDown(ChangeRun_Walk))
+            if (Input.IsKeyDown(ChangeRun_Walk))
                 run = !run;
 
             if (run)
@@ -146,13 +148,13 @@ namespace Engine.Scripting.Prefab
         {
             Vector result = Vector.Zero;
 
-            if (Keyboard.IsKeyDown(StepForward))
+            if (Input.IsKeyDown(StepForward))
                 result += Vector.Forward;
-            if (Keyboard.IsKeyDown(StepBack))
+            if (Input.IsKeyDown(StepBack))
                 result += Vector.Backward;
-            if (Keyboard.IsKeyDown(StepLeft))
+            if (Input.IsKeyDown(StepLeft))
                 result += Vector.Left;
-            if (Keyboard.IsKeyDown(StepRight))
+            if (Input.IsKeyDown(StepRight))
                 result += Vector.Right;
 
             result *= Entity.RelativeDirection;

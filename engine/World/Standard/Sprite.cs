@@ -1,8 +1,8 @@
-﻿using Engine.Imaging;
+﻿using GLTech.Imaging;
 
-using Struct = Engine.Structs.SpriteStruct;
+using Struct = GLTech.Structs.SpriteStruct;
 
-namespace Engine.World
+namespace GLTech.World
 {
     internal unsafe sealed class Sprite : Entity
     {

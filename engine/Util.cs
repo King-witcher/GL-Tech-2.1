@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Engine
+namespace GLTech
 {
     internal static unsafe class Util
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using Engine;
-using Engine.Imaging;
+using GLTech;
+using GLTech.Imaging;
 
-namespace Engine.GUI
+namespace GLTech.GUI
 {
     public class Text : GUIElement
     {
@@ -16,9 +16,9 @@ namespace Engine.GUI
 
         public string Value { get; set; }
         public float FontSize { get; set; }
-        public Engine.Imaging.Color Color { get; set; } = Engine.Imaging.Color.White;
+        public global::GLTech.Imaging.Color Color { get; set; } = global::GLTech.Imaging.Color.White;
 
-        internal override void Render(Engine.Imaging.Image image)
+        internal override void Render(global::GLTech.Imaging.Image image)
         {
             base.Render(image);
 

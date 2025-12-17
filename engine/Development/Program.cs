@@ -1,17 +1,17 @@
 ﻿using System;
 using System.IO;
 
-using Engine.World;
-using Engine.Serialization;
-using Engine.Structs;
+using GLTech.World;
+using GLTech.Serialization;
+using GLTech.Structs;
 
-namespace Engine.Development
+namespace GLTech.Development
 {
     internal class Program
     {
         static unsafe void Main()
         {
-            Scene scene = new Engine.Demos.SuperBlockMap.Map();
+            Scene scene = new global::GLTech.Demos.SuperBlockMap.Map();
         }
     }
 }

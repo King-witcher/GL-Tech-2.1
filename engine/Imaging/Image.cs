@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
-namespace Engine.Imaging
+namespace GLTech.Imaging
 {
     [StructLayout(LayoutKind.Sequential)]
     public unsafe readonly struct Image : IDisposable

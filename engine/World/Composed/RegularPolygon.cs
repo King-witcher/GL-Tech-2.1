@@ -1,6 +1,6 @@
-﻿using Engine.Imaging;
+﻿using GLTech.Imaging;
 
-namespace Engine.World.Composed
+namespace GLTech.World.Composed
 {
     public sealed class RegularPolygon : Polygon
     {

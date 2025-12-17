@@ -1,6 +1,6 @@
 ﻿#pragma warning disable IDE0051
 
-namespace Engine.Scripting.Prefab
+namespace GLTech.Scripting.Prefab
 {
     public sealed class Move : Script
     {

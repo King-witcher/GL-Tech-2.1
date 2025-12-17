@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace Engine.Serialization
+namespace GLTech.Serialization
 {
     /// <summary>
     /// Represents a file that stores a scene.

@@ -1,6 +1,6 @@
 ﻿
 
-namespace Engine.Imaging.Processing
+namespace GLTech.Imaging.Processing
 {
     public sealed class GrayScale : Effect
     {

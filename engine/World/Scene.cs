@@ -1,10 +1,10 @@
-﻿using Engine.Imaging;
-using Engine.Scripting;
-using Engine.Structs;
+﻿using GLTech.Imaging;
+using GLTech.Scripting;
+using GLTech.Structs;
 using System;
 using System.Collections.Generic;
 
-namespace Engine.World
+namespace GLTech.World
 {
     public unsafe partial class Scene : IDisposable
     {

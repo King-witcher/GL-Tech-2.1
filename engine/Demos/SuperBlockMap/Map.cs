@@ -1,12 +1,12 @@
-﻿using Engine.Imaging;
-using Engine.Scripting.Debugging;
-using Engine.Scripting.Physics;
-using Engine.Scripting.Prefab;
-using Engine.World;
-using Engine.World.Composed;
+﻿using GLTech.Imaging;
+using GLTech.Scripting.Debugging;
+using GLTech.Scripting.Physics;
+using GLTech.Scripting.Prefab;
+using GLTech.World;
+using GLTech.World.Composed;
 using System.Collections.Generic;
 
-namespace Engine.Demos.SuperBlockMap
+namespace GLTech.Demos.SuperBlockMap
 {
     // Esse é um mapa com uma quantidade extrema de planos para testes de gargalo.
     public class Map : Scene

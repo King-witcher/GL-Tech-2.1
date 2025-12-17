@@ -1,7 +1,7 @@
-﻿using Engine.Imaging;
-using Engine.World;
+﻿using GLTech.Imaging;
+using GLTech.World;
 
-namespace Engine.Demos.SimpleBenchmark
+namespace GLTech.Demos.SimpleBenchmark
 {
     internal class Map : Scene
     {

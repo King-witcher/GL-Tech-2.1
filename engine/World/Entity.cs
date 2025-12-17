@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Engine.World
+namespace GLTech.World
 {
     public abstract partial class Entity : IDisposable
     {

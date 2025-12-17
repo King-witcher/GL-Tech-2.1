@@ -2,9 +2,9 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-using Engine.World;
+using GLTech.World;
 
-namespace Engine.Structs
+namespace GLTech.Structs
 {
     [NativeCppClass]
     [StructLayout(layoutKind: LayoutKind.Sequential)]

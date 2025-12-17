@@ -1,5 +1,5 @@
 ﻿
-namespace Engine.World
+namespace GLTech.World
 {
     internal static class Culling
     {

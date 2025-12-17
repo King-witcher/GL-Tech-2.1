@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Engine
+namespace GLTech
 {
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct Vector : IEquatable<Vector>

@@ -1,16 +1,16 @@
-﻿using Engine.Imaging;
+﻿using GLTech.Imaging;
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using CameraClass = Engine.World.Camera;
-using CeilingClass = Engine.World.Ceiling;
-using ColliderClass = Engine.World.Collider;
-using Entity = Engine.World.Entity;
-using FloorClass = Engine.World.Floor;
-using PlaneClass = Engine.World.Plane;
-using SpriteClass = Engine.World.Sprite;
+using CameraClass = GLTech.World.Camera;
+using CeilingClass = GLTech.World.Ceiling;
+using ColliderClass = GLTech.World.Collider;
+using Entity = GLTech.World.Entity;
+using FloorClass = GLTech.World.Floor;
+using PlaneClass = GLTech.World.Plane;
+using SpriteClass = GLTech.World.Sprite;
 
-namespace Engine.Structs
+namespace GLTech.Structs
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]

@@ -1,5 +1,5 @@
 ﻿
-namespace Engine.Input
+namespace GLTech.Input
 {
     public enum ScanCode
     {

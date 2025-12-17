@@ -1,14 +1,14 @@
-﻿using Engine;
-using Engine.Imaging;
-using Engine.World;
-using Engine.World.Composed;
-using Engine.Scripting;
-using Engine.Scripting.Debugging;
-using Engine.Scripting.Prefab;
-using Engine.Scripting.Physics;
-using Engine.Input;
+﻿using GLTech;
+using GLTech.Imaging;
+using GLTech.World;
+using GLTech.World.Composed;
+using GLTech.Scripting;
+using GLTech.Scripting.Debugging;
+using GLTech.Scripting.Prefab;
+using GLTech.Scripting.Physics;
+using GLTech.Input;
 
-namespace Engine.Demos.RotatingPillars
+namespace GLTech.Demos.RotatingPillars
 {
     public class Map : Scene
     {

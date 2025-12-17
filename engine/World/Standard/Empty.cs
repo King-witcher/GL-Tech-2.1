@@ -1,4 +1,4 @@
-﻿namespace Engine.World
+﻿namespace GLTech.World
 {
     public sealed class Empty : Entity
     {

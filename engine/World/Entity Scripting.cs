@@ -1,10 +1,10 @@
-﻿using Engine.Scripting;
+﻿using GLTech.Scripting;
 using System;
 using System.Collections.Generic;
 
 // Talvez as World devam atualizar as relativas tambem. Posso criar uma que atualize apenas a interna e usar por quest'oes de performance.
 
-namespace Engine.World
+namespace GLTech.World
 {
     partial class Entity
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Engine.Input
+namespace GLTech.Input
 {
     internal interface IKeyboard
     {

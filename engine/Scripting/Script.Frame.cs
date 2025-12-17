@@ -1,4 +1,4 @@
-﻿namespace Engine.Scripting
+﻿namespace GLTech.Scripting
 {
     partial class Script
     {

@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Engine.Imaging
+namespace GLTech.Imaging
 {
     [StructLayout(LayoutKind.Explicit)]
     public partial struct Color : IEquatable<Color>

@@ -1,11 +1,11 @@
 ﻿
-using Engine.Imaging;
-using Engine.Input;
+using GLTech.Imaging;
+using GLTech.Input;
 using SDL;
 using System;
 using static SDL.SDL3;
 
-namespace Engine
+namespace GLTech
 {
     internal unsafe sealed class Window
     {
@@ -14,6 +14,8 @@ namespace Engine
         SDL_Renderer* renderer;
         SDL_Texture* texture;
 
+        public Image Buffer { get => buffer; }
+
         static Window()
         {
             SDL_Init(SDL_InitFlags.SDL_INIT_VIDEO);
@@ -21,16 +23,12 @@ namespace Engine
 
         internal Window(
             string title,
-            int w,
-            int h,
-            int bufw,
-            int bufh,
-            bool fullscreen,
-            out Image buffer
+            int width,
+            int height,
+            bool fullscreen
         )
         {
-            this.buffer = new Image(bufw, bufh);
-            buffer = this.buffer;
+            buffer = new Image(width, height);
             //Fullscreen = fullscreen;
 
             SDL_WindowFlags flags = SDL_WindowFlags.SDL_WINDOW_MOUSE_GRABBED;
@@ -38,8 +36,8 @@ namespace Engine
 
             window = SDL_CreateWindow(
                 title,
-                w,
-                h,
+                width,
+                height,
                 flags
             );
 
@@ -50,8 +48,8 @@ namespace Engine
                 renderer,
                 SDL_PixelFormat.SDL_PIXELFORMAT_ARGB8888,
                 SDL_TextureAccess.SDL_TEXTUREACCESS_STATIC,
-                bufw,
-                bufh
+                width,
+                height
             );
         }
 
@@ -73,7 +71,6 @@ namespace Engine
 
         internal void Present()
         {
-            //SDL_RenderClear(renderer);
             SDL_UpdateTexture(texture, null, buffer.Buffer, buffer.Width * 4);
             SDL_RenderTexture(renderer, texture, null, null);
             SDL_RenderPresent(renderer);

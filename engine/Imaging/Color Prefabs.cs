@@ -1,5 +1,5 @@
 ﻿
-namespace Engine.Imaging
+namespace GLTech.Imaging
 {
     public partial struct Color
     {

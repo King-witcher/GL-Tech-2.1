@@ -1,12 +1,12 @@
 ﻿
-using Engine.Imaging;
-using Engine.Scripting;
-using Engine.Scripting.Physics;
-using Engine.Scripting.Prefab;
-using Engine.World;
-using Engine.World.Composed;
+using GLTech.Imaging;
+using GLTech.Scripting;
+using GLTech.Scripting.Physics;
+using GLTech.Scripting.Prefab;
+using GLTech.World;
+using GLTech.World.Composed;
 
-namespace Engine.Tutorial
+namespace GLTech.Tutorial
 {
     class Map : Scene
     {
@@ -59,9 +59,9 @@ namespace Engine.Tutorial
         static void Main()
         {
             Scene scene = new Map();
-            Renderer.CaptureMouse = true;
-            Renderer.FullScreen = true;
-            Renderer.Run(scene);
+            //Engine.CaptureMouse = true;
+            //Engine.FullScreen = true;
+            //Engine.Run(scene);
         }
     }
 }

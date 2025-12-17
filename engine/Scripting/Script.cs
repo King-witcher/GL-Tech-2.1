@@ -1,9 +1,9 @@
-﻿using Engine.Input;
-using Engine.World;
+﻿using GLTech.Input;
+using GLTech.World;
 using System;
 using System.Reflection;
 
-namespace Engine.Scripting
+namespace GLTech.Scripting
 {
     public abstract partial class Script
     {

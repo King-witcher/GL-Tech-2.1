@@ -1,8 +1,8 @@
-﻿using Engine.Scripting.Physics;
-using Engine.World;
-using Engine.Input;
+﻿using GLTech.Scripting.Physics;
+using GLTech.World;
+using GLTech.Input;
 
-namespace Engine.Scripting.Prefab
+namespace GLTech.Scripting.Prefab
 {
     public sealed class FlatMovement : Script
     {

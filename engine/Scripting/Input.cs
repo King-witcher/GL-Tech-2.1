@@ -1,7 +1,7 @@
 ﻿using SDL;
 using static SDL.SDL3;
 
-namespace Engine.Scripting
+namespace GLTech.Scripting
 {
     public static class Input
     {
@@ -12,6 +12,16 @@ namespace Engine.Scripting
         public static Vector MousePosition { get; private set; } = (0f, 0f);
         public static Vector MouseRel { get; private set; } = (0f, 0f);
         public static bool ShouldExit { get; internal set; } = false;
+
+        public static bool IsKeyDown(SDL_Scancode scancode)
+        {
+            return keysDown[(int)scancode];
+        }
+
+        public static bool WasKeyPressed(SDL_Scancode scancode)
+        {
+            return keysPressed[(int)scancode];
+        }
 
         unsafe internal static void Update()
         {

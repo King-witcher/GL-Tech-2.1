@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Engine.Imaging.Processing
+namespace GLTech.Imaging.Processing
 {
     public sealed unsafe class FFXAA : Effect, IDisposable
     {

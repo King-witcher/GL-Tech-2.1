@@ -1,9 +1,9 @@
-﻿using Engine.Scripting.Physics;
-using Engine.Input;
-using Engine.World;
+﻿using GLTech.Scripting.Physics;
+using GLTech.Input;
+using GLTech.World;
 using System;
 
-namespace Engine.Scripting.Prefab
+namespace GLTech.Scripting.Prefab
 {
     public sealed class Q3Movement : Script
     {

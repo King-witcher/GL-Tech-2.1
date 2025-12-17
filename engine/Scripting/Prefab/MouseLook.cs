@@ -1,4 +1,4 @@
-﻿namespace Engine.Scripting.Prefab
+﻿namespace GLTech.Scripting.Prefab
 {
     public sealed class MouseLook : Script
     {

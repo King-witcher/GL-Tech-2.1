@@ -1,5 +1,5 @@
 ﻿
-namespace Engine.Scripting.Debugging
+namespace GLTech.Scripting.Debugging
 {
     public class DebugScene : Script
     {

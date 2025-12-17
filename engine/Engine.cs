@@ -26,25 +26,44 @@ public class Engine
     Scene? currentScene = null;
     Action? ScheduledActions = null;
     Window window;
+    Renderer renderer;
     private static Logger logger = new("Engine");
 
-    public bool ParallelRendering { get; set; }
-    public bool FullScreen { get; set; }
-    public float FieldOfView { get; set; }
-    public bool CaptureMouse { get; set; }
-    public int WindowWidth { get; set; }
-    public int WindowHeight { get; set; }
+    public bool ParallelRendering
+    {
+        get => renderer.ParallelRendering;
+        set => renderer.ParallelRendering = value;
+    }
+    public bool FullScreen
+    {
+        get => window.Fullscreen;
+        set => window.Fullscreen = value;
+    }
+    public float FieldOfView
+    {
+        get => renderer.HFov;
+        set => renderer.HFov = value;
+    }
+    public bool CaptureMouse
+    {
+        get => window.RelativeMouseMode;
+        set => window.RelativeMouseMode = value;
+    }
+    public (int width, int height) WindowSize
+    {
+        get => window.Size;
+        set => window.Size = value;
+    }
     public bool IsRunning { get; private set; }
 
     public Engine(EngineCreateInfo createInfo)
     {
         window = new Window(createInfo.Title, createInfo.WindowWidth, createInfo.WindowHeight, createInfo.FullScreen);
+        renderer = new Renderer(window.Buffer);
+
         ParallelRendering = createInfo.ParallelRendering;
-        FullScreen = createInfo.FullScreen;
         FieldOfView = createInfo.FieldOfView;
         CaptureMouse = createInfo.CaptureMouse;
-        WindowWidth = createInfo.WindowWidth;
-        WindowHeight = createInfo.WindowHeight;
     }
 
     public Engine() : this(new EngineCreateInfo()) { }
@@ -53,7 +72,10 @@ public class Engine
     {
         #region Checks
         if (IsRunning)
+        {
+            logger.Error($"Engine is already running a Scene. Cannot run multiple Scenes at once.");
             return;
+        }
         IsRunning = true;
 
         if (scene == null)
@@ -77,8 +99,6 @@ public class Engine
         Script.Time.TimeStep = 0;
         Script.Time.WindowTime = 0;
         currentScene.Start?.Invoke();
-
-        Renderer renderer = new(window.Buffer);
 
         window.RelativeMouseMode = CaptureMouse;
 
@@ -107,7 +127,6 @@ public class Engine
             // Update input state
             Scripting.Input.Update();
             FlushSchedule();
-            window.ProcessEvents();
             //if (CaptureMouse)
             //    Mouse.Shift = window.GetMouseShift();
 

@@ -15,6 +15,19 @@ namespace GLTech
         SDL_Texture* texture;
 
         public Image Buffer { get => buffer; }
+        public (int width, int height) Size
+        {
+            get
+            {
+                int width, height;
+                SDL_GetWindowSize(window, &width, &height);
+                return (width, height);
+            }
+            set
+            {
+                SDL_SetWindowSize(window, value.width, value.height);
+            }
+        }
 
         static Window()
         {
@@ -75,32 +88,6 @@ namespace GLTech
             SDL_RenderTexture(renderer, texture, null, null);
             SDL_RenderPresent(renderer);
         }
-
-        /** Processes all pending events from the event queue. */
-        internal void ProcessEvents()
-        {
-            //while (SDL_PollEvent(out SDL_Event sdlEvent) != 0)
-            //{
-            //    switch (sdlEvent.type)
-            //    {
-            //        case SDL_EventType.SDL_QUIT:
-            //            OnQuit?.Invoke();
-            //            break;
-            //        case SDL_EventType.SDL_KEYDOWN:
-            //            OnKeyDown?.Invoke((ScanCode)sdlEvent.key.keysym.scancode);
-            //            break;
-            //        case SDL_EventType.SDL_KEYUP:
-            //            OnKeyUp?.Invoke((ScanCode)sdlEvent.key.keysym.scancode);
-            //            break;
-            //    }
-            //}
-        }
-
-        //internal (int x, int y) GetMouseShift()
-        //{
-        //    SDL_GetRelativeMouseState(out int x, out int y);
-        //    return (x, y);
-        //}
 
         internal void Destroy()
         {

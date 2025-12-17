@@ -91,7 +91,8 @@ public class Engine
         long initTime = Stopwatch.GetTimestamp();
         long lastTime = initTime;
         long accumulator = 0;
-        while (!Scripting.Input.ShouldExit)
+
+        while (!Scripting.Input.ShouldExit && !quitRequested)
         {
             // Draw current state
             renderer.Draw(currentScene.unmanaged);

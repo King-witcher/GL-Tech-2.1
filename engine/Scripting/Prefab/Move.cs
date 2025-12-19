@@ -15,7 +15,7 @@ namespace GLTech.Scripting.Prefab
             Speed = velocity.Module;
         }
 
-        public Vector Direction { get; set; } = Vector.Forward;
+        public Vector Direction { get; set; } = Vector.North;
 
         public float Speed { get; set; } = 0.5f;
 

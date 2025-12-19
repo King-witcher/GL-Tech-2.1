@@ -5,7 +5,7 @@
         public Empty(Vector pos)
         {
             PositionData = pos;
-            DirectionData = Vector.Forward;
+            DirectionData = Vector.North;
         }
 
         public Empty(float x, float y) : this(new Vector(x, y)) { }

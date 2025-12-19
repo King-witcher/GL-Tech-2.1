@@ -1,5 +1,4 @@
-﻿using GLTech.Imaging;
-using Struct = GLTech.Structs.PlaneStruct;
+﻿using Struct = GLTech.Structs.PlaneStruct;
 
 namespace GLTech.World
 {
@@ -55,11 +54,6 @@ namespace GLTech.World
             unmanaged = Struct.Create(start, end, texture);
         }
 
-        ~Plane()
-        {
-            if (unmanaged != null) Dispose();
-        }
-
         public override void Dispose()
         {
             Struct.Delete(unmanaged);
@@ -68,7 +62,7 @@ namespace GLTech.World
 
         public override string ToString()
         {
-            return $"|{ Start } -- { End }| ";
+            return $"|{Start} -- {End}| ";
         }
     }
 }

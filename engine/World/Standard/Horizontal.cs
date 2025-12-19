@@ -1,7 +1,4 @@
-﻿using System;
-
-using GLTech.Imaging;
-using Struct = GLTech.Structs.HorizontalStruct;
+﻿using Struct = GLTech.Structs.HorizontalStruct;
 
 namespace GLTech.World
 {
@@ -49,11 +46,6 @@ namespace GLTech.World
             unmanaged = Struct.Create((left, top), (right, bottom), texture);
         }
 
-        ~Horizontal()
-        {
-            if (unmanaged != null) Dispose();
-        }
-
         public override void Dispose()
         {
             //STriFloor.Delete(unmanaged);
@@ -62,7 +54,7 @@ namespace GLTech.World
 
         public override string ToString()
         {
-            return $"<Floor: { Position }> ";
+            return $"<Floor: {Position}> ";
         }
     }
 }

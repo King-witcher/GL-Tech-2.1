@@ -1,6 +1,4 @@
-﻿using GLTech.Imaging;
-
-namespace GLTech.World.Composed
+﻿namespace GLTech.World.Composed
 {
     public sealed class RegularPolygon : Polygon
     {
@@ -17,13 +15,13 @@ namespace GLTech.World.Composed
                 logger.Error("Radius cannot be zero. The polygon was not be created and the RegularPolygon was returned as an empty RegularPolygon.");
 
                 PositionData = position;
-                DirectionData = Vector.Forward;
+                DirectionData = Vector.North;
 
                 return;
             }
 
             PositionData = position;
-            DirectionData = Vector.Forward * radius;
+            DirectionData = Vector.North * radius;
 
             Build(
                 verts: Vector.GetRegularPolygon(position, radius, vertices),

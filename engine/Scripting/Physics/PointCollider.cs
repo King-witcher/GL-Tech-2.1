@@ -1,18 +1,64 @@
-﻿using GLTech.World;
-using System;
+﻿using Engine.Physics;
+using GLTech.World;
 
 namespace GLTech.Scripting.Physics
 {
     public class PointCollider : KinematicBody
     {
-        const float MIN_DIST = 0.01f;
-
-        private Vector truePosition;
-        private Vector predictedPosition;
+        private Vector realPosition;
+        private Vector framePosition;
         private Vector error = Vector.Zero;
-
         public bool HandleCollisions { get; set; } = true;
         public Vector StartPosition { get; set; } = Vector.Zero;
+        public float MinDistance { get; set; } = 0.1f;
+
+        void Start()
+        {
+            realPosition = StartPosition;
+            framePosition = StartPosition;
+            Entity.WorldPosition = StartPosition;
+        }
+
+        void OnFixedTick()
+        {
+            Vector step = Velocity * Time.TimeStep;
+
+            if (HandleCollisions && Speed != 0)
+            {
+                RayCastInfo info = new();
+                info.segment.start = realPosition;
+                info.segment.direction = step;
+                var summary = Scene.RayCast(info);
+
+                // Simulate ray factor as if it was closer by MinDistance
+                summary.ray_factor += MinDistance / Vector.DotProduct(summary.normal, step);
+
+                while (summary.ray_factor < 1f)
+                {
+                    var preHitStep = step * summary.ray_factor;
+                    var overStep = step - preHitStep;
+                    var slideStep = overStep - summary.normal * Vector.DotProduct(summary.normal, overStep);
+                    step = preHitStep + slideStep;
+                    Velocity -= summary.normal * Vector.DotProduct(Velocity, summary.normal);
+
+                    info.segment.direction = step;
+                    summary = Scene.RayCast(info);
+                    summary.ray_factor += MinDistance / Vector.DotProduct(summary.normal, step);
+                }
+            }
+
+            realPosition += step;
+            error = framePosition - realPosition;
+        }
+
+        void OnFrame()
+        {
+            framePosition += Velocity * Time.TimeStep;
+            var correction = error * Time.TimeStep / Time.FixedTimestep;
+            framePosition -= correction;
+            error -= correction;
+            Entity.WorldPosition = framePosition;
+        }
 
         public override void Accelerate(Vector direction)
         {
@@ -34,30 +80,6 @@ namespace GLTech.Scripting.Physics
             throw new NotImplementedException();
         }
 
-        void OnStart()
-        {
-            truePosition = StartPosition;
-            predictedPosition = StartPosition;
-        }
-
-        void OnFixedTick()
-        {
-            if (HandleCollisions)
-                ClipCollisions();
-            truePosition += Velocity * Time.TimeStep;
-            error = predictedPosition - truePosition;
-        }
-
-        void OnFrame()
-        {
-            const float FIXED_TIMESTEP = 1.0f / Time.FIXED_TICKS_PER_SECOND;
-            predictedPosition += Velocity * Time.TimeStep;
-            var correction = error * Time.TimeStep / FIXED_TIMESTEP;
-            predictedPosition -= correction;
-            error -= correction;
-            Entity.WorldPosition = predictedPosition;
-        }
-
         private void ClipCollisions()
         {
             if (Speed == 0) return;
@@ -66,13 +88,13 @@ namespace GLTech.Scripting.Physics
             float deltaS = Speed * Time.TimeStep;
 
             Scene.CastRay(
-                new Segment(truePosition, Velocity),
+                new Segment(realPosition, Velocity),
                 out float c_dist,
                 out Vector c_normal
             );
 
             // If it is in collision route for the next frame, cap the speed so that 
-            if (deltaS > c_dist - MIN_DIST)
+            if (deltaS > c_dist - MinDistance)
             {
                 // Compensate the current step.
                 Vector compensation = c_normal * (Vector.DotProduct(Velocity, c_normal));
@@ -82,12 +104,12 @@ namespace GLTech.Scripting.Physics
                 deltaS = Speed * Time.TimeStep;
 
                 Scene.CastRay(
-                    new Segment(truePosition, Velocity),
+                    new Segment(realPosition, Velocity),
                     out c_dist,
                     out c_normal
                 );
 
-                if (deltaS > c_dist - MIN_DIST)
+                if (deltaS > c_dist - MinDistance)
                     Velocity = Vector.Zero;
             }
         }

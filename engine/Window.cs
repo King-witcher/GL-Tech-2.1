@@ -1,8 +1,6 @@
 ﻿
-using GLTech.Imaging;
 using GLTech.Input;
 using SDL;
-using System;
 using static SDL.SDL3;
 
 namespace GLTech
@@ -26,6 +24,20 @@ namespace GLTech
             set
             {
                 SDL_SetWindowSize(window, value.width, value.height);
+            }
+        }
+
+        public (int x, int y) Position
+        {
+            get
+            {
+                int x, y;
+                SDL_GetWindowPosition(window, &x, &y);
+                return (x, y);
+            }
+            set
+            {
+                SDL_SetWindowPosition(window, value.x, value.y);
             }
         }
 

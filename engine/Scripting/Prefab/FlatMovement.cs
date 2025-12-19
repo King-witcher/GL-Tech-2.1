@@ -1,6 +1,6 @@
-﻿using GLTech.Scripting.Physics;
+﻿using GLTech.Input;
+using GLTech.Scripting.Physics;
 using GLTech.World;
-using GLTech.Input;
 
 namespace GLTech.Scripting.Prefab
 {
@@ -31,17 +31,17 @@ namespace GLTech.Scripting.Prefab
 
         public ScanCode StepRight { get; set; } = ScanCode.D;
 
-        public ScanCode TurnRight { get; set; } = ScanCode.RIGHT;
+        public ScanCode TurnRight { get; set; } = ScanCode.Right;
 
-        public ScanCode TurnLeft { get; set; } = ScanCode.LEFT;
+        public ScanCode TurnLeft { get; set; } = ScanCode.Left;
 
-        public ScanCode ChangeRun_Walk { get; set; } = ScanCode.LSHIFT;
+        public ScanCode ChangeRun_Walk { get; set; } = ScanCode.LeftShift;
 
         void OnFrame()
         {
             // Check speed
             bool run = AlwaysRun;
-            if (Keyboard.IsKeyDown(ChangeRun_Walk))
+            if (Input.IsKeyDown(ChangeRun_Walk))
                 run = !run;
 
             float speed;
@@ -51,14 +51,14 @@ namespace GLTech.Scripting.Prefab
 
 
             Vector wishdir = (0, 0);
-            if (Keyboard.IsKeyDown(StepForward))
-                wishdir += Vector.Forward;
-            if (Keyboard.IsKeyDown(StepBack))
-                wishdir += Vector.Backward;
-            if (Keyboard.IsKeyDown(StepLeft))
-                wishdir += Vector.Left;
-            if (Keyboard.IsKeyDown(StepRight))
-                wishdir += Vector.Right;
+            if (Input.IsKeyDown(StepForward))
+                wishdir += Vector.North;
+            if (Input.IsKeyDown(StepBack))
+                wishdir += Vector.South;
+            if (Input.IsKeyDown(StepLeft))
+                wishdir += Vector.West;
+            if (Input.IsKeyDown(StepRight))
+                wishdir += Vector.East;
 
             // Suboptimal
             if (wishdir.Module != 0)
@@ -67,9 +67,9 @@ namespace GLTech.Scripting.Prefab
             body.Velocity = wishdir * speed * Entity.WorldDirection;
 
             // Turn
-            if (Keyboard.IsKeyDown(TurnLeft))
+            if (Input.IsKeyDown(TurnLeft))
                 Entity.Rotate(-TurnSpeed * Time.TimeStep);
-            if (Keyboard.IsKeyDown(TurnRight))
+            if (Input.IsKeyDown(TurnRight))
                 Entity.Rotate(TurnSpeed * Time.TimeStep);
         }
     }

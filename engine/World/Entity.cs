@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Engine.Physics;
 
 namespace GLTech.World
 {
@@ -29,7 +28,7 @@ namespace GLTech.World
 
         public IEnumerable<Entity> GetNodes()
         {
-            Queue<Entity> queue = new ();
+            Queue<Entity> queue = new();
             queue.Enqueue(this);
 
             while (queue.TryDequeue(out Entity current))
@@ -63,7 +62,7 @@ namespace GLTech.World
 
         private protected virtual Vector PositionData { get; set; }
 
-        private protected virtual Vector DirectionData { get; set; } = Vector.Forward;
+        private protected virtual Vector DirectionData { get; set; } = Vector.North;
 
         public Scene Scene => scene;
 
@@ -73,21 +72,5 @@ namespace GLTech.World
         {
             this.scene = scene;
         }
-    }
-}
-
-interface Implementada
-{
-    static void Test()
-    {
-        Console.WriteLine("asdf");
-    }
-}
-
-class Teste : Implementada
-{
-    public static void Test()
-    {
-
     }
 }

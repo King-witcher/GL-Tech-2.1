@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-	<TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
+	<TargetFramework>net10.0-windows</TargetFramework>
     <RootNamespace>wolf3d</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

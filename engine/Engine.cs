@@ -1,7 +1,5 @@
-﻿using GLTech.Input;
-using GLTech.Scripting;
+﻿using GLTech.Scripting;
 using GLTech.World;
-using System;
 using System.Diagnostics;
 
 namespace GLTech;
@@ -59,6 +57,7 @@ public class Engine
     public Engine(EngineCreateInfo createInfo)
     {
         window = new Window(createInfo.Title, createInfo.WindowWidth, createInfo.WindowHeight, createInfo.FullScreen);
+        window.Position = (-1000, 300);
         renderer = new Renderer(window.Buffer);
 
         ParallelRendering = createInfo.ParallelRendering;
@@ -84,8 +83,8 @@ public class Engine
             return;
         }
 
-        if (scene.Background.source.Buffer == IntPtr.Zero)
-            logger.Warn($"The Scene being rendered does not have a background texture. Add it by using Scene.Background property.");
+        //if (scene.Background.source.Buffer == IntPtr.Zero)
+        //    logger.Warn($"The Scene being rendered does not have a background texture. Add it by using Scene.Background property.");
         #endregion
 
         Camera camera = scene.Camera;
@@ -103,19 +102,17 @@ public class Engine
         window.RelativeMouseMode = CaptureMouse;
 
         window.OnQuit += () => { quitRequested = true; };
-        window.OnKeyDown += Keyboard.SetKeyDown;
-        window.OnKeyUp += Keyboard.SetKeyUp;
 
-        long FIXED_TIMESTEP = Stopwatch.Frequency / Script.Time.FIXED_TICKS_PER_SECOND;
+        long FIXED_TIMESTEP = Stopwatch.Frequency / Script.Time.FixedTicks;
 
         long initTime = Stopwatch.GetTimestamp();
         long lastTime = initTime;
         long accumulator = 0;
 
-        while (!Scripting.Input.ShouldExit && !quitRequested)
+        while (!Script.Input.ShouldExit && !quitRequested)
         {
             // Draw current state
-            renderer.Draw(currentScene.unmanaged);
+            renderer.Render(currentScene.unmanaged);
             window.Present();
 
             // Update timers
@@ -125,7 +122,7 @@ public class Engine
             accumulator += frameTime;
 
             // Update input state
-            Scripting.Input.Update();
+            Script.Input.Update();
             FlushSchedule();
             //if (CaptureMouse)
             //    Mouse.Shift = window.GetMouseShift();
@@ -144,12 +141,10 @@ public class Engine
             Script.Time.FixedRemainder = (float)accumulator / FIXED_TIMESTEP;
             currentScene.OnFrame?.Invoke();
         }
-        Scripting.Input.ShouldExit = false;
-
         window.Destroy();
 
         // Clears the Keyboard
-        Keyboard.Clear();
+        Script.Input.Clear();
 
         currentScene = null;
         IsRunning = false;

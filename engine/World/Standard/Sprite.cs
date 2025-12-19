@@ -1,6 +1,4 @@
-﻿using GLTech.Imaging;
-
-using Struct = GLTech.Structs.SpriteStruct;
+﻿using Struct = GLTech.Structs.SpriteStruct;
 
 namespace GLTech.World
 {
@@ -19,11 +17,6 @@ namespace GLTech.World
         public Sprite(Vector position, Texture material)
         {
             unmanaged = Struct.Create(position, material);
-        }
-
-        ~Sprite()
-        {
-            if (unmanaged != null) Dispose();
         }
 
         public override void Dispose()

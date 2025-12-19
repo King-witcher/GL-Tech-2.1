@@ -1,46 +1,40 @@
-﻿using System;
-using Struct = GLTech.Structs.CameraStruct;
+﻿using Struct = GLTech.Structs.CameraStruct;
 
 namespace GLTech.World
 {
     public unsafe sealed class Camera : Entity, IDisposable
     {
         #region What should happen to the unmanaged data if its position/direction changes? Here's where the class answers it.
-        internal Struct* unmanaged;
+        internal Struct* raw;
 
         private protected override Vector PositionData
         {
-            get => unmanaged->position;
-            set => unmanaged->position = value;
+            get => raw->position;
+            set => raw->position = value;
         }
 
         private protected override Vector DirectionData
         {
-            get => unmanaged->direction;
-            set => unmanaged->direction = value;
+            get => raw->direction;
+            set => raw->direction = value;
         }
         #endregion
 
         public float Z
         {
-            get => unmanaged->z;
-            set => unmanaged->z = value;
+            get => raw->z;
+            set => raw->z = value;
         }
 
         internal Camera()
         {
-            unmanaged = Struct.Create(Vector.Zero, Vector.Forward);
-        }
-
-        ~Camera()
-        {
-            if (unmanaged != null) Dispose();
+            raw = Struct.Create(Vector.Zero, Vector.North);
         }
 
         public override void Dispose()
         {
-            Struct.Delete(unmanaged);
-            unmanaged = null;
+            Struct.Delete(raw);
+            raw = null;
         }
     }
 }

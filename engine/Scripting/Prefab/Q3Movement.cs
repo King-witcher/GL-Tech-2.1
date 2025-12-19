@@ -1,7 +1,6 @@
-﻿using GLTech.Scripting.Physics;
-using GLTech.Input;
+﻿using GLTech.Input;
+using GLTech.Scripting.Physics;
 using GLTech.World;
-using System;
 
 namespace GLTech.Scripting.Prefab
 {
@@ -31,9 +30,9 @@ namespace GLTech.Scripting.Prefab
         public ScanCode StepBack { get; set; } = ScanCode.S;
         public ScanCode StepLeft { get; set; } = ScanCode.A;
         public ScanCode StepRight { get; set; } = ScanCode.D;
-        public ScanCode TurnRight { get; set; } = ScanCode.RIGHT;
-        public ScanCode TurnLeft { get; set; } = ScanCode.LEFT;
-        public ScanCode ChangeRun_Walk { get; set; } = ScanCode.LSHIFT;
+        public ScanCode TurnRight { get; set; } = ScanCode.Right;
+        public ScanCode TurnLeft { get; set; } = ScanCode.Left;
+        public ScanCode ChangeRun_Walk { get; set; } = ScanCode.LeftShift;
 
         void OnStart()
         {
@@ -51,16 +50,16 @@ namespace GLTech.Scripting.Prefab
                 UpdateVelocity(GetMaxSpeed());
                 UpdateZ(camera);
 
-                if (Keyboard.IsKeyDown(ScanCode.LEFT))
+                if (Input.IsKeyDown(ScanCode.Left))
                     camera.RelativeRotation -= Time.TimeStep * TurnSpeed;
-                if (Keyboard.IsKeyDown(ScanCode.RIGHT))
+                if (Input.IsKeyDown(ScanCode.Right))
                     camera.RelativeRotation += Time.TimeStep * TurnSpeed;
             }
         }
 
         void DetectJump()
         {
-            if (Keyboard.IsKeyDown(ScanCode.SPACE) && grounded)
+            if (Input.IsKeyDown(ScanCode.Space) && grounded)
             {
                 zspeed = JumpSpeed;
                 grounded = false;
@@ -91,7 +90,7 @@ namespace GLTech.Scripting.Prefab
         float GetMaxSpeed()
         {
             bool run = AlwaysRun;
-            if (Keyboard.IsKeyDown(ChangeRun_Walk))
+            if (Input.IsKeyDown(ChangeRun_Walk))
                 run = !run;
 
             if (run)
@@ -151,14 +150,14 @@ namespace GLTech.Scripting.Prefab
         {
             Vector result = Vector.Zero;
 
-            if (Keyboard.IsKeyDown(StepForward))
-                result += Vector.Forward;
-            if (Keyboard.IsKeyDown(StepBack))
-                result += Vector.Backward;
-            if (Keyboard.IsKeyDown(StepLeft))
-                result += Vector.Left;
-            if (Keyboard.IsKeyDown(StepRight))
-                result += Vector.Right;
+            if (Input.IsKeyDown(StepForward))
+                result += Vector.North;
+            if (Input.IsKeyDown(StepBack))
+                result += Vector.South;
+            if (Input.IsKeyDown(StepLeft))
+                result += Vector.West;
+            if (Input.IsKeyDown(StepRight))
+                result += Vector.East;
 
             result *= Entity.RelativeDirection;
 

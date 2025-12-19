@@ -1,0 +1,188 @@
+﻿using GLTech.Input;
+using GLTech.Scripting.Physics;
+using GLTech.World;
+using SDL;
+
+namespace GLTech.Scripting.Prefab
+{
+    public sealed class Q1Movement : Script
+    {
+        static Logger logger = new(typeof(Q1Movement).Name);
+        KinematicBody body;
+        float zspeed = 0f;
+        bool grounded = true;
+
+        public Q1Movement(KinematicBody body)
+        {
+            this.body = body;
+        }
+
+        public bool AlwaysRun { get; set; } = true;
+        public float TurnSpeed { get; set; } = 90f;
+        public float JumpSpeed { get; set; } = 2.7f;
+        public float Gravity { get; set; } = 8f;
+        public float StopSpeed { get; set; } = 1f;
+        public float MaxSpeed { get; set; } = 3.2f;
+        public float Acceleration { get; set; } = 10f;
+        public float AirAcceleration { get; set; } = 10f;
+        public float Friction { get; set; } = 6f;
+        public float Height { get; set; } = 0.45f;
+        public SDL_Scancode StepForward { get; set; } = SDL_Scancode.SDL_SCANCODE_W;
+        public SDL_Scancode StepBack { get; set; } = SDL_Scancode.SDL_SCANCODE_S;
+        public SDL_Scancode StepLeft { get; set; } = SDL_Scancode.SDL_SCANCODE_A;
+        public SDL_Scancode StepRight { get; set; } = SDL_Scancode.SDL_SCANCODE_D;
+        public SDL_Scancode TurnRight { get; set; } = SDL_Scancode.SDL_SCANCODE_RIGHT;
+        public SDL_Scancode TurnLeft { get; set; } = SDL_Scancode.SDL_SCANCODE_LEFT;
+        public SDL_Scancode ChangeRun_Walk { get; set; } = SDL_Scancode.SDL_SCANCODE_LSHIFT;
+        public SDL_Scancode Jump { get; set; } = SDL_Scancode.SDL_SCANCODE_SPACE;
+
+        void OnStart()
+        {
+            if (Entity is Camera camera)
+                camera.Z = Height;
+            else
+                logger.Error($"Entity {Entity} is not a camera.");
+        }
+
+        void OnFrame()
+        {
+            if (Entity is Camera camera)
+            {
+                DetectJump();
+                UpdateVelocity(GetMaxSpeed());
+                UpdateZ(camera);
+
+                if (Input.IsKeyDown(SDL_Scancode.SDL_SCANCODE_LEFT))
+                    camera.RelativeRotation -= Time.TimeStep * TurnSpeed;
+                if (Keyboard.IsKeyDown(ScanCode.RIGHT))
+                    camera.RelativeRotation += Time.TimeStep * TurnSpeed;
+            }
+        }
+
+        void DetectJump()
+        {
+            if ((Input.WasKeyPressed(Jump) || Input.IsKeyDown(Jump)) && grounded)
+            {
+                zspeed = JumpSpeed;
+                grounded = false;
+            }
+        }
+
+        void UpdateZ(Camera camera)
+        {
+            if (grounded) return;
+
+            camera.Z += zspeed * Time.TimeStep;
+            if (camera.Z < Height)
+            {
+                camera.Z = Height;
+                grounded = true;
+                zspeed = 0f;
+            }
+
+            if (camera.Z > 1f)
+            {
+                camera.Z = 0.9f;
+                zspeed = 0f;
+            }
+
+            zspeed -= Gravity * Time.TimeStep;
+        }
+
+        float GetMaxSpeed()
+        {
+            bool run = AlwaysRun;
+            if (Input.IsKeyDown(ChangeRun_Walk))
+                run = !run;
+
+            if (run)
+                return MaxSpeed;
+            else
+                return MaxSpeed / 2;
+        }
+
+        void UpdateVelocity(float maxspeed)
+        {
+            Vector wishdir = GetWishDir();
+
+            if (grounded)
+                Accelerate(wishdir, maxspeed);
+            else
+                AirAccelerate(wishdir, maxspeed);
+
+            if (body.Speed < .01f) body.Velocity = (0, 0);
+        }
+
+        void Accelerate(Vector wishdir, float wishspeed)
+        {
+            ApplyFriction();
+            float currentspeed = Vector.DotProduct(body.Velocity, wishdir);
+            float addspeed = wishspeed - currentspeed;
+            if (addspeed < 0) return;
+            float accelspeed = Acceleration * wishspeed * Time.TimeStep;
+            if (accelspeed > addspeed)
+                accelspeed = addspeed;
+
+            body.Velocity += accelspeed * wishdir;
+        }
+
+        void AirAccelerate(Vector wishdir, float wishspeed)
+        {
+            float wishspd = wishspeed;
+            if (wishspd > .3f)
+                wishspd = .3f;
+
+            float currentspeed = Vector.DotProduct(body.Velocity, wishdir);
+            float addspeed = wishspd - currentspeed;
+
+            if (addspeed < 0) return;
+
+            float accelspeed = AirAcceleration * wishspeed * Time.TimeStep;
+            if (accelspeed > addspeed)
+                accelspeed = addspeed;
+
+            body.Velocity += accelspeed * wishdir;
+        }
+
+        Vector GetWishDir()
+        {
+            Vector result = Vector.Zero;
+
+            if (Input.IsKeyDown(StepForward))
+                result += Vector.Forward;
+            if (Input.IsKeyDown(StepBack))
+                result += Vector.Backward;
+            if (Input.IsKeyDown(StepLeft))
+                result += Vector.Left;
+            if (Input.IsKeyDown(StepRight))
+                result += Vector.Right;
+
+            result *= Entity.RelativeDirection;
+
+            if (result.Module == 0)
+                return Vector.Zero;
+            else
+                return result / result.Module;
+        }
+
+
+        void ApplyFriction()
+        {
+            if (body.Speed < 0.01f)
+            {
+                body.Velocity = (0, 0);
+                return;
+            }
+
+            float control = body.Speed < StopSpeed ? StopSpeed : body.Speed;
+            float drop = control * Friction * Time.TimeStep;
+
+            float newspeed = body.Speed - drop;
+            if (newspeed < 0f)
+                newspeed = 0f;
+            newspeed /= body.Speed;
+
+            body.Velocity *= newspeed;
+        }
+    }
+}

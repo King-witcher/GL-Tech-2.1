@@ -1,9 +1,8 @@
 ﻿using GLTech;
-using GLTech.Imaging;
 using GLTech.Scripting;
-using GLTech.Scripting.Debugging;
 using GLTech.Scripting.Physics;
 using GLTech.Scripting.Prefab;
+using GLTech.Space;
 using GLTech.World;
 using GLTech.World.Composed;
 using System.Diagnostics;
@@ -77,9 +76,9 @@ public class FlagBehavior : Script
 // Wolfenstein 3D's first level
 public class Map : Scene
 {
-    Image textures = new(Images.Textures);
-    Image textures_censored = new(Images.TexturesCensored);
-    Image background_buffer = new(Images.Background);
+    Image textures = Utils.GetImageFromBitmap(Images.Textures);
+    Image textures_censored = Utils.GetImageFromBitmap(Images.TexturesCensored);
+    Image background_buffer = Utils.GetImageFromBitmap(Images.Background);
     Image highscore = Image.FromColor(Color.Green);
 
     protected override void Delete()
@@ -96,7 +95,7 @@ public class Map : Scene
 
         // BlockMap
         {
-            using Image blockmap_buffer = new Image(Images.E1M1);
+            using Image blockmap_buffer = Utils.GetImageFromBitmap(Images.E1M1);
             Dictionary<Color, Texture> dict = new();
             {
                 Texture blueStone1 = new Texture(
@@ -248,7 +247,7 @@ public class Map : Scene
                 {
                     if (dict.TryGetValue(color, out Texture texture))
                         return texture;
-                    return Texture.NullTexture;
+                    return null;
                 },
                 textureFilling: BlockMap.TextureFilling.Side,
                 optimize: true,
@@ -344,7 +343,6 @@ public class Map : Scene
 
         // Camera
         {
-            Camera.AddScript<DebugScene>();
             Camera.AddScript(new MouseLook(2.2f));
             //Camera.AddScript<DebugEntity>();
 

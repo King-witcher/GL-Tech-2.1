@@ -1,14 +1,10 @@
-﻿using System;
-
-using GLTech.Imaging;
-
-namespace GLTech.World.Composed
+﻿namespace GLTech.World.Composed
 {
     public class Polygon : Entity
     {
         // The reason behind this is SPAGUETTI. I must change as quick as possible.
         private protected override Vector PositionData { get; set; } = Vector.Zero;
-        private protected override Vector DirectionData { get; set; } = Vector.Forward;
+        private protected override Vector DirectionData { get; set; } = Vector.North;
 
         private protected Polygon() { }
 

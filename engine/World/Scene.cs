@@ -1,8 +1,6 @@
-﻿using GLTech.Imaging;
+﻿using Engine.Physics;
 using GLTech.Scripting;
 using GLTech.Structs;
-using System;
-using System.Collections.Generic;
 
 namespace GLTech.World
 {
@@ -30,6 +28,7 @@ namespace GLTech.World
         private List<Collider> colliders = new List<Collider>();
         private Dictionary<string, Entity> entityNames = new Dictionary<string, Entity>();
         private Camera camera;
+        private ColliderSystem colliderSystem = new ColliderSystem();
 
         internal Action Start { get; private set; }
         internal Action OnFrame { get; private set; }
@@ -103,12 +102,33 @@ namespace GLTech.World
             {
                 entities.Add(entity);
                 entityNames.Add(entity.Name, entity);
-                if (entity is Collider collider)
-                    colliders.Add(collider);
 
                 entity.AssignScene(this);
 
-                unmanaged->Add(entity);
+
+                if (entity is Plane plane)
+                {
+                    unmanaged->Add(plane.unmanaged);
+                }
+                else if (entity is Floor floor)
+                {
+                    unmanaged->AddFloor(floor.unmanaged);
+                }
+                else if (entity is Ceiling ceiling)
+                {
+                    unmanaged->AddCeiling(ceiling.unmanaged);
+                }
+                else if (entity is Camera camera)
+                {
+                    unmanaged->Add(camera.raw);
+                }
+                else if (entity is Collider collider)
+                {
+                    colliders.Add(collider); // Deprecated
+                    colliderSystem.Add(collider);
+                }
+
+                //unmanaged->Add(entity);
 
                 // Scene caches every script for performance reasons.
                 // When a new script is added to an Entity, the scene should be told.
@@ -146,11 +166,6 @@ namespace GLTech.World
 
             Start = null;
             OnFrame = null;
-        }
-
-        ~Scene()
-        {
-            if (unmanaged != null) Dispose();
         }
 
         /// <summary>

@@ -27,14 +27,16 @@ namespace GLTech.Scripting.Physics
             {
                 RayCastInfo info = new();
                 info.segment.start = realPosition;
-                info.segment.direction = step;
-                var summary = Scene.RayCast(info);
-
-                // Simulate ray factor as if it was closer by MinDistance
-                summary.ray_factor += MinDistance / Vector.DotProduct(summary.normal, step);
-
-                while (summary.ray_factor < 1f)
+                while (true)
                 {
+                    info.segment.direction = step;
+                    var summary = Scene.RayCast(info);
+
+                    // Simulate ray factor as if it was closer by MinDistance
+                    summary.ray_factor += MinDistance / Vector.DotProduct(summary.normal, step);
+
+                    if (summary.ray_factor >= 1f) break;
+
                     var preHitStep = step * summary.ray_factor;
                     var overStep = step - preHitStep;
                     var slideStep = overStep - summary.normal * Vector.DotProduct(summary.normal, overStep);

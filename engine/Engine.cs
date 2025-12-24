@@ -97,7 +97,7 @@ public class Engine
         Script.Time.RenderTime = 0;
         Script.Time.TimeStep = 0;
         Script.Time.WindowTime = 0;
-        currentScene.Start?.Invoke();
+        currentScene.Start();
 
         window.RelativeMouseMode = CaptureMouse;
 
@@ -112,7 +112,7 @@ public class Engine
         while (!Script.Input.ShouldExit && !quitRequested)
         {
             // Draw current state
-            renderer.Render(currentScene.unmanaged);
+            renderer.Render(currentScene.raw);
             window.Present();
 
             // Update timers
@@ -132,14 +132,14 @@ public class Engine
             Script.Time.FixedRemainder = 0f;
             while (accumulator >= FIXED_TIMESTEP)
             {
-                currentScene.OnFixedTick?.Invoke();
+                currentScene.FixedUpdate();
                 accumulator -= FIXED_TIMESTEP;
             }
 
             //// Run per frame tick
             Script.Time.TimeStep = (float)frameTime / Stopwatch.Frequency;
             Script.Time.FixedRemainder = (float)accumulator / FIXED_TIMESTEP;
-            currentScene.OnFrame?.Invoke();
+            currentScene.Update();
         }
         window.Destroy();
 

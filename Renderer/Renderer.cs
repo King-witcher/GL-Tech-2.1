@@ -25,7 +25,7 @@ public unsafe class Renderer
         cache = RenderCache.Create(HFov, target.widthf);
     }
 
-    public unsafe void Render(SceneStruct* scene)
+    public unsafe void Render(RawScene* scene)
     {
         var col_start_table = new int[target.width];
         var col_end_table = new int[target.width];

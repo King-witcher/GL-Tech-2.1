@@ -8,7 +8,7 @@ namespace GLTech.World
     {
         public Scene()
         {
-            unmanaged = SceneStruct.Create();
+            raw = RawScene.Create();
 
             // Bad smell
             Camera defaultCamera = new();
@@ -18,55 +18,55 @@ namespace GLTech.World
 
         public Scene(Texture background) : this()
         {
-            unmanaged->background = background;
+            raw->background = background;
         }
 
-        internal SceneStruct* unmanaged;
+        internal RawScene* raw;
 
         private static Logger logger = new(typeof(Scene).Name);
         private List<Entity> entities = new List<Entity>();
-        private List<Collider> colliders = new List<Collider>();
         private Dictionary<string, Entity> entityNames = new Dictionary<string, Entity>();
         private Camera camera;
-        private ColliderSystem colliderSystem = new ColliderSystem();
+        private CollisionSystem CollisionSystem { get; } = new CollisionSystem();
 
-        internal Action Start { get; private set; }
-        internal Action OnFrame { get; private set; }
-        internal Action OnFixedTick { get; private set; }
-        internal Action<Input.ScanCode> OnKeyDown { get; private set; }
-        internal Action<Input.ScanCode> OnKeyUp { get; private set; }
-        public int ColliderCount => colliders.Count;
+        private List<Action> starts = new List<Action>();
+        private List<Action> updates = new List<Action>();
+        private List<Action> fixedUpdates = new List<Action>();
+
+        public int ColliderCount => 0;
         public int EntityCount => entities.Count;
-        public int PlaneCount => unmanaged->plane_list.count;
+        public int PlaneCount => raw->plane_list.count;
         public Camera Camera => camera;
 
         public Texture Background
         {
-            get => unmanaged->background;
-            set => unmanaged->background = value;
+            get => raw->background;
+            set => raw->background = value;
         }
 
-        internal void SubscribeScript(Script script)
+        internal void CacheScript(Script script)
         {
-            Start += script.StartAction;
-            OnFrame += script.OnFrameAction;
-            OnFixedTick += script.OnFixedTickAction;
-            OnKeyDown += script.OnKeyDownAction;
-            OnKeyUp += script.OnKeyUpAction;
+            if (script.StartAction != null)
+                starts.Add(script.StartAction);
+            if (script.UpdateAction != null)
+                updates.Add(script.UpdateAction);
+            if (script.FixedUpdateAction != null)
+                fixedUpdates.Add(script.FixedUpdateAction);
         }
 
-        internal void UnubscribeScript(Script script)
+        internal void UnCacheScript(Script script)
         {
-            Start -= script.StartAction;
-            OnFrame -= script.OnFrameAction;
-            OnFixedTick -= script.OnFixedTickAction;
-            OnKeyDown -= script.OnKeyDownAction;
-            OnKeyUp -= script.OnKeyUpAction;
+            if (script.StartAction != null)
+                starts.Remove(script.StartAction);
+            if (script.UpdateAction != null)
+                updates.Remove(script.UpdateAction);
+            if (script.FixedUpdateAction != null)
+                fixedUpdates.Remove(script.FixedUpdateAction);
         }
 
         public Entity? FindByname(string name)
         {
-            if (entityNames.TryGetValue(name, out Entity entity))
+            if (entityNames.TryGetValue(name, out Entity? entity))
                 return entity;
             else return null;
         }
@@ -95,10 +95,7 @@ namespace GLTech.World
             }
             #endregion
 
-            foreach (Entity node in entity.GetNodes())
-                add_node(node);
-
-            void add_node(Entity entity)
+            foreach (Entity node in entity.Traverse())
             {
                 entities.Add(entity);
                 entityNames.Add(entity.Name, entity);
@@ -108,32 +105,29 @@ namespace GLTech.World
 
                 if (entity is Plane plane)
                 {
-                    unmanaged->Add(plane.unmanaged);
+                    raw->Add(plane.unmanaged);
                 }
                 else if (entity is Floor floor)
                 {
-                    unmanaged->AddFloor(floor.unmanaged);
+                    raw->AddFloor(floor.unmanaged);
                 }
                 else if (entity is Ceiling ceiling)
                 {
-                    unmanaged->AddCeiling(ceiling.unmanaged);
+                    raw->AddCeiling(ceiling.unmanaged);
                 }
                 else if (entity is Camera camera)
                 {
-                    unmanaged->Add(camera.raw);
+                    raw->Add(camera.raw);
                 }
                 else if (entity is Collider collider)
                 {
-                    colliders.Add(collider); // Deprecated
-                    colliderSystem.Add(collider);
+                    CollisionSystem.Add(collider);
                 }
-
-                //unmanaged->Add(entity);
 
                 // Scene caches every script for performance reasons.
                 // When a new script is added to an Entity, the scene should be told.
                 foreach (Script script in entity.Scripts)
-                    SubscribeScript(script);
+                    CacheScript(script);
             }
         }
 
@@ -141,11 +135,6 @@ namespace GLTech.World
         {
             foreach (Entity item in entities)
                 Add(item);
-        }
-
-        public void AddOnFrame(Action action)
-        {
-            this.OnFrame += action;
         }
 
         public void Add(params Entity[] entities) =>
@@ -156,16 +145,30 @@ namespace GLTech.World
             foreach (Entity item in entities)
                 item.Dispose();
 
-            SceneStruct.Delete(unmanaged);
-            unmanaged = null;
+            RawScene.Delete(raw);
+            raw = null;
 
             Delete();
 
             entities.Clear();
-            colliders.Clear();
+        }
 
-            Start = null;
-            OnFrame = null;
+        internal void Start()
+        {
+            foreach (var action in starts)
+                action();
+        }
+
+        internal void Update()
+        {
+            foreach (var action in updates)
+                action();
+        }
+
+        internal void FixedUpdate()
+        {
+            foreach (var action in fixedUpdates)
+                action();
         }
 
         /// <summary>

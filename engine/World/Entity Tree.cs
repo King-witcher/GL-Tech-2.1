@@ -8,7 +8,7 @@ namespace GLTech.World
         private Vector relativePosition;
         private Vector relativeDirection;
         private List<Entity> children = new();
-        private Entity parent;
+        private Entity? parent;
         private Action onMove;
 
         public Vector WorldPosition
@@ -108,7 +108,7 @@ namespace GLTech.World
             }
         }
 
-        public Entity Parent
+        public Entity? Parent
         {
             get => parent;
             set

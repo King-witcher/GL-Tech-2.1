@@ -5,7 +5,7 @@ namespace GLTech.Structs
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct SceneStruct : IDisposable
+    public unsafe struct RawScene : IDisposable
     {
         public static int count;
         public SpriteStruct* first_sprite; //not implemented
@@ -17,10 +17,10 @@ namespace GLTech.Structs
         public HorizontalList floor_list;
         public HorizontalList ceiling_list;
 
-        public static SceneStruct* Create()
+        public static RawScene* Create()
         {
             count++;
-            SceneStruct* result = (SceneStruct*)Marshal.AllocHGlobal(sizeof(SceneStruct));
+            RawScene* result = (RawScene*)Marshal.AllocHGlobal(sizeof(RawScene));
             result->first_sprite = null;
             result->plane_list = new();
             result->last_sprite = null;
@@ -41,7 +41,7 @@ namespace GLTech.Structs
         }
 
         // TODO Must delete plane list!
-        public static void Delete(SceneStruct* item)
+        public static void Delete(RawScene* item)
         {
             item->Dispose();
             Marshal.FreeHGlobal((IntPtr)item);

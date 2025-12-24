@@ -51,7 +51,7 @@ public class TrajectoryRecorder : Script
         Entity.WorldPosition = (float.PositiveInfinity, float.PositiveInfinity);
     }
 
-    void OnFrame()
+    void Update()
     {
         if (!recording) return;
         Record();

@@ -1,10 +1,8 @@
-﻿using Engine.Physics;
-
-namespace GLTech.World
+﻿namespace GLTech.World
 {
     public abstract partial class Entity : IDisposable
     {
-        private Scene scene;
+        private Scene? scene;
         private static int entityCount = 0;
 
         internal Entity()
@@ -26,12 +24,12 @@ namespace GLTech.World
             }
         }
 
-        public IEnumerable<Entity> GetNodes()
+        public IEnumerable<Entity> Traverse()
         {
             Queue<Entity> queue = new();
             queue.Enqueue(this);
 
-            while (queue.TryDequeue(out Entity current))
+            while (queue.TryDequeue(out Entity? current))
             {
                 yield return current;
                 foreach (Entity entity in current.Children)
@@ -39,32 +37,11 @@ namespace GLTech.World
             }
         }
 
-        internal virtual IEnumerable<Plane> GetPlanes()
-        {
-            foreach (Entity entity in GetNodes())
-                if (entity is Plane plane)
-                    yield return plane;
-        }
-
-        internal virtual IEnumerable<Collider> GetColliders()
-        {
-            foreach (Entity entity in GetNodes())
-                if (entity is Collider collider)
-                    yield return collider;
-        }
-
-        internal virtual IEnumerable<Horizontal> GetFloors()
-        {
-            foreach (Entity entity in GetNodes())
-                if (entity is Horizontal floor)
-                    yield return floor;
-        }
-
         private protected virtual Vector PositionData { get; set; }
 
         private protected virtual Vector DirectionData { get; set; } = Vector.North;
 
-        public Scene Scene => scene;
+        public Scene? Scene => scene;
 
         public virtual void Dispose() { }
 

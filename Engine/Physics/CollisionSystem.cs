@@ -23,16 +23,17 @@ public struct RayCastInfo
     }
 }
 
-unsafe class ColliderSystem
+public unsafe sealed class CollisionSystem
 {
-    StructList<RawCollider> list = new StructList<RawCollider>();
+    StructList<RawCollider> unmanagedList = new StructList<RawCollider>();
+    LinkedList<Collider> managedList = new LinkedList<Collider>();
 
-    public ColliderSystem() { }
+    internal CollisionSystem() { }
 
-    public unsafe CollisionSummary RayCast(RayCastInfo info)
+    public unsafe CollisionSummary GetCollision(RayCastInfo info)
     {
         CollisionSummary summary = new();
-        var iterator = list.Iter();
+        var iterator = unmanagedList.Iter();
 
         while (iterator.Next(out RawCollider* pcollider))
         {
@@ -57,13 +58,21 @@ unsafe class ColliderSystem
         return summary;
     }
 
-    public unsafe void Add(RawCollider* pcollider) => list.Add(pcollider);
-
-    public unsafe void Add(Collider collider) => Add(collider.raw);
-
-    ~ColliderSystem()
+    public (Collider? collider, CollisionSummary summary) GetCollider(RayCastInfo info)
     {
-        list.Clear();
+        Collider? collider = null;
+        return (collider, default);
+    }
+
+    internal unsafe void Add(Collider collider)
+    {
+        unmanagedList.Add(collider.raw);
+        managedList.AddLast(collider);
+    }
+
+    ~CollisionSystem()
+    {
+        unmanagedList.Clear();
     }
 }
 

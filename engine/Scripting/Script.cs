@@ -6,31 +6,35 @@ namespace GLTech.Scripting
 {
     public abstract partial class Script
     {
-        private Entity entity;
-
-        private static Action Scheduled;
-
-        internal static void Schedule(Action action)
-        {
-
-        }
-
-        internal static void RunScheduled()
-        {
-            Scheduled?.Invoke();
-            Scheduled = null;
-        }
-
-        internal void Assign(Entity e)
-        {
-            entity = e;
-        }
+        private Entity? entity;
 
         protected internal Script() { }
 
-        protected internal Entity Entity => entity;
+        protected internal Entity Entity
+        {
+            get
+            {
+                if (entity == null)
+                    throw new InvalidOperationException("Script is not attached to an entity.");
+                return entity;
+            }
+            internal set
+            {
+                entity = value;
+            }
+        }
 
-        protected internal Scene Scene => entity.Scene;
+        protected internal Scene Scene
+        {
+            get
+            {
+                if (entity == null)
+                    throw new InvalidOperationException("Script is not attached to an entity.");
+                if (entity.Scene == null)
+                    throw new InvalidOperationException("Entity is not attached to a scene.");
+                return entity.Scene;
+            }
+        }
 
         // Gets the method called void Start()
         private Action? start = null;
@@ -50,40 +54,40 @@ namespace GLTech.Scripting
         }
 
         // Gets the method called void OnFrame()
-        private Action? onFrame = null;
-        internal Action? OnFrameAction
+        private Action? update = null;
+        internal Action? UpdateAction
         {
             get
             {
-                if (onFrame is null)
+                if (update is null)
                 {
-                    var method = GetMethod("OnFrame");
+                    var method = GetMethod("Update");
                     if (method != null)
-                        onFrame = () => method.Invoke(this, null);
+                        update = () => method.Invoke(this, null);
                 }
 
-                return onFrame;
+                return update;
             }
         }
 
-        private Action? onFixedTick = null;
-        internal Action? OnFixedTickAction
+        private Action? fixedUpdate = null;
+        internal Action? FixedUpdateAction
         {
             get
             {
-                if (onFixedTick is null)
+                if (fixedUpdate is null)
                 {
-                    var method = GetMethod("OnFixedTick");
+                    var method = GetMethod("FixedUpdate");
                     if (method != null)
-                        onFixedTick = () => method.Invoke(this, null);
+                        fixedUpdate = () => method.Invoke(this, null);
                 }
 
-                return onFixedTick;
+                return fixedUpdate;
             }
         }
 
-        private Action<ScanCode> onKeyDown = null;
-        internal Action<ScanCode> OnKeyDownAction
+        private Action<ScanCode>? onKeyDown = null;
+        internal Action<ScanCode>? OnKeyDownAction
         {
             get
             {
@@ -104,8 +108,8 @@ namespace GLTech.Scripting
             }
         }
 
-        private Action<ScanCode> onKeyUp = null;
-        internal Action<ScanCode> OnKeyUpAction
+        private Action<ScanCode>? onKeyUp = null;
+        internal Action<ScanCode>? OnKeyUpAction
         {
             get
             {
@@ -126,19 +130,19 @@ namespace GLTech.Scripting
             }
         }
 
-        private MethodInfo GetMethod(string methodName)
+        private MethodInfo? GetMethod(string methodName)
         {
             return GetType().GetMethod(methodName,
-                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
+                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static,
                 null,
-                new Type[0],
+                [],
                 null);
         }
 
-        private MethodInfo GetMethod(string methodName, params Type[] parameterTypes)
+        private MethodInfo? GetMethod(string methodName, params Type[] parameterTypes)
         {
             return GetType().GetMethod(methodName,
-                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
+                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static,
                 null,
                 parameterTypes,
                 null);

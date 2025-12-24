@@ -349,9 +349,10 @@ public class Map : Scene
             var rigidBody = new RigidBody((57.5f, 29.5f));
             Q1Movement movement = new(rigidBody);
             rigidBody.AddScript(movement);
+            Add(rigidBody);
 
             //Camera.AddScript(pc);
-            Camera.AddScript(movement);
+            //Camera.AddScript(movement);
             Camera.Parent = rigidBody;
         }
 

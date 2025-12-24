@@ -13,7 +13,7 @@
             Sensitivity = sensitivity;
         }
 
-        void OnFrame()
+        void Update()
         {
             if (Enabled)
             {

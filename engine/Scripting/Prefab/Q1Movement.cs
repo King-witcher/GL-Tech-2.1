@@ -122,7 +122,7 @@ namespace GLTech.Scripting.Prefab
             if (accelspeed > addspeed)
                 accelspeed = addspeed;
 
-            rigidBody.Velocity += accelspeed * wishdir;
+            rigidBody.Accelerate(accelspeed * wishdir);
         }
 
         void AirAccelerate(Vector wishdir, float wishspeed)

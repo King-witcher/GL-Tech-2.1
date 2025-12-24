@@ -27,6 +27,7 @@ namespace GLTech.World
         private List<Entity> entities = new List<Entity>();
         private Dictionary<string, Entity> entityNames = new Dictionary<string, Entity>();
         private Camera camera;
+        private List<RigidBody> rigidBodies = new List<RigidBody>();
         private CollisionSystem CollisionSystem { get; } = new CollisionSystem();
 
         private List<Action> starts = new List<Action>();
@@ -98,7 +99,7 @@ namespace GLTech.World
             foreach (Entity node in entity.Traverse())
             {
                 entities.Add(entity);
-                entityNames.Add(entity.Name, entity);
+                //entityNames.Add(entity.Name, entity);
 
                 entity.AssignScene(this);
 
@@ -122,6 +123,10 @@ namespace GLTech.World
                 else if (entity is Collider collider)
                 {
                     CollisionSystem.Add(collider);
+                }
+                else if (entity is RigidBody rigidBody)
+                {
+                    rigidBodies.Add(rigidBody);
                 }
 
                 // Scene caches every script for performance reasons.
@@ -159,16 +164,20 @@ namespace GLTech.World
                 action();
         }
 
-        internal void Update()
+        internal void Update(float timestep)
         {
             foreach (var action in updates)
                 action();
+            foreach (var body in rigidBodies)
+                body.FrameUpdate(timestep);
         }
 
-        internal void FixedUpdate()
+        internal void FixedUpdate(float timestep)
         {
             foreach (var action in fixedUpdates)
                 action();
+            foreach (var body in rigidBodies)
+                body.PhysicsUpdate(timestep);
         }
 
         /// <summary>

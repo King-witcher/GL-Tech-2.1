@@ -132,14 +132,14 @@ public class Engine
             Script.Time.FixedRemainder = 0f;
             while (accumulator >= FIXED_TIMESTEP)
             {
-                currentScene.FixedUpdate();
+                currentScene.FixedUpdate(Script.Time.TimeStep);
                 accumulator -= FIXED_TIMESTEP;
             }
 
             //// Run per frame tick
             Script.Time.TimeStep = (float)frameTime / Stopwatch.Frequency;
             Script.Time.FixedRemainder = (float)accumulator / FIXED_TIMESTEP;
-            currentScene.Update();
+            currentScene.Update(Script.Time.TimeStep);
         }
         window.Destroy();
 

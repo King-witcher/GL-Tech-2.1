@@ -1,6 +1,6 @@
-﻿using GLTech;
+﻿using Engine.Physics;
+using GLTech;
 using GLTech.Scripting;
-using GLTech.Scripting.Physics;
 using GLTech.Scripting.Prefab;
 using GLTech.Space;
 using GLTech.World;
@@ -346,12 +346,13 @@ public class Map : Scene
             Camera.AddScript(new MouseLook(2.2f));
             //Camera.AddScript<DebugEntity>();
 
-            PointCollider pc = new();
-            pc.StartPosition = (57.5f, 29.5f);
-            Q1Movement movement = new(pc);
+            var rigidBody = new RigidBody((57.5f, 29.5f));
+            Q1Movement movement = new(rigidBody);
+            rigidBody.AddScript(movement);
 
-            Camera.AddScript(pc);
+            //Camera.AddScript(pc);
             Camera.AddScript(movement);
+            Camera.Parent = rigidBody;
         }
 
         // Renderer customization

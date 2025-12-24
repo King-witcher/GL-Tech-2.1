@@ -1,5 +1,4 @@
-﻿using GLTech.Scripting.Debugging;
-using GLTech.Scripting.Physics;
+﻿using Engine.Physics;
 using GLTech.Scripting.Prefab;
 using GLTech.World;
 using GLTech.World.Composed;
@@ -49,15 +48,16 @@ namespace GLTech.Demos.FloorStressTest
 
             // Camera
             {
-                Camera.AddScript<DebugPerformance>();
                 Camera.WorldPosition = (0.5f, 0.5f);
                 Camera.WorldDirection = (1f, 1f);
 
-                PointCollider collider = new PointCollider();
-                Q1Movement movement = new Q1Movement(collider);
-                MouseLook mouseLook = new MouseLook(2.2f);
+                //PointCollider collider = new PointCollider();
+                var rigidBody = new RigidBody((0.5f, 0.5f));
+                Q1Movement movement = new Q1Movement(rigidBody);
+                Add(rigidBody);
 
-                Camera.AddScript(collider);
+                Camera.Parent = rigidBody;
+                MouseLook mouseLook = new MouseLook(2.2f);
                 Camera.AddScript(movement);
                 Camera.AddScript(mouseLook);
             }

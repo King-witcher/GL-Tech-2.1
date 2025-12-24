@@ -1,5 +1,5 @@
-﻿using GLTech.Input;
-using GLTech.Scripting.Physics;
+﻿using Engine.Physics;
+using GLTech.Input;
 using GLTech.World;
 
 namespace GLTech.Scripting.Prefab
@@ -7,13 +7,13 @@ namespace GLTech.Scripting.Prefab
     public sealed class Q1Movement : Script
     {
         static Logger logger = new(typeof(Q1Movement).Name);
-        KinematicBody body;
         float zspeed = 0f;
         bool grounded = true;
+        RigidBody rigidBody;
 
-        public Q1Movement(KinematicBody body)
+        public Q1Movement(RigidBody rigidBody)
         {
-            this.body = body;
+            this.rigidBody = rigidBody;
         }
 
         public bool AlwaysRun { get; set; } = true;
@@ -109,20 +109,20 @@ namespace GLTech.Scripting.Prefab
             else
                 AirAccelerate(wishdir, maxspeed);
 
-            if (body.Speed < .01f) body.Velocity = (0, 0);
+            if (rigidBody.Speed < .01f) rigidBody.Velocity = (0, 0);
         }
 
         void Accelerate(Vector wishdir, float wishspeed)
         {
             ApplyFriction();
-            float currentspeed = Vector.DotProduct(body.Velocity, wishdir);
+            float currentspeed = Vector.DotProduct(rigidBody.Velocity, wishdir);
             float addspeed = wishspeed - currentspeed;
             if (addspeed < 0) return;
             float accelspeed = Acceleration * wishspeed * Time.TimeStep;
             if (accelspeed > addspeed)
                 accelspeed = addspeed;
 
-            body.Velocity += accelspeed * wishdir;
+            rigidBody.Velocity += accelspeed * wishdir;
         }
 
         void AirAccelerate(Vector wishdir, float wishspeed)
@@ -131,7 +131,7 @@ namespace GLTech.Scripting.Prefab
             if (wishspd > .3f)
                 wishspd = .3f;
 
-            float currentspeed = Vector.DotProduct(body.Velocity, wishdir);
+            float currentspeed = Vector.DotProduct(rigidBody.Velocity, wishdir);
             float addspeed = wishspd - currentspeed;
 
             if (addspeed < 0) return;
@@ -140,7 +140,7 @@ namespace GLTech.Scripting.Prefab
             if (accelspeed > addspeed)
                 accelspeed = addspeed;
 
-            body.Velocity += accelspeed * wishdir;
+            rigidBody.Velocity += accelspeed * wishdir;
         }
 
         Vector GetWishDir()
@@ -167,21 +167,21 @@ namespace GLTech.Scripting.Prefab
 
         void ApplyFriction()
         {
-            if (body.Speed < 0.01f)
+            if (rigidBody.Speed < 0.01f)
             {
-                body.Velocity = (0, 0);
+                rigidBody.Velocity = (0, 0);
                 return;
             }
 
-            float control = body.Speed < StopSpeed ? StopSpeed : body.Speed;
+            float control = rigidBody.Speed < StopSpeed ? StopSpeed : rigidBody.Speed;
             float drop = control * Friction * Time.TimeStep;
 
-            float newspeed = body.Speed - drop;
+            float newspeed = rigidBody.Speed - drop;
             if (newspeed < 0f)
                 newspeed = 0f;
-            newspeed /= body.Speed;
+            newspeed /= rigidBody.Speed;
 
-            body.Velocity *= newspeed;
+            rigidBody.Velocity *= newspeed;
         }
     }
 }

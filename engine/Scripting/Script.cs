@@ -10,12 +10,10 @@ namespace GLTech.Scripting
 
         protected internal Script() { }
 
-        protected internal Entity Entity
+        protected internal Entity? Entity
         {
             get
             {
-                if (entity == null)
-                    throw new InvalidOperationException("Script is not attached to an entity.");
                 return entity;
             }
             internal set

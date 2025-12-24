@@ -1,8 +1,4 @@
-﻿
-using GLTech.Scripting.Debugging;
-using GLTech.Scripting.Physics;
-using GLTech.Scripting.Prefab;
-using GLTech.World;
+﻿using GLTech.World;
 using GLTech.World.Composed;
 
 namespace GLTech.Demos.SampleBlockMap
@@ -69,20 +65,20 @@ namespace GLTech.Demos.SampleBlockMap
 
             // Camera
             {
-                Camera.WorldPosition = (8f, 8f);
-                Camera.RelativeRotation = -90f;
+                //Camera.WorldPosition = (8f, 8f);
+                //Camera.RelativeRotation = -90f;
 
-                Camera.AddScript<DebugPerformance>();
-                Camera.AddScript<DebugScene>();
-                Camera.AddScript<DebugEntity>();
+                //Camera.AddScript<DebugPerformance>();
+                //Camera.AddScript<DebugScene>();
+                //Camera.AddScript<DebugEntity>();
 
-                PointCollider collider = new PointCollider();
-                Q1Movement movement = new Q1Movement(collider);
-                MouseLook mouseLook = new MouseLook(2.2f);
+                //PointCollider collider = new PointCollider();
+                //Q1Movement movement = new Q1Movement(collider);
+                //MouseLook mouseLook = new MouseLook(2.2f);
 
-                Camera.AddScript(collider);
-                Camera.AddScript(movement);
-                Camera.AddScript(mouseLook);
+                //Camera.AddScript(collider);
+                //Camera.AddScript(movement);
+                //Camera.AddScript(mouseLook);
             }
         }
     }

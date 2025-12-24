@@ -19,8 +19,15 @@ public class RigidBody : Entity
     {
         truePosition = position;
         guessPosition = position;
+        lastPosition = position;
+
         positionError = Vector.Zero;
+        trueVelocity = Vector.Zero;
+        guessVelocity = Vector.Zero;
+        velocityError = Vector.Zero;
     }
+
+    public float Speed => guessVelocity.Module;
 
     private protected override Vector PositionData
     {
@@ -46,11 +53,19 @@ public class RigidBody : Entity
 
     internal void FrameUpdate(float timestep)
     {
-        throw new NotImplementedException();
+        var velCorrection = -velocityError * MathF.Pow(2f, -timestep);
+        guessVelocity += velCorrection;
+        velocityError += velCorrection;
+
+        var posCorrection = -positionError * MathF.Pow(2f, -timestep);
+        guessPosition += posCorrection;
+        positionError += posCorrection;
+        WorldPosition = guessPosition;
     }
 
     internal void PhysicsUpdate(float timestep)
     {
+        Console.WriteLine("here");
         // Update true position based on true velocity
         lastPosition = truePosition;
         truePosition += trueVelocity * timestep;

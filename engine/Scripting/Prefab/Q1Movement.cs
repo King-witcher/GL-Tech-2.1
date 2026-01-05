@@ -9,11 +9,11 @@ namespace GLTech.Scripting.Prefab
         static Logger logger = new(typeof(Q1Movement).Name);
         float zspeed = 0f;
         bool grounded = true;
-        RigidBody rigidBody;
+        Camera camera;
 
-        public Q1Movement(RigidBody rigidBody)
+        public Q1Movement(Camera camera)
         {
-            this.rigidBody = rigidBody;
+            this.camera = camera;
         }
 
         public bool AlwaysRun { get; set; } = true;
@@ -37,28 +37,37 @@ namespace GLTech.Scripting.Prefab
 
         void Start()
         {
-            if (Entity is Camera camera)
-                camera.Z = Height;
-            else
-                logger.Error($"Entity {Entity} is not a camera.");
-        }
-
-        void Update()
-        {
-            if (Entity is Camera camera)
+            if (Entity is RigidBody)
             {
-                DetectJump();
-                UpdateVelocity(GetMaxSpeed());
-                UpdateZ(camera);
-
-                if (Input.IsKeyDown(ScanCode.Left))
-                    camera.RelativeRotation -= Time.TimeStep * TurnSpeed;
-                if (Input.IsKeyDown(ScanCode.Right))
-                    camera.RelativeRotation += Time.TimeStep * TurnSpeed;
+                camera.Z = Height;
+            }
+            else
+            {
+                logger.Error($"Entity {Entity} is not a RigidBody.");
             }
         }
 
-        void DetectJump()
+        void FixedUpdate()
+        {
+            //rigidBody.Accelerate(Vector.East * 0.01f);
+            if (Entity is RigidBody rb)
+            {
+                HandleJump();
+
+                var wishspeed = GetWishSpeed();
+                var wishdir = GetWishDir();
+                if (grounded) GroundAccelerate(rb, wishdir, wishspeed);
+                else AirAccelerate(rb, wishdir, wishspeed);
+
+                //if (rb.Speed < .01f) rb.Velocity = (0, 0);
+
+                var z = camera.Z;
+                UpdateZ(ref z);
+                camera.Z = z;
+            }
+        }
+
+        void HandleJump()
         {
             if ((Input.WasKeyPressed(Jump) || Input.IsKeyDown(Jump)) && grounded)
             {
@@ -67,28 +76,28 @@ namespace GLTech.Scripting.Prefab
             }
         }
 
-        void UpdateZ(Camera camera)
+        void UpdateZ(ref float z)
         {
             if (grounded) return;
 
-            camera.Z += zspeed * Time.TimeStep;
+            z += zspeed * Time.TimeStep;
             if (camera.Z < Height)
             {
-                camera.Z = Height;
+                z = Height;
                 grounded = true;
                 zspeed = 0f;
             }
 
-            if (camera.Z > 1f)
+            if (z > 1f)
             {
-                camera.Z = 0.9f;
+                z = 0.9f;
                 zspeed = 0f;
             }
 
             zspeed -= Gravity * Time.TimeStep;
         }
 
-        float GetMaxSpeed()
+        float GetWishSpeed()
         {
             bool run = AlwaysRun;
             if (Input.IsKeyDown(ChangeRun_Walk))
@@ -100,38 +109,26 @@ namespace GLTech.Scripting.Prefab
                 return MaxSpeed / 2;
         }
 
-        void UpdateVelocity(float maxspeed)
+        void GroundAccelerate(RigidBody rb, Vector wishdir, float wishspeed)
         {
-            Vector wishdir = GetWishDir();
-
-            if (grounded)
-                Accelerate(wishdir, maxspeed);
-            else
-                AirAccelerate(wishdir, maxspeed);
-
-            if (rigidBody.Speed < .01f) rigidBody.Velocity = (0, 0);
-        }
-
-        void Accelerate(Vector wishdir, float wishspeed)
-        {
-            ApplyFriction();
-            float currentspeed = Vector.DotProduct(rigidBody.Velocity, wishdir);
+            ApplyFriction(rb);
+            float currentspeed = Vector.DotProduct(rb.Velocity, wishdir);
             float addspeed = wishspeed - currentspeed;
             if (addspeed < 0) return;
             float accelspeed = Acceleration * wishspeed * Time.TimeStep;
             if (accelspeed > addspeed)
                 accelspeed = addspeed;
 
-            rigidBody.Accelerate(accelspeed * wishdir);
+            rb.Accelerate(accelspeed * wishdir);
         }
 
-        void AirAccelerate(Vector wishdir, float wishspeed)
+        void AirAccelerate(RigidBody rb, Vector wishdir, float wishspeed)
         {
             float wishspd = wishspeed;
             if (wishspd > .3f)
                 wishspd = .3f;
 
-            float currentspeed = Vector.DotProduct(rigidBody.Velocity, wishdir);
+            float currentspeed = Vector.DotProduct(rb.Velocity, wishdir);
             float addspeed = wishspd - currentspeed;
 
             if (addspeed < 0) return;
@@ -140,7 +137,7 @@ namespace GLTech.Scripting.Prefab
             if (accelspeed > addspeed)
                 accelspeed = addspeed;
 
-            rigidBody.Velocity += accelspeed * wishdir;
+            rb.Velocity += accelspeed * wishdir;
         }
 
         Vector GetWishDir()
@@ -156,7 +153,7 @@ namespace GLTech.Scripting.Prefab
             if (Input.IsKeyDown(StepRight))
                 result += Vector.East;
 
-            result *= Entity.RelativeDirection;
+            result *= camera.WorldDirection;
 
             if (result.Module == 0)
                 return Vector.Zero;
@@ -165,23 +162,23 @@ namespace GLTech.Scripting.Prefab
         }
 
 
-        void ApplyFriction()
+        void ApplyFriction(RigidBody rb)
         {
-            if (rigidBody.Speed < 0.01f)
+            if (rb.Speed < 0.01f)
             {
-                rigidBody.Velocity = (0, 0);
+                rb.Velocity = (0, 0);
                 return;
             }
 
-            float control = rigidBody.Speed < StopSpeed ? StopSpeed : rigidBody.Speed;
+            float control = rb.Speed < StopSpeed ? StopSpeed : rb.Speed;
             float drop = control * Friction * Time.TimeStep;
 
-            float newspeed = rigidBody.Speed - drop;
+            float newspeed = rb.Speed - drop;
             if (newspeed < 0f)
                 newspeed = 0f;
-            newspeed /= rigidBody.Speed;
+            newspeed /= rb.Speed;
 
-            rigidBody.Velocity *= newspeed;
+            rb.Velocity *= newspeed;
         }
     }
 }

@@ -347,7 +347,7 @@ public class Map : Scene
             //Camera.AddScript<DebugEntity>();
 
             var rigidBody = new RigidBody((57.5f, 29.5f));
-            Q1Movement movement = new(rigidBody);
+            Q1Movement movement = new(Camera);
             rigidBody.AddScript(movement);
             Add(rigidBody);
 

@@ -65,7 +65,6 @@ public class RigidBody : Entity
 
     internal void PhysicsUpdate(float timestep)
     {
-        Console.WriteLine("here");
         // Update true position based on true velocity
         lastPosition = truePosition;
         truePosition += trueVelocity * timestep;

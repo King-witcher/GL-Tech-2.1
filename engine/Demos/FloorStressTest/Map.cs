@@ -53,7 +53,7 @@ namespace GLTech.Demos.FloorStressTest
 
                 //PointCollider collider = new PointCollider();
                 var rigidBody = new RigidBody((0.5f, 0.5f));
-                Q1Movement movement = new Q1Movement(rigidBody);
+                Q1Movement movement = new Q1Movement(Camera);
                 Add(rigidBody);
 
                 Camera.Parent = rigidBody;

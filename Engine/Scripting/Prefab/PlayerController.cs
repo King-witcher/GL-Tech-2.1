@@ -1,4 +1,5 @@
-﻿using GLTech;
+﻿using Engine.Physics;
+using GLTech;
 using GLTech.Input;
 using GLTech.Scripting;
 using GLTech.World;
@@ -32,6 +33,8 @@ public abstract class PlayerController : Script
     public float RunSpeed { get; set; } = 3.2f;
     public float WalkSpeed { get; set; } = 1.6f;
     public float Height { get; set; } = 0.45f;
+    public bool HandleCollisions { get; set; } = true;
+    public float CollisionRadius { get; set; } = 0.15f;
     public ScanCode StepForward { get; set; } = ScanCode.W;
     public ScanCode StepBack { get; set; } = ScanCode.S;
     public ScanCode StepLeft { get; set; } = ScanCode.A;
@@ -70,7 +73,11 @@ public abstract class PlayerController : Script
         Accelerate(ref guessVelocity, wishdir * wishspeed, true);
         Straighten(ref guessVelocity, ref velocityError);
 
-        guessPosition += guessVelocity * Time.TimeStep;
+        var wishstep = guessVelocity * Time.TimeStep;
+        // Handle collisions
+        ClipComponents(ref guessVelocity, ref wishstep);
+
+        guessPosition += wishstep;
         Straighten(ref guessPosition, ref positionError);
 
         Entity?.WorldPosition = guessPosition;
@@ -85,14 +92,16 @@ public abstract class PlayerController : Script
         var wishspeed = GetWishspeed();
         Accelerate(ref trueVelocity, wishdir * wishspeed, true);
 
+        var wishstep = trueVelocity * Time.TimeStep;
+        // Handle collisions
+        ClipComponents(ref trueVelocity, ref wishstep);
+
         lastPosition = truePosition;
-        truePosition += trueVelocity * Time.TimeStep;
+        truePosition += wishstep;
 
         // Calculate differences
         positionError = guessPosition - truePosition;
         velocityError = guessVelocity - trueVelocity;
-
-        Console.WriteLine(positionError.Module);
     }
 
     Vector GetWishdir()
@@ -108,7 +117,7 @@ public abstract class PlayerController : Script
         if (Input.IsKeyDown(StepRight))
             result += Vector.East;
 
-        result *= Entity.WorldDirection;
+        result *= Entity?.WorldDirection ?? Vector.Zero;
 
         if (result.Module == 0)
             return Vector.Zero;
@@ -119,6 +128,41 @@ public abstract class PlayerController : Script
     float GetWishspeed()
     {
         return Input.IsKeyDown(ChangeRun_Walk) && !AlwaysRun ? WalkSpeed : RunSpeed;
+    }
+
+    void ClipComponents(ref Vector velocity, ref Vector wishstep)
+    {
+        RayCastInfo raycastInfo = new();
+        raycastInfo.segment.start = truePosition;
+
+        while (true)
+        {
+            raycastInfo.segment.direction = wishstep;
+            var summary = Scene.RayCast(raycastInfo);
+
+            // Simulate ray factor as if it was closer by CollisionRadius
+            summary.ray_factor += CollisionRadius / Vector.DotProduct(summary.normal, wishstep);
+
+            // If current wishstep wouldn't hit anything, we're done
+            if (summary.ray_factor >= 1f) break;
+
+            // How much we can go before hitting
+            var preHitStep = wishstep * summary.ray_factor;
+
+            // How much we overstepped
+            var overStep = wishstep - preHitStep;
+
+            // Project overstep onto the collision plane to get slide step
+            var slideStep = overStep - summary.normal * Vector.DotProduct(summary.normal, overStep);
+
+            // Update components
+            wishstep = preHitStep + slideStep;
+            velocity -= summary.normal * Vector.DotProduct(velocity, summary.normal);
+
+            //raycastInfo.segment.direction = wishstep;
+            //summary = Scene.RayCast(raycastInfo);
+            //summary.ray_factor += CollisionRadius / Vector.DotProduct(summary.normal, wishstep);
+        }
     }
 
     void Straighten(ref Vector value, ref Vector error)

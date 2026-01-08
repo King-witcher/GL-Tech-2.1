@@ -116,30 +116,32 @@ public class Engine
             window.Present();
 
             // Update timers
-            long newTime = Stopwatch.GetTimestamp();
-            long frameTime = newTime - lastTime;
-            lastTime = newTime;
-            accumulator += frameTime;
+            long currentTime = Stopwatch.GetTimestamp();
+            long totalTime = currentTime - initTime;
+            long currentStep = currentTime - lastTime;
+            accumulator += currentStep;
 
             // Update input state
             Script.Input.Update();
             FlushSchedule();
-            //if (CaptureMouse)
-            //    Mouse.Shift = window.GetMouseShift();
 
-            // Run fixed ticks
+            // Run fixed updates
             Script.Time.TimeStep = (float)FIXED_TIMESTEP / Stopwatch.Frequency;
             Script.Time.FixedRemainder = 0f;
             while (accumulator >= FIXED_TIMESTEP)
             {
+                Script.Time.TotalTime = (float)(totalTime - accumulator + FIXED_TIMESTEP) / Stopwatch.Frequency;
                 currentScene.FixedUpdate(Script.Time.TimeStep);
                 accumulator -= FIXED_TIMESTEP;
             }
 
-            //// Run per frame tick
-            Script.Time.TimeStep = (float)frameTime / Stopwatch.Frequency;
+            // Run frame update
+            Script.Time.TimeStep = (float)currentStep / Stopwatch.Frequency;
+            Script.Time.TotalTime = (float)totalTime / Stopwatch.Frequency;
             Script.Time.FixedRemainder = (float)accumulator / FIXED_TIMESTEP;
             currentScene.Update(Script.Time.TimeStep);
+
+            lastTime = currentTime;
         }
         window.Destroy();
 

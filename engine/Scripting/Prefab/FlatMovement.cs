@@ -1,76 +1,20 @@
-﻿using GLTech.Input;
+﻿using Engine.Scripting.Prefab;
 using GLTech.Scripting.Physics;
-using GLTech.World;
 
 namespace GLTech.Scripting.Prefab
 {
-    public sealed class FlatMovement : Script
+    public sealed class FlatMovement : PlayerController
     {
         KinematicBody body;
 
-        public FlatMovement(KinematicBody body)
+        protected override void Accelerate(ref Vector source, Vector wishvel, bool grounded)
         {
-            this.body = body;
+            source = wishvel;
         }
 
-        public bool HandleCollisions { get; set; } = true;
-
-        public bool AlwaysRun { get; set; } = true;
-
-        public float WalkSpeed { get; set; } = 0.75f;
-
-        public float RunSpeed { get; set; } = 2.5f;
-
-        public float TurnSpeed { get; set; } = 90f;
-
-        public ScanCode StepForward { get; set; } = ScanCode.W;
-
-        public ScanCode StepBack { get; set; } = ScanCode.S;
-
-        public ScanCode StepLeft { get; set; } = ScanCode.A;
-
-        public ScanCode StepRight { get; set; } = ScanCode.D;
-
-        public ScanCode TurnRight { get; set; } = ScanCode.Right;
-
-        public ScanCode TurnLeft { get; set; } = ScanCode.Left;
-
-        public ScanCode ChangeRun_Walk { get; set; } = ScanCode.LeftShift;
-
-        void OnFrame()
+        protected override void ApplyFriction(ref Vector source)
         {
-            // Check speed
-            bool run = AlwaysRun;
-            if (Input.IsKeyDown(ChangeRun_Walk))
-                run = !run;
-
-            float speed;
-            if (run)
-                speed = RunSpeed;
-            else speed = WalkSpeed;
-
-
-            Vector wishdir = (0, 0);
-            if (Input.IsKeyDown(StepForward))
-                wishdir += Vector.North;
-            if (Input.IsKeyDown(StepBack))
-                wishdir += Vector.South;
-            if (Input.IsKeyDown(StepLeft))
-                wishdir += Vector.West;
-            if (Input.IsKeyDown(StepRight))
-                wishdir += Vector.East;
-
-            // Suboptimal
-            if (wishdir.Module != 0)
-                wishdir /= wishdir.Module;
-
-            body.Velocity = wishdir * speed * Entity.WorldDirection;
-
-            // Turn
-            if (Input.IsKeyDown(TurnLeft))
-                Entity.Rotate(-TurnSpeed * Time.TimeStep);
-            if (Input.IsKeyDown(TurnRight))
-                Entity.Rotate(TurnSpeed * Time.TimeStep);
+            source = Vector.Zero;
         }
     }
 }

@@ -4,6 +4,24 @@ using System.Reflection;
 
 namespace GLTech.Scripting
 {
+    [AttributeUsage(AttributeTargets.Method)]
+    public class ScriptStartAttribute : Attribute
+    {
+        public ScriptStartAttribute() { }
+    }
+
+    [AttributeUsage(AttributeTargets.Method)]
+    public class ScriptUpdateAttribute : Attribute
+    {
+        public ScriptUpdateAttribute() { }
+    }
+
+    [AttributeUsage(AttributeTargets.Method)]
+    public class ScriptFixedUpdateAttribute : Attribute
+    {
+        public ScriptFixedUpdateAttribute() { }
+    }
+
     public abstract partial class Script
     {
         private Entity? entity;
@@ -42,7 +60,8 @@ namespace GLTech.Scripting
             {
                 if (start == null)
                 {
-                    var method = GetMethod("Start");
+                    var method = GetMethodByAttribute<ScriptStartAttribute>() ?? GetMethodByName("Start");
+
                     if (method != null)
                         start = () => method.Invoke(this, null);
                 }
@@ -59,7 +78,7 @@ namespace GLTech.Scripting
             {
                 if (update is null)
                 {
-                    var method = GetMethod("Update");
+                    var method = GetMethodByAttribute<ScriptUpdateAttribute>() ?? GetMethodByName("Update");
                     if (method != null)
                         update = () => method.Invoke(this, null);
                 }
@@ -75,7 +94,7 @@ namespace GLTech.Scripting
             {
                 if (fixedUpdate is null)
                 {
-                    var method = GetMethod("FixedUpdate");
+                    var method = GetMethodByAttribute<ScriptFixedUpdateAttribute>() ?? GetMethodByName("FixedUpdate");
                     if (method != null)
                         fixedUpdate = () => method.Invoke(this, null);
                 }
@@ -128,10 +147,19 @@ namespace GLTech.Scripting
             }
         }
 
-        private MethodInfo? GetMethod(string methodName)
+        private MethodInfo? GetMethodByAttribute<T>() where T : new()
+        {
+            var methods = GetType().GetMethods();
+            foreach (var method in methods)
+                if (method.GetCustomAttribute(typeof(T)) != null && method.GetParameters().Length == 0)
+                    return method;
+            return null;
+        }
+
+        private MethodInfo? GetMethodByName(string methodName)
         {
             return GetType().GetMethod(methodName,
-                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static,
+                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy,
                 null,
                 [],
                 null);

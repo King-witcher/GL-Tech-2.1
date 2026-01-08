@@ -1,4 +1,4 @@
-﻿using Engine.Physics;
+﻿using Engine.Scripting.Prefab;
 using GLTech;
 using GLTech.Scripting;
 using GLTech.Scripting.Prefab;
@@ -343,21 +343,26 @@ public class Map : Scene
 
         // Camera
         {
-            Camera.AddScript(new MouseLook(2.2f));
+            //Camera.AddScript(new MouseLook(2.2f));
             //Camera.AddScript<DebugEntity>();
 
-            var rigidBody = new RigidBody((57.5f, 29.5f));
-            Q1Movement movement = new(Camera);
-            rigidBody.AddScript(movement);
-            Add(rigidBody);
+            //var rigidBody = new RigidBody((57.5f, 29.5f));
+            //Q1Movement movement = new(Camera);
+            //rigidBody.AddScript(movement);
+            //Add(rigidBody);
 
             //Camera.AddScript(pc);
             //Camera.AddScript(movement);
-            Camera.Parent = rigidBody;
+            //Camera.Parent = rigidBody;
+
+            PlayerController controller = new FlatMovement();
+            controller.StartPosition = (57.5f, 29.5f);
+
+            Camera.AddScript(controller);
         }
 
         // Renderer customization
-        // FIXME: Create a setup method.
+        // FIXME: Create a setup method. 
         //global::GLTech.Engine.FieldOfView = 93.93f;
     }
 

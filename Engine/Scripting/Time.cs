@@ -10,6 +10,8 @@
 
             public static float FixedTimestep => 1.0f / FixedTicks;
 
+            public static float TotalTime { get; internal set; }
+
             public static float TimeStep { get; internal set; }
 
             public static float FixedRemainder { get; internal set; }

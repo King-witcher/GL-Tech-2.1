@@ -98,40 +98,40 @@ namespace GLTech.World
 
             foreach (Entity node in entity.Traverse())
             {
-                entities.Add(entity);
+                entities.Add(node);
                 //entityNames.Add(entity.Name, entity);
 
-                entity.AssignScene(this);
+                node.AssignScene(this);
 
 
-                if (entity is Plane plane)
+                if (node is Plane plane)
                 {
                     raw->Add(plane.unmanaged);
                 }
-                else if (entity is Floor floor)
+                else if (node is Floor floor)
                 {
                     raw->AddFloor(floor.unmanaged);
                 }
-                else if (entity is Ceiling ceiling)
+                else if (node is Ceiling ceiling)
                 {
                     raw->AddCeiling(ceiling.unmanaged);
                 }
-                else if (entity is Camera camera)
+                else if (node is Camera camera)
                 {
                     raw->Add(camera.raw);
                 }
-                else if (entity is Collider collider)
+                else if (node is Collider collider)
                 {
                     CollisionSystem.Add(collider);
                 }
-                else if (entity is RigidBody rigidBody)
+                else if (node is RigidBody rigidBody)
                 {
                     rigidBodies.Add(rigidBody);
                 }
 
                 // Scene caches every script for performance reasons.
                 // When a new script is added to an Entity, the scene should be told.
-                foreach (Script script in entity.Scripts)
+                foreach (Script script in node.Scripts)
                     CacheScript(script);
             }
         }

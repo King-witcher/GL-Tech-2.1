@@ -68,6 +68,7 @@ namespace GLTech
 
 
             renderer = SDL_CreateRenderer(window, (byte*)null);
+            SDL_SetRenderVSync(renderer, 1);
 
             texture = SDL_CreateTexture(
                 renderer,

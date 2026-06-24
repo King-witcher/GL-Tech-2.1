@@ -355,7 +355,7 @@ public class Map : Scene
             //Camera.AddScript(movement);
             //Camera.Parent = rigidBody;
 
-            PlayerController controller = new FlatMovement();
+            PlayerController controller = new Q1Movement();
             controller.StartPosition = (57.5f, 29.5f);
 
             Camera.AddScript(controller);

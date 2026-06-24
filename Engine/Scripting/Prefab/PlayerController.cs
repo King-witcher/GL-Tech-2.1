@@ -16,8 +16,6 @@ public abstract class PlayerController : Script
     Vector truePosition;
     Vector trueVelocity;
 
-    Vector lastPosition;
-
     Vector guessPosition;
     Vector guessVelocity;
 
@@ -41,7 +39,7 @@ public abstract class PlayerController : Script
     public ScanCode StepRight { get; set; } = ScanCode.D;
     public ScanCode TurnRight { get; set; } = ScanCode.Right;
     public ScanCode TurnLeft { get; set; } = ScanCode.Left;
-    public ScanCode ChangeRun_Walk { get; set; } = ScanCode.LeftShift;
+    public ScanCode SlowWalk { get; set; } = ScanCode.LeftShift;
     public ScanCode Jump { get; set; } = ScanCode.Space;
 
     public bool IsGrounded => (Time.TotalTime - groundedTime) < 0.2f;
@@ -51,7 +49,7 @@ public abstract class PlayerController : Script
     {
         guessPosition = StartPosition;
         truePosition = StartPosition;
-        lastPosition = StartPosition;
+        //lastPosition = StartPosition;
 
         Entity?.WorldPosition = StartPosition;
 
@@ -71,11 +69,14 @@ public abstract class PlayerController : Script
         var wishdir = GetWishdir();
         var wishspeed = GetWishspeed();
         Accelerate(ref guessVelocity, wishdir * wishspeed, true);
-        Straighten(ref guessVelocity, ref velocityError);
+
+        if (velocityError.Module > 0f)
+            Straighten(ref guessVelocity, ref velocityError);
 
         var wishstep = guessVelocity * Time.TimeStep;
         // Handle collisions
-        ClipComponents(ref guessVelocity, ref wishstep);
+        if (guessVelocity.Module > 0f)
+            ClipComponents(ref guessVelocity, ref wishstep);
 
         guessPosition += wishstep;
         Straighten(ref guessPosition, ref positionError);
@@ -93,10 +94,18 @@ public abstract class PlayerController : Script
         Accelerate(ref trueVelocity, wishdir * wishspeed, true);
 
         var wishstep = trueVelocity * Time.TimeStep;
-        // Handle collisions
-        ClipComponents(ref trueVelocity, ref wishstep);
 
-        lastPosition = truePosition;
+        if (float.IsNaN(wishstep.x))
+        {
+            logger.Error("NaN detected in wishstep calculation.");
+            wishstep = Vector.Zero;
+        }
+
+        // Handle collisions
+        if (trueVelocity.Module > 0f)
+            ClipComponents(ref trueVelocity, ref wishstep);
+
+        //lastPosition = truePosition;
         truePosition += wishstep;
 
         // Calculate differences
@@ -127,44 +136,62 @@ public abstract class PlayerController : Script
 
     float GetWishspeed()
     {
-        return Input.IsKeyDown(ChangeRun_Walk) && !AlwaysRun ? WalkSpeed : RunSpeed;
+        return Input.IsKeyDown(SlowWalk) && !AlwaysRun ? WalkSpeed : RunSpeed;
     }
 
+    /// <summary>
+    /// Clips velocity and wishstep against collisions.
+    /// </summary>
+    /// <param name="velocity"></param>
+    /// <param name="wishstep"></param>
     void ClipComponents(ref Vector velocity, ref Vector wishstep)
     {
         RayCastInfo raycastInfo = new();
         raycastInfo.segment.start = truePosition;
+        Vector result = Vector.Zero;
+        Vector remainder = wishstep;
 
         while (true)
         {
-            raycastInfo.segment.direction = wishstep;
+            raycastInfo.segment.direction = remainder;
             var summary = Scene.RayCast(raycastInfo);
 
             // Simulate ray factor as if it was closer by CollisionRadius
             summary.ray_factor += CollisionRadius / Vector.DotProduct(summary.normal, wishstep);
+            if (summary.ray_factor < 0f)
+            {
+                summary.ray_factor = 0f;
+            }
 
             // If current wishstep wouldn't hit anything, we're done
-            if (summary.ray_factor >= 1f) break;
+            if (summary.ray_factor >= 1f)
+            {
+                result += remainder;
+                break;
+            }
 
             // How much we can go before hitting
             var preHitStep = wishstep * summary.ray_factor;
+            result += preHitStep;
 
             // How much we overstepped
             var overStep = wishstep - preHitStep;
 
             // Project overstep onto the collision plane to get slide step
             var slideStep = overStep - summary.normal * Vector.DotProduct(summary.normal, overStep);
+            remainder = slideStep;
 
-            // Update components
-            wishstep = preHitStep + slideStep;
+            // Clip velocity against the collision normal
+            //wishstep = preHitStep + slideStep;
             velocity -= summary.normal * Vector.DotProduct(velocity, summary.normal);
-
-            //raycastInfo.segment.direction = wishstep;
-            //summary = Scene.RayCast(raycastInfo);
-            //summary.ray_factor += CollisionRadius / Vector.DotProduct(summary.normal, wishstep);
         }
+
+        wishstep = result;
     }
 
+    /// <summary>
+    /// Smoothly correct value and error over time
+    /// </summary>
     void Straighten(ref Vector value, ref Vector error)
     {
         var distance = error.Module;

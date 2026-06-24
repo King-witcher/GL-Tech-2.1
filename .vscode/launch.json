@@ -1,26 +1,153 @@
 {
     "version": "0.2.0",
     "configurations": [
+        //#region Debug
         {
-            // Use IntelliSense to find out which attributes exist for C# debugging
-            // Use hover for the description of the existing attributes
-            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
-            "name": ".NET Core Launch (console)",
+            "name": "Debug ▸ FloorStressTest",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
-            // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/bin/Debug/net6.0-windows/gltech2.dll",
+            "preLaunchTask": "build (Debug x64)",
+            "program": "${workspaceFolder}/Demos/FloorStressTest/bin/x64/Debug/net10.0-windows/FloorStressTest.dll",
             "args": [],
-            "cwd": "${workspaceFolder}",
-            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "cwd": "${workspaceFolder}/Demos/FloorStressTest",
             "console": "internalConsole",
-            "stopAtEntry": false
+            "stopAtEntry": false,
+            "presentation": { "group": "1: Debug", "order": 1 }
         },
         {
-            "name": ".NET Core Attach",
+            "name": "Debug ▸ RotatingPillars",
             "type": "coreclr",
-            "request": "attach"
+            "request": "launch",
+            "preLaunchTask": "build (Debug x64)",
+            "program": "${workspaceFolder}/Demos/RotatingPillars/bin/x64/Debug/net10.0-windows/RotatingPillars.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Demos/RotatingPillars",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "presentation": { "group": "1: Debug", "order": 2 }
+        },
+        {
+            "name": "Debug ▸ SampleBlockMap",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build (Debug x64)",
+            "program": "${workspaceFolder}/Demos/SampleBlockMap/bin/x64/Debug/net10.0-windows/SampleBlockMap.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Demos/SampleBlockMap",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "presentation": { "group": "1: Debug", "order": 3 }
+        },
+        {
+            "name": "Debug ▸ SimpleBenchmark",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build (Debug x64)",
+            "program": "${workspaceFolder}/Demos/SimpleBenchmark/bin/x64/Debug/net10.0-windows/SimpleBenchmark.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Demos/SimpleBenchmark",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "presentation": { "group": "1: Debug", "order": 4 }
+        },
+        {
+            "name": "Debug ▸ SuperBlockMap",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build (Debug x64)",
+            "program": "${workspaceFolder}/Demos/SuperBlockMap/bin/x64/Debug/net10.0-windows/SuperBlockMap.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Demos/SuperBlockMap",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "presentation": { "group": "1: Debug", "order": 5 }
+        },
+        {
+            "name": "Debug ▸ Wolfenstein",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build (Debug x64)",
+            "program": "${workspaceFolder}/Demos/Wolfenstein/bin/x64/Debug/net10.0-windows/Wolfenstein.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Demos/Wolfenstein",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "presentation": { "group": "1: Debug", "order": 6 }
+        },
+        //#endregion
+        //#region Release
+        {
+            "name": "Release ▸ FloorStressTest",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build (Release x64)",
+            "program": "${workspaceFolder}/Demos/FloorStressTest/bin/x64/Release/net10.0-windows/FloorStressTest.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Demos/FloorStressTest",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "presentation": { "group": "2: Release", "order": 1 }
+        },
+        {
+            "name": "Release ▸ RotatingPillars",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build (Release x64)",
+            "program": "${workspaceFolder}/Demos/RotatingPillars/bin/x64/Release/net10.0-windows/RotatingPillars.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Demos/RotatingPillars",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "presentation": { "group": "2: Release", "order": 2 }
+        },
+        {
+            "name": "Release ▸ SampleBlockMap",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build (Release x64)",
+            "program": "${workspaceFolder}/Demos/SampleBlockMap/bin/x64/Release/net10.0-windows/SampleBlockMap.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Demos/SampleBlockMap",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "presentation": { "group": "2: Release", "order": 3 }
+        },
+        {
+            "name": "Release ▸ SimpleBenchmark",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build (Release x64)",
+            "program": "${workspaceFolder}/Demos/SimpleBenchmark/bin/x64/Release/net10.0-windows/SimpleBenchmark.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Demos/SimpleBenchmark",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "presentation": { "group": "2: Release", "order": 4 }
+        },
+        {
+            "name": "Release ▸ SuperBlockMap",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build (Release x64)",
+            "program": "${workspaceFolder}/Demos/SuperBlockMap/bin/x64/Release/net10.0-windows/SuperBlockMap.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Demos/SuperBlockMap",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "presentation": { "group": "2: Release", "order": 5 }
+        },
+        {
+            "name": "Release ▸ Wolfenstein",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build (Release x64)",
+            "program": "${workspaceFolder}/Demos/Wolfenstein/bin/x64/Release/net10.0-windows/Wolfenstein.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Demos/Wolfenstein",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "presentation": { "group": "2: Release", "order": 6 }
         }
+        //#endregion
     ]
 }

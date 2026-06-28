@@ -34,7 +34,7 @@ namespace GLTech.Scripting.Prefab
         public ScanCode TurnLeft { get; set; } = ScanCode.Left;
         public ScanCode ChangeRun_Walk { get; set; } = ScanCode.LeftShift;
 
-        void OnStart()
+        void Start()
         {
             if (Entity is Camera camera)
                 camera.Z = Height;
@@ -42,7 +42,7 @@ namespace GLTech.Scripting.Prefab
                 logger.Error($"Entity {Entity} is not a camera.");
         }
 
-        void OnFrame()
+        void Update()
         {
             if (Entity is Camera camera)
             {

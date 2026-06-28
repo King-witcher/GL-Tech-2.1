@@ -46,14 +46,15 @@ namespace GLTech
             using Bitmap src32 = source.Clone(PixelFormat.Format32bppArgb) ??
                 throw new ArgumentNullException("source");
 
-            Image image = new Image(source.Width, source.Height);
 
             BitmapData lockdata = src32.LockBits();
-            System.Buffer.MemoryCopy(
-                source: (void*)lockdata.Scan0,
-                destination: (void*)image.Buffer,
-                sourceBytesToCopy: image.Size,
-                destinationSizeInBytes: image.Size);
+            uint* srcptr = (uint*) lockdata.Scan0;
+            Image image = new Image(source.Width, source.Height, srcptr);
+            // System.Buffer.MemoryCopy(
+            //     source: (void*)lockdata.Scan0,
+            //     destination: (void*)image.Buffer,
+            //     sourceBytesToCopy: image.Size,
+            //     destinationSizeInBytes: image.Size);
 
             src32.UnlockBits(lockdata);
             return image;

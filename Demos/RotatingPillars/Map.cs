@@ -107,7 +107,8 @@ namespace GLTech.Demos.RotatingPillars
                             position: (i, j),
                             vertices: 4,
                             radius: 0.2f,
-                            texture: tex);
+                            texture: tex,
+                            collision: true);
 
                         Rotate rotate = new();
                         rotate.AngularSpeed = Scripting.Random.GetFloat(-90f, 90f);
@@ -125,10 +126,10 @@ namespace GLTech.Demos.RotatingPillars
                 Camera.AddScript<SwitchBackgroundScript>();
                 Camera.AddScript<DebugPerformance>();
                 Camera.AddScript<MouseLook>();
-                Noclip nm = new();
-                Camera.AddScript(nm);
-                Q3Movement movement = new(nm);
+                KinematicBody body = new() { CollisionEnabled = true }; // noclip
+                Q3Movement movement = new(body);
                 Camera.AddScript(movement);
+                Camera.AddScript(body);
             }
         }
     }

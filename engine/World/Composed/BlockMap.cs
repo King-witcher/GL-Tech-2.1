@@ -36,7 +36,8 @@ namespace GLTech.World.Composed
             {
                 if (column < 0 || column >= map.Height || line < 0 || line >= map.Width)
                     return true;
-                if (mapTexture(map[column, line]) == null)
+                // Tanto null quanto uma textura sem buffer (ex.: Texture.NullTexture) significam que não há bloco.
+                if (mapTexture(map[column, line]) is not Texture texture || texture.IsNull)
                     return true;
                 return false;
             }
@@ -174,7 +175,8 @@ namespace GLTech.World.Composed
                     for (int line = 0; line < map.Height; line++)
                     {
                         Texture? nullable = mapTexture(map[column, line]);
-                        if (nullable is Texture texture)
+                        // Uma textura sem buffer (ex.: Texture.NullTexture) também representa ausência de bloco.
+                        if (nullable is Texture texture && !texture.IsNull)
                         {
 
                             if (isEmpty(column - 1, line))

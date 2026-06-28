@@ -8,16 +8,16 @@
 
         private protected Polygon() { }
 
-        public Polygon(Vector[] vertices, Texture texture)
+        public Polygon(Vector[] vertices, Texture texture, bool collision = true)
         {
             if (vertices == null)
                 throw new ArgumentNullException("\"vertices\" cannot be null.");
 
-            Build(vertices, texture);
+            Build(vertices, texture, collision);
         }
 
         // This exists because C# doesn't allow to call base constructor anywhere, so here it is.
-        private protected void Build(Vector[] verts, Texture texture)
+        private protected void Build(Vector[] verts, Texture texture, bool collision)
         {
             if (verts.Length == 0)
                 return;
@@ -30,12 +30,19 @@
             for (int i = 0; i < total_walls - 1; i++)
             {
                 currentTexture.hoffset = texture.hoffset + texture.hrepeat * i / (total_walls);
+                Entity e;
+                if (collision)
+                    e = new Wall(
+                        start: verts[i],
+                        end: verts[i + 1],
+                        texture: currentTexture);
+                else
+                    e = new Plane(
+                        start: verts[i],
+                        end: verts[i + 1],
+                        texture: currentTexture);
 
-                new Plane(
-                    start: verts[i],
-                    end: verts[i + 1],
-                    texture: currentTexture)
-                        .Parent = this;
+                e.Parent = this;
             }
 
             currentTexture.hoffset = texture.hoffset + texture.hrepeat * (total_walls - 1) / total_walls;

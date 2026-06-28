@@ -56,8 +56,12 @@ public class Engine
 
     public Engine(EngineCreateInfo createInfo)
     {
-        window = new Window(createInfo.Title, createInfo.WindowWidth, createInfo.WindowHeight, createInfo.FullScreen);
-        window.Position = (-1000, 300);
+        window = new Window(
+            title: createInfo.Title,
+            width: createInfo.WindowWidth,
+            height: createInfo.WindowHeight,
+            fullscreen: createInfo.FullScreen,
+            vsync: false);
         renderer = new Renderer(window.Buffer);
 
         ParallelRendering = createInfo.ParallelRendering;

@@ -4,7 +4,7 @@
     {
         static Logger logger = new Logger(typeof(RegularPolygon).Name);
 
-        public RegularPolygon(Vector position, int vertices, float radius, Texture texture)
+        public RegularPolygon(Vector position, int vertices, float radius, Texture texture, bool collision = true)
         {
             if (vertices <= 2)
                 logger.Warn("An actual polygon has at least 3 vertices. If you want to make a polygon with only 2 vertices, consider creating two walls manually.");
@@ -25,7 +25,8 @@
 
             Build(
                 verts: Vector.GetRegularPolygon(position, radius, vertices),
-                texture
+                texture,
+                collision
             );
         }
     }

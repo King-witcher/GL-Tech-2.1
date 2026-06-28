@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 namespace GLTech
 {
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe readonly struct Image : IDisposable
+    public unsafe struct Image : IDisposable
     {
         public const int PixelSize = 4;
 
-        readonly internal uint* buffer;
+        internal uint* buffer;
         readonly internal int width;
         readonly internal int height;
         readonly internal float widthf;
@@ -27,16 +27,22 @@ namespace GLTech
             widthf = this.width = width;
             heightf = this.height = height;
 
-            buffer = (uint*)Marshal.AllocHGlobal(width * height * PixelSize);
+            AllocBuffer(width, height);
         }
 
+        /// <summary>
+        /// Create an new Image, copying the data from the pointed bitmap.
+        /// </summary>
         public Image(int width, int height, uint* buffer)
         {
             if (width <= 0 || height <= 0)
-                throw new ArgumentOutOfRangeException("width/height");
+                throw new ArgumentOutOfRangeException("width/height must be non negative");
+
             widthf = this.width = width;
             heightf = this.height = height;
-            this.buffer = buffer;
+
+            AllocBuffer(width, height);
+            CopyTransposed(buffer);
         }
 
         public static Image FromColor(Color color)
@@ -93,10 +99,10 @@ namespace GLTech
         public Color this[int column, int line]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => ((Color*)Buffer)[column + Width * line];
+            get => ((Color*)Buffer)[line + height * column];
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => ((Color*)Buffer)[column + Width * line] = value;
+            set => ((Color*)Buffer)[line + height * column] = value;
         }
 
         public override string ToString()
@@ -107,6 +113,28 @@ namespace GLTech
         public void Dispose()
         {
             Marshal.FreeHGlobal(Buffer);
+        }
+
+        private void AllocBuffer(int width, int height)
+        {
+            buffer = (uint*)Marshal.AllocHGlobal(width * height * PixelSize);
+        }
+
+        private void CopyTransposed(uint* src)
+        {
+            int width = this.width;
+            int height = this.height;
+            uint* buffer = this.buffer;
+
+            Parallel.For(0, height, (line) =>
+            {
+                for (int col = 0; col < width; col++)
+                {
+                    int src_idx = col + width * line;
+                    int this_idx = line + height * col;
+                    buffer[this_idx] = src[src_idx];
+                }
+            });
         }
     }
 }

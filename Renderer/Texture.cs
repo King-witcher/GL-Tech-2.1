@@ -43,7 +43,7 @@ namespace GLTech
                 int x = (int)(source.widthf * (hrepeat * hratio + hoffset)) % source.width;
                 int y = (int)(source.heightf * (vrepeat * vratio + voffset)) % source.height;
 
-                uint color = source.buffer[source.width * y + x];
+                uint color = source.buffer[source.height * x + y];
 
                 return color;
             }

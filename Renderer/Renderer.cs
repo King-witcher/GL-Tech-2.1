@@ -6,7 +6,7 @@ namespace GLTech;
 public unsafe class Renderer
 {
     RenderCache* cache;
-    Image target;
+    FrameBufferInner target;
 
     public bool ParallelRendering { get; set; } = true;
     public float HFov
@@ -19,7 +19,7 @@ public unsafe class Renderer
         }
     } = 90f;
 
-    public Renderer(Image target)
+    public Renderer(FrameBufferInner target)
     {
         this.target = target;
         cache = RenderCache.Create(HFov, target.widthf);
@@ -27,8 +27,8 @@ public unsafe class Renderer
 
     public unsafe void Render(RawScene* scene)
     {
-        var col_start_table = new int[target.width];
-        var col_end_table = new int[target.width];
+        var col_start_table = stackalloc int[target.width];
+        var col_end_table = stackalloc int[target.width];
 
         // Cull only the planes that appear in the field of view.
         var left = new Vector(-scene->camera->direction.y, scene->camera->direction.x);
@@ -43,24 +43,24 @@ public unsafe class Renderer
 
         {
             if (ParallelRendering)
-                Parallel.For(fromInclusive: 0, toExclusive: target.Width, body: DrawColumn);
+                Parallel.For(fromInclusive: 0, toExclusive: target.width, body: DrawColumn);
             else
-                for (int i = 0; i < target.Width; i++)
+                for (int i = 0; i < target.width; i++)
                     DrawColumn(i);
         }
 
         // Checks if the code should be run in all cores or just one.
         if (ParallelRendering)
-            Parallel.For(fromInclusive: 0, toExclusive: target.Height >> 1, body: drawCeilingLine);
+            Parallel.For(fromInclusive: 0, toExclusive: target.height >> 1, body: drawCeilingLine);
         else
-            for (int i = 0; i < target.Height >> 1; i++)
+            for (int i = 0; i < target.height >> 1; i++)
                 drawCeilingLine(i);
 
         // Checks if the code should be run in all cores or just one.
         if (ParallelRendering)
-            Parallel.For(fromInclusive: target.Height >> 1, toExclusive: target.Height, body: drawFloorLine);
+            Parallel.For(fromInclusive: target.height >> 1, toExclusive: target.height, body: drawFloorLine);
         else
-            for (int i = target.Height >> 1; i < target.Height; i++)
+            for (int i = target.height >> 1; i < target.height; i++)
                 drawFloorLine(i);
 
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
@@ -75,10 +75,10 @@ public unsafe class Renderer
                 Vector right = new Vector(camera_dir.y, -camera_dir.x);
                 Vector center_hit = scene->camera->position + camera_dir * hit_dist;
 
-                Vector left_bound_hit = center_hit - right * step * (target.Width >> 1);
+                Vector left_bound_hit = center_hit - right * step * (target.width >> 1);
                 using HorizontalList list = scene->floor_list.GetIntersections(left_bound_hit, left_bound_hit + right);
                 var step_vec = right * step;
-                for (int col = 0; col < target.Width; col++)
+                for (int col = 0; col < target.width; col++)
                 {
                     if (col_end_table[col] > line) continue;
 
@@ -105,11 +105,11 @@ public unsafe class Renderer
                 Vector right = new Vector(camera_dir.y, -camera_dir.x);
                 Vector center_hit = scene->camera->position + camera_dir * hit_dist;
 
-                Vector left_bound_hit = center_hit - right * step * (target.Width >> 1);
+                Vector left_bound_hit = center_hit - right * step * (target.width >> 1);
                 using HorizontalList list = scene->ceiling_list.GetIntersections(left_bound_hit, left_bound_hit + right);
 
                 var step_vec = right * step;
-                for (int col = 0; col < target.Width; col++)
+                for (int col = 0; col < target.width; col++)
                 {
                     if (col_start_table[col] <= line) continue;
 

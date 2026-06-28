@@ -1,4 +1,7 @@
-﻿using GLTech.World;
+﻿using GLTech.Scripting.Debugging;
+using GLTech.Scripting.Physics;
+using GLTech.Scripting.Prefab;
+using GLTech.World;
 using GLTech.World.Composed;
 
 namespace GLTech.Demos.SuperBlockMap
@@ -35,7 +38,7 @@ namespace GLTech.Demos.SuperBlockMap
                     {
                         if (dict.TryGetValue(color, out Texture texture))
                             return texture;
-                        else return Texture.NullTexture;
+                        else return null;
                     },
                     textureFilling: BlockMap.TextureFilling.Side,
                     optimize: true,
@@ -48,15 +51,15 @@ namespace GLTech.Demos.SuperBlockMap
 
             // Camera
             {
-                //Camera.AddScript(new MouseLook(2.2f));
-                //Camera.AddScript<DebugPerformance>();
-                //Camera.AddScript<DebugScene>();
+                Camera.AddScript(new MouseLook(2.2f));
+                Camera.AddScript<DebugPerformance>();
+                // Camera.AddScript<DebugScene>();
 
-                //// Tratador de colisão
-                //PointCollider pointCollider = new();
-                //Q1Movement softMovement = new(pointCollider);
-                //Camera.AddScript(pointCollider);
-                //Camera.AddScript(softMovement);
+                // Tratador de colisão
+                KinematicBody body = new();
+                Q3Movement softMovement = new(body);
+                Camera.AddScript(body);
+                Camera.AddScript(softMovement);
             }
         }
     }

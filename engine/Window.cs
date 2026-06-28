@@ -7,12 +7,12 @@ namespace GLTech
 {
     internal unsafe sealed class Window
     {
-        Image buffer;
+        FrameBufferInner buffer;
         SDL_Window* window;
         SDL_Renderer* renderer;
         SDL_Texture* texture;
 
-        public Image Buffer { get => buffer; }
+        public FrameBufferInner Buffer { get => buffer; }
         public (int width, int height) Size
         {
             get
@@ -50,10 +50,11 @@ namespace GLTech
             string title,
             int width,
             int height,
-            bool fullscreen
+            bool fullscreen,
+            bool vsync
         )
         {
-            buffer = new Image(width, height);
+            buffer = new FrameBufferInner(width, height);
             //Fullscreen = fullscreen;
 
             SDL_WindowFlags flags = SDL_WindowFlags.SDL_WINDOW_MOUSE_GRABBED;
@@ -66,9 +67,12 @@ namespace GLTech
                 flags
             );
 
+            // Find the best screen mode on the primary monitor
+            var bestDisplayMode = GetDisplayMode();
+            SDL_SetWindowFullscreenMode(window, &bestDisplayMode);
 
             renderer = SDL_CreateRenderer(window, (byte*)null);
-            SDL_SetRenderVSync(renderer, 1);
+            if (vsync) SDL_SetRenderVSync(renderer, 1);
 
             texture = SDL_CreateTexture(
                 renderer,
@@ -97,7 +101,7 @@ namespace GLTech
 
         internal void Present()
         {
-            SDL_UpdateTexture(texture, null, buffer.Buffer, buffer.Width * 4);
+            SDL_UpdateTexture(texture, null, (nint)buffer.buffer, buffer.width * 4);
             SDL_RenderTexture(renderer, texture, null, null);
             SDL_RenderPresent(renderer);
         }
@@ -107,12 +111,71 @@ namespace GLTech
             SDL_DestroyTexture(texture);
             SDL_DestroyRenderer(renderer);
             SDL_DestroyWindow(window);
-            buffer.Dispose();
         }
 
         internal event Action<ScanCode>? OnKeyDown;
         internal event Action<ScanCode>? OnKeyUp;
 
         internal event Action? OnQuit;
+
+        private SDL_DisplayMode GetDisplayMode()
+        {
+            int displaysCount;
+            var pdisplay = SDL_GetDisplays(&displaysCount);
+
+            if (pdisplay is null || displaysCount == 0)
+            {
+                SDL_free(pdisplay);
+                var error = SDL_GetError();
+                throw new Exception($"Couldn't find a display: {error}");
+            }
+
+#if DEBUG
+            for (int i = 0; i < displaysCount; i++)
+            {
+                var cur = pdisplay[i];
+
+                var name = SDL_GetDisplayName(cur);
+
+                SDL_Rect bounds;
+                if (!SDL_GetDisplayBounds(cur, &bounds))
+                {
+                    SDL_free(pdisplay);
+                    var error = SDL_GetError();
+                    throw new Exception($"Failed to get display bounds for display id {cur}: {error}");
+                }
+
+                Console.WriteLine($"Found display {cur}: {name} {bounds.w}x{bounds.h}");
+            }
+#endif
+
+            // Only display 0 matters
+            var display = *pdisplay;
+
+            int count;
+            var ppmode = SDL_GetFullscreenDisplayModes(display, &count);
+            if (ppmode is null || count == 0)
+            {
+                SDL_free(pdisplay);
+                var error = SDL_GetError();
+                throw new Exception($"Failed to get display mode: {error}");
+            }
+
+            // Only mode 0 matters because they are sorted from best to worse.
+            var pmode = *ppmode;
+            if (pmode is null)
+            {
+                SDL_free(pdisplay);
+                SDL_free(ppmode);
+                var error = SDL_GetError();
+                throw new Exception($"Failed to get display mode: {error}");
+            }
+
+            var result = *pmode;
+            SDL_free(ppmode);
+            SDL_free(pdisplay);
+
+            return result;
+        }
     }
 }

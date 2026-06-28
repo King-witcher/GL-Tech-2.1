@@ -1,58 +1,46 @@
-﻿using Engine.Physics;
 using GLTech;
 using GLTech.Input;
 using GLTech.Scripting;
+using GLTech.Scripting.Physics;
 using GLTech.World;
 
 namespace Engine.Scripting.Prefab;
 
+/// <summary>
+/// Base de controle de jogador, modelada como PRODUTOR DE VELOCIDADE: lê o input,
+/// aplica fricção/aceleração (deixadas para a subclasse) e escreve o resultado em
+/// um <see cref="KinematicBody"/> que ele dirige por composição.
+///
+/// Não integra posição nem trata colisão — isso é papel do <see cref="KinematicBody"/>
+/// e do serviço de colisão da engine. Aqui mora só a regra de jogo (input → desejo
+/// de movimento). O olhar do mouse roda por frame (responsivo); a velocidade é
+/// recalculada no passo físico fixo, logo antes de o corpo integrar.
+/// </summary>
 public abstract class PlayerController : Script
 {
-    static Logger logger = new Logger(typeof(PlayerController).Name);
+    private static Logger logger = new Logger(typeof(PlayerController).Name);
 
-    // When the player will be considered grounded again.
-    float groundedTime = 0f;
+    protected KinematicBody Body { get; }
 
-    Vector truePosition;
-    Vector trueVelocity;
+    public PlayerController(KinematicBody body)
+    {
+        Body = body;
+    }
 
-    Vector guessPosition;
-    Vector guessVelocity;
-
-    Vector positionError;
-    Vector velocityError;
-
-    public Vector StartPosition { get; set; } = Vector.Zero;
     public float MouseSensitivity { get; set; } = 2.2f;
     public bool AlwaysRun { get; set; } = true;
-    public float TurnSpeed { get; set; } = 90f;
-    public float JumpSpeed { get; set; } = 2.7f;
-    public float Gravity { get; set; } = 8f;
     public float RunSpeed { get; set; } = 3.2f;
     public float WalkSpeed { get; set; } = 1.6f;
     public float Height { get; set; } = 0.45f;
-    public bool HandleCollisions { get; set; } = true;
-    public float CollisionRadius { get; set; } = 0.15f;
     public ScanCode StepForward { get; set; } = ScanCode.W;
     public ScanCode StepBack { get; set; } = ScanCode.S;
     public ScanCode StepLeft { get; set; } = ScanCode.A;
     public ScanCode StepRight { get; set; } = ScanCode.D;
-    public ScanCode TurnRight { get; set; } = ScanCode.Right;
-    public ScanCode TurnLeft { get; set; } = ScanCode.Left;
     public ScanCode SlowWalk { get; set; } = ScanCode.LeftShift;
-    public ScanCode Jump { get; set; } = ScanCode.Space;
-
-    public bool IsGrounded => (Time.TotalTime - groundedTime) < 0.2f;
 
     [ScriptStart]
     protected void Start()
     {
-        guessPosition = StartPosition;
-        truePosition = StartPosition;
-        //lastPosition = StartPosition;
-
-        Entity?.WorldPosition = StartPosition;
-
         if (Entity is Camera camera)
             camera.Z = Height;
         else
@@ -62,148 +50,49 @@ public abstract class PlayerController : Script
     [ScriptUpdate]
     protected void Update()
     {
+        // Olhar com o mouse: responsivo, atualizado a cada frame.
         Entity?.Rotate(Input.MouseRel.x * 0.022f * MouseSensitivity);
-
-        ApplyFriction(ref guessVelocity);
-
-        var wishdir = GetWishdir();
-        var wishspeed = GetWishspeed();
-        Accelerate(ref guessVelocity, wishdir * wishspeed, true);
-
-        if (velocityError.Module > 0f)
-            Straighten(ref guessVelocity, ref velocityError);
-
-        var wishstep = guessVelocity * Time.TimeStep;
-        // Handle collisions
-        if (guessVelocity.Module > 0f)
-            ClipComponents(ref guessVelocity, ref wishstep);
-
-        guessPosition += wishstep;
-        Straighten(ref guessPosition, ref positionError);
-
-        Entity?.WorldPosition = guessPosition;
     }
 
     [ScriptFixedUpdate]
     protected void FixedUpdate()
     {
-        ApplyFriction(ref trueVelocity);
+        // Passo determinístico: parte da velocidade atual do corpo, aplica a regra
+        // de movimento e devolve. O corpo (próximo no fixed update) é quem integra
+        // e resolve a colisão.
+        Vector velocity = Body.Velocity;
 
-        var wishdir = GetWishdir();
-        var wishspeed = GetWishspeed();
-        Accelerate(ref trueVelocity, wishdir * wishspeed, true);
+        ApplyFriction(ref velocity);
 
-        var wishstep = trueVelocity * Time.TimeStep;
+        Vector wishDir = GetWishDir();
+        float wishSpeed = GetWishSpeed();
+        Accelerate(ref velocity, wishDir * wishSpeed);
 
-        if (float.IsNaN(wishstep.x))
-        {
-            logger.Error("NaN detected in wishstep calculation.");
-            wishstep = Vector.Zero;
-        }
-
-        // Handle collisions
-        if (trueVelocity.Module > 0f)
-            ClipComponents(ref trueVelocity, ref wishstep);
-
-        //lastPosition = truePosition;
-        truePosition += wishstep;
-
-        // Calculate differences
-        positionError = guessPosition - truePosition;
-        velocityError = guessVelocity - trueVelocity;
+        Body.Velocity = velocity;
     }
 
-    Vector GetWishdir()
+    private Vector GetWishDir()
     {
         Vector result = Vector.Zero;
 
-        if (Input.IsKeyDown(StepForward))
-            result += Vector.North;
-        if (Input.IsKeyDown(StepBack))
-            result += Vector.South;
-        if (Input.IsKeyDown(StepLeft))
-            result += Vector.West;
-        if (Input.IsKeyDown(StepRight))
-            result += Vector.East;
+        if (Input.IsKeyDown(StepForward)) result += Vector.North;
+        if (Input.IsKeyDown(StepBack)) result += Vector.South;
+        if (Input.IsKeyDown(StepLeft)) result += Vector.West;
+        if (Input.IsKeyDown(StepRight)) result += Vector.East;
 
-        result *= Entity?.WorldDirection ?? Vector.Zero;
+        // Leva do referencial da câmera para o mundo.
+        result *= Entity?.WorldDirection ?? Vector.North;
 
-        if (result.Module == 0)
-            return Vector.Zero;
-        else
-            return result / result.Module;
+        float module = result.Module;
+        return module == 0f ? Vector.Zero : result / module;
     }
 
-    float GetWishspeed()
-    {
-        return Input.IsKeyDown(SlowWalk) && !AlwaysRun ? WalkSpeed : RunSpeed;
-    }
+    private float GetWishSpeed() =>
+        Input.IsKeyDown(SlowWalk) && !AlwaysRun ? WalkSpeed : RunSpeed;
 
-    /// <summary>
-    /// Clips velocity and wishstep against collisions.
-    /// </summary>
-    /// <param name="velocity"></param>
-    /// <param name="wishstep"></param>
-    void ClipComponents(ref Vector velocity, ref Vector wishstep)
-    {
-        RayCastInfo raycastInfo = new();
-        raycastInfo.segment.start = truePosition;
-        Vector result = Vector.Zero;
-        Vector remainder = wishstep;
+    /// <summary>Como a subclasse acelera a velocidade rumo ao desejo de movimento.</summary>
+    protected abstract void Accelerate(ref Vector velocity, Vector wishVelocity);
 
-        while (true)
-        {
-            raycastInfo.segment.direction = remainder;
-            var summary = Scene.RayCast(raycastInfo);
-
-            // Simulate ray factor as if it was closer by CollisionRadius
-            summary.ray_factor += CollisionRadius / Vector.DotProduct(summary.normal, wishstep);
-            if (summary.ray_factor < 0f)
-            {
-                summary.ray_factor = 0f;
-            }
-
-            // If current wishstep wouldn't hit anything, we're done
-            if (summary.ray_factor >= 1f)
-            {
-                result += remainder;
-                break;
-            }
-
-            // How much we can go before hitting
-            var preHitStep = wishstep * summary.ray_factor;
-            result += preHitStep;
-
-            // How much we overstepped
-            var overStep = wishstep - preHitStep;
-
-            // Project overstep onto the collision plane to get slide step
-            var slideStep = overStep - summary.normal * Vector.DotProduct(summary.normal, overStep);
-            remainder = slideStep;
-
-            // Clip velocity against the collision normal
-            //wishstep = preHitStep + slideStep;
-            velocity -= summary.normal * Vector.DotProduct(velocity, summary.normal);
-        }
-
-        wishstep = result;
-    }
-
-    /// <summary>
-    /// Smoothly correct value and error over time
-    /// </summary>
-    void Straighten(ref Vector value, ref Vector error)
-    {
-        var distance = error.Module;
-        var correctionFactor = 2f * MathF.Sqrt(2f / distance) * Time.TimeStep;
-        correctionFactor = MathF.Min(correctionFactor, 1f);
-
-        var correction = -error * correctionFactor;
-        value += correction;
-        error += correction;
-    }
-
-    protected abstract void Accelerate(ref Vector source, Vector wishvel, bool grounded);
-
-    protected abstract void ApplyFriction(ref Vector source);
+    /// <summary>Como a subclasse aplica fricção/desaceleração.</summary>
+    protected abstract void ApplyFriction(ref Vector velocity);
 }

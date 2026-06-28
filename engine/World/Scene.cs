@@ -28,13 +28,13 @@ namespace GLTech.World
         private Dictionary<string, Entity> entityNames = new Dictionary<string, Entity>();
         private Camera camera;
         private List<RigidBody> rigidBodies = new List<RigidBody>();
-        private CollisionSystem CollisionSystem { get; } = new CollisionSystem();
+        public CollisionSystem CollisionSystem { get; } = new CollisionSystem();
 
         private List<Action> starts = new List<Action>();
         private List<Action> updates = new List<Action>();
         private List<Action> fixedUpdates = new List<Action>();
 
-        public int ColliderCount => 0;
+        public int ColliderCount => CollisionSystem.ColliderCount;
         public int EntityCount => entities.Count;
         public int PlaneCount => raw->plane_list.count;
         public Camera Camera => camera;

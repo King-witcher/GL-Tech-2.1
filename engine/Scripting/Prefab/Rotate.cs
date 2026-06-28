@@ -16,7 +16,11 @@ namespace GLTech.Scripting.Prefab
 
         public float AngularSpeed { get; set; } = 30f;
 
-        void OnFrame() =>
-            Entity.Rotate(AngularSpeed * Time.TimeStep);
+
+        [ScriptUpdate]
+        void Update()
+        {
+            Entity?.Rotate(AngularSpeed * Time.TimeStep);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Engine.Scripting.Prefab;
 using GLTech;
 using GLTech.Scripting;
+using GLTech.Scripting.Physics;
 using GLTech.Scripting.Prefab;
 using GLTech.Space;
 using GLTech.World;
@@ -355,10 +356,18 @@ public class Map : Scene
             //Camera.AddScript(movement);
             //Camera.Parent = rigidBody;
 
-            PlayerController controller = new Q1Movement();
-            controller.StartPosition = (57.5f, 29.5f);
+            // O player é a composição: corpo cinemático (engine, resolve colisão)
+            // + controller de movimento (jogo, produz velocidade).
+            var body = new KinematicBody
+            {
+                StartPosition = (57.5f, 29.5f),
+                Radius = 0.15f,
+            };
+            var controller = new Q1Movement(body);
 
+            // Ordem importa: o controller calcula a velocidade ANTES de o corpo integrar.
             Camera.AddScript(controller);
+            Camera.AddScript(body);
         }
 
         // Renderer customization

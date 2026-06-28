@@ -1,4 +1,7 @@
-﻿using GLTech.World;
+﻿using GLTech.Scripting.Debugging;
+using GLTech.Scripting.Physics;
+using GLTech.Scripting.Prefab;
+using GLTech.World;
 using GLTech.World.Composed;
 
 namespace GLTech.Demos.SampleBlockMap
@@ -54,7 +57,7 @@ namespace GLTech.Demos.SampleBlockMap
                     {
                         if (dict.TryGetValue(color, out Texture texture))
                             return texture;
-                        else return Texture.NullTexture;
+                        else return null;
                     },
                     textureFilling: BlockMap.TextureFilling.Block,
                     optimize: true,
@@ -79,6 +82,22 @@ namespace GLTech.Demos.SampleBlockMap
                 //Camera.AddScript(collider);
                 //Camera.AddScript(movement);
                 //Camera.AddScript(mouseLook);
+            }
+
+            // Camera
+            {
+                Camera.AddScript(new MouseLook(2.2f));
+                Camera.AddScript<DebugPerformance>();
+                Camera.RelativeRotation = -90f;
+                // Camera.AddScript<DebugScene>();
+
+                // Tratador de colisão
+                KinematicBody body = new();
+                body.StartPosition = (8f, 8f);
+                Q3Movement softMovement = new(body);
+
+                Camera.AddScript(body);
+                Camera.AddScript(softMovement);
             }
         }
     }

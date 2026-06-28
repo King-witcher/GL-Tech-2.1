@@ -5,7 +5,7 @@ namespace GLTech.Space;
 
 [NativeCppClass]
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct Vector : IEquatable<Vector>
+public struct Vector : IEquatable<Vector>
 {
     private const float TORAD = MathF.PI / 180f;
     private const float TODEGREE = 180f / MathF.PI;

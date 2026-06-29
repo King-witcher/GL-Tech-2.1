@@ -6,69 +6,77 @@ using GLTech.World;
 
 namespace Engine.Scripting.Prefab;
 
-/// <summary>
-/// Base de controle de jogador, modelada como PRODUTOR DE VELOCIDADE: lê o input,
-/// aplica fricção/aceleração (deixadas para a subclasse) e escreve o resultado em
-/// um <see cref="KinematicBody"/> que ele dirige por composição.
-///
-/// Não integra posição nem trata colisão — isso é papel do <see cref="KinematicBody"/>
-/// e do serviço de colisão da engine. Aqui mora só a regra de jogo (input → desejo
-/// de movimento). O olhar do mouse roda por frame (responsivo); a velocidade é
-/// recalculada no passo físico fixo, logo antes de o corpo integrar.
-/// </summary>
 public abstract class PlayerController : Script
 {
     private static Logger logger = new Logger(typeof(PlayerController).Name);
 
-    protected KinematicBody Body { get; }
+    private VerticalMotion vertical = new();
 
-    public PlayerController(KinematicBody body)
-    {
-        Body = body;
-    }
+    protected KinematicBody? PlayerPhysics { get; private set; }
 
     public float MouseSensitivity { get; set; } = 2.2f;
     public bool AlwaysRun { get; set; } = true;
     public float RunSpeed { get; set; } = 3.2f;
     public float WalkSpeed { get; set; } = 1.6f;
-    public float Height { get; set; } = 0.45f;
+    public float PlayerHeight { get; set; } = 0.55f;
+    public float JumpSpeed { get => vertical.JumpSpeed; set => vertical.JumpSpeed = value; }
+    public float Gravity { get => vertical.Gravity; set => vertical.Gravity = value; }
+
     public ScanCode StepForward { get; set; } = ScanCode.W;
     public ScanCode StepBack { get; set; } = ScanCode.S;
     public ScanCode StepLeft { get; set; } = ScanCode.A;
     public ScanCode StepRight { get; set; } = ScanCode.D;
     public ScanCode SlowWalk { get; set; } = ScanCode.LeftShift;
+    public ScanCode Jump { get; set; } = ScanCode.Space;
+    public bool Grounded => vertical.Grounded;
 
     [ScriptStart]
     protected void Start()
     {
-        if (Entity is Camera camera)
-            camera.Z = Height;
+        Player player = Scene.Player;
+        var kinematicBody = player.GetScript<KinematicBody>();
+        if (kinematicBody is not null)
+        {
+            PlayerPhysics = kinematicBody;
+            player.Height = PlayerHeight;
+        }
         else
-            logger.Error($"PlayerController must be added to a Camera, but was added to a {Entity}.");
-    }
-
-    [ScriptUpdate]
-    protected void Update()
-    {
-        // Olhar com o mouse: responsivo, atualizado a cada frame.
-        Entity?.Rotate(Input.MouseRel.x * 0.022f * MouseSensitivity);
+        {
+            logger.Error($"For PlayerController to work, the Scene Player must have a KinematicBody Script added.");
+        }
     }
 
     [ScriptFixedUpdate]
     protected void FixedUpdate()
     {
-        // Passo determinístico: parte da velocidade atual do corpo, aplica a regra
-        // de movimento e devolve. O corpo (próximo no fixed update) é quem integra
-        // e resolve a colisão.
-        Vector velocity = Body.Velocity;
+        if (PlayerPhysics is null)
+            return;
 
-        ApplyFriction(ref velocity);
+        vertical.FixedStep(Time.TimeStep, Input.IsKeyDown(Jump) || Input.WasKeyPressed(Jump));
+
+        Vector velocity = PlayerPhysics.Velocity;
+
+        bool onGround = vertical.Grounded && !vertical.Jumped;
+        if (onGround)
+            ApplyFriction(ref velocity);
 
         Vector wishDir = GetWishDir();
         float wishSpeed = GetWishSpeed();
-        Accelerate(ref velocity, wishDir * wishSpeed);
+        Vector wishVelocity = wishDir * wishSpeed;
 
-        Body.Velocity = velocity;
+        if (onGround)
+            Accelerate(ref velocity, wishVelocity);
+        else
+            AirAccelerate(ref velocity, wishVelocity);
+
+        PlayerPhysics.Velocity = velocity;
+    }
+
+    [ScriptUpdate]
+    protected void Update()
+    {
+        Scene.Player.Rotate(Input.MouseRel.x * 0.022f * MouseSensitivity);
+        Scene.Player.Height = PlayerHeight + vertical.InterpolatedDisplacement(Time.FixedRemainder);
     }
 
     private Vector GetWishDir()
@@ -80,8 +88,7 @@ public abstract class PlayerController : Script
         if (Input.IsKeyDown(StepLeft)) result += Vector.West;
         if (Input.IsKeyDown(StepRight)) result += Vector.East;
 
-        // Leva do referencial da câmera para o mundo.
-        result *= Entity?.WorldDirection ?? Vector.North;
+        result *= Scene.Player.WorldDirection;
 
         float module = result.Module;
         return module == 0f ? Vector.Zero : result / module;
@@ -90,9 +97,7 @@ public abstract class PlayerController : Script
     private float GetWishSpeed() =>
         Input.IsKeyDown(SlowWalk) && !AlwaysRun ? WalkSpeed : RunSpeed;
 
-    /// <summary>Como a subclasse acelera a velocidade rumo ao desejo de movimento.</summary>
     protected abstract void Accelerate(ref Vector velocity, Vector wishVelocity);
-
-    /// <summary>Como a subclasse aplica fricção/desaceleração.</summary>
+    protected abstract void AirAccelerate(ref Vector velocity, Vector wishVelocity);
     protected abstract void ApplyFriction(ref Vector velocity);
 }

@@ -1,5 +1,4 @@
-﻿using Engine.Scripting.Prefab;
-using GLTech;
+﻿using GLTech;
 using GLTech.Scripting;
 using GLTech.Scripting.Physics;
 using GLTech.Scripting.Prefab;
@@ -38,7 +37,7 @@ public class FlagBehavior : Script
 
     public void OnFrame()
     {
-        float distance = (Entity.WorldPosition - Scene.Camera.WorldPosition).Module;
+        float distance = (Entity.WorldPosition - Scene.Player.WorldPosition).Module;
         bool colliding = distance < Radius;
 
         if (colliding)
@@ -344,30 +343,15 @@ public class Map : Scene
 
         // Camera
         {
-            //Camera.AddScript(new MouseLook(2.2f));
-            //Camera.AddScript<DebugEntity>();
-
-            //var rigidBody = new RigidBody((57.5f, 29.5f));
-            //Q1Movement movement = new(Camera);
-            //rigidBody.AddScript(movement);
-            //Add(rigidBody);
-
-            //Camera.AddScript(pc);
-            //Camera.AddScript(movement);
-            //Camera.Parent = rigidBody;
-
             // O player é a composição: corpo cinemático (engine, resolve colisão)
             // + controller de movimento (jogo, produz velocidade).
-            var body = new KinematicBody
+            // Ordem importa: o controller calcula a velocidade ANTES de o corpo integrar.
+            Player.AddScript<Q1Movement>();
+            Player.AddScript(new KinematicBody
             {
                 StartPosition = (57.5f, 29.5f),
                 Radius = 0.15f,
-            };
-            var controller = new Q1Movement(body);
-
-            // Ordem importa: o controller calcula a velocidade ANTES de o corpo integrar.
-            Camera.AddScript(controller);
-            Camera.AddScript(body);
+            });
         }
 
         // Renderer customization

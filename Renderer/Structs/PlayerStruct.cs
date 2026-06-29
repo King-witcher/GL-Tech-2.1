@@ -5,22 +5,22 @@ namespace GLTech.Structs
 {
     [NativeCppClass]
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct CameraStruct
+    public unsafe struct PlayerStruct
     {
         public Vector position;
         public Vector direction;
-        public float z;
+        public float height;
 
-        static public CameraStruct* Create(Vector position, Vector direction)
+        static public PlayerStruct* Create(Vector position, Vector direction)
         {
-            CameraStruct* result = (CameraStruct*)Marshal.AllocHGlobal(sizeof(CameraStruct));
+            PlayerStruct* result = (PlayerStruct*)Marshal.AllocHGlobal(sizeof(PlayerStruct));
             result->position = position;
             result->direction = direction;
-            result->z = 0.5f;
+            result->height = 0.5f;
             return result;
         }
 
-        static public void Delete(CameraStruct* item)
+        static public void Delete(PlayerStruct* item)
         {
             Marshal.FreeHGlobal((IntPtr)item);
         }

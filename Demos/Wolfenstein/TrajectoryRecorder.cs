@@ -63,7 +63,7 @@ public class TrajectoryRecorder : Script
         int keyframesRecorded = currentRun.Count;
         float keyframeIntervals = Time / keyframeInterval;
         if (keyframesRecorded < keyframeIntervals)
-            currentRun.Add(Scene.Camera.WorldPosition);
+            currentRun.Add(Scene.Player.WorldPosition);
     }
 
     void PlayBack()

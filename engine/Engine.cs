@@ -91,7 +91,7 @@ public class Engine
         //    logger.Warn($"The Scene being rendered does not have a background texture. Add it by using Scene.Background property.");
         #endregion
 
-        Camera camera = scene.Camera;
+        Player camera = scene.Player;
         currentScene = scene;
 
         bool quitRequested = false;

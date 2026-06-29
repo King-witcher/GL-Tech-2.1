@@ -1,5 +1,4 @@
 using Engine.Scripting.Prefab;
-using GLTech.Scripting.Physics;
 
 namespace GLTech.Scripting.Prefab
 {
@@ -9,10 +8,10 @@ namespace GLTech.Scripting.Prefab
     /// </summary>
     public sealed class FlatMovement : PlayerController
     {
-        public FlatMovement(KinematicBody body) : base(body) { }
-
         protected override void Accelerate(ref Vector velocity, Vector wishVelocity)
             => velocity = wishVelocity;
+
+    protected override void AirAccelerate(ref Vector velocity, Vector wishVelocity) => Accelerate(ref velocity, wishVelocity);
 
         protected override void ApplyFriction(ref Vector velocity)
             => velocity = Vector.Zero;

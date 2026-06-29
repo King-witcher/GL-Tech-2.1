@@ -31,14 +31,14 @@ public unsafe class Renderer
         var col_end_table = stackalloc int[target.width];
 
         // Cull only the planes that appear in the field of view.
-        var left = new Vector(-scene->camera->direction.y, scene->camera->direction.x);
+        var left = new Vector(-scene->player->direction.y, scene->player->direction.x);
         var rtl = left * cache->step0 * target.widthf;
         View view = new(
-            center: scene->camera->position,
-            left: scene->camera->direction + rtl * 0.5f,
-            right: scene->camera->direction - rtl * 0.5f
+            center: scene->player->position,
+            left: scene->player->direction + rtl * 0.5f,
+            right: scene->player->direction - rtl * 0.5f
         );
-        using var surface_culled = scene->plane_list.CullBySurface(scene->camera->position);
+        using var surface_culled = scene->plane_list.CullBySurface(scene->player->position);
         using var plane_list = surface_culled.CullByFrustum(view);
 
         {
@@ -68,12 +68,12 @@ public unsafe class Renderer
         {
             unchecked
             {
-                float hit_dist = scene->camera->z / ((line - target.heightf * 0.5f) * cache->step0);
+                float hit_dist = scene->player->height / ((line - target.heightf * 0.5f) * cache->step0);
                 float step = cache->step0 * hit_dist;
 
-                Vector camera_dir = scene->camera->direction;
+                Vector camera_dir = scene->player->direction;
                 Vector right = new Vector(camera_dir.y, -camera_dir.x);
-                Vector center_hit = scene->camera->position + camera_dir * hit_dist;
+                Vector center_hit = scene->player->position + camera_dir * hit_dist;
 
                 Vector left_bound_hit = center_hit - right * step * (target.width >> 1);
                 using HorizontalList list = scene->floor_list.GetIntersections(left_bound_hit, left_bound_hit + right);
@@ -98,12 +98,12 @@ public unsafe class Renderer
         {
             unchecked
             {
-                float hit_dist = (1 - scene->camera->z) / ((target.heightf * 0.5f - line) * cache->step0);
+                float hit_dist = (1 - scene->player->height) / ((target.heightf * 0.5f - line) * cache->step0);
                 float step = cache->step0 * hit_dist;
 
-                Vector camera_dir = scene->camera->direction;
+                Vector camera_dir = scene->player->direction;
                 Vector right = new Vector(camera_dir.y, -camera_dir.x);
-                Vector center_hit = scene->camera->position + camera_dir * hit_dist;
+                Vector center_hit = scene->player->position + camera_dir * hit_dist;
 
                 Vector left_bound_hit = center_hit - right * step * (target.width >> 1);
                 using HorizontalList list = scene->ceiling_list.GetIntersections(left_bound_hit, left_bound_hit + right);
@@ -136,8 +136,8 @@ public unsafe class Renderer
 
                 // Caching frequently used variables
                 var delta = width / 2 - col_idx;
-                var dir = scene->camera->direction + left * (cache->step0 * delta);
-                Segment ray = new Segment(scene->camera->position, dir);
+                var dir = scene->player->direction + left * (cache->step0 * delta);
+                Segment ray = new Segment(scene->player->position, dir);
                 //Texture bg = scene->background;
 
                 // Cast the ray towards every plane.
@@ -148,12 +148,12 @@ public unsafe class Renderer
                 #region Render the plane
 
                 // Height that the current column should have on the screen.
-                float colision_depth = Vector.DotProduct(ray.direction, scene->camera->direction) * rs.x;
+                float colision_depth = Vector.DotProduct(ray.direction, scene->player->direction) * rs.x;
                 float col_height_f = cache->colHeight1 / colision_depth; // Wall column size in pixels
 
                 // Where the column starts and ends relative to the screen.
-                float col_start_f = (height_f - 1f - col_height_f) * 0.5f + col_height_f * (scene->camera->z - 0.5f);
-                float col_end_f = (height_f - 1f + col_height_f) * 0.5f + col_height_f * (scene->camera->z - 0.5f);
+                float col_start_f = (height_f - 1f - col_height_f) * 0.5f + col_height_f * (scene->player->height - 0.5f);
+                float col_end_f = (height_f - 1f + col_height_f) * 0.5f + col_height_f * (scene->player->height - 0.5f);
 
                 // Wall rendering bounds on the screen...
                 int col_start_i = height - (int)(height_f - col_start_f);    // Inclusive

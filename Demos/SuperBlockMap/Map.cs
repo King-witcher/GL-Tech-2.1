@@ -51,15 +51,15 @@ namespace GLTech.Demos.SuperBlockMap
 
             // Camera
             {
-                Camera.AddScript(new MouseLook(2.2f));
-                Camera.AddScript<DebugPerformance>();
+                Player.AddScript(new MouseLook(2.2f));
+                Player.AddScript<DebugPerformance>();
                 // Camera.AddScript<DebugScene>();
 
                 // Tratador de colisão
                 KinematicBody body = new();
-                Q3Movement softMovement = new(body);
-                Camera.AddScript(body);
-                Camera.AddScript(softMovement);
+                Q1Movement softMovement = new();
+                Player.AddScript(body);
+                Player.AddScript(softMovement);
             }
         }
     }

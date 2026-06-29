@@ -123,13 +123,13 @@ namespace GLTech.Demos.RotatingPillars
 
             // Camera
             {
-                Camera.AddScript<SwitchBackgroundScript>();
-                Camera.AddScript<DebugPerformance>();
-                Camera.AddScript<MouseLook>();
+                Player.AddScript<SwitchBackgroundScript>();
+                Player.AddScript<DebugPerformance>();
+                Player.AddScript<MouseLook>();
                 KinematicBody body = new() { CollisionEnabled = true }; // noclip
-                Q3Movement movement = new(body);
-                Camera.AddScript(movement);
-                Camera.AddScript(body);
+                Q1Movement movement = new();
+                Player.AddScript(movement);
+                Player.AddScript(body);
             }
         }
     }

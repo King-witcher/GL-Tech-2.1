@@ -1,8 +1,8 @@
-﻿using Struct = GLTech.Structs.CameraStruct;
+﻿using Struct = GLTech.Structs.PlayerStruct;
 
 namespace GLTech.World
 {
-    public unsafe sealed class Camera : Entity, IDisposable
+    public unsafe sealed class Player : Entity, IDisposable
     {
         #region What should happen to the unmanaged data if its position/direction changes? Here's where the class answers it.
         internal Struct* raw;
@@ -20,13 +20,13 @@ namespace GLTech.World
         }
         #endregion
 
-        public float Z
+        public float Height
         {
-            get => raw->z;
-            set => raw->z = value;
+            get => raw->height;
+            set => raw->height = value;
         }
 
-        internal Camera()
+        internal Player()
         {
             raw = Struct.Create(Vector.Zero, Vector.North);
         }

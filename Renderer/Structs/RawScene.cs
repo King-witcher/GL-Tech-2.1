@@ -13,7 +13,7 @@ namespace GLTech.Structs
         public int sprite_count;
         public PlaneList plane_list;
         public Texture background;
-        public CameraStruct* camera;  // Talvez eu mude isso
+        public PlayerStruct* player;  // Talvez eu mude isso
         public HorizontalList floor_list;
         public HorizontalList ceiling_list;
 
@@ -26,7 +26,7 @@ namespace GLTech.Structs
             result->last_sprite = null;
             result->sprite_count = 0;
             result->background = Texture.NullTexture;
-            result->camera = null;
+            result->player = null;
             result->floor_list = new();
             result->ceiling_list = new();
 
@@ -65,9 +65,9 @@ namespace GLTech.Structs
             sprite_count++;
         }
 
-        public void Add(CameraStruct* camera)
+        public void Add(PlayerStruct* camera)
         {
-            this.camera = camera;
+            this.player = camera;
         }
 
         public void AddFloor(HorizontalStruct* floor)

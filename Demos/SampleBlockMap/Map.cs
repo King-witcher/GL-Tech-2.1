@@ -86,18 +86,18 @@ namespace GLTech.Demos.SampleBlockMap
 
             // Camera
             {
-                Camera.AddScript(new MouseLook(2.2f));
-                Camera.AddScript<DebugPerformance>();
-                Camera.RelativeRotation = -90f;
+                Player.AddScript(new MouseLook(2.2f));
+                Player.AddScript<DebugPerformance>();
+                Player.RelativeRotation = -90f;
                 // Camera.AddScript<DebugScene>();
 
                 // Tratador de colisão
                 KinematicBody body = new();
                 body.StartPosition = (8f, 8f);
-                Q3Movement softMovement = new(body);
+                Q1Movement softMovement = new();
 
-                Camera.AddScript(body);
-                Camera.AddScript(softMovement);
+                Player.AddScript(body);
+                Player.AddScript(softMovement);
             }
         }
     }

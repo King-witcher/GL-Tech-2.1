@@ -11,9 +11,9 @@ namespace GLTech.World
             raw = RawScene.Create();
 
             // Bad smell
-            Camera defaultCamera = new();
+            Player defaultCamera = new();
             Add(defaultCamera);
-            camera = defaultCamera;
+            player = defaultCamera;
         }
 
         public Scene(Texture background) : this()
@@ -26,7 +26,7 @@ namespace GLTech.World
         private static Logger logger = new(typeof(Scene).Name);
         private List<Entity> entities = new List<Entity>();
         private Dictionary<string, Entity> entityNames = new Dictionary<string, Entity>();
-        private Camera camera;
+        private Player player;
         private List<RigidBody> rigidBodies = new List<RigidBody>();
         public CollisionSystem CollisionSystem { get; } = new CollisionSystem();
 
@@ -37,7 +37,7 @@ namespace GLTech.World
         public int ColliderCount => CollisionSystem.ColliderCount;
         public int EntityCount => entities.Count;
         public int PlaneCount => raw->plane_list.count;
-        public Camera Camera => camera;
+        public Player Player => player;
 
         public Texture Background
         {
@@ -116,7 +116,7 @@ namespace GLTech.World
                 {
                     raw->AddCeiling(ceiling.unmanaged);
                 }
-                else if (node is Camera camera)
+                else if (node is Player camera)
                 {
                     raw->Add(camera.raw);
                 }

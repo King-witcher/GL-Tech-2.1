@@ -48,18 +48,18 @@ namespace GLTech.Demos.FloorStressTest
 
             // Camera
             {
-                Camera.WorldPosition = (0.5f, 0.5f);
-                Camera.WorldDirection = (1f, 1f);
+                Player.WorldPosition = (0.5f, 0.5f);
+                Player.WorldDirection = (1f, 1f);
 
                 //PointCollider collider = new PointCollider();
                 var rigidBody = new RigidBody((0.5f, 0.5f));
                 //Q1Movement movement = new Q1Movement(Camera);
                 Add(rigidBody);
 
-                Camera.Parent = rigidBody;
+                Player.Parent = rigidBody;
                 MouseLook mouseLook = new MouseLook(2.2f);
                 //Camera.AddScript(movement);
-                Camera.AddScript(mouseLook);
+                Player.AddScript(mouseLook);
             }
         }
     }

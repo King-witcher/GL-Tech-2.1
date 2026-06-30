@@ -9,10 +9,10 @@ namespace GLTech.Demos.SampleBlockMap
     // Um pequeno mapa usando BlockMap
     public class Map : Scene
     {
-        Image floors_buffer = Utils.GetImageFromBitmap(Resources.Floors);
-        Image golden_buffer = Utils.GetImageFromBitmap(Resources.golden);
-        Image got_buffer = Utils.GetImageFromBitmap(Resources.GOT);
-        Image background_buffer = Utils.GetImageFromBitmap(Resources.Universe);
+        TextureBuffer floors_buffer = Utils.GetImageFromBitmap(Resources.Floors);
+        TextureBuffer golden_buffer = Utils.GetImageFromBitmap(Resources.golden);
+        TextureBuffer got_buffer = Utils.GetImageFromBitmap(Resources.GOT);
+        TextureBuffer background_buffer = Utils.GetImageFromBitmap(Resources.Universe);
 
         protected override void Delete()
         {
@@ -28,7 +28,7 @@ namespace GLTech.Demos.SampleBlockMap
 
             // BlockMap
             {
-                using Image blockmap_buffer = Utils.GetImageFromBitmap(Resources.MapGrid);
+                using TextureBuffer blockmap_buffer = Utils.GetImageFromBitmap(Resources.MapGrid);
                 Dictionary<Color, Texture> dict = new();
                 {
                     Texture floors = new Texture(
@@ -68,36 +68,16 @@ namespace GLTech.Demos.SampleBlockMap
 
             // Camera
             {
-                //Camera.WorldPosition = (8f, 8f);
-                //Camera.RelativeRotation = -90f;
-
-                //Camera.AddScript<DebugPerformance>();
-                //Camera.AddScript<DebugScene>();
-                //Camera.AddScript<DebugEntity>();
-
-                //PointCollider collider = new PointCollider();
-                //Q1Movement movement = new Q1Movement(collider);
-                //MouseLook mouseLook = new MouseLook(2.2f);
-
-                //Camera.AddScript(collider);
-                //Camera.AddScript(movement);
-                //Camera.AddScript(mouseLook);
-            }
-
-            // Camera
-            {
-                Player.AddScript(new MouseLook(2.2f));
                 Player.AddScript<DebugPerformance>();
                 Player.RelativeRotation = -90f;
-                // Camera.AddScript<DebugScene>();
 
                 // Tratador de colisão
                 KinematicBody body = new();
                 body.StartPosition = (8f, 8f);
-                Q1Movement softMovement = new();
+                Q1Controller controller = new();
 
+                Player.AddScript(controller);
                 Player.AddScript(body);
-                Player.AddScript(softMovement);
             }
         }
     }

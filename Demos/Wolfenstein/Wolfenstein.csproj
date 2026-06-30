@@ -7,25 +7,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>
+    <AssemblyTitle>Wolfenstein</AssemblyTitle>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\engine\Engine.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Images.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Images.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Images.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Images.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <ProjectReference Include="..\..\Engine\Engine.csproj" />
   </ItemGroup>
 
 </Project>

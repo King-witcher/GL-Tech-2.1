@@ -9,9 +9,9 @@ namespace GLTech.Demos.SuperBlockMap
     // Esse é um mapa com uma quantidade extrema de planos para testes de gargalo.
     public class Map : Scene
     {
-        Image crazyBackground_buffer = Utils.GetImageFromBitmap(Resources.GOT);
-        Image blockmap_buffer = Utils.GetImageFromBitmap(Resources.Plant);
-        Image test_buffer = Utils.GetImageFromBitmap(Resources.Test);
+        TextureBuffer crazyBackground_buffer = Utils.GetImageFromBitmap(Resources.GOT);
+        TextureBuffer blockmap_buffer = Utils.GetImageFromBitmap(Resources.Plant);
+        TextureBuffer test_buffer = Utils.GetImageFromBitmap(Resources.Test);
 
         protected override void Delete()
         {
@@ -57,7 +57,7 @@ namespace GLTech.Demos.SuperBlockMap
 
                 // Tratador de colisão
                 KinematicBody body = new();
-                Q1Movement softMovement = new();
+                Q1Controller softMovement = new();
                 Player.AddScript(body);
                 Player.AddScript(softMovement);
             }

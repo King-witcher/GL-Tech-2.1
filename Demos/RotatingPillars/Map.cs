@@ -11,11 +11,11 @@ namespace GLTech.Demos.RotatingPillars
     public class Map : Scene
     {
         // Firstly, load buffers
-        Image background_buffer = Utils.GetImageFromBitmap(Resources.HellSky);
-        Image carvedWall_buffer = Utils.GetImageFromBitmap(Resources.CarvedWall);
-        Image bricks_buffer = Utils.GetImageFromBitmap(Resources.Bricks);
-        Image wood_buffer = Utils.GetImageFromBitmap(Resources.Wood);
-        Image grayHexagons_buffer = Utils.GetImageFromBitmap(Resources.GrayHexagons);
+        TextureBuffer background_buffer = Utils.GetImageFromBitmap(Resources.HellSky);
+        TextureBuffer carvedWall_buffer = Utils.GetImageFromBitmap(Resources.CarvedWall);
+        TextureBuffer bricks_buffer = Utils.GetImageFromBitmap(Resources.Bricks);
+        TextureBuffer wood_buffer = Utils.GetImageFromBitmap(Resources.Wood);
+        TextureBuffer grayHexagons_buffer = Utils.GetImageFromBitmap(Resources.GrayHexagons);
 
         protected override void Delete()
         {
@@ -127,7 +127,7 @@ namespace GLTech.Demos.RotatingPillars
                 Player.AddScript<DebugPerformance>();
                 Player.AddScript<MouseLook>();
                 KinematicBody body = new() { CollisionEnabled = true }; // noclip
-                Q1Movement movement = new();
+                Q1Controller movement = new();
                 Player.AddScript(movement);
                 Player.AddScript(body);
             }

@@ -8,7 +8,7 @@ namespace GLTech.Demos.FloorStressTest
     // Um pequeno mapa usando BlockMap
     public class Map : Scene
     {
-        Image floors_buffer = Utils.GetImageFromBitmap(Resources.golden);
+        TextureBuffer floors_buffer = Utils.GetImageFromBitmap(Resources.golden);
 
         protected override void Delete()
         {

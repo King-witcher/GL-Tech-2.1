@@ -1,4 +1,5 @@
-﻿using GLTech;
+﻿using Engine;
+using GLTech;
 using GLTech.Scripting;
 using GLTech.Scripting.Physics;
 using GLTech.Scripting.Prefab;
@@ -76,168 +77,45 @@ public class FlagBehavior : Script
 // Wolfenstein 3D's first level
 public class Map : Scene
 {
-    Image textures = Utils.GetImageFromBitmap(Images.Textures);
-    Image textures_censored = Utils.GetImageFromBitmap(Images.TexturesCensored);
-    Image background_buffer = Utils.GetImageFromBitmap(Images.Background);
-    Image highscore = Image.FromColor(Color.Green);
+    readonly List<TextureBuffer> buffers = new();
 
     protected override void Delete()
     {
-        textures.Dispose();
-        textures_censored.Dispose();
-        background_buffer.Dispose();
-        highscore.Dispose();
+        foreach (TextureBuffer buffer in buffers)
+            buffer.Dispose();
     }
+
+    TextureBuffer LoadBuffer(string path)
+    {
+        TextureBuffer buffer = ResourceManager.LoadTextureBuffer(path);
+        buffers.Add(buffer);
+        return buffer;
+    }
+
+    Texture LoadTexture(string path) => new(LoadBuffer(path));
 
     public Map()
     {
-        Background = new Texture(background_buffer);
+        Background = LoadTexture("bg.bmp");
 
         // BlockMap
         {
-            using Image blockmap_buffer = Utils.GetImageFromBitmap(Images.E1M1);
+            using TextureBuffer blockmap_buffer = ResourceManager.LoadTextureBuffer("maps/e1m1.bmp");
+
             Dictionary<Color, Texture> dict = new();
-            {
-                Texture blueStone1 = new Texture(
-                    source: textures,
-                    hrepeat: 1 / 6f,
-                    vrepeat: 1 / 19f,
-                    hoffset: 2 / 6f,
-                    voffset: 2 / 19f);
-
-                Texture blueStone2 = new Texture(
-                    source: textures,
-                    hrepeat: 1 / 6f,
-                    vrepeat: 1 / 19f,
-                    hoffset: 4 / 6f,
-                    voffset: 2 / 19f);
-
-                Texture bluestoneCell = new Texture(
-                    source: textures,
-                    hrepeat: 1 / 6f,
-                    vrepeat: 1 / 19f,
-                    hoffset: 2 / 6f,
-                    voffset: 1 / 19f);
-
-                Texture bluestoneCellSkeleton = new Texture(
-                    source: textures,
-                    hrepeat: 1 / 6f,
-                    vrepeat: 1 / 19f,
-                    hoffset: 0 / 6f,
-                    voffset: 2 / 19f);
-
-                Texture grayStone1 = new Texture(
-                    source: textures,
-                    hrepeat: 1 / 6f,
-                    vrepeat: 1 / 19f,
-                    hoffset: 0 / 6f,
-                    voffset: 0 / 19f);
-
-                Texture grayStone2 = new Texture(
-                    source: textures,
-                    hrepeat: 1 / 6f,
-                    vrepeat: 1 / 19f,
-                    hoffset: 2 / 6f,
-                    voffset: 0 / 19f);
-
-                //Texture gs_naziFlag = new Texture(
-                //    source: textures,
-                //    hrepeat: 1 / 6f,
-                //    vrepeat: 1 / 19f,
-                //    hoffset: 4 / 6f,
-                //    voffset: 0 / 19f);
-
-                Texture gs_naziFlag = new(
-                    source: textures_censored,
-                    hrepeat: 1f / 4f,
-                    vrepeat: 1f / 4f,
-                    hoffset: 2f / 4f,
-                    voffset: 2f / 4f);
-
-                //Texture gs_hitler = new Texture(
-                //    source: textures,
-                //    hrepeat: 1 / 6f,
-                //    vrepeat: 1 / 19f,
-                //    hoffset: 0 / 6f,
-                //    voffset: 1 / 19f);
-
-                Texture gs_hitler = new(
-                    source: textures_censored,
-                    hrepeat: 1f / 4f,
-                    vrepeat: 1f / 4f,
-                    hoffset: 1f / 4f,
-                    voffset: 2f / 4f);
-
-                //Texture gs_goldEagle = new Texture(
-                //    source: textures,
-                //    hrepeat: 1 / 6f,
-                //    vrepeat: 1 / 19f,
-                //    hoffset: 4 / 6f,
-                //    voffset: 1 / 19f);
-
-                Texture gs_goldEagle = new(
-                    source: textures_censored,
-                    hrepeat: 1f / 4f,
-                    vrepeat: 1f / 4f,
-                    hoffset: 0f / 4f,
-                    voffset: 2f / 4f);
-
-                Texture woodPanelling = new Texture(
-                    source: textures,
-                    hrepeat: 1 / 6f,
-                    vrepeat: 1 / 19f,
-                    hoffset: 4 / 6f,
-                    voffset: 3 / 19f);
-
-                //Texture wp_whiteEagle = new Texture(
-                //    source: textures,
-                //    hrepeat: 1 / 6f,
-                //    vrepeat: 1 / 19f,
-                //    hoffset: 0 / 6f,
-                //    voffset: 3 / 19f);
-
-                Texture wp_whiteEagle = new(
-                    source: textures_censored,
-                    hrepeat: 1f / 4f,
-                    vrepeat: 1f / 4f,
-                    hoffset: 3f / 4f,
-                    voffset: 1f / 4f);
-
-                //Texture wp_hitler = new Texture(
-                //    source: textures,
-                //    hrepeat: 1 / 6f,
-                //    vrepeat: 1 / 19f,
-                //    hoffset: 2 / 6f,
-                //    voffset: 3 / 19f);
-
-                Texture wp_hitler = new(
-                    source: textures_censored,
-                    hrepeat: 1f / 4f,
-                    vrepeat: 1f / 4f,
-                    hoffset: 2f / 4f,
-                    voffset: 1f / 4f);
-
-                Texture elevator = new Texture(
-                    source: textures,
-                    hrepeat: 1 / 6f,
-                    vrepeat: 1 / 19f,
-                    hoffset: 0 / 6f,
-                    voffset: 17 / 19f);
-
-                dict[(0, 0, 255)] = blueStone1;
-                dict[(0, 0, 128)] = blueStone2;
-                dict[(0, 0, 64)] = bluestoneCell;
-                dict[(0, 128, 0)] = bluestoneCellSkeleton;
-                dict[(128, 128, 128)] = grayStone1;
-                dict[(64, 64, 64)] = grayStone2;
-                dict[(255, 0, 0)] = gs_naziFlag;
-                dict[(128, 64, 0)] = gs_hitler;
-                dict[(255, 255, 0)] = gs_goldEagle;
-                dict[(255, 128, 0)] = woodPanelling;
-                dict[(255, 192, 128)] = wp_whiteEagle;
-                dict[(80, 40, 0)] = wp_hitler;
-                dict[(128, 255, 128)] = elevator;
-            }
+            dict[(0, 0, 255)] = LoadTexture("blue_bricks/1.png");
+            dict[(0, 0, 128)] = LoadTexture("blue_bricks/2.png");
+            dict[(0, 0, 64)] = LoadTexture("blue_bricks/cell.png");
+            dict[(0, 128, 0)] = LoadTexture("blue_bricks/cell_skull.png");
+            dict[(128, 128, 128)] = LoadTexture("stones/1.png");
+            dict[(64, 64, 64)] = LoadTexture("stones/2.png");
+            dict[(255, 0, 0)] = LoadTexture("stones/flag.png");
+            dict[(128, 64, 0)] = LoadTexture("stones/hitler.png");
+            dict[(255, 255, 0)] = LoadTexture("stones/eagle.png");
+            dict[(255, 128, 0)] = LoadTexture("wood/l.png");
+            dict[(255, 192, 128)] = LoadTexture("wood/eagle.png");
+            dict[(80, 40, 0)] = LoadTexture("wood/hitler.png");
+            dict[(128, 255, 128)] = LoadTexture("control/elevator_btn.png");
 
             // BlockMap BlockMap = new BlockMap(map: grid, textureBindings: binds);
 
@@ -258,26 +136,8 @@ public class Map : Scene
 
         // Floor and ceiling
         {
-            Texture bricks = new Texture(
-                source: textures,
-                hrepeat: 1f / 6f,
-                vrepeat: 1f / 19f,
-                hoffset: 3f / 6f,
-                voffset: 11f / 19f);
-
-            Texture brownBricks = new Texture(
-                source: textures,
-                hrepeat: 1f / 6f,
-                vrepeat: 1f / 19f,
-                hoffset: 2f / 6f,
-                voffset: 9f / 19f);
-
-            Texture checkered = new Texture(
-                source: textures,
-                hrepeat: 1f / 6f,
-                vrepeat: 1f / 19f,
-                hoffset: 4f / 6f,
-                voffset: 13f / 19f);
+            Texture bricks = LoadTexture("bricks/normal.png");
+            Texture checkered = LoadTexture("tiles/1.png");
 
             var floor = new Floor((0, 0), (64, 64), checkered);
             var ceiling = new Ceiling((0, 0), (64, 64), bricks);
@@ -286,13 +146,7 @@ public class Map : Scene
 
         // Flag
         {
-            Texture tex = new(
-                source: textures,
-                hrepeat: 1 / 6f,
-                vrepeat: 1 / 19f,
-                hoffset: 0 / 6f,
-                voffset: 6 / 19f
-            );
+            Texture tex = LoadTexture("stones/flag.png");
 
             RegularPolygon polygon = new(
                 position: Vector.Zero, // To be defined by flag behavior
@@ -334,7 +188,8 @@ public class Map : Scene
 
         // Highscore
         {
-            Texture tex = Texture.FromColor(Color.Green, out _);
+            Texture tex = Texture.FromColor(Color.Green, out TextureBuffer highscoreBuffer);
+            buffers.Add(highscoreBuffer);
             Entity highscore = new RegularPolygon(Vector.Zero, 16, 0.02f, tex);
             highscore.Name = "highscore";
             highscore.AddScript(new TrajectoryRecorder(1f / 20f));
@@ -343,10 +198,7 @@ public class Map : Scene
 
         // Camera
         {
-            // O player é a composição: corpo cinemático (engine, resolve colisão)
-            // + controller de movimento (jogo, produz velocidade).
-            // Ordem importa: o controller calcula a velocidade ANTES de o corpo integrar.
-            Player.AddScript<Q1Movement>();
+            Player.AddScript<Q1Controller>();
             Player.AddScript(new KinematicBody
             {
                 StartPosition = (57.5f, 29.5f),
@@ -355,13 +207,13 @@ public class Map : Scene
         }
 
         // Renderer customization
-        // FIXME: Create a setup method. 
+        // FIXME: Create a setup method.
         //global::GLTech.Engine.FieldOfView = 93.93f;
     }
 
-    static Image Resize(Image pb, int scale)
+    static TextureBuffer Resize(TextureBuffer pb, int scale)
     {
-        Image resized = new Image(pb.Width * scale, pb.Height * scale);
+        TextureBuffer resized = new TextureBuffer(pb.Width * scale, pb.Height * scale);
 
         Parallel.For(0, resized.Height, line =>
         {
@@ -377,10 +229,10 @@ public class Map : Scene
                 int matchcol = (int)float_match_col;
                 float rest_col = float_match_col - matchcol;
 
-                Color top = pb[matchcol, matchline].Mix(pb[matchcol + 1, matchline], rest_col);
-                Color bot = pb[matchcol, matchline + 1].Mix(pb[matchcol + 1, matchline + 1], rest_col);
+                Color top = pb[matchcol, matchline].Lerp(pb[matchcol + 1, matchline], rest_col);
+                Color bot = pb[matchcol, matchline + 1].Lerp(pb[matchcol + 1, matchline + 1], rest_col);
 
-                Color center = top.Mix(bot, rest_line);
+                Color center = top.Lerp(bot, rest_line);
                 resized[column, line] = center;
             }
         });

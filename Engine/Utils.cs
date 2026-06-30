@@ -40,7 +40,7 @@ namespace GLTech
 
     public static class Utils
     {
-        public static unsafe Image GetImageFromBitmap(Bitmap source)
+        public static unsafe TextureBuffer GetImageFromBitmap(Bitmap source)
         {
             // Converts the source into a standarized bits-per-pixel bitmap.
             using Bitmap src32 = source.Clone(PixelFormat.Format32bppArgb) ??
@@ -49,7 +49,7 @@ namespace GLTech
 
             BitmapData lockdata = src32.LockBits();
             uint* srcptr = (uint*) lockdata.Scan0;
-            Image image = new Image(source.Width, source.Height, srcptr);
+            TextureBuffer image = new TextureBuffer(source.Width, source.Height, srcptr);
             // System.Buffer.MemoryCopy(
             //     source: (void*)lockdata.Scan0,
             //     destination: (void*)image.Buffer,

@@ -4,7 +4,7 @@ namespace GLTech.Demos.SimpleBenchmark
 {
     internal class Map : Scene
     {
-        Image bmp = Utils.GetImageFromBitmap(Resources.Bmp);
+        TextureBuffer bmp = Utils.GetImageFromBitmap(Resources.Bmp);
 
         protected override void Delete()
         {

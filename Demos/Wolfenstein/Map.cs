@@ -78,9 +78,11 @@ public class FlagBehavior : Script
 public class Map : Scene
 {
     readonly List<TextureBuffer> buffers = new();
+    readonly TextureBuffer black_buffer = TextureBuffer.FromColor((0, 0, 0));
 
     protected override void Delete()
     {
+        black_buffer.Dispose();
         foreach (TextureBuffer buffer in buffers)
             buffer.Dispose();
     }
@@ -97,6 +99,7 @@ public class Map : Scene
     public Map()
     {
         Background = LoadTexture("bg.bmp");
+        var black_texture = new Texture(black_buffer);
 
         // BlockMap
         {
@@ -109,12 +112,12 @@ public class Map : Scene
             dict[(0, 128, 0)] = LoadTexture("blue_bricks/cell_skull.png");
             dict[(128, 128, 128)] = LoadTexture("stones/1.png");
             dict[(64, 64, 64)] = LoadTexture("stones/2.png");
-            dict[(255, 0, 0)] = LoadTexture("stones/flag.png");
-            dict[(128, 64, 0)] = LoadTexture("stones/hitler.png");
-            dict[(255, 255, 0)] = LoadTexture("stones/eagle.png");
+            dict[(255, 0, 0)] = black_texture;
+            dict[(128, 64, 0)] = black_texture;
+            dict[(255, 255, 0)] = black_texture;
             dict[(255, 128, 0)] = LoadTexture("wood/l.png");
-            dict[(255, 192, 128)] = LoadTexture("wood/eagle.png");
-            dict[(80, 40, 0)] = LoadTexture("wood/hitler.png");
+            dict[(255, 192, 128)] = black_texture;
+            dict[(80, 40, 0)] = black_texture;
             dict[(128, 255, 128)] = LoadTexture("control/elevator_btn.png");
 
             // BlockMap BlockMap = new BlockMap(map: grid, textureBindings: binds);
@@ -146,7 +149,7 @@ public class Map : Scene
 
         // Flag
         {
-            Texture tex = LoadTexture("stones/flag.png");
+            Texture tex = black_texture;
 
             RegularPolygon polygon = new(
                 position: Vector.Zero, // To be defined by flag behavior

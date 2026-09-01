@@ -1,78 +1,79 @@
-﻿using GLTech.Scripting;
+﻿using Engine.Window;
+using GLTech.Scripting;
 using GLTech.World;
 using System.Diagnostics;
 
 namespace GLTech;
 
-public struct EngineCreateInfo
+public struct GameEngineCreateInfo
 {
-    public int WindowWidth = 800;
-    public int WindowHeight = 600;
-    public bool ParallelRendering = true;
-    public float FieldOfView = 90f;
+    //public int WindowWidth = 800;
+    //public int WindowHeight = 600;
+    //public bool ParallelRendering = true;
+    //public float FieldOfView = 90f;
     public int MaxFPS = int.MaxValue;
-    public bool FullScreen = false;
-    public bool CaptureMouse = true;
-    public string Title = "GL Tech Window";
+    //public bool FullScreen = false;
+    //public bool CaptureMouse = true;
+    //public string Title = "GL Tech Window";
     public string FsBasePath = "base";
 
-    public EngineCreateInfo() { }
+    public GameEngineCreateInfo() { }
 
 }
 
-public class Engine
+public class GameEngine
 {
     Scene? currentScene = null;
     Action? ScheduledActions = null;
-    Window window;
+    //LegacyWindow window;
     Renderer renderer;
     private static Logger logger = new("Engine");
 
-    public bool ParallelRendering
-    {
-        get => renderer.ParallelRendering;
-        set => renderer.ParallelRendering = value;
-    }
-    public bool FullScreen
-    {
-        get => window.Fullscreen;
-        set => window.Fullscreen = value;
-    }
-    public float FieldOfView
-    {
-        get => renderer.HFov;
-        set => renderer.HFov = value;
-    }
-    public bool CaptureMouse
-    {
-        get => window.RelativeMouseMode;
-        set => window.RelativeMouseMode = value;
-    }
-    public (int width, int height) WindowSize
-    {
-        get => window.Size;
-        set => window.Size = value;
-    }
+    //public bool ParallelRendering
+    //{
+    //    get => renderer.ParallelRendering;
+    //    set => renderer.ParallelRendering = value;
+    //}
+    //public bool FullScreen
+    //{
+    //    get => window.Fullscreen;
+    //    set => window.Fullscreen = value;
+    //}
+    //public float FieldOfView
+    //{
+    //    get => renderer.HFov;
+    //    set => renderer.HFov = value;
+    //}
+    //public bool CaptureMouse
+    //{
+    //    get => window.RelativeMouseMode;
+    //    set => window.RelativeMouseMode = value;
+    //}
+    //public (int width, int height) WindowSize
+    //{
+    //    get => window.Size;
+    //    set => window.Size = value;
+    //}
     public bool IsRunning { get; private set; }
 
-    public Engine(EngineCreateInfo createInfo)
+    public GameEngine(GameEngineCreateInfo createInfo)
     {
-        window = new Window(
-            title: createInfo.Title,
-            width: createInfo.WindowWidth,
-            height: createInfo.WindowHeight,
-            fullscreen: createInfo.FullScreen,
-            vsync: false);
-        renderer = new Renderer(window.Buffer);
+        //window = new LegacyWindow(
+        //    title: createInfo.Title,
+        //    width: createInfo.WindowWidth,
+        //    height: createInfo.WindowHeight,
+        //    fullscreen: createInfo.FullScreen,
+        //    vsync: false);
+        //renderer = new Renderer(window.Buffer);
 
-        ParallelRendering = createInfo.ParallelRendering;
-        FieldOfView = createInfo.FieldOfView;
-        CaptureMouse = createInfo.CaptureMouse;
+        //ParallelRendering = createInfo.ParallelRendering;
+        //FieldOfView = createInfo.FieldOfView;
+        //CaptureMouse = createInfo.CaptureMouse;
     }
 
-    public Engine() : this(new EngineCreateInfo()) { }
+    public GameEngine() : this(new GameEngineCreateInfo()) { }
 
-    public unsafe void Run(Scene scene)
+    public unsafe void Run(IWindow window, Renderer renderer, Scene scene)
     {
         #region Checks
         if (IsRunning)
@@ -104,9 +105,9 @@ public class Engine
         Script.Time.WindowTime = 0;
         currentScene.Start();
 
-        window.RelativeMouseMode = CaptureMouse;
+        //window.RelativeMouseMode = CaptureMouse;
 
-        window.OnQuit += () => { quitRequested = true; };
+        //window.OnQuit += () => { quitRequested = true; };
 
         long FIXED_TIMESTEP = Stopwatch.Frequency / Script.Time.FixedTicks;
 
@@ -116,9 +117,10 @@ public class Engine
 
         while (!Script.Input.ShouldExit && !quitRequested)
         {
+            var target = window.AcquireImage();
             // Draw current state
-            renderer.Render(currentScene.raw);
-            window.Present();
+            renderer.Render(currentScene.raw, target);
+            window.Present(target);
 
             // Update timers
             long currentTime = Stopwatch.GetTimestamp();
@@ -148,7 +150,7 @@ public class Engine
 
             lastTime = currentTime;
         }
-        window.Destroy();
+        window.Close();
 
         // Clears the Keyboard
         Script.Input.Clear();

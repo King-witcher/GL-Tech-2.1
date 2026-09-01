@@ -1,4 +1,5 @@
-﻿using GLTech.Scripting.Debugging;
+﻿using Engine;
+using GLTech.Scripting.Debugging;
 using GLTech.Scripting.Physics;
 using GLTech.Scripting.Prefab;
 using GLTech.World;
@@ -9,31 +10,26 @@ namespace GLTech.Demos.SuperBlockMap
     // Esse é um mapa com uma quantidade extrema de planos para testes de gargalo.
     public class Map : Scene
     {
-        TextureBuffer crazyBackground_buffer = Utils.GetImageFromBitmap(Resources.GOT);
-        TextureBuffer blockmap_buffer = Utils.GetImageFromBitmap(Resources.Plant);
-        TextureBuffer test_buffer = Utils.GetImageFromBitmap(Resources.Test);
+        TextureBuffer plant = ResourceManager.LoadTextureBuffer("plant.png");
+        TextureBuffer test_texture = ResourceManager.LoadTextureBuffer("test.png");
 
         protected override void Delete()
         {
-            blockmap_buffer.Dispose();
-            test_buffer.Dispose();
-            crazyBackground_buffer.Dispose();
+            plant.Dispose();
+            test_texture.Dispose();
         }
 
         public Map()
         {
-            Texture background = new Texture(crazyBackground_buffer, 0, 9, 0, 3);
-            Background = background;
-
             // BlockMap
             {
-                Texture tex = new(test_buffer, 0f, 1f, 0f, 25f);
+                Texture tex = new(test_texture, 0f, 1f, 0f, 25f);
 
                 Dictionary<Color, Texture> dict = new();
-                dict[(0, 0, 0)] = tex;
+                dict[(255, 0, 0)] = tex;
 
                 BlockMap blockMap = new(
-                    map: blockmap_buffer,
+                    map: plant,
                     mapTexture: color =>
                     {
                         if (dict.TryGetValue(color, out Texture texture))

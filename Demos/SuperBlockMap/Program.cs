@@ -1,15 +1,17 @@
+using Engine.Window;
 using GLTech;
 using GLTech.Demos.SuperBlockMap;
 
 Map map = new();
 
-var createInfo = new EngineCreateInfo();
-createInfo.FullScreen = true;
-createInfo.WindowWidth = 1920;
-createInfo.WindowHeight = 1080;
-createInfo.MaxFPS = 5000;
+var window = new LegacyWindow("Super Block Map", 1920, 1080, true, false);
+window.RelativeMouseMode = true;
 
-var engine = new GLTech.Engine(createInfo);
+var engineInfo = new GameEngineCreateInfo();
+engineInfo.MaxFPS = 5000;
 
-engine.CaptureMouse = true;
-engine.Run(map);
+var engine = new GameEngine(engineInfo);
+
+var renderer = new Renderer(90f, true);
+
+engine.Run(window, renderer, map);

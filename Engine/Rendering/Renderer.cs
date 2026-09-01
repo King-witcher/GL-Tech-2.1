@@ -1,64 +1,69 @@
-﻿using GLTech.Structs;
+﻿using Engine.Rendering;
+using Engine.Window;
+using GLTech.Structs;
+using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
 
 namespace GLTech;
 
-internal unsafe class Renderer
+// TODO: RendererInner como readonly struct
+public unsafe class Renderer
 {
-    RenderCache* cache;
-    FrameBufferInner target;
+    RendererState state;
+    //RenderTarget target;
 
-    public bool ParallelRendering { get; set; } = true;
-    public float HFov
-    {
-        get;
-        set
-        {
-            field = value;
-            RecalculateCache();
-        }
-    } = 90f;
+    public bool Parallel { get; set; } = true;
+    public float HFov { get; set; }
 
-    public Renderer(FrameBufferInner target)
+    public Renderer(float hFov, bool parallel)
     {
-        this.target = target;
-        cache = RenderCache.Create(HFov, target.widthf);
+        state = new RendererState(800, 600, hFov);
+        HFov = hFov;
+        Parallel = parallel;
     }
 
-    public unsafe void Render(RawScene* scene)
+    internal void Render(RawScene* scene, RenderTarget target)
     {
+        EnsureCompatibility(target);
+
         var col_start_table = stackalloc int[target.width];
         var col_end_table = stackalloc int[target.width];
 
         // Cull only the planes that appear in the field of view.
         var left = new Vector(-scene->player->direction.y, scene->player->direction.x);
-        var rtl = left * cache->step0 * target.widthf;
+        var rtl = left * state.step0 * target.widthf;
         View view = new(
             center: scene->player->position,
             left: scene->player->direction + rtl * 0.5f,
             right: scene->player->direction - rtl * 0.5f
         );
+
+        // TODO: Culling is not renderer's responsibility
         using var surface_culled = scene->plane_list.CullBySurface(scene->player->position);
         using var plane_list = surface_culled.CullByFrustum(view);
 
         {
-            if (ParallelRendering)
-                Parallel.For(fromInclusive: 0, toExclusive: target.width, body: DrawColumn);
+            if (Parallel)
+                //System.Threading.Tasks.Parallel.For(fromInclusive: 0, toExclusive: target.width, body: DrawColumn);
+                System.Threading.Tasks.Parallel.ForEach(Partitioner.Create(0, target.width), range =>
+                {
+                    for (int col = range.Item1; col < range.Item2; col++) DrawColumn(col);
+                });
             else
                 for (int i = 0; i < target.width; i++)
                     DrawColumn(i);
         }
 
         // Checks if the code should be run in all cores or just one.
-        if (ParallelRendering)
-            Parallel.For(fromInclusive: 0, toExclusive: target.height >> 1, body: drawCeilingLine);
+        if (Parallel)
+            System.Threading.Tasks.Parallel.For(fromInclusive: 0, toExclusive: target.height >> 1, body: drawCeilingLine);
         else
             for (int i = 0; i < target.height >> 1; i++)
                 drawCeilingLine(i);
 
         //// Checks if the code should be run in all cores or just one.
-        if (ParallelRendering)
-            Parallel.For(fromInclusive: target.height >> 1, toExclusive: target.height, body: drawFloorLine);
+        if (Parallel)
+            System.Threading.Tasks.Parallel.For(fromInclusive: target.height >> 1, toExclusive: target.height, body: drawFloorLine);
         else
             for (int i = target.height >> 1; i < target.height; i++)
                 drawFloorLine(i);
@@ -68,8 +73,8 @@ internal unsafe class Renderer
         {
             unchecked
             {
-                float hit_dist = scene->player->height / ((line - target.heightf * 0.5f) * cache->step0);
-                float step = cache->step0 * hit_dist;
+                float hit_dist = scene->player->height / ((line - target.heightf * 0.5f) * state.step0);
+                float step = state.step0 * hit_dist;
 
                 Vector camera_dir = scene->player->direction;
                 Vector right = new Vector(camera_dir.y, -camera_dir.x);
@@ -98,8 +103,8 @@ internal unsafe class Renderer
         {
             unchecked
             {
-                float hit_dist = (1 - scene->player->height) / ((target.heightf * 0.5f - line) * cache->step0);
-                float step = cache->step0 * hit_dist;
+                float hit_dist = (1 - scene->player->height) / ((target.heightf * 0.5f - line) * state.step0);
+                float step = state.step0 * hit_dist;
 
                 Vector camera_dir = scene->player->direction;
                 Vector right = new Vector(camera_dir.y, -camera_dir.x);
@@ -136,20 +141,26 @@ internal unsafe class Renderer
 
                 // Caching frequently used variables
                 var delta = width / 2 - col_idx;
-                var dir = scene->player->direction + left * (cache->step0 * delta);
+                var dir = scene->player->direction + left * (state.step0 * delta);
                 Segment ray = new Segment(scene->player->position, dir);
                 //Texture bg = scene->background;
 
                 // Cast the ray towards every plane.
                 PlaneStruct* plane = plane_list.NearestPlane(ray, out Vector rs);
-                //if (plane == null) return;
+
+                if (plane == null)
+                {
+                    col_start_table[col_idx] = height;
+                    col_end_table[col_idx] = 0;
+                    return;
+                }
 
                 // Found out that optimizing this part by separing the case when it hits and not a wall is unecessary.
                 #region Render the plane
 
                 // Height that the current column should have on the screen.
                 float colision_depth = Vector.DotProduct(ray.direction, scene->player->direction) * rs.x;
-                float col_height_f = cache->colHeight1 / colision_depth; // Wall column size in pixels
+                float col_height_f = state.colHeight1 / colision_depth; // Wall column size in pixels
 
                 // Where the column starts and ends relative to the screen.
                 float col_start_f = (height_f - 1f - col_height_f) * 0.5f + col_height_f * (scene->player->height - 0.5f);
@@ -185,14 +196,21 @@ internal unsafe class Renderer
         }
     }
 
-    ~Renderer()
+    public void Update(int width, int height, float hFov)
     {
-        RenderCache.Delete(cache);
+        if (width <= 0 || height <= 0)
+            throw new ArgumentException("Width and height must be positive integers.");
+
+        if (hFov <= 0 || hFov >= 180)
+            throw new ArgumentException("Horizontal field of view must be between 0 and 180 degrees.");
+
+        state = new RendererState(width, height, hFov);
     }
 
-    private void RecalculateCache()
+    private void EnsureCompatibility(RenderTarget target)
     {
-        RenderCache.Delete(cache);
-        cache = RenderCache.Create(HFov, target.widthf);
+        // TODO: Check hFov
+        if (target.width != state.width || target.height != state.height)
+            state = new RendererState(target.width, target.height, HFov);
     }
 }

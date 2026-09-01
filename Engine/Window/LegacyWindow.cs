@@ -1,18 +1,16 @@
-﻿
-using GLTech.Input;
+﻿using GLTech.Input;
 using SDL;
 using static SDL.SDL3;
 
-namespace GLTech
+namespace Engine.Window
 {
-    internal unsafe sealed class Window
+    public unsafe sealed class LegacyWindow : IWindow
     {
-        FrameBufferInner buffer;
+        RenderTarget buffer;
         SDL_Window* window;
         SDL_Renderer* renderer;
         SDL_Texture* texture;
 
-        public FrameBufferInner Buffer { get => buffer; }
         public (int width, int height) Size
         {
             get
@@ -41,12 +39,12 @@ namespace GLTech
             }
         }
 
-        static Window()
+        static LegacyWindow()
         {
             SDL_Init(SDL_InitFlags.SDL_INIT_VIDEO);
         }
 
-        internal Window(
+        public LegacyWindow(
             string title,
             int width,
             int height,
@@ -54,7 +52,7 @@ namespace GLTech
             bool vsync
         )
         {
-            buffer = new FrameBufferInner(width, height);
+            buffer = new RenderTarget(width, height);
             //Fullscreen = fullscreen;
 
             SDL_WindowFlags flags = SDL_WindowFlags.SDL_WINDOW_MOUSE_GRABBED;
@@ -68,7 +66,7 @@ namespace GLTech
             );
 
             // Find the best screen mode on the primary monitor
-            var bestDisplayMode = GetDisplayMode();
+            var bestDisplayMode = FindDisplayMode();
             SDL_SetWindowFullscreenMode(window, &bestDisplayMode);
 
             renderer = SDL_CreateRenderer(window, (byte*)null);
@@ -99,14 +97,20 @@ namespace GLTech
             set => SDL_SetWindowFullscreen(window, value);
         }
 
-        internal void Present()
+        RenderTarget IWindow.AcquireImage()
         {
-            SDL_UpdateTexture(texture, null, (nint)buffer.buffer, buffer.width * 4);
+            return buffer;
+        }
+
+        void IWindow.Present(RenderTarget rt)
+        {
+            // TODO: use SDL_LockTexture and SDL_UnlockTexture instead of memcpy
+            SDL_UpdateTexture(texture, null, (nint)rt.buffer, rt.width * 4);
             SDL_RenderTexture(renderer, texture, null, null);
             SDL_RenderPresent(renderer);
         }
 
-        internal void Destroy()
+        void IWindow.Close()
         {
             SDL_DestroyTexture(texture);
             SDL_DestroyRenderer(renderer);
@@ -118,7 +122,7 @@ namespace GLTech
 
         internal event Action? OnQuit;
 
-        private SDL_DisplayMode GetDisplayMode()
+        private SDL_DisplayMode FindDisplayMode()
         {
             int displaysCount;
             var pdisplay = SDL_GetDisplays(&displaysCount);

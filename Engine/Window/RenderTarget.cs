@@ -1,9 +1,10 @@
-﻿using System.Runtime.CompilerServices;
+﻿using GLTech;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace GLTech
+namespace Engine.Window
 {
-    internal unsafe class FrameBufferInner
+    internal unsafe class RenderTarget
     {
         public readonly Color* buffer;
         public readonly int width;
@@ -11,7 +12,7 @@ namespace GLTech
         public readonly float widthf;
         public readonly float heightf;
 
-        public FrameBufferInner(int width, int height)
+        public RenderTarget(int width, int height)
         {
             buffer = (Color*)Marshal.AllocHGlobal(width * height * sizeof(Color));
             widthf = this.width = width;
@@ -27,7 +28,7 @@ namespace GLTech
             set => (buffer)[column + width * line] = value;
         }
 
-        ~FrameBufferInner()
+        ~RenderTarget()
         {
             Marshal.FreeHGlobal((nint)buffer);
         }

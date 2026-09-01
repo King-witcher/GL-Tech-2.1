@@ -35,12 +35,12 @@ namespace GLTech
         }
 
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-        internal uint MapNearest(float hratio, float vratio)
+        internal uint MapNearest(float u, float v)
         {
             unchecked
             {
-                int x = (int)(source.widthf * MathF.FusedMultiplyAdd(hrepeat, hratio, hoffset)) & (source.width - 1);
-                int y = (int)(source.heightf * MathF.FusedMultiplyAdd(vrepeat, vratio, voffset)) & (source.height - 1);
+                int x = (int)(source.widthf * MathF.FusedMultiplyAdd(hrepeat, u, hoffset)) & (source.width - 1);
+                int y = (int)(source.heightf * MathF.FusedMultiplyAdd(vrepeat, v, voffset)) & (source.height - 1);
 
                 uint color = source.buffer[source.height * x + y];
 
@@ -51,11 +51,11 @@ namespace GLTech
 
 
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-        internal readonly int ResolveX(float hratio)
+        internal readonly int ResolveX(float u)
         {
             unchecked
             {
-                return (int)(source.widthf * MathF.FusedMultiplyAdd(hrepeat, hratio, hoffset)) & (source.width - 1);
+                return (int)(source.widthf * MathF.FusedMultiplyAdd(hrepeat, u, hoffset)) & (source.width - 1);
             }
         }
 
@@ -64,11 +64,11 @@ namespace GLTech
         // ratio. hratio is constant across a wall column, so both x and the
         // column base (height * x) are computed once here instead of per pixel.
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-        internal readonly uint* ResolveColumn(float hratio)
+        internal readonly uint* ResolveColumn(float u)
         {
             unchecked
             {
-                return source.buffer + source.height * ResolveX(hratio);
+                return source.buffer + source.height * ResolveX(u);
             }
         }
 
@@ -76,11 +76,11 @@ namespace GLTech
         // Samples a pixel from a pre-resolved texture column. Only the vertical
         // index is computed per pixel; the column base was hoisted out of the loop.
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-        internal readonly uint MapColumn(uint* column, float vratio)
+        internal readonly uint MapColumn(uint* column, float v)
         {
             unchecked
             {
-                int y = (int)(source.heightf * MathF.FusedMultiplyAdd(vrepeat, vratio, voffset)) & (source.height - 1);
+                int y = (int)(source.heightf * MathF.FusedMultiplyAdd(vrepeat, v, voffset)) & (source.height - 1);
                 return column[y];
             }
         }

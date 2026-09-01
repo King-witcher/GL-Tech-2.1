@@ -2,19 +2,20 @@
 
 namespace Engine
 {
+    // TODO: Use NativeMemory
     internal unsafe static class Memory
     {
-        public static T* Alloc<T>() where T : unmanaged
+        public static T* HeapAlloc<T>() where T : unmanaged
         {
             return (T*)Marshal.AllocHGlobal(sizeof(T));
         }
 
-        public static void Free<T>(T* ptr) where T : unmanaged
+        public static void HeapFree<T>(T* ptr) where T : unmanaged
         {
             Marshal.FreeHGlobal((nint)ptr);
         }
 
-        public static void Copy<T>(T* source, T* destination, int count) where T : unmanaged
+        public static void Memcpy<T>(T* source, T* destination, int count) where T : unmanaged
         {
             Buffer.MemoryCopy(
                 source,

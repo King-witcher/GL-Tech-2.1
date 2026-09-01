@@ -197,118 +197,121 @@ namespace GLTech.World.Composed
             #endregion
 
             #region Make Colliders
-            // Suboptimal
-            ushort[,,] joining_table = new ushort[map.Width, map.Height, 4];
-
-            for (int column = 0; column < map.Width; column++)
+            if (colliders)
             {
-                for (int line = 0; line < map.Height; line++)
+                // Suboptimal
+                ushort[,,] joining_table = new ushort[map.Width, map.Height, 4];
+
+                for (int column = 0; column < map.Width; column++)
                 {
-                    if (isEmpty(column, line))
-                        continue;
-
-                    // Left
-                    if (isEmpty(column - 1, line))
+                    for (int line = 0; line < map.Height; line++)
                     {
-                        if (line == 0 || joining_table[column, line - 1, 0] == 0)
-                        {
-                            joining_table[column, line, 0] = 1;
-                        }
-                        else
-                        {
-                            joining_table[column, line, 0] = (ushort)(joining_table[column, line - 1, 0] + 1);
-                            joining_table[column, line - 1, 0] = 0;
-                        }
-                    }
+                        if (isEmpty(column, line))
+                            continue;
 
-                    // Bottom
-                    if (isEmpty(column, line + 1))
-                    {
-                        if (column == 0 || joining_table[column - 1, line, 1] == 0)
+                        // Left
+                        if (isEmpty(column - 1, line))
                         {
-                            joining_table[column, line, 1] = 1;
+                            if (line == 0 || joining_table[column, line - 1, 0] == 0)
+                            {
+                                joining_table[column, line, 0] = 1;
+                            }
+                            else
+                            {
+                                joining_table[column, line, 0] = (ushort)(joining_table[column, line - 1, 0] + 1);
+                                joining_table[column, line - 1, 0] = 0;
+                            }
                         }
-                        else
-                        {
-                            joining_table[column, line, 1] = (ushort)(joining_table[column - 1, line, 1] + 1);
-                            joining_table[column - 1, line, 1] = 0;
-                        }
-                    }
 
-                    // Right
-                    if (isEmpty(column + 1, line))
-                    {
-                        if (line == 0 || joining_table[column, line - 1, 2] == 0)
+                        // Bottom
+                        if (isEmpty(column, line + 1))
                         {
-                            joining_table[column, line, 2] = 1;
+                            if (column == 0 || joining_table[column - 1, line, 1] == 0)
+                            {
+                                joining_table[column, line, 1] = 1;
+                            }
+                            else
+                            {
+                                joining_table[column, line, 1] = (ushort)(joining_table[column - 1, line, 1] + 1);
+                                joining_table[column - 1, line, 1] = 0;
+                            }
                         }
-                        else
-                        {
-                            joining_table[column, line, 2] = (ushort)(joining_table[column, line - 1, 2] + 1);
-                            joining_table[column, line - 1, 2] = 0;
-                        }
-                    }
 
-                    // Top
-                    if (isEmpty(column, line - 1))
-                    {
-                        if (column == 0 || joining_table[column - 1, line, 3] == 0)
+                        // Right
+                        if (isEmpty(column + 1, line))
                         {
-                            joining_table[column, line, 3] = 1;
+                            if (line == 0 || joining_table[column, line - 1, 2] == 0)
+                            {
+                                joining_table[column, line, 2] = 1;
+                            }
+                            else
+                            {
+                                joining_table[column, line, 2] = (ushort)(joining_table[column, line - 1, 2] + 1);
+                                joining_table[column, line - 1, 2] = 0;
+                            }
                         }
-                        else
+
+                        // Top
+                        if (isEmpty(column, line - 1))
                         {
-                            joining_table[column, line, 3] = (ushort)(joining_table[column - 1, line, 3] + 1);
-                            joining_table[column - 1, line, 3] = 0;
+                            if (column == 0 || joining_table[column - 1, line, 3] == 0)
+                            {
+                                joining_table[column, line, 3] = 1;
+                            }
+                            else
+                            {
+                                joining_table[column, line, 3] = (ushort)(joining_table[column - 1, line, 3] + 1);
+                                joining_table[column - 1, line, 3] = 0;
+                            }
                         }
                     }
                 }
-            }
 
-            for (int column = 0; column < map.Width; column++)
-            {
-                for (int line = 0; line < map.Height; line++)
+                for (int column = 0; column < map.Width; column++)
                 {
-                    // Left
-                    int left_stack = joining_table[column, line, 0];
-                    int bottom_stack = joining_table[column, line, 1];
-                    int right_stack = joining_table[column, line, 2];
-                    int top_stack = joining_table[column, line, 3];
-
-                    if (left_stack != 0)
+                    for (int line = 0; line < map.Height; line++)
                     {
-                        Vector start = (line - left_stack + 1, column);
-                        Vector end = (line + 1, column);
+                        // Left
+                        int left_stack = joining_table[column, line, 0];
+                        int bottom_stack = joining_table[column, line, 1];
+                        int right_stack = joining_table[column, line, 2];
+                        int top_stack = joining_table[column, line, 3];
 
-                        Collider collider = new(start, end);
-                        collider.Parent = this;
-                    }
+                        if (left_stack != 0)
+                        {
+                            Vector start = (line - left_stack + 1, column);
+                            Vector end = (line + 1, column);
 
-                    if (bottom_stack != 0)
-                    {
-                        Vector start = (line + 1, column + 1 - bottom_stack);
-                        Vector end = (line + 1, column + 1);
+                            Collider collider = new(start, end);
+                            collider.Parent = this;
+                        }
 
-                        Collider collider = new(start, end);
-                        collider.Parent = this;
-                    }
+                        if (bottom_stack != 0)
+                        {
+                            Vector start = (line + 1, column + 1 - bottom_stack);
+                            Vector end = (line + 1, column + 1);
 
-                    if (right_stack != 0)
-                    {
-                        Vector start = (line + 1, column + 1);
-                        Vector end = (line - right_stack + 1, column + 1);
+                            Collider collider = new(start, end);
+                            collider.Parent = this;
+                        }
 
-                        Collider collider = new(start, end);
-                        collider.Parent = this;
-                    }
+                        if (right_stack != 0)
+                        {
+                            Vector start = (line + 1, column + 1);
+                            Vector end = (line - right_stack + 1, column + 1);
 
-                    if (top_stack != 0)
-                    {
-                        Vector start = (line, column + 1);
-                        Vector end = (line, column - top_stack + 1);
+                            Collider collider = new(start, end);
+                            collider.Parent = this;
+                        }
 
-                        Collider collider = new(start, end);
-                        collider.Parent = this;
+                        if (top_stack != 0)
+                        {
+                            Vector start = (line, column + 1);
+                            Vector end = (line, column - top_stack + 1);
+
+                            Collider collider = new(start, end);
+                            collider.Parent = this;
+                        }
                     }
                 }
             }

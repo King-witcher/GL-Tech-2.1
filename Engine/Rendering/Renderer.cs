@@ -11,6 +11,8 @@ public unsafe class Renderer
 {
     RendererState state;
     //RenderTarget target;
+    readonly HorizontalPass floorPass = new(isFloor: true);
+    readonly HorizontalPass ceilingPass = new(isFloor: false);
 
     public bool Parallel { get; set; } = true;
     public float HFov { get; set; }
@@ -54,79 +56,38 @@ public unsafe class Renderer
                     DrawColumn(i);
         }
 
-        // Checks if the code should be run in all cores or just one.
-        if (Parallel)
-            System.Threading.Tasks.Parallel.For(fromInclusive: 0, toExclusive: target.height >> 1, body: drawCeilingLine);
-        else
-            for (int i = 0; i < target.height >> 1; i++)
-                drawCeilingLine(i);
-
-        //// Checks if the code should be run in all cores or just one.
-        if (Parallel)
-            System.Threading.Tasks.Parallel.For(fromInclusive: target.height >> 1, toExclusive: target.height, body: drawFloorLine);
-        else
-            for (int i = target.height >> 1; i < target.height; i++)
-                drawFloorLine(i);
-
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-        void drawFloorLine(int line)
+        // Floors and ceilings: snapshot and bucket the visible triangles once per
+        // frame, then rasterize spans per scanline (see HorizontalPass).
         {
-            unchecked
-            {
-                float hit_dist = scene->player->height / ((line - target.heightf * 0.5f) * state.step0);
-                float step = state.step0 * hit_dist;
+            var cam_pos = scene->player->position;
+            var cam_dir = scene->player->direction;
+            var cam_right = new Vector(cam_dir.y, -cam_dir.x);
+            float player_height = scene->player->height;
 
-                Vector camera_dir = scene->player->direction;
-                Vector right = new Vector(camera_dir.y, -camera_dir.x);
-                Vector center_hit = scene->player->position + camera_dir * hit_dist;
-
-                Vector left_bound_hit = center_hit - right * step * (target.width >> 1);
-                using HorizontalList list = scene->floor_list.GetIntersections(left_bound_hit, left_bound_hit + right);
-                var step_vec = right * step;
-                for (int col = 0; col < target.width; col++)
-                {
-                    if (col_end_table[col] > line) continue;
-
-                    Vector floor_hit = left_bound_hit + col * step_vec;
-                    HorizontalStruct* floor = list.FindAndRaise(floor_hit);
-
-                    if (floor != null)
-                        target[col, line] = floor->MapTexture(floor_hit);
-                    else
-                        target[col, line] = 0;
-                }
-            }
+            ceilingPass.Prepare(scene->ceiling_list, cam_pos, cam_dir, cam_right, view.left, view.right,
+                1f - player_height, state.step0, target.width, target.height);
+            floorPass.Prepare(scene->floor_list, cam_pos, cam_dir, cam_right, view.left, view.right,
+                player_height, state.step0, target.width, target.height);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-        void drawCeilingLine(int line)
-        {
-            unchecked
+        int half_height = target.height >> 1;
+
+        if (Parallel)
+            System.Threading.Tasks.Parallel.ForEach(Partitioner.Create(0, target.height), range =>
             {
-                float hit_dist = (1 - scene->player->height) / ((target.heightf * 0.5f - line) * state.step0);
-                float step = state.step0 * hit_dist;
+                for (int line = range.Item1; line < range.Item2; line++)
+                    DrawHorizontalLine(line);
+            });
+        else
+            for (int line = 0; line < target.height; line++)
+                DrawHorizontalLine(line);
 
-                Vector camera_dir = scene->player->direction;
-                Vector right = new Vector(camera_dir.y, -camera_dir.x);
-                Vector center_hit = scene->player->position + camera_dir * hit_dist;
-
-                Vector left_bound_hit = center_hit - right * step * (target.width >> 1);
-                using HorizontalList list = scene->ceiling_list.GetIntersections(left_bound_hit, left_bound_hit + right);
-
-                var step_vec = right * step;
-                for (int col = 0; col < target.width; col++)
-                {
-                    if (col_start_table[col] <= line) continue;
-
-                    Vector hit = left_bound_hit + step_vec * col;
-                    HorizontalStruct* ceiling = list.FindAndRaise(hit);
-
-                    if (ceiling != null)
-                        target[col, line] = ceiling->MapTexture(hit);
-                    else
-                        target[col, line] = 0;
-                }
-            }
+        void DrawHorizontalLine(int line)
+        {
+            if (line < half_height)
+                ceilingPass.DrawLine<AboveWalls>(line, target, col_start_table);
+            else
+                floorPass.DrawLine<BelowWalls>(line, target, col_end_table);
         }
 
         // Render a vertical column of the screen.

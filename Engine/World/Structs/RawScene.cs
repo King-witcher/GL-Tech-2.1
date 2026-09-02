@@ -14,8 +14,8 @@ namespace GLTech.Structs
         public PlaneList plane_list;
         public Texture background;
         public PlayerStruct* player;  // Talvez eu mude isso
-        public HorizontalList floor_list;
-        public HorizontalList ceiling_list;
+        public TriangleList floor_list;
+        public TriangleList ceiling_list;
 
         public static RawScene* Create()
         {
@@ -70,19 +70,19 @@ namespace GLTech.Structs
             this.player = camera;
         }
 
-        public void AddFloor(HorizontalStruct* floor)
+        public void AddFloor(TriangleStruct* floor)
         {
             floor_list.Add(floor);
         }
 
-        public void AddCeiling(HorizontalStruct* ceiling)
+        public void AddCeiling(TriangleStruct* ceiling)
         {
             ceiling_list.Add(ceiling);
         }
 
-        internal HorizontalStruct* FloorAt(Vector point)
+        internal TriangleStruct* FloorAt(Vector point)
         {
-            return floor_list.FindAndRaise(point);
+            return floor_list.Find(point);
         }
     }
 }

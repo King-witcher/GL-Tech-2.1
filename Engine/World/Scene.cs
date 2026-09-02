@@ -110,11 +110,13 @@ namespace GLTech.World
                 }
                 else if (node is Floor floor)
                 {
-                    raw->AddFloor(floor.unmanaged);
+                    foreach (var triangle in floor.triangles)
+                        raw->AddFloor(triangle);
                 }
                 else if (node is Ceiling ceiling)
                 {
-                    raw->AddCeiling(ceiling.unmanaged);
+                    foreach (var triangle in ceiling.triangles)
+                        raw->AddCeiling(triangle);
                 }
                 else if (node is Player camera)
                 {

@@ -139,12 +139,12 @@ public class Map : Scene
 
         // Floor and ceiling
         {
-            //Texture bricks = LoadTexture("bricks/normal.png");
-            //Texture checkered = LoadTexture("tiles/1.png");
+            Texture bricks = LoadTexture("bricks/normal.png");
+            Texture checkered = LoadTexture("tiles/1.png");
 
-            //var floor = new Floor((0, 0), (64, 64), checkered);
-            //var ceiling = new Ceiling((0, 0), (64, 64), bricks);
-            //Add(floor, ceiling);
+            var floor = new Floor((0, 0), (64, 64), checkered);
+            var ceiling = new Ceiling((0, 0), (64, 64), bricks);
+            Add(floor, ceiling);
         }
 
         // Flag

@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Engine;
 
 namespace GLTech.Structs
 {
@@ -138,7 +139,7 @@ namespace GLTech.Structs
             public static Node* Create(PlaneStruct* plane)
             {
                 count++;
-                Node* result = (Node*)Marshal.AllocHGlobal(sizeof(Node));
+                Node* result = Memory.Alloc<Node>(alignment: 16);
                 result->data = plane;
                 return result;
             }
@@ -146,7 +147,7 @@ namespace GLTech.Structs
             public static void Delete(Node* node)
             {
                 count--;
-                Marshal.FreeHGlobal((IntPtr)node);
+                Memory.Free(node);
             }
         }
     }
@@ -162,7 +163,7 @@ namespace GLTech.Structs
 
         public static PlaneStruct* Create(Vector start, Vector end, Texture texture)
         {
-            PlaneStruct* result = (PlaneStruct*)Marshal.AllocHGlobal(sizeof(PlaneStruct));
+            PlaneStruct* result = Memory.Alloc<PlaneStruct>(alignment: 16);
             result->texture = texture;
             result->segment = new(start, end - start);
             result->list_next = null;
@@ -171,7 +172,7 @@ namespace GLTech.Structs
 
         public static PlaneStruct* Create(Vector start, float angle, float length, Texture texture)
         {
-            PlaneStruct* result = (PlaneStruct*)Marshal.AllocHGlobal(sizeof(PlaneStruct));
+            PlaneStruct* result = Memory.Alloc<PlaneStruct>(alignment: 16);
             Vector direction = new Vector(angle) * length;
             result->texture = texture;
             result->segment = new(start, direction);
@@ -181,7 +182,7 @@ namespace GLTech.Structs
 
         public static void Delete(PlaneStruct* item)
         {
-            Marshal.FreeHGlobal((IntPtr)item);
+            Memory.Free(item);
         }
     }
 }

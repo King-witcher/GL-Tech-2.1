@@ -1,18 +1,28 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Engine
 {
-    // TODO: Use NativeMemory
     internal unsafe static class Memory
     {
-        public static T* HeapAlloc<T>() where T : unmanaged
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T* Alloc<T>(nuint alignment) where T : unmanaged
         {
-            return (T*)Marshal.AllocHGlobal(sizeof(T));
+            return (T*)NativeMemory.AlignedAlloc((nuint)sizeof(T), alignment);
         }
 
-        public static void HeapFree<T>(T* ptr) where T : unmanaged
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T* Alloc<T>(int count, nuint alignment) where T : unmanaged
         {
-            Marshal.FreeHGlobal((nint)ptr);
+            ArgumentOutOfRangeException.ThrowIfNegative(count);
+            nuint byteCount = checked((nuint)count * (nuint)sizeof(T));
+            return (T*)NativeMemory.AlignedAlloc(byteCount, alignment);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void Free<T>(T* ptr) where T : unmanaged
+        {
+            NativeMemory.AlignedFree(ptr);
         }
 
         public static void Memcpy<T>(T* source, T* destination, int count) where T : unmanaged

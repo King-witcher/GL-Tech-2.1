@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using Engine;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace GLTech
@@ -106,12 +107,12 @@ namespace GLTech
 
         public void Dispose()
         {
-            Marshal.FreeHGlobal(Buffer);
+            Memory.Free(buffer);
         }
 
         private void AllocBuffer(int width, int height)
         {
-            buffer = (uint*)Marshal.AllocHGlobal(width * height * PixelSize);
+            buffer = Memory.Alloc<uint>(width * height, alignment: 64);
         }
 
         private int GetCeilingPowerOfTwo(int n)

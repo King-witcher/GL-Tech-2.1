@@ -23,14 +23,14 @@ public unsafe sealed class Collider : Entity
 
     public Collider(Vector start, Vector end)
     {
-        raw = Memory.HeapAlloc<RawCollider>();
+        raw = Memory.Alloc<RawCollider>(alignment: 16);
         raw->Start = start;
         raw->Direction = end - start;
     }
 
     public Collider(Plane plane)
     {
-        raw = Memory.HeapAlloc<RawCollider>();
+        raw = Memory.Alloc<RawCollider>(alignment: 16);
         raw->Start = plane.Start;
         raw->Direction = plane.End - plane.Start;
     }
@@ -43,7 +43,7 @@ public unsafe sealed class Collider : Entity
 
     public override void Dispose()
     {
-        Memory.HeapFree(raw);
+        Memory.Free(raw);
         raw = null;
     }
 }

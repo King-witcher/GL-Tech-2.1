@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Engine;
 
 namespace GLTech.Structs
 {
@@ -14,7 +15,7 @@ namespace GLTech.Structs
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpriteStruct* Create(Vector position, Texture material)
         {
-            SpriteStruct* result = (SpriteStruct*)Marshal.AllocHGlobal(sizeof(SpriteStruct));
+            SpriteStruct* result = Memory.Alloc<SpriteStruct>(alignment: 16);
             result->position = position;
             result->material = material;
             result->list_next = null;
@@ -23,7 +24,7 @@ namespace GLTech.Structs
 
         public static void Delete(SpriteStruct* item)
         {
-            Marshal.FreeHGlobal((IntPtr)item);
+            Memory.Free(item);
         }
     }
 }

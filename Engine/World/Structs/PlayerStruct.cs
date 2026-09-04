@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Engine;
 
 namespace GLTech.Structs
 {
@@ -13,7 +14,7 @@ namespace GLTech.Structs
 
         static public PlayerStruct* Create(Vector position, Vector direction)
         {
-            PlayerStruct* result = (PlayerStruct*)Marshal.AllocHGlobal(sizeof(PlayerStruct));
+            PlayerStruct* result = Memory.Alloc<PlayerStruct>(alignment: 16);
             result->position = position;
             result->direction = direction;
             result->height = 0.5f;
@@ -22,7 +23,7 @@ namespace GLTech.Structs
 
         static public void Delete(PlayerStruct* item)
         {
-            Marshal.FreeHGlobal((IntPtr)item);
+            Memory.Free(item);
         }
     }
 }

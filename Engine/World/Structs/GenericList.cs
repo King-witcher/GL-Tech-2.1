@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Engine;
 
 namespace GLTech.Structs
 {
@@ -89,7 +90,7 @@ namespace GLTech.Structs
             public static Node* Create(T* item)
             {
                 Interlocked.Increment(ref count);
-                Node* result = (Node*)Marshal.AllocHGlobal(sizeof(Node));
+                Node* result = Memory.Alloc<Node>(alignment: 16);
                 result->data = item;
                 return result;
             }
@@ -97,7 +98,7 @@ namespace GLTech.Structs
             public static void Delete(Node* node)
             {
                 Interlocked.Decrement(ref count);
-                Marshal.FreeHGlobal((IntPtr)node);
+                Memory.Free(node);
             }
         }
     }

@@ -1,6 +1,5 @@
 ﻿using GLTech;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace Engine.Window
 {
@@ -14,7 +13,7 @@ namespace Engine.Window
 
         public RenderTarget(int width, int height)
         {
-            buffer = (Color*)Marshal.AllocHGlobal(width * height * sizeof(Color));
+            buffer = Memory.Alloc<Color>(width * height, alignment: 64); // Cache line: the framebuffer is written scanline by scanline.
             widthf = this.width = width;
             heightf = this.height = height;
         }
@@ -30,7 +29,7 @@ namespace Engine.Window
 
         ~RenderTarget()
         {
-            Marshal.FreeHGlobal((nint)buffer);
+            Memory.Free(buffer);
         }
     }
 }

@@ -22,14 +22,14 @@
 
         public static RendererState* Create(int width, int height, float hfov)
         {
-            RendererState* result = Memory.HeapAlloc<RendererState>();
+            RendererState* result = Memory.Alloc<RendererState>(alignment: 64);
             *result = new(width, height, hfov);
             return result;
         }
 
         public static void Destroy(RendererState* cache)
         {
-            Memory.HeapFree(cache);
+            Memory.Free(cache);
         }
     }
 }

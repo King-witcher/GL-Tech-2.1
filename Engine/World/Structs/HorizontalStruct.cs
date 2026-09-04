@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Engine;
 
 namespace GLTech.Structs
 {
@@ -92,14 +93,14 @@ namespace GLTech.Structs
 
             public static Node* Create(HorizontalStruct* sfloor)
             {
-                Node* result = (Node*)Marshal.AllocHGlobal(sizeof(Node));
+                Node* result = Memory.Alloc<Node>(alignment: 16);
                 result->data = sfloor;
                 return result;
             }
 
             public static void Delete(Node* node)
             {
-                Marshal.FreeHGlobal((IntPtr)node);
+                Memory.Free(node);
             }
         }
     }
@@ -115,7 +116,7 @@ namespace GLTech.Structs
 
         public static HorizontalStruct* Create(Vector topLeft, Vector bottomRight, Texture texture)
         {
-            HorizontalStruct* result = (HorizontalStruct*)Marshal.AllocHGlobal(sizeof(HorizontalStruct));
+            HorizontalStruct* result = Memory.Alloc<HorizontalStruct>(alignment: 16);
             result->tl = topLeft;
             result->br = bottomRight;
             result->texture = texture;

@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Engine;
 
 namespace GLTech.Structs
 {
@@ -20,7 +21,7 @@ namespace GLTech.Structs
         public static RawScene* Create()
         {
             count++;
-            RawScene* result = (RawScene*)Marshal.AllocHGlobal(sizeof(RawScene));
+            RawScene* result = Memory.Alloc<RawScene>(alignment: 16);
             result->first_sprite = null;
             result->plane_list = new();
             result->last_sprite = null;
@@ -44,7 +45,7 @@ namespace GLTech.Structs
         public static void Delete(RawScene* item)
         {
             item->Dispose();
-            Marshal.FreeHGlobal((IntPtr)item);
+            Memory.Free(item);
             count--;
         }
 

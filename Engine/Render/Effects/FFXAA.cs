@@ -1,4 +1,6 @@
-﻿namespace GLTech.Processing
+﻿using GLTech;
+
+namespace Engine.Render.Effects
 {
     public sealed unsafe class FFXAA : Effect, IDisposable
     {

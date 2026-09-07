@@ -1,4 +1,6 @@
-﻿namespace GLTech.Processing
+﻿using GLTech;
+
+namespace Engine.Render.Effects
 {
     public abstract class Effect
     {

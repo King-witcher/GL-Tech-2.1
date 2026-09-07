@@ -74,18 +74,18 @@ public unsafe class Renderer
         sw.Stop();
         Debug.WallRenderTime = (float)sw.Elapsed.TotalSeconds;
 
-        if (Parallel)
-        {
-            System.Threading.Tasks.Parallel.For(fromInclusive: 0, toExclusive: target.height >> 1, body: drawCeilingLine);
-            System.Threading.Tasks.Parallel.For(fromInclusive: target.height >> 1, toExclusive: target.height, body: drawFloorLine);
-        }
-        else
-        {
-            for (int i = 0; i < target.height >> 1; i++)
-                drawCeilingLine(i);
-            for (int i = target.height >> 1; i < target.height; i++)
-                drawFloorLine(i);
-        }
+        //if (Parallel)
+        //{
+        //    System.Threading.Tasks.Parallel.For(fromInclusive: 0, toExclusive: target.height >> 1, body: drawCeilingLine);
+        //    System.Threading.Tasks.Parallel.For(fromInclusive: target.height >> 1, toExclusive: target.height, body: drawFloorLine);
+        //}
+        //else
+        //{
+        //    for (int i = 0; i < target.height >> 1; i++)
+        //        drawCeilingLine(i);
+        //    for (int i = target.height >> 1; i < target.height; i++)
+        //        drawFloorLine(i);
+        //}
 
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
         void drawFloorLine(int line)

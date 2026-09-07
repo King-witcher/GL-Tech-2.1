@@ -14,6 +14,7 @@ namespace GLTech.Scripting.Physics
         public bool CollisionEnabled { get; set; } = true;
 
         public Vector StartPosition { get; set; } = Vector.Zero;
+        public bool DebugSpeed { get; set; } = true;
 
         public Vector Velocity
         {
@@ -64,6 +65,10 @@ namespace GLTech.Scripting.Physics
             {
                 Vector interpolated = previousPosition + (currentPosition - previousPosition) * Time.FixedRemainder;
                 Entity.WorldPosition = interpolated;
+            }
+            if (DebugSpeed)
+            {
+                Debug.Log($"speed: {velocity.Module:F2}");
             }
         }
     }

@@ -43,7 +43,6 @@
                 logs.Add($"{fps:F0} FPS | {avgFrameTime * 1000f:F2}ms");
                 logs.Add($"  render: {100f * renderTime / frameTime:F1}%");
                 logs.Add($"    walls:");
-                logs.Add($"      visible: {Debug.VisibleWalls}");
                 logs.Add($"      cull: {100f * wallCullTime / renderTime:F1}%");
                 logs.Add($"      render: {100f * wallRenderTime / renderTime:F1}%");
                 logs.Add($"  present: {100f * presentTime / frameTime:F1}%");
@@ -59,9 +58,8 @@
             }
 
             foreach (var log in logs)
-            {
                 Debug.Log(log);
-            }
+            Debug.Log($"visible walls: {Debug.VisibleWalls}");
         }
     }
 }

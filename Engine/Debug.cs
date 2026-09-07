@@ -1,24 +1,42 @@
-﻿using Microsoft.Win32.SafeHandles;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text;
 
 namespace GLTech
 {
-    public class Debug
+    internal struct LogEntry
     {
-        private static bool enabled = false;
-        public static bool Enabled => enabled;
+        public string message;
+        public Color color;
+    }
 
+    public static class Debug
+    {
+        #region public
         public enum Options { Normal, Success, Warning, Error }
+        public static int VisibleWalls { get; internal set; } = 0;
+        /// <summary>
+        /// This field is delayed by one frame when running scripts.
+        /// </summary>
+        public static float ScriptTime { get; internal set; } = 0f;
+        public static float WallCullTime { get; internal set; } = 0f;
+        public static float WallRenderTime { get; internal set; } = 0f;
+        public static float PresentTime { get; internal set; } = 0f;
+        public static float RenderTime { get; internal set; } = 0f;
 
-        public static void Log()
+        public static void Log(string message, Color color) =>
+            LogsList.Add(new LogEntry { message = message, color = color });
+
+        public static void Log(string message = "") =>
+            Log(message, Color.White);
+
+        public static void LogTerminal()
         {
-            if (enabled) Console.WriteLine();
+            if (terminalEnabled) Console.WriteLine();
         }
 
-        public static void Log(object message, string? context = null, Options debugOption = Options.Normal)
+        public static void LogTerminal(object message, string? context = null, Options debugOption = Options.Normal)
         {
-            if (!enabled) return;
+            if (!terminalEnabled) return;
 
             ConsoleColor prev = Console.ForegroundColor;
 
@@ -52,81 +70,25 @@ namespace GLTech
             Console.WriteLine(logBuilder.ToString());
             Console.ForegroundColor = prev;
         }
-
-        public static string Read()
-        {
-            if (!enabled) return string.Empty;
-
-            string retn = Console.ReadLine();
-            Console.WriteLine();
-            return retn;
-        }
-
-        public static void Pause()
-        {
-            if (!enabled) return;
-
-            Console.ReadKey();
-            Console.Write("\b \b\n");
-        }
-
-        public static void Clear()
-        {
-            if (enabled) Console.Clear();
-        }
-
-        #region kernel32.dll
-        [DllImport("kernel32.dll", EntryPoint = "GetStdHandle")]
-        static extern IntPtr kernel32_GetStdHandle(int nStdHandle);
-
-        [DllImport("kernel32.dll", EntryPoint = "AllocConsole")]
-        static extern bool kernel32_AllocConsole();
-
-        [DllImport("kernel32.dll", EntryPoint = "FreeConsole", SetLastError = true, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool kernel32_FreeConsole();
         #endregion
 
-        internal static void OpenConsole()
+        #region internal
+        internal static Span<LogEntry> LogEntries => CollectionsMarshal.AsSpan(LogsList);
+
+        /// <summary>
+        /// Clears all log entries after being rendered.
+        /// Must always be called after rendering.
+        /// </summary>
+        internal static void ClearLogs()
         {
-            if (enabled) return;
-
-            kernel32_AllocConsole();
-
-            IntPtr stdinh = kernel32_GetStdHandle(-10);
-            IntPtr stdouth = kernel32_GetStdHandle(-11);
-            IntPtr stderrh = kernel32_GetStdHandle(-12);
-
-            var safein = new SafeFileHandle(stdinh, true);
-            var safeout = new SafeFileHandle(stdouth, true);
-            var safeerr = new SafeFileHandle(stderrh, true);
-
-            var fsin = new FileStream(safein, FileAccess.Read);
-            var fsout = new FileStream(safeout, FileAccess.Write);
-            var fserr = new FileStream(safeerr, FileAccess.Write);
-
-            var srin = new StreamReader(fsin, Console.InputEncoding);
-            var srout = new StreamWriter(fsout, Console.OutputEncoding);
-
-            var srerr = new StreamWriter(fserr, Console.OutputEncoding);
-
-            srout.AutoFlush = srerr.AutoFlush = true;
-
-            Console.SetIn(srin);
-            Console.SetOut(srout);
-            Console.SetError(srerr);
-
-            Console.Title = "GL Tech 2.1 - Debugger";
-
-            enabled = true;
+            LogsList.Clear();
         }
+        #endregion
 
-        internal static void CloseConsole()
-        {
-            if (!enabled) return;
-            enabled = false;
+        #region private
+        private static List<LogEntry> LogsList = new();
 
-            kernel32_FreeConsole();
-        }
+        private static bool terminalEnabled = false;
+        #endregion
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Engine.Window
+﻿using Engine.Rendering;
+
+namespace Engine.Window
 {
     public interface IWindow
     {
@@ -8,8 +10,8 @@
         bool Fullscreen { get; set; }
         void Close();
 
-
-        internal RenderTarget AcquireImage();
-        internal void Present(RenderTarget target);
+        internal void PushDebugMsg(string msg) { }
+        internal SwapchainImage AcquireImage();
+        internal void Present(SwapchainImage target);
     }
 }

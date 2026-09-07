@@ -1,6 +1,7 @@
 ﻿using Engine;
 using GLTech;
 using GLTech.Scripting;
+using GLTech.Scripting.Debugging;
 using GLTech.Scripting.Physics;
 using GLTech.Scripting.Prefab;
 using GLTech.Space;
@@ -207,6 +208,8 @@ public class Map : Scene
                 StartPosition = (57.5f, 29.5f),
                 Radius = 0.15f,
             });
+            Player.AddScript<PerformanceDebugger>();
+            Player.AddScript<SceneDebugger>();
         }
 
         // Renderer customization

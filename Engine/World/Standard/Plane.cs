@@ -1,4 +1,4 @@
-﻿using Struct = GLTech.Structs.PlaneStruct;
+﻿using Struct = GLTech.Structs.PlaneInner;
 
 namespace GLTech.World
 {

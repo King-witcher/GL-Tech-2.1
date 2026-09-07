@@ -12,27 +12,27 @@ namespace GLTech
 
         public void Log()
         {
-            Debug.Log();
+            Debug.LogTerminal();
         }
 
         public void Log(object message)
         {
-            Debug.Log(message, context, Debug.Options.Normal);
+            Debug.LogTerminal(message, context, Debug.Options.Normal);
         }
 
         public void Warn(object message)
         {
-            Debug.Log(message, context, Debug.Options.Warning);
+            Debug.LogTerminal(message, context, Debug.Options.Warning);
         }
 
         public void Error(object message)
         {
-            Debug.Log(message, context, Debug.Options.Error);
+            Debug.LogTerminal(message, context, Debug.Options.Error);
         }
 
         public void Success(object message)
         {
-            Debug.Log(message, context, Debug.Options.Success);
+            Debug.LogTerminal(message, context, Debug.Options.Success);
         }
     }
 }

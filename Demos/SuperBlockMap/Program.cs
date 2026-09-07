@@ -4,7 +4,7 @@ using GLTech.Demos.SuperBlockMap;
 
 Map map = new();
 
-var window = new LegacyWindow("Super Block Map", 1920, 1080, true, false);
+var window = new SDLWindow("Super Block Map", 1920, 1080, true, false);
 window.RelativeMouseMode = true;
 
 var engineInfo = new GameEngineCreateInfo();

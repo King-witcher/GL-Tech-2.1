@@ -1,10 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace GLTech.Space;
 
-[NativeCppClass]
-[StructLayout(LayoutKind.Sequential)]
+// Can be represented as a complex y + xi
 public struct Vector : IEquatable<Vector>
 {
     private const float TORAD = MathF.PI / 180f;
@@ -99,6 +97,7 @@ public struct Vector : IEquatable<Vector>
         return MathF.Sqrt(dx * dx + dy * dy);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector Projection(Vector origin, Vector normal)
     {
         return (this - origin) / normal;
@@ -128,7 +127,7 @@ public struct Vector : IEquatable<Vector>
             return false;
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static float CrossProduct(Vector left, Vector right)
     {
         return left.x * right.y - left.y * right.x;

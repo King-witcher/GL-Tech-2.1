@@ -1,6 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿using Engine;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Engine;
 
 namespace GLTech.Structs
 {
@@ -12,7 +12,6 @@ namespace GLTech.Structs
         public SpriteStruct* first_sprite; //not implemented
         public SpriteStruct* last_sprite;
         public int sprite_count;
-        public PlaneList plane_list;
         public Texture background;
         public PlayerStruct* player;  // Talvez eu mude isso
         public HorizontalList floor_list;
@@ -23,7 +22,6 @@ namespace GLTech.Structs
             count++;
             RawScene* result = Memory.Alloc<RawScene>(alignment: 16);
             result->first_sprite = null;
-            result->plane_list = new();
             result->last_sprite = null;
             result->sprite_count = 0;
             result->background = Texture.NullTexture;
@@ -36,7 +34,6 @@ namespace GLTech.Structs
 
         public void Dispose()
         {
-            plane_list.Dispose();
             floor_list.Dispose();
             ceiling_list.Dispose();
         }
@@ -49,9 +46,9 @@ namespace GLTech.Structs
             count--;
         }
 
-        public void Add(PlaneStruct* plane)
+        public void Add(PlayerStruct* camera)
         {
-            plane_list.Add(plane);
+            this.player = camera;
         }
 
         public void Add(SpriteStruct* sprite)
@@ -64,11 +61,6 @@ namespace GLTech.Structs
                 last_sprite = sprite;
             }
             sprite_count++;
-        }
-
-        public void Add(PlayerStruct* camera)
-        {
-            this.player = camera;
         }
 
         public void AddFloor(HorizontalStruct* floor)

@@ -23,7 +23,9 @@ namespace GLTech.World
 
         internal RawScene* raw;
 
+
         private static Logger logger = new(typeof(Scene).Name);
+        internal List<Plane> planes = new List<Plane>();
         private List<Entity> entities = new List<Entity>();
         private Dictionary<string, Entity> entityNames = new Dictionary<string, Entity>();
         private Player player;
@@ -36,7 +38,7 @@ namespace GLTech.World
 
         public int ColliderCount => CollisionSystem.ColliderCount;
         public int EntityCount => entities.Count;
-        public int PlaneCount => raw->plane_list.count;
+        public int WallCount => planes.Count;
         public Player Player => player;
 
         public Texture Background
@@ -106,7 +108,7 @@ namespace GLTech.World
 
                 if (node is Plane plane)
                 {
-                    raw->Add(plane.unmanaged);
+                    planes.Add(plane);
                 }
                 else if (node is Floor floor)
                 {
@@ -156,6 +158,7 @@ namespace GLTech.World
             Delete();
 
             entities.Clear();
+            planes.Clear();
         }
 
         internal void Start()

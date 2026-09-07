@@ -1,9 +1,9 @@
 ﻿using GLTech;
 using System.Runtime.CompilerServices;
 
-namespace Engine.Window
+namespace Engine.Rendering
 {
-    internal unsafe class RenderTarget
+    internal unsafe readonly struct SwapchainImage
     {
         public readonly Color* buffer;
         public readonly int width;
@@ -11,13 +11,14 @@ namespace Engine.Window
         public readonly float widthf;
         public readonly float heightf;
 
-        public RenderTarget(int width, int height)
+        public SwapchainImage(Color* buffer, int width, int height)
         {
-            buffer = Memory.Alloc<Color>(width * height, alignment: 64); // Cache line: the framebuffer is written scanline by scanline.
+            this.buffer = buffer;
             widthf = this.width = width;
             heightf = this.height = height;
         }
 
+        [Obsolete]
         public Color this[int column, int line]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -25,11 +26,6 @@ namespace Engine.Window
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => (buffer)[column + width * line] = value;
-        }
-
-        ~RenderTarget()
-        {
-            Memory.Free(buffer);
         }
     }
 }

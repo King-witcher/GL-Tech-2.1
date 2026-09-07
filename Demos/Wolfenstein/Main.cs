@@ -4,7 +4,7 @@ using wolf3d;
 
 Map map = new();
 
-var window = new LegacyWindow("Wolfenstein", 1920, 1080, true, false);
+var window = new SDLWindow("Wolfenstein", 1920, 1080, true, false);
 window.RelativeMouseMode = true;
 
 var engineInfo = new GameEngineCreateInfo();

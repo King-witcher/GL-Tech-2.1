@@ -68,7 +68,7 @@ namespace GLTech.Demos.SampleBlockMap
 
             // Camera
             {
-                Player.AddScript<DebugPerformance>();
+                Player.AddScript<PerformanceDebugger>();
                 Player.RelativeRotation = -90f;
 
                 // Tratador de colisão

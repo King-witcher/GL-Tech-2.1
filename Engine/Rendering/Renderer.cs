@@ -1,80 +1,99 @@
 ﻿using Engine.Rendering;
-using Engine.Window;
 using GLTech.Structs;
+using GLTech.World;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace GLTech;
 
 // TODO: RendererInner como readonly struct
 public unsafe class Renderer
 {
-    RendererState state;
-    //RenderTarget target;
+    // One source of truth for the frustum constants; WallPass reads the same struct.
+    Projection projection;
+    int cached_width, cached_height;
+
+    // Wall scratch, reused across frames so that a frame allocates nothing. Both arrays live in
+    // the pinned object heap, so they never move and the pointers below stay valid for good.
+    Segment[] wall_segments = [];
+    Texture[] wall_textures = [];
+    Segment* wall_segments_ptr;
+    Texture* wall_textures_ptr;
+    Stopwatch sw = new();
 
     public bool Parallel { get; set; } = true;
     public float HFov { get; set; }
 
     public Renderer(float hFov, bool parallel)
     {
-        state = new RendererState(800, 600, hFov);
         HFov = hFov;
         Parallel = parallel;
+        SetProjection(800, 600, hFov);
     }
 
-    internal void Render(RawScene* scene, RenderTarget target)
+    internal void Render(Scene managed_scene, SwapchainImage target)
     {
         EnsureCompatibility(target);
+
+        RawScene* scene = managed_scene.raw;
+        PlayerStruct* player = scene->player;
 
         var col_start_table = stackalloc int[target.width];
         var col_end_table = stackalloc int[target.width];
 
-        // Cull only the planes that appear in the field of view.
-        var left = new Vector(-scene->player->direction.y, scene->player->direction.x);
-        var rtl = left * state.step0 * target.widthf;
-        View view = new(
-            center: scene->player->position,
-            left: scene->player->direction + rtl * 0.5f,
-            right: scene->player->direction - rtl * 0.5f
-        );
+        CameraInfo camera = new(player->position, player->direction, player->height);
 
-        // TODO: Culling is not renderer's responsibility
-        using var surface_culled = scene->plane_list.CullBySurface(scene->player->position);
-        using var plane_list = surface_culled.CullByFrustum(view);
+        sw.Restart();
+        EnsureWallCapacity(managed_scene.planes.Count);
+        int wall_count = FlattenWalls(managed_scene.planes);
+        WallPass.GatherViewspaceWalls(
+            camera, projection,
+            wall_count, wall_segments_ptr, wall_textures_ptr,
+            out int visible_count, wall_segments_ptr, wall_textures_ptr);
+        sw.Stop();
 
-        {
-            if (Parallel)
-                //System.Threading.Tasks.Parallel.For(fromInclusive: 0, toExclusive: target.width, body: DrawColumn);
-                System.Threading.Tasks.Parallel.ForEach(Partitioner.Create(0, target.width), range =>
-                {
-                    for (int col = range.Item1; col < range.Item2; col++) DrawColumn(col);
-                });
-            else
-                for (int i = 0; i < target.width; i++)
-                    DrawColumn(i);
-        }
+        Debug.VisibleWalls = visible_count;
+        Debug.WallCullTime = (float)sw.Elapsed.TotalSeconds;
 
-        // Checks if the code should be run in all cores or just one.
+        Frame frame = new(
+            camera: camera,
+            projection: projection,
+            spans: new ColumnSpans(col_start_table, col_end_table),
+            image: target,
+            walls: new WallsInfo(visible_count, wall_segments_ptr, wall_textures_ptr));
+
+        // Render walls
+        sw.Restart();
         if (Parallel)
-            System.Threading.Tasks.Parallel.For(fromInclusive: 0, toExclusive: target.height >> 1, body: drawCeilingLine);
+            System.Threading.Tasks.Parallel.ForEach(Partitioner.Create(0, target.width),
+                range => WallPass.Render(frame, range.Item1, range.Item2));
         else
+            WallPass.Render(frame, 0, target.width);
+        sw.Stop();
+        Debug.WallRenderTime = (float)sw.Elapsed.TotalSeconds;
+
+        if (Parallel)
+        {
+            System.Threading.Tasks.Parallel.For(fromInclusive: 0, toExclusive: target.height >> 1, body: drawCeilingLine);
+            System.Threading.Tasks.Parallel.For(fromInclusive: target.height >> 1, toExclusive: target.height, body: drawFloorLine);
+        }
+        else
+        {
             for (int i = 0; i < target.height >> 1; i++)
                 drawCeilingLine(i);
-
-        //// Checks if the code should be run in all cores or just one.
-        if (Parallel)
-            System.Threading.Tasks.Parallel.For(fromInclusive: target.height >> 1, toExclusive: target.height, body: drawFloorLine);
-        else
             for (int i = target.height >> 1; i < target.height; i++)
                 drawFloorLine(i);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
         void drawFloorLine(int line)
         {
             unchecked
             {
-                float hit_dist = scene->player->height / ((line - target.heightf * 0.5f) * state.step0);
-                float step = state.step0 * hit_dist;
+                float hit_dist = scene->player->height / ((line - projection.horizon) * projection.columnSlope);
+                float step = projection.columnSlope * hit_dist;
 
                 Vector camera_dir = scene->player->direction;
                 Vector right = new Vector(camera_dir.y, -camera_dir.x);
@@ -103,8 +122,8 @@ public unsafe class Renderer
         {
             unchecked
             {
-                float hit_dist = (1 - scene->player->height) / ((target.heightf * 0.5f - line) * state.step0);
-                float step = state.step0 * hit_dist;
+                float hit_dist = (1 - scene->player->height) / ((projection.horizon - line) * projection.columnSlope);
+                float step = projection.columnSlope * hit_dist;
 
                 Vector camera_dir = scene->player->direction;
                 Vector right = new Vector(camera_dir.y, -camera_dir.x);
@@ -128,72 +147,6 @@ public unsafe class Renderer
                 }
             }
         }
-
-        // Render a vertical column of the screen.
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-        void DrawColumn(int col_idx)
-        {
-            unchecked
-            {
-                int width = target.width;
-                int height = target.height;
-                float height_f = target.heightf;
-
-                // Caching frequently used variables
-                var delta = width / 2 - col_idx;
-                var dir = scene->player->direction + left * (state.step0 * delta);
-                Segment ray = new Segment(scene->player->position, dir);
-                //Texture bg = scene->background;
-
-                // Cast the ray towards every plane.
-                PlaneStruct* plane = plane_list.NearestPlane(ray, out Vector rs);
-
-                if (plane == null)
-                {
-                    col_start_table[col_idx] = height;
-                    col_end_table[col_idx] = 0;
-                    return;
-                }
-
-                // Found out that optimizing this part by separing the case when it hits and not a wall is unecessary.
-                #region Render the plane
-
-                // Height that the current column should have on the screen.
-                float colision_depth = Vector.DotProduct(ray.direction, scene->player->direction) * rs.x;
-                float col_height_f = state.colHeight1 / colision_depth; // Wall column size in pixels
-
-                // Where the column starts and ends relative to the screen.
-                float col_start_f = (height_f - 1f - col_height_f) * 0.5f + col_height_f * (scene->player->height - 0.5f);
-                float col_end_f = (height_f - 1f + col_height_f) * 0.5f + col_height_f * (scene->player->height - 0.5f);
-
-                // Wall rendering bounds on the screen...
-                int col_start_i = height - (int)(height_f - col_start_f);    // Inclusive
-                if (col_start_i < 0)
-                    col_start_i = 0;
-
-                int col_end_i = height - (int)(height_f - col_end_f);        // Exclusive
-                if (col_end_i > height)
-                    col_end_i = height;
-
-                col_start_table[col_idx] = col_start_i;
-                col_end_table[col_idx] = col_end_i;
-
-                // Draw the wall
-                // Critical performance impact.
-                float i_col_h = 1f / col_height_f;
-                // Resolve the texture column once for the entire column (rs.y is constant),
-                // hoisting both x and the column base pointer out of the per-pixel loop.
-                Texture tex = plane->texture;
-                uint* texcol = tex.ResolveColumn(rs.y);
-                for (int line_idx = col_start_i; line_idx < col_end_i; line_idx++)
-                {
-                    float v = (line_idx - col_start_f) * i_col_h;
-                    Color color = tex.MapColumn(texcol, v);
-                    target[col_idx, line_idx] = color;
-                }
-                #endregion
-            }
-        }
     }
 
     public void Update(int width, int height, float hFov)
@@ -204,13 +157,49 @@ public unsafe class Renderer
         if (hFov <= 0 || hFov >= 180)
             throw new ArgumentException("Horizontal field of view must be between 0 and 180 degrees.");
 
-        state = new RendererState(width, height, hFov);
+        SetProjection(width, height, hFov);
     }
 
-    private void EnsureCompatibility(RenderTarget target)
+    private int FlattenWalls(List<Plane> planes)
+    {
+        Segment* segments = wall_segments_ptr;
+        Texture* textures = wall_textures_ptr;
+        int count = 0;
+
+        foreach (Plane plane in CollectionsMarshal.AsSpan(planes))
+        {
+            PlaneInner* inner = plane.unmanaged;
+            segments[count] = inner->segment;
+            textures[count] = inner->texture;
+            count++;
+        }
+
+        return count;
+    }
+
+    private void EnsureWallCapacity(int plane_count)
+    {
+        if (plane_count <= wall_segments.Length)
+            return;
+
+        // Pinned object heap: never relocated, so a pointer taken once here stays valid.
+        wall_segments = GC.AllocateArray<Segment>(plane_count, pinned: true);
+        wall_textures = GC.AllocateArray<Texture>(plane_count, pinned: true);
+        wall_segments_ptr = (Segment*)Unsafe.AsPointer(ref MemoryMarshal.GetArrayDataReference(wall_segments));
+        wall_textures_ptr = (Texture*)Unsafe.AsPointer(ref MemoryMarshal.GetArrayDataReference(wall_textures));
+    }
+
+    private void EnsureCompatibility(SwapchainImage target)
     {
         // TODO: Check hFov
-        if (target.width != state.width || target.height != state.height)
-            state = new RendererState(target.width, target.height, HFov);
+        if (target.width != cached_width || target.height != cached_height)
+            SetProjection(target.width, target.height, HFov);
+    }
+
+    private void SetProjection(int width, int height, float hFov)
+    {
+        cached_width = width;
+        cached_height = height;
+        projection = Projection.From(width, height, hFov);
     }
 }

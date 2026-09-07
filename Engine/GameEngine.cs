@@ -102,7 +102,6 @@ public class GameEngine
         // Run setup scripts
         Script.Time.RenderTime = 0;
         Script.Time.TimeStep = 0;
-        Script.Time.WindowTime = 0;
         currentScene.Start();
 
         //window.RelativeMouseMode = CaptureMouse;
@@ -111,6 +110,7 @@ public class GameEngine
 
         long FIXED_TIMESTEP = Stopwatch.Frequency / Script.Time.FixedTicks;
 
+        var sw = new Stopwatch();
         long initTime = Stopwatch.GetTimestamp();
         long lastTime = initTime;
         long accumulator = 0;
@@ -119,8 +119,16 @@ public class GameEngine
         {
             var target = window.AcquireImage();
             // Draw current state
-            renderer.Render(currentScene.raw, target);
+            sw.Restart();
+            renderer.Render(currentScene, target);
+            sw.Stop();
+            Debug.RenderTime = (float)sw.Elapsed.TotalSeconds;
+
+            sw.Restart();
             window.Present(target);
+            sw.Stop();
+            Debug.PresentTime = (float)sw.Elapsed.TotalSeconds;
+            Debug.ClearLogs();
 
             // Update timers
             long currentTime = Stopwatch.GetTimestamp();
@@ -133,6 +141,7 @@ public class GameEngine
             FlushSchedule();
 
             // Run fixed updates
+            sw.Restart();
             Script.Time.TimeStep = (float)FIXED_TIMESTEP / Stopwatch.Frequency;
             Script.Time.FixedRemainder = 0f;
             while (accumulator >= FIXED_TIMESTEP)
@@ -147,6 +156,8 @@ public class GameEngine
             Script.Time.TotalTime = (float)totalTime / Stopwatch.Frequency;
             Script.Time.FixedRemainder = (float)accumulator / FIXED_TIMESTEP;
             currentScene.Update(Script.Time.TimeStep);
+            sw.Stop();
+            Debug.ScriptTime = (float)sw.Elapsed.TotalSeconds;
 
             lastTime = currentTime;
         }

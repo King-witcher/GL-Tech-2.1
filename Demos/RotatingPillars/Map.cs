@@ -124,7 +124,7 @@ namespace GLTech.Demos.RotatingPillars
             // Camera
             {
                 Player.AddScript<SwitchBackgroundScript>();
-                Player.AddScript<DebugPerformance>();
+                Player.AddScript<PerformanceDebugger>();
                 Player.AddScript<MouseLook>();
                 KinematicBody body = new() { CollisionEnabled = true }; // noclip
                 Q1Controller movement = new();

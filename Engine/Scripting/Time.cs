@@ -18,9 +18,11 @@
 
             public static double RenderTime { get; internal set; }
 
+            [Obsolete("Use Debug instead")]
             public static double ScriptTime => scriptTime;
 
-            public static float WindowTime { get; internal set; }
+            [Obsolete("Use Debug instead")]
+            public static float PresentTime { get; internal set; }
 
         }
     }

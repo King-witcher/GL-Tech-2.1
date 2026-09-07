@@ -48,8 +48,8 @@ namespace GLTech.Demos.SuperBlockMap
             // Camera
             {
                 Player.AddScript(new MouseLook(2.2f));
-                Player.AddScript<DebugPerformance>();
-                // Camera.AddScript<DebugScene>();
+                Player.AddScript<PerformanceDebugger>();
+                Player.AddScript<SceneDebugger>();
 
                 // Tratador de colisão
                 KinematicBody body = new();

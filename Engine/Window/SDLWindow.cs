@@ -1,15 +1,19 @@
-﻿using GLTech.Input;
+﻿using Engine.Rendering;
+using GLTech;
+using GLTech.Input;
 using SDL;
 using static SDL.SDL3;
 
 namespace Engine.Window
 {
-    public unsafe sealed class LegacyWindow : IWindow
+    public unsafe sealed class SDLWindow : IWindow
     {
-        RenderTarget buffer;
+        //SwapchainImage buffer;
         SDL_Window* window;
         SDL_Renderer* renderer;
         SDL_Texture* texture;
+        Color* stagingBuffer;
+        List<string> messages = new();
 
         public (int width, int height) Size
         {
@@ -39,12 +43,12 @@ namespace Engine.Window
             }
         }
 
-        static LegacyWindow()
+        static SDLWindow()
         {
             SDL_Init(SDL_InitFlags.SDL_INIT_VIDEO);
         }
 
-        public LegacyWindow(
+        public SDLWindow(
             string title,
             int width,
             int height,
@@ -52,7 +56,7 @@ namespace Engine.Window
             bool vsync
         )
         {
-            buffer = new RenderTarget(width, height);
+            stagingBuffer = Memory.Alloc<Color>(width * height, 64);
             //Fullscreen = fullscreen;
 
             SDL_WindowFlags flags = SDL_WindowFlags.SDL_WINDOW_MOUSE_GRABBED;
@@ -97,17 +101,38 @@ namespace Engine.Window
             set => SDL_SetWindowFullscreen(window, value);
         }
 
-        RenderTarget IWindow.AcquireImage()
+        SwapchainImage IWindow.AcquireImage()
         {
-            return buffer;
+            return new SwapchainImage(stagingBuffer, Size.width, Size.height);
         }
 
-        void IWindow.Present(RenderTarget rt)
+        void IWindow.PushDebugMsg(string msg)
+        {
+            messages.Add(msg);
+        }
+
+        void IWindow.Present(SwapchainImage rt)
         {
             // TODO: use SDL_LockTexture and SDL_UnlockTexture instead of memcpy
             SDL_UpdateTexture(texture, null, (nint)rt.buffer, rt.width * 4);
             SDL_RenderTexture(renderer, texture, null, null);
+            RenderLogs();
             SDL_RenderPresent(renderer);
+        }
+
+        void RenderLogs()
+        {
+            var logs = Debug.LogEntries;
+            for (int i = 0; i < logs.Length; i++)
+            {
+                var entry = logs[i];
+                var rect = new SDL_FRect { x = 0, y = 12 * i, w = 8 * entry.message.Length + 4, h = 12 }; ;
+                SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+                SDL_RenderFillRect(renderer, &rect);
+
+                SDL_SetRenderDrawColor(renderer, entry.color.R, entry.color.G, entry.color.B, 255);
+                SDL_RenderDebugText(renderer, 2, 12 * i + 2, entry.message);
+            }
         }
 
         void IWindow.Close()

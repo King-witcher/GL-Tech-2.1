@@ -15,12 +15,16 @@ public unsafe class Renderer
     Projection projection;
     int cached_width, cached_height;
 
-    // Wall scratch, reused across frames so that a frame allocates nothing. Both arrays live in
+    // Wall scratch, reused across frames so that a frame allocates nothing. Every array lives in
     // the pinned object heap, so they never move and the pointers below stay valid for good.
+    // The gather pass reads the segments and writes the screen walls, so those cannot be shared;
+    // the textures are only compacted in place.
     Segment[] wall_segments = [];
     Texture[] wall_textures = [];
+    ScreenWall[] screen_walls = [];
     Segment* wall_segments_ptr;
     Texture* wall_textures_ptr;
+    ScreenWall* screen_walls_ptr;
     Stopwatch sw = new();
 
     public bool Parallel { get; set; } = true;
@@ -48,10 +52,10 @@ public unsafe class Renderer
         sw.Restart();
         EnsureWallCapacity(managed_scene.planes.Count);
         int wall_count = FlattenWalls(managed_scene.planes);
-        WallPass.GatherViewspaceWalls(
+        WallPass.GatherScreenWalls(
             camera, projection,
             wall_count, wall_segments_ptr, wall_textures_ptr,
-            out int visible_count, wall_segments_ptr, wall_textures_ptr);
+            out int visible_count, screen_walls_ptr, wall_textures_ptr);
         sw.Stop();
 
         Debug.VisibleWalls = visible_count;
@@ -62,7 +66,7 @@ public unsafe class Renderer
             projection: projection,
             spans: new ColumnSpans(col_start_table, col_end_table),
             image: target,
-            walls: new WallsInfo(visible_count, wall_segments_ptr, wall_textures_ptr));
+            walls: new WallsInfo(visible_count, screen_walls_ptr, wall_textures_ptr));
 
         // Render walls
         sw.Restart();
@@ -185,8 +189,10 @@ public unsafe class Renderer
         // Pinned object heap: never relocated, so a pointer taken once here stays valid.
         wall_segments = GC.AllocateArray<Segment>(plane_count, pinned: true);
         wall_textures = GC.AllocateArray<Texture>(plane_count, pinned: true);
+        screen_walls = GC.AllocateArray<ScreenWall>(plane_count, pinned: true);
         wall_segments_ptr = (Segment*)Unsafe.AsPointer(ref MemoryMarshal.GetArrayDataReference(wall_segments));
         wall_textures_ptr = (Texture*)Unsafe.AsPointer(ref MemoryMarshal.GetArrayDataReference(wall_textures));
+        screen_walls_ptr = (ScreenWall*)Unsafe.AsPointer(ref MemoryMarshal.GetArrayDataReference(screen_walls));
     }
 
     private void EnsureCompatibility(SwapchainImage target)

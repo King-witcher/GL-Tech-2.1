@@ -14,16 +14,55 @@ namespace Engine.Rendering
         }
     }
 
+    /// <summary>
+    /// A visible wall already resolved into the two quantities that are affine in the ray slope
+    /// t = (column - halfWidth) * columnSlope:
+    /// <code>
+    /// 1 / depth = invDepthSlope * t + invDepthBase
+    /// u / depth = uSlope * t + uBase
+    /// </code>
+    /// Both are linear only because the perspective divide was factored out, which is the whole
+    /// point of screen space: a column costs one fused multiply add per wall plus a single
+    /// reciprocal for the winner, instead of a ray/segment intersection per wall.
+    /// </summary>
+    internal readonly struct ScreenWall
+    {
+        public readonly float invDepthSlope;
+        public readonly float invDepthBase;
+        public readonly float uSlope;
+        public readonly float uBase;
+
+        // Columns the wall covers, both inclusive, already clipped to the frustrum and the image.
+        public readonly int firstColumn;
+        public readonly int lastColumn;
+
+        public ScreenWall(
+            float invDepthSlope,
+            float invDepthBase,
+            float uSlope,
+            float uBase,
+            int firstColumn,
+            int lastColumn)
+        {
+            this.invDepthSlope = invDepthSlope;
+            this.invDepthBase = invDepthBase;
+            this.uSlope = uSlope;
+            this.uBase = uBase;
+            this.firstColumn = firstColumn;
+            this.lastColumn = lastColumn;
+        }
+    }
+
     internal unsafe readonly struct WallsInfo
     {
         public readonly int count;
-        public readonly Segment* segments;
+        public readonly ScreenWall* items;
         public readonly Texture* textures;
 
-        public WallsInfo(int count, Segment* segments, Texture* textures)
+        public WallsInfo(int count, ScreenWall* items, Texture* textures)
         {
             this.count = count;
-            this.segments = segments;
+            this.items = items;
             this.textures = textures;
         }
     }
